@@ -1,0 +1,66 @@
+.btn, button{
+  background: $highlight;
+  color: white;
+  padding: 0.5rem 1rem;
+  @include card(1);
+  font-size: 1.3em;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease-in-out;
+  display: inline-block;
+  font-weight: 900;
+  border: none;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+  border-radius: 0.25rem;
+  &.__large{
+    padding: 1rem 0;
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+  &.__round {
+    border-radius: 50%;
+  }
+  &.__round.__clear{
+    &> svg {
+      border-radius: 50%;
+    }
+  }
+  &.__clear{
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    &:hover{
+      @include card(0);
+    }
+    &:hover svg{
+      @include card(2);
+    }
+    &> svg {
+      width: 3rem;
+      cursor: pointer;
+      border-radius: 0.25rem;  
+      transition: box-shadow 0.3s ease-in-out;
+
+      @include card(1);
+    }
+    
+  }
+  &:hover{
+    @include card(2);
+  }
+}
+
+@include bp(max, $smallBP){
+  .btn, button{
+    font-size: 1.1em;
+    letter-spacing: 1.1px;
+  }
+}
+
+@include bp(max, $xsmallBP){
+  .btn, button{
+    width: 100% !important;
+  }
+}
