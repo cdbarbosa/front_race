@@ -1,0 +1,23 @@
+#navstrip {
+  background: #2B4F73;
+  height: 100%;
+  .logo {
+    background: white;
+    height: 96px;
+  }
+  .links {
+    li {
+      text-decoration: none;
+      padding: 1rem;
+      color: white;
+      margin: 0;
+      cursor: pointer;
+      &:hover {
+        background: #D36063
+      }
+    }
+    .__active {
+      background: #D36063;
+    }
+  }
+}

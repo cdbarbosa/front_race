@@ -1,28 +1,24 @@
 <template>
-  <div id="home">
+  <div id="dashboard">
     <div class="columns">
-      <div class=" column is-one-quarter">
+      <div class=" column is-one-fifth">
         <navstrip></navstrip>
          <!-- <h1>Nav</h1> -->
       </div>
       <div class="column is-full">
-        <!-- <transition name="fade" mdoe="out-in">
+        <transition name="fade" mdoe="in-out">
           <router-view></router-view>
-        </transition> -->
-        <dashboard></dashboard>
-        <!-- <h1>Dashboard</h1> -->
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import dashboard from './Dashboard.vue'
 import navstrip from './Dashboard/NavStrip.vue'
 export default {
   name: 'home',
   components: {
-    dashboard,
     navstrip
   }
 }
