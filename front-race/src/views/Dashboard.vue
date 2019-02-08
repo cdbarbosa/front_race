@@ -5,7 +5,7 @@
         <navstrip></navstrip>
          <!-- <h1>Nav</h1> -->
       </div>
-      <div class="column is-full">
+      <div class="column">
         <transition name="fade" mdoe="in-out">
           <router-view></router-view>
         </transition>
