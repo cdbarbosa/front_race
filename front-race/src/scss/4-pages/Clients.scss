@@ -1,0 +1,47 @@
+#clients {
+  height: 100%;
+  .information {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1rem;
+    padding: 1rem;
+    .info-first {     
+      display: grid;
+      grid-template-columns: 10fr 1fr;
+      grid-gap: 1rem;
+    }
+    .info-second {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-gap: 1rem;
+      .block {
+        margin-top: 2.5rem;
+      }
+    }
+    .info-three {
+      display: grid;
+      grid-template-columns: 4fr 1fr;
+      grid-gap: 1rem;
+    }
+    .info-fourth {
+      display: grid;
+      grid-template-columns: 1fr 2fr 2fr;
+      grid-gap: 1rem;
+    }
+  }
+  .tableClients {
+    background: #ccc;
+    padding: 1rem;
+    .headerTable {
+      position: relative;
+      .control {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+    .b-table {
+      padding-top: 1rem;
+    }
+  }
+}

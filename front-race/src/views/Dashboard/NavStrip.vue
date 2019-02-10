@@ -1,5 +1,5 @@
 <template>
-  <div id="navstrip" style="position: fixed; width: 20%">
+  <div id="navstrip">
     <div class="logo"></div>
     <div class="links">
       <ul>
