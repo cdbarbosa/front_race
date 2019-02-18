@@ -21,9 +21,9 @@
 @import '2-global/bulma-overrides';
 
 // 3 - Modules
+@import '3-modules/navStrip.scss';
 
 // 4 - pages
-@import '4-pages/Dashboard.scss';
-@import '4-pages/NavStrip.scss';
-@import '4-pages/Clients.scss';
-@import '4-pages/Service.scss';
+@import '4-pages/dashboard.scss';
+@import '4-pages/clients.scss';
+@import '4-pages/service.scss';

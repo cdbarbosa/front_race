@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     .info-first {     
       display: grid;
       grid-template-columns: 10fr 1fr;
@@ -27,6 +27,12 @@
       display: grid;
       grid-template-columns: 1fr 2fr 2fr;
       grid-gap: 1rem;
+    }
+    .client{
+      textarea{
+      }
+    }
+    .others{
     }
   }
   .tableClients {
