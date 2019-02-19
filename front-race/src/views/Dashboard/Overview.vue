@@ -1,5 +1,5 @@
 <template>
-  <div class="page" id="overview">
+  <div class="page" id="overview" style="height: 100%">
     <h1>Visão Geral</h1>
   </div>
 </template>
