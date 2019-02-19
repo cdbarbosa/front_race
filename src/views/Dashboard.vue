@@ -1,11 +1,10 @@
 <template>
   <div id="dashboard">
-    <div class="columns">
-      <div class=" column is-one-fifth">
+    <div class="component">
+      <div class="dashNav">
         <navstrip></navstrip>
-         <!-- <h1>Nav</h1> -->
       </div>
-      <div class="column">
+      <div class="content">
         <transition name="fade" mdoe="in-out">
           <router-view></router-view>
         </transition>
