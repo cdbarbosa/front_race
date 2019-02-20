@@ -1,0 +1,57 @@
+@import '../3-components/_details.scss';
+@import '../3-components/receive.scss';
+
+#service {
+  height: 100%;
+  h2 {
+    padding: 1rem;
+  }
+  .service-information {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1rem;
+    padding: 1rem;
+    .description-service {
+      .info-one {
+        display: grid;
+        grid-template-columns: 10fr 1fr;
+        grid-gap: 1rem;
+      }
+      .info-two {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr;
+        grid-gap: 1rem;
+      }
+      .info-three {
+       display: grid;
+       grid-template-columns: 2fr 2fr;
+       grid-gap: 1rem; 
+      }
+      .info-four {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+      }
+    }
+  }
+  .serviceTable {
+    background: #ccc;
+    padding: 1rem;
+    .headerTable {
+      position: relative;
+      .control {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .buttons {
+        position: absolute;
+        top: 4px;
+        right: 312px;
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
+      }
+    }
+  }
+}

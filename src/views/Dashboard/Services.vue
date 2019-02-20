@@ -4,8 +4,8 @@
     <div class="service-information">
       <div class="description-service">
         <div class="info-one">
-          <b-field label="Descrição">
-            <textarea name="" id="" cols="100" rows="2"></textarea>
+          <b-field label="Título">
+            <textarea name="" id="" cols="50" rows="2"></textarea>
           </b-field>
           <b-field label="ID">
             <b-input placeholder="23"></b-input>
@@ -67,6 +67,7 @@
     <div class="serviceTable">
       <div class="headerTable">
         <h4>Serviços</h4>
+        <button class="buttons is-primary">Cadastrar Novo Serviço</button>
         <b-input placeholder="Procurar..."></b-input>
       </div>
       <b-table :data="data" :columns="columns" style="padding-top: 1rem"></b-table>

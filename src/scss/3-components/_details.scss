@@ -1,0 +1,54 @@
+#details {
+  height: 100%;
+  h1 {
+    padding: 1rem 1rem 0 1rem;
+    margin: 0;
+  }
+  .content {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+
+    .infoClient {
+      .infoRh {
+        display: grid;
+        grid-template-columns: 10fr 1fr;
+        grid-gap: 1rem;
+      }
+      .cost {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        grid-gap: 1rem;
+        .b-checkbox {
+          margin-top: 3rem;
+        }
+      }
+      .hours {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1rem;
+      }
+    }
+  }
+  .serviceTable {
+    background: #ccc;
+    padding: 1rem;
+    .headerTable {
+      position: relative;
+      .control {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .buttons {
+        position: absolute;
+        top: 4px;
+        right: 312px;
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
+      }
+    }
+  }
+}
