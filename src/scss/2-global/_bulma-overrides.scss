@@ -11,20 +11,20 @@
     margin-bottom: 0.5rem;
   }
 	.control {
-		input, textarea, select {
-			border: none;
-			background: white;
-			box-shadow: 0px 3px 6px $default_input_shadow;
-			border-radius: 0.25rem;
-			color: #DDDDDD;
-      font-size: 1.25em;
-			&:focus, &:active {
-				border: none;
-			}
-		}
-		.select:not(.is-multiple):not(.is-loading)::after {
-			border-color: #DDDDDD;
-		}
+		// input, textarea, select {
+		// 	border: none;
+		// 	background: white;
+		// 	box-shadow: 0px 3px 6px $default_input_shadow;
+		// 	border-radius: 0.25rem;
+		// 	color: #DDDDDD;
+    //   font-size: 1.25em;
+		// 	&:focus, &:active {
+		// 		border: none;
+		// 	}
+		// }
+		// .select:not(.is-multiple):not(.is-loading)::after {
+		// 	border-color: #DDDDDD;
+		// }
 	}
 }
 .select:not(.is-multiple):not(.is-loading)::after{

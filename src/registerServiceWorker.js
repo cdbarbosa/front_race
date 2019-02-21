@@ -34,4 +34,3 @@ if (NODE_ENV === 'production') {
     register(`${BASE_URL}service-worker.js`)
   }
 }
-

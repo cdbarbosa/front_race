@@ -118,22 +118,30 @@ body{
     }
   }
   input, textarea, .input, .textarea, select{
-    border: none;
+    // border: none;
     background: white;
-    box-shadow: 0px 3px 6px $default_input_shadow;
+    // box-shadow: 0px 3px 6px $default_input_shadow;
     border-radius: 0.25rem;
     font-size: 1.25em;
     margin-bottom: 0.5rem;
     padding: 0.5rem 1rem;
+  }
+  textarea, .textarea{
+    border-color: #dbdbdb;
+    box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+    // outline: none;
+    resize: none;
+    &:focus, &:active{
+      box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+      border-color: #3273dc;
+      outline: none;
+    }
   }
   .select select{
     padding: 0.5rem 1rem;
     &:focus, &:active{
       border-color: transparent;
     }
-  }
-  textarea{
-    resize: none;
   }
 }
 

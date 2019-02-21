@@ -1,11 +1,13 @@
 <template>
   <div id="navstrip">
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="/img/logo.png" alt=""/>
+    </div>
     <div class="links">
       <ul>
-        <router-link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}">
-          Overview
-        </router-link>
+        <!-- <router&#45;link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}"> -->
+        <!--   Overview -->
+        <!-- </router&#45;link> -->
         <router-link tag="li" :to="{ name: 'clients' }" :class="{__active: this.$route.name == 'clients'}">
           Clientes
         </router-link>
@@ -19,15 +21,15 @@
           </span>
         </div>
         <div class="alternative" v-if="services === true">
-            <ul>
-              <router-link tag="li" :to="{ name: 'details' }">
-                Detalhes
-              </router-link>
-              <router-link tag="li" :to="{ name: 'receive' }">
-                Recebimentos                
-              </router-link>
-            </ul>
-          </div>
+          <ul>
+            <router-link tag="li" :to="{ name: 'details' }">
+              Detalhes
+            </router-link>
+            <router-link tag="li" :to="{ name: 'receive' }">
+              Recebimentos
+            </router-link>
+          </ul>
+        </div>
         <router-link tag="li" :to={} :class="{__active: this.$route.name == 'administration'}">Administração</router-link>
       </ul>
     </div>
@@ -53,5 +55,3 @@ export default {
   }
 }
 </script>
-
-
