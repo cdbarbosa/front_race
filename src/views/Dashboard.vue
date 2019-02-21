@@ -5,7 +5,7 @@
         <navstrip></navstrip>
       </div>
       <div class="content">
-        <transition name="fade" mdoe="in-out">
+        <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
       </div>
