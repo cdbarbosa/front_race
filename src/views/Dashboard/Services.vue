@@ -5,7 +5,7 @@
       <div class="description-service">
         <div class="info-one">
           <b-field label="Título">
-            <textarea name="" id="" cols="50" rows="2"></textarea>
+            <textarea name="" id="" cols="40" rows="2"></textarea>
           </b-field>
           <b-field label="ID">
             <b-input placeholder="23"></b-input>
@@ -60,7 +60,7 @@
       </div>
       <div class="description">
         <b-field label="Observações">
-          <textarea name="" id="" cols="50" rows="15"></textarea>
+          <textarea name="" id="" cols="35" rows="15"></textarea>
         </b-field>
       </div>
     </div>

@@ -4,13 +4,17 @@
 #service {
   height: 100%;
   h2 {
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
+    margin: 0;
   }
   .service-information {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 1rem;
     padding: 1rem;
+    input, textarea, select {
+      font-size: 16px;
+    }
     .description-service {
       .info-one {
         display: grid;
@@ -26,6 +30,9 @@
        display: grid;
        grid-template-columns: 2fr 2fr;
        grid-gap: 1rem; 
+       .block {
+        font-size: 12px;
+       }
       }
       .info-four {
         display: grid;
@@ -33,21 +40,33 @@
         grid-gap: 1rem;
       }
     }
+    .description {
+      textarea {
+        font-size: 16px;
+      }
+    }
   }
   .serviceTable {
     background: #ccc;
     padding: 1rem;
     .headerTable {
+      h4 {
+        font-weight: 200;
+      }
       position: relative;
       .control {
         position: absolute;
         top: 0;
         right: 0;
+        input {
+          width: 330px;
+          font-size: 16px;
+        }
       }
       .buttons {
         position: absolute;
-        top: 4px;
-        right: 312px;
+        top: 1px;
+        right: 340px;
         padding: .5rem;
         font-size: 12px;
         background: #2B4E72;

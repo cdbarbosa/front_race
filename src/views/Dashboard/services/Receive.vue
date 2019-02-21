@@ -1,5 +1,5 @@
 <template>
-	<div id="receive">
+	<div id="receives">
 		<h1>Recebimento</h1>
     <div class="content">
       <div class="infoClient">

@@ -7,7 +7,7 @@
           <b-input placeholder="Lorem ipsum dolor sit amet"></b-input>
         </b-field>
         <b-field label="Descrição">
-          <textarea name="" id="" cols="55" rows="2"></textarea>
+          <textarea name="" id="" cols="40" rows="2"></textarea>
         </b-field>
         <b-field label="Situação">
           <b-select placeholder="Select a name">
@@ -26,7 +26,7 @@
           </b-field>
         </div>
         <b-field label="Descrição">
-          <textarea name="" id="" cols="30" rows="2"></textarea>
+          <textarea name="" id="" cols="40" rows="2"></textarea>
         </b-field>
         <div class="cost">
           <b-field label="Custo">

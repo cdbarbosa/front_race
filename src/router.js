@@ -4,7 +4,10 @@ import Router from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Overview from './views/Dashboard/Overview.vue'
+import Rh from './views/Dashboard/Rh.vue'
 import Service from './views/Dashboard/Services.vue'
+import Details from './views/Dashboard/services/Details.vue'
+import Receive from './views/Dashboard/services/Receive.vue'
 
 Vue.use(Router)
 
@@ -35,6 +38,21 @@ export default new Router({
           path: 'services',
           name: 'service',
           component: Service
+        },
+        {
+          path: 'details',
+          name: 'details',
+          component: Details
+        },
+        {
+          path: 'receive',
+          name: 'receive',
+          component: Receive
+        },
+        {
+          path: 'rh',
+          name: 'rh',
+          component: Rh
         }
       ]
     }

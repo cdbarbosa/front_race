@@ -2,12 +2,15 @@
   height: 100%;
   .information {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
     padding: 1rem;
+    input, textarea {
+      font-size: 16px;
+    }
     .info-first {     
       display: grid;
-      grid-template-columns: 10fr 1fr;
+      grid-template-columns: 8fr 1fr;
       grid-gap: 1rem;
     }
     .info-second {
@@ -15,7 +18,13 @@
       grid-template-columns: 2fr 1fr;
       grid-gap: 1rem;
       .block {
+        font-size: 12px;
         margin-top: 2.5rem;
+      }
+    }
+    .address {
+      h3 {
+        margin-bottom: 0;
       }
     }
     .info-three {
@@ -28,16 +37,39 @@
       grid-template-columns: 1fr 2fr 2fr;
       grid-gap: 1rem;
     }
+    .others {
+      .buttons {
+        float: right;
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
+      }
+    }
   }
   .tableClients {
     background: #ccc;
     padding: 1rem;
     .headerTable {
+      h4 {
+        font-weight: 200;
+      }
       position: relative;
       .control {
         position: absolute;
         top: 0;
         right: 0;
+        input {
+          width: 330px;
+          font-size: 16px;
+        }
+      }
+      .buttons {
+        position: absolute;
+        top: 1px;
+        right: 340px;
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
       }
     }
     .b-table {
