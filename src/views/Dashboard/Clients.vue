@@ -116,11 +116,10 @@ export default {
       },
       set (newValue) {
         console.log(newValue)
-
       }
     }
   },
-	beforeMount () {
+  beforeMount () {
     this.getClients(this)
   },
   mounted () {
@@ -132,6 +131,6 @@ export default {
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     }
-  },
+  }
 }
 </script>
