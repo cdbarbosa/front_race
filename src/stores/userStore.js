@@ -84,7 +84,6 @@ const actions = {
   setClientDetails ({ commit }, payload) {
     commit('SET_CLIENT_DETAILS', payload)
   }
-
 }
 
 export default {
