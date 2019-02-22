@@ -9,6 +9,8 @@ import Rh from './views/Dashboard/Rh.vue'
 import Service from './views/Dashboard/Services.vue'
 import Details from './views/Dashboard/services/Details.vue'
 import Receive from './views/Dashboard/services/Receive.vue'
+import Show from './views/Dashboard/client/show.vue'
+import Create from './views/Dashboard/client/create.vue'
 
 Vue.use(Router)
 
@@ -32,8 +34,19 @@ export default new Router({
         },
         {
           path: 'clients',
-          name: 'clients',
-          component: Clients
+          component: Clients,
+          children: [
+            {
+              path: 'show',
+              name: 'show',
+              component: Show
+            },
+            {
+              path: 'create',
+              name: 'create',
+              component: Create
+            }
+          ]
         },
         {
           path: 'services',

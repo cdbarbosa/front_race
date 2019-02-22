@@ -8,7 +8,7 @@
         <!-- <router&#45;link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}"> -->
         <!--   Overview -->
         <!-- </router&#45;link> -->
-        <router-link tag="li" :to="{ name: 'clients' }" :class="{__active: this.$route.name == 'clients'}">
+        <router-link tag="li" :to="{ name: 'show' }" :class="{__active: this.$route.name == 'show' || this.$route.name == 'create'}">
           Clientes
         </router-link>
         <router-link tag="li" :to="{ name: 'rh' }" :class="{__active: this.$route.name == 'rh'}">RH's</router-link>

@@ -1,18 +1,12 @@
-@import '../3-components/clients/create';
-#clients {
-  height: 100%;
-  .information {
+#createClient {
+	height: 100%;
+  .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
     padding: 1rem;
     input, textarea {
       font-size: 16px;
-    }
-    .info-first {     
-      display: grid;
-      grid-template-columns: 8fr 1fr;
-      grid-gap: 1rem;
     }
     .info-second {
       display: grid;
@@ -39,42 +33,17 @@
       grid-gap: 1rem;
     }
     .others {
-      .buttons {
+      button {
+        text-align: center;
+        width: 150px;
         float: right;
         padding: .5rem;
         font-size: 12px;
         background: #2B4E72;
-      }
-    }
-  }
-  .tableClients {
-    background: #ccc;
-    padding: 1rem;
-    .headerTable {
-      h4 {
-        font-weight: 200;
-      }
-      position: relative;
-      .control {
-        position: absolute;
-        top: 0;
-        right: 0;
-        input {
-          width: 330px;
-          font-size: 16px;
-        }
+        margin-right: 1rem;
       }
       .buttons {
-        position: absolute;
-        top: 1px;
-        right: 340px;
-        padding: .5rem;
-        font-size: 12px;
-        background: #2B4E72;
       }
-    }
-    .b-table {
-      padding-top: 1rem;
     }
   }
 }

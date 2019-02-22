@@ -24,6 +24,7 @@
       background: #D36063;
     }
     .selectService {
+      position: relative;
       a {
         text-decoration: none;
       }
@@ -31,7 +32,7 @@
         border: 1px solid white;
         position: absolute;
         right: 19px;
-        top: 292px;
+        top: 15px;
         background: white;
         cursor: pointer;
       }
