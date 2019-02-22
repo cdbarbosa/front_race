@@ -22,7 +22,7 @@ export default new Router({
       component: Login
     },
     {
-      path: 'dashboard',
+      path: '/dashboard',
       component: Dashboard,
       children: [
         {

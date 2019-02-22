@@ -11,9 +11,7 @@ import { api } from './config'
 Vue.prototype.$api = api
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
-Vue.use(Buefy, {
-  defaultIconPack: 'fa'
-})
+Vue.use(Buefy)
 
 new Vue({
   router,

@@ -1,59 +1,59 @@
 <template>
-  <div id="clients">
+  <main v-if="clients.length" id="clients" >
     <div class="information">
       <div class="client">
         <h3>Cliente</h3>
         <div class="info-first">
           <b-field label="Nome">
-            <b-input placeholder="Nome"></b-input>
+            <b-input v-model="selected.name" placeholder="Nome"></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input placeholder="23"></b-input>
+            <b-input v-model="selected.id" placeholder="23"></b-input>
           </b-field>
         </div>
         <div class="info-second">
           <b-field label="Cadastro">
-            <b-input placeholder="Cadastro"></b-input>
+            <b-input :value="parseDate(selected.created_at)" disabled></b-input>
           </b-field>
           <b-field label="Telefone">
-            <b-input placeholder="Telefone"></b-input>
+            <b-input v-model="selected.phone" placeholder="Telefone"></b-input>
           </b-field>
         </div>
         <div class="info-second">
           <b-field label="Email">
-            <b-input placeholder="example@example.com"></b-input>
+            <b-input v-model="selected.user.email" placeholder="example@example.com"></b-input>
           </b-field>
           <div class="block">
-            <b-radio v-model="radio" native-value="Fisico">
+            <b-radio v-model="selected.user.type.name" native-value="Fisico">
               Fisico
             </b-radio>
-            <b-radio v-model="radio" native-value="Juridico">
+            <b-radio v-model="selected.user.type.name" native-value="legal">
               Juridico
             </b-radio>
           </div>
         </div>
         <b-field label="CPF/CNPJ">
-          <b-input placeholder="cpf"></b-input>
+          <b-input v-model="selected.user.document" placeholder="cpf"></b-input>
         </b-field>
         <div class="address">
           <h3>Endereço</h3>
           <div class="info-three">
             <b-field label="Rua">
-              <b-input placeholder="Rua"></b-input>
+              <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input placeholder="ES"></b-input>
+              <b-input v-model="selected.user.address.state" placeholder="ES"></b-input>
             </b-field>
           </div>
           <div class="info-fourth">
             <b-field label="CEP">
-              <b-input placeholder="CEP"></b-input>
+              <b-input v-model="selected.user.address.postal_code" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input placeholder="Bairro"></b-input>
+              <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro"></b-input>
             </b-field>
             <b-field label="Cidade">
-              <b-input placeholder="Cidade"></b-input>
+              <b-input v-model="selected.user.address.city" placeholder="Cidade"></b-input>
             </b-field>
           </div>
         </div>
@@ -75,49 +75,63 @@
         <button class="buttons is-primary">Cadastrar novo cliente</button>
         <b-input placeholder="Procurar..."></b-input>
       </div>
-      <b-table :data="data" :columns="columns"></b-table>
+      <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+        <template slot-scope="props">
+          <b-table-column field="name" label="NOME" sortable>
+            {{ props.row.name }}
+          </b-table-column>
+          <b-table-column field="created_at" label="CADASTRO">
+            {{ parseDate(props.row.created_at) }}
+          </b-table-column>
+          <b-table-column field="user.email" label="EMAIL">
+            {{ props.row.user.email }}
+          </b-table-column>
+          <b-table-column field="phone" label="TELEFONE">
+            {{ props.row.phone }}
+          </b-table-column>
+        </template>
+      </b-table>
     </div>
-  </div>
+  </main>
 </template>
+
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
 export default {
   name: 'clients',
   data () {
     return {
       radio: '',
-      data: [
-        { 'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male' },
-        { 'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male' },
-        { 'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female' },
-        { 'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male' },
-        { 'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female' }
-      ],
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          width: '40',
-          numeric: true
-        },
-        {
-          field: 'first_name',
-          label: 'First Name'
-        },
-        {
-          field: 'last_name',
-          label: 'Last Name'
-        },
-        {
-          field: 'date',
-          label: 'Date',
-          centered: true
-        },
-        {
-          field: 'gender',
-          label: 'Gender'
-        }
-      ]
+      userSelected: undefined
     }
-  }
+  },
+  computed: {
+    ...mapGetters([
+      'clients'
+    ]),
+    selected: {
+      get () {
+        return this.userSelected ? this.userSelected : this.clients[0]
+      },
+      set (newValue) {
+        console.log(newValue)
+
+      }
+    }
+  },
+	beforeMount () {
+    this.getClients(this)
+  },
+  mounted () {
+  },
+  methods: {
+    ...mapActions([
+      'getClients'
+    ]),
+    parseDate (date) {
+      return moment().format('DD/MM/YYYY')
+    }
+  },
 }
 </script>

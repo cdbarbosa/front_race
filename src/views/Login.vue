@@ -20,7 +20,7 @@ export default {
       this.setAuthToken(response.data).then(() => {
         this.getAuthUser(this).then(response => {
           this.setAuthUser(response.data).then(status => {
-            this.$router.push({ name: 'overview' })
+            this.$router.push({ name: 'clients' })
           })
         })
       })
