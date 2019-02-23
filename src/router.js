@@ -11,6 +11,8 @@ import Details from './views/Dashboard/services/Details.vue'
 import Receive from './views/Dashboard/services/Receive.vue'
 import Show from './views/Dashboard/client/show.vue'
 import Create from './views/Dashboard/client/create.vue'
+import RhShow from './views/Dashboard/rh/show.vue'
+import RhCreate from './views/Dashboard/rh/create.vue'
 
 Vue.use(Router)
 
@@ -65,8 +67,19 @@ export default new Router({
         },
         {
           path: 'rh',
-          name: 'rh',
-          component: Rh
+          component: Rh,
+          children: [
+            {
+              path: 'show',
+              name: 'rhShow',
+              component: RhShow
+            },
+            {
+              path: 'create',
+              name: 'rhCreate',
+              component: RhCreate
+            }
+          ]
         }
       ]
     }

@@ -11,7 +11,7 @@
         <router-link tag="li" :to="{ name: 'show' }" :class="{__active: this.$route.name == 'show' || this.$route.name == 'create'}">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rh' }" :class="{__active: this.$route.name == 'rh'}">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'rhShow' }" :class="{__active: this.$route.name == 'rhShow' || this.$route.name == 'rhCreate'}">RH's</router-link>
         <div class="selectService">
           <router-link tag="li" :to="{ name: 'service'}" :class="{__active: this.$route.name == 'service'}">
             Serviços
@@ -51,7 +51,6 @@ export default {
   },
   beforeMount () {
     /* eslint-disable no-console */
-    console.log(this.$route)
   }
 }
 </script>

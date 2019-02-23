@@ -1,26 +1,26 @@
 import { header } from '../config/index.js'
 
 const state = {
-  clients: []
+  rhs: []
 }
 
 const getters = {
-  clients: () => state.clients
+  rhs: () => state.rhs
 }
 
 const mutations = {
-  SET_CLIENTS (state, clients) {
-    state.clients = clients
+  SET_RHS (state, rhs) {
+    state.rhs = rhs
   }
 }
 
 const actions = {
-  getClients ({ commit }, that) {
-    that.$http.get(that.$api({ target: 'client' }), {
+  getRhs ({ commit }, that) {
+    that.$http.get(that.$api({ target: 'rh' }), {
       headers: header()
     }).then(response => {
       console.log(response)
-      commit('SET_CLIENTS', response.data)
+      commit('SET_RHS', response.data)
     })
   }
 }
