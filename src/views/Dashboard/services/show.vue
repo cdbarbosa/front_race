@@ -1,0 +1,104 @@
+<template>
+  <div id="showService">
+    <div class="service-information">
+      <div class="description-service">
+        <div class="info-one">
+          <b-field label="Título">
+            <textarea v-model="selected.name" name=""  cols="40" rows="2"></textarea>
+          </b-field>
+          <b-field label="ID">
+            <b-input v-model="selected.id" placeholder="23"></b-input>
+          </b-field>
+        </div>
+        <div class="info-two">
+          <b-field label="Data de registro">
+            <b-input :value="parseDate(selected.created_at)" placeholder="data"></b-input>
+          </b-field>
+          <b-field label="Previsão">
+            <b-input :value="parseDate(selected.created_at)" placeholder="data"></b-input>
+          </b-field>
+          <b-field label="Prazo">
+            <b-input :value="parseDate(selected.due_date)" placeholder="data"></b-input>
+          </b-field>
+        </div>
+        <div class="info-three">
+          <b-field label="Cliente">
+            <b-input v-model="selected.client.name" placeholder="Cliente"></b-input>
+          </b-field>
+          <b-field label="Sigilo">
+            <div class="block">
+              <b-radio v-model="radio" native-value="Nenhum">
+                Nenhum
+              </b-radio>
+              <b-radio v-model="radio" native-value="Parcial">
+                Parcial
+              </b-radio>
+              <b-radio v-model="radio" native-value="Total">
+                Total
+              </b-radio>
+            </div>
+          </b-field>
+        </div>
+        <div class="info-four">
+          <b-field label="Margem">
+            <b-input v-model="selected.profit" placeholder="50%"></b-input>
+          </b-field>
+          <b-field label="Valor">
+            <b-input v-model="selected.value" placeholder="825"></b-input>
+          </b-field>
+          <b-field label="Recebido">
+            <b-input v-model="selected.value" placeholder="825"></b-input>
+          </b-field>
+        </div>
+        <b-field label="Situação">
+          <b-select placeholder="Select a name">
+            <option value="">Selecione</option>
+            <option value="1">ORCA - Orçamento (em aberto)</option>
+          </b-select>
+        </b-field>
+      </div>
+      <div class="description">
+        <b-field label="Observações">
+          <textarea v-model="selected.description" name="" id="" cols="35" rows="15"></textarea>
+        </b-field>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
+export default {
+  name: 'showService',
+  data () {
+    return {
+      radio: '',
+      serviceSelected: undefined
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'services'
+    ]),
+    selected: {
+      get () {
+        return this.serviceSelected ? this.serviceSelected : this.services[0]
+      },
+      set (newValue) {
+        console.log(newValue)
+      }
+    }
+  },
+  beforeMount () {
+    this.getServices(this)
+  },
+  methods: {
+    ...mapActions([
+      'getServices'
+    ]),
+    parseDate (date) {
+      return moment().format('DD/MM/YYYY')
+    }
+  }
+}
+</script>

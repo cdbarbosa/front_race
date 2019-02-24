@@ -13,7 +13,7 @@
         </router-link>
         <router-link tag="li" :to="{ name: 'rhShow' }" :class="{__active: this.$route.name == 'rhShow' || this.$route.name == 'rhCreate'}">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'service'}" :class="{__active: this.$route.name == 'service'}">
+          <router-link tag="li" :to="{ name: 'serviceShow'}" :class="{__active: this.$route.name == 'serviceShow'}">
             Serviços
           </router-link>
           <span class="icon-select" @click="services = !services">

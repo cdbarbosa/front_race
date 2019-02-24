@@ -13,6 +13,8 @@ import Show from './views/Dashboard/client/show.vue'
 import Create from './views/Dashboard/client/create.vue'
 import RhShow from './views/Dashboard/rh/show.vue'
 import RhCreate from './views/Dashboard/rh/create.vue'
+import ServiceShow from './views/Dashboard/services/show.vue'
+import ServiceCreate from './views/Dashboard/services/create.vue'
 
 Vue.use(Router)
 
@@ -52,8 +54,19 @@ export default new Router({
         },
         {
           path: 'services',
-          name: 'service',
-          component: Service
+          component: Service,
+          children: [
+            {
+              path: 'show',
+              name: 'serviceShow',
+              component: ServiceShow
+            },
+            {
+              path: 'create/:code',
+              name: 'serviceCreate',
+              component: ServiceCreate
+            }
+          ]
         },
         {
           path: 'details',

@@ -1,14 +1,4 @@
-@import '../3-components/_details.scss';
-@import '../3-components/receive.scss';
-@import '../3-components/service/_show';
-@import '../3-components/service/_create';
-
-#service {
-  height: 100%;
-  h2 {
-    padding: 1rem 1rem 0 1rem;
-    margin: 0;
-  }
+#showService {
   .service-information {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -45,33 +35,6 @@
     .description {
       textarea {
         font-size: 16px;
-      }
-    }
-  }
-  .serviceTable {
-    background: #ccc;
-    padding: 1rem;
-    .headerTable {
-      h4 {
-        font-weight: 200;
-      }
-      position: relative;
-      .control {
-        position: absolute;
-        top: 0;
-        right: 0;
-        input {
-          width: 330px;
-          font-size: 16px;
-        }
-      }
-      .buttons {
-        position: absolute;
-        top: 1px;
-        right: 340px;
-        padding: .5rem;
-        font-size: 12px;
-        background: #2B4E72;
       }
     }
   }
