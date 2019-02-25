@@ -59,7 +59,7 @@ export default new Router({
             {
               path: 'show',
               name: 'showServices',
-              component: ShowServices 
+              component: ShowServices
             },
             {
               path: 'create/:code',
@@ -85,7 +85,7 @@ export default new Router({
             {
               path: 'show',
               name: 'showRhs',
-              component: ShowRhs 
+              component: ShowRhs
             },
             {
               path: 'create',

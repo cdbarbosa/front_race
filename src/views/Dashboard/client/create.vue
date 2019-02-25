@@ -71,7 +71,7 @@
 <script>
 import { header } from '../../../config/index.js'
 export default {
-  name: 'create',
+  name: 'createClient',
   data () {
     return {
       user: {
@@ -109,7 +109,7 @@ export default {
       }).then(response => {
         console.log(response.data.data.id)
         let datas = {
-          user_id: response.data.data.id,
+          user_id: response.data.id,
           address: this.address
         }
         this.$http.post(this.$api({ target: 'addresses' }), datas, {

@@ -15,12 +15,12 @@
         <div class="selectService">
           <router-link tag="li" :to="{ name: 'showServices'}">
             Serviços
+            <span @click="serviceSubMenuOpen = !serviceSubMenuOpen" class="toggleBtn">
+              <b-icon  icon="fa-angle-down"></b-icon>
+            </span>
           </router-link>
-          <span class="icon-select" @click="services = !services">
-            <b-icon icon="fa-angle-down"></b-icon>
-          </span>
         </div>
-        <div class="alternative" v-if="services === true">
+        <div :class="[{ __open: serviceSubMenuOpen }, 'serviceSubMenu']">
           <ul>
             <router-link tag="li" :to="{ name: 'details' }">
               Detalhes
@@ -42,7 +42,7 @@ export default {
     return {
       active: 1,
       index: 0,
-      services: false,
+      serviceSubMenuOpen: false,
       radio: ''
     }
   },

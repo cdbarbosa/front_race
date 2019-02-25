@@ -85,7 +85,7 @@
 <script>
 import { header } from '../../../config/index.js'
 export default {
-  name: 'rhC',
+  name: 'createRh',
   data () {
     return {
       user: {
@@ -124,7 +124,7 @@ export default {
         headers: header()
       }).then(response => {
         let datas = {
-          user_id: response.data.data.id,
+          user_id: response.data.id,
           address: this.address
         }
         this.$http.post(this.$api({ target: 'addresses' }), datas, {
@@ -137,7 +137,7 @@ export default {
           this.$http.post(this.$api({ target: 'rhs' }), data, {
             headers: header()
           }).then(() => {
-            this.$router.push({ name: 'rhShow' })
+            this.$router.push({ name: 'showRhs' })
           })
         })
       })
