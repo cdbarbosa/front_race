@@ -20,7 +20,7 @@
         background: #D36063
       }
     }
-    .__active {
+    .router-link-active{
       background: #D36063;
     }
     .selectService {
@@ -36,9 +36,24 @@
         background: white;
         cursor: pointer;
       }
+      .toggleBtn{
+        display: inline-block;
+        background: white;
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        .icon{
+        }
+      }
     }
-    .alternative {
+    .serviceSubMenu {
       background: #D37D7F;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+      &.__open{
+        max-height: 1000px;
+      }
       li {
         padding-left: 3rem;
       }

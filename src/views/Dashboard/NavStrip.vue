@@ -8,19 +8,18 @@
         <!-- <router&#45;link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}"> -->
         <!--   Overview -->
         <!-- </router&#45;link> -->
-        <router-link tag="li" :to="{ name: 'show' }" :class="{__active: this.$route.name == 'show' || this.$route.name == 'create'}">
+        <router-link tag="li" :to="{ name: 'clients' }">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rhShow' }" :class="{__active: this.$route.name == 'rhShow' || this.$route.name == 'rhCreate'}">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'showRhs' }">RH's</router-link>
         <div class="selectService">
           <router-link tag="li" :to="{ name: 'serviceShow'}" :class="{__active: this.$route.name == 'serviceShow' || this.$route.name == 'details' || this.$route.name == 'receive'}">
-            Serviços
+            <span @click="serviceSubMenuOpen = !serviceSubMenuOpen" class="toggleBtn">
+              <b-icon  icon="fa-angle-down"></b-icon>
+            </span>
           </router-link>
-          <span class="icon-select" @click="services = !services">
-            <b-icon icon="fa-angle-down"></b-icon>
-          </span>
         </div>
-        <div class="alternative" v-if="services === true">
+        <div :class="[{ __open: serviceSubMenuOpen }, 'serviceSubMenu']">
           <ul>
             <router-link tag="li" :to="{ name: 'details' }">
               Detalhes
@@ -30,7 +29,7 @@
             </router-link>
           </ul>
         </div>
-        <router-link tag="li" :to={} :class="{__active: this.$route.name == 'administration'}">Administração</router-link>
+        <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
     </div>
   </div>
@@ -42,7 +41,7 @@ export default {
     return {
       active: 1,
       index: 0,
-      services: false,
+      serviceSubMenuOpen: false,
       radio: ''
     }
   },
