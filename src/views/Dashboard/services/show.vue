@@ -1,6 +1,6 @@
 <template>
   <div id="showService">
-    <div class="service-information">
+    <div class="service-information" v-if="selected !== undefined">
       <div class="description-service">
         <div class="info-one">
           <b-field label="Título">

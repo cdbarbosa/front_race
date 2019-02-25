@@ -4,7 +4,7 @@
     padding: 1rem 1rem 0 1rem;
     margin: 0;
   }
-  .content {
+  .service-information {
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -12,7 +12,7 @@
     input, textarea, select {
       font-size: 16px;
     }
-    .infoClient {
+    .description {
       .infoRh {
         display: grid;
         grid-template-columns: 10fr 1fr;

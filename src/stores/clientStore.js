@@ -19,7 +19,6 @@ const actions = {
     that.$http.get(that.$api({ target: 'client' }), {
       headers: header()
     }).then(response => {
-      console.log(response)
       commit('SET_CLIENTS', response.data)
     })
   }

@@ -1,22 +1,22 @@
 <template>
   <div id="service">
-    <h2>Serviços</h2>
+    <h2 v-if="$route.name === 'serviceShow'">Serviços</h2>
     <div class="info">
       <router-view></router-view>
     </div>
-    <div class="serviceTable">
+    <div class="serviceTable" v-if="$route.name !== 'details' && $route.name !== 'receive'">
       <div class="headerTable">
         <h4>Serviços</h4>
-        <router-link class="buttons s-primary" tag="button" :to="{ name: 'serviceCreate', params: { client_name: selected.client.name, code: selected.client.id } }">Criar novo serviço</router-link>
+        <router-link v-if="selected !== undefined" class="buttons s-primary" tag="button" :to="{ name: 'serviceCreate', params: { client_name: selected.client.name, code: selected.client.id } }">Criar novo serviço</router-link>
         <b-input placeholder="Procurar..."></b-input>
       </div>
       <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
         <template slot-scope="props">
-          <b-table-column field="name" label="Tirulo" sortable>
+          <b-table-column field="name" label="Titulo" sortable>
             {{ props.row.name }}
           </b-table-column>
           <b-table-column field="name" label="Cliente">
-            {{ props.row.client.name }}
+            {{ props.row == undefined ? undefined : props.row.client.name }}
           </b-table-column>
           <b-table-column field="created_at" label="Registro">
             {{ parseDate(props.row.created_at) }}
@@ -42,7 +42,8 @@ export default {
   name: 'service',
   data () {
     return {
-      serviceSelected: undefined
+      serviceSelected: undefined,
+      client: undefined
     }
   },
   computed: {

@@ -1,13 +1,13 @@
 <template>
   <div id="details">
     <h1>Detalhes</h1>
-    <div class="content">
-      <div class="infoService">
-        <b-field label="Titulo">
-          <b-input placeholder="Lorem ipsum dolor sit amet"></b-input>
+    <div class="service-information">
+      <div class="description-service">
+        <b-field label="Título">
+          <textarea v-model="selected.name" name=""  cols="60" rows="2"></textarea>
         </b-field>
-        <b-field label="Descrição">
-          <textarea name="" id="" cols="40" rows="2"></textarea>
+        <b-field label="Observações">
+          <textarea v-model="selected.description" name="" id="" cols="60" rows="5"></textarea>
         </b-field>
         <b-field label="Situação">
           <b-select placeholder="Select a name">
@@ -16,21 +16,21 @@
           </b-select>
         </b-field>
       </div>
-      <div class="infoClient">
+      <div class="description">
         <div class="infoRh">
           <b-field label="RH">
-            <b-input placeholder="Lorem ipsum dolor sit amet"></b-input>
+            <b-input v-model="selected.rhs[0].name" placeholder="Lorem ipsum dolor sit amet"></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input placeholder="2"></b-input>
+            <b-input v-model="selected.rhs[0].id" placeholder="2"></b-input>
           </b-field>
         </div>
-        <b-field label="Descrição">
-          <textarea name="" id="" cols="40" rows="2"></textarea>
+        <b-field label="Especificidade e Serviço">
+          <textarea v-model="selected.rhs[0].observations" name="" id="" cols="40" rows="4"></textarea>
         </b-field>
         <div class="cost">
           <b-field label="Custo">
-            <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
+            <b-input v-model="selected.rhs[0].cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
           </b-field>
           <div class="field">
             <b-checkbox>Estado</b-checkbox>
@@ -46,57 +46,70 @@
         </div>
       </div>
     </div>
-    <div class="serviceTable">
+    <div class="serviceTable" v-if="$route.name == 'details'">
       <div class="headerTable">
         <h4>RHs responsáveis</h4>
         <button class="buttons is-primary">Adicionar novo RH ao serviço</button>
         <b-input placeholder="Procurar..."></b-input>
       </div>
-      <b-table :data="data" :columns="columns" style="padding-top: 1rem"></b-table>
+      <b-table :data="rhsService" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <template slot-scope="props">
+          <b-table-column field="name" label="ID" sortable>
+            {{ props.row.id }}
+          </b-table-column>
+          <b-table-column field="name" label="NOME" sortable>
+            {{ props.row.name }}
+          </b-table-column>
+          <b-table-column field="created_at" label="Custo">
+            {{ props.row.cost }}
+          </b-table-column>
+          <b-table-column field="user.email" label="Horas">
+            {{ parseDate(props.row.created_at) }}
+          </b-table-column>
+          <b-table-column field="phone" label="Prazo">
+            {{ parseDate(props.row.created_at) }}
+          </b-table-column>
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
 export default {
-  name: 'VueDetails',
+  name: 'showService',
   data () {
     return {
-      data: [
-        { 'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male' },
-        { 'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male' },
-        { 'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female' },
-        { 'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male' },
-        { 'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female' }
-      ],
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          width: '40',
-          numeric: true
-        },
-        {
-          field: 'first_name',
-          label: 'First Name'
-        },
-        {
-          field: 'last_name',
-          label: 'Last Name'
-        },
-        {
-          field: 'date',
-          label: 'Date',
-          centered: true
-        },
-        {
-          field: 'gender',
-          label: 'Gender'
-        }
-      ]
+      radio: '',
+      serviceSelected: undefined,
+      rhsService: undefined
     }
   },
+  computed: {
+    ...mapGetters([
+      'services'
+    ]),
+    selected: {
+      get () {
+        return this.serviceSelected ? this.serviceSelected : this.services[0]
+      },
+      set (newValue) {
+        console.log(newValue)
+      }
+    }
+  },
+  beforeMount () {
+    this.getServices(this)
+    this.rhsService = this.services[0].rhs
+  },
   methods: {
-    //
+    ...mapActions([
+      'getServices'
+    ]),
+    parseDate (date) {
+      return moment().format('DD/MM/YYYY')
+    }
   }
 }
 </script>

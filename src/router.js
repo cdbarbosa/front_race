@@ -65,18 +65,18 @@ export default new Router({
               path: 'create/:code',
               name: 'serviceCreate',
               component: ServiceCreate
+            },
+            {
+              path: 'details',
+              name: 'details',
+              component: Details
+            },
+            {
+              path: 'receive',
+              name: 'receive',
+              component: Receive
             }
           ]
-        },
-        {
-          path: 'details',
-          name: 'details',
-          component: Details
-        },
-        {
-          path: 'receive',
-          name: 'receive',
-          component: Receive
         },
         {
           path: 'rh',

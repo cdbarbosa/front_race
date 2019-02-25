@@ -19,7 +19,6 @@ const actions = {
     that.$http.get(that.$api({ target: 'rh' }), {
       headers: header()
     }).then(response => {
-      console.log(response)
       commit('SET_RHS', response.data)
     })
   }
