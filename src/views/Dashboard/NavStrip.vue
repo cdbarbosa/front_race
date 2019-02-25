@@ -8,12 +8,12 @@
         <!-- <router&#45;link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}"> -->
         <!--   Overview -->
         <!-- </router&#45;link> -->
-        <router-link tag="li" :to="{ name: 'show' }" :class="{__active: this.$route.name == 'show' || this.$route.name == 'create'}">
+        <router-link tag="li" :to="{ name: 'clients' }">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rhShow' }" :class="{__active: this.$route.name == 'rhShow' || this.$route.name == 'rhCreate'}">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'showRhs' }">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'serviceShow'}" :class="{__active: this.$route.name == 'serviceShow'}">
+          <router-link tag="li" :to="{ name: 'showServices'}">
             Serviços
           </router-link>
           <span class="icon-select" @click="services = !services">
@@ -30,7 +30,7 @@
             </router-link>
           </ul>
         </div>
-        <router-link tag="li" :to={} :class="{__active: this.$route.name == 'administration'}">Administração</router-link>
+        <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
     </div>
   </div>

@@ -6,7 +6,7 @@
     <div class="tableClients">
       <div class="headerTable">
         <h4>Clientes</h4>
-        <router-link class="buttons is-primary" tag="button" :to="{ name: 'create'}">
+        <router-link class="buttons is-primary" tag="button" :to="{ name: 'createClient'}">
           Cadastrar novo cliente
         </router-link>
         <!-- <button class="buttons is-primary">Cadastrar novo cliente</button> -->

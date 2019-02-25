@@ -61,7 +61,7 @@
         </b-field>
         <div class="buttonClass">
           <button @click="createUser">Cadastrar</button>
-          <button >Cancelar</button>
+          <button @click="$router.push({ name: 'clients' })">Cancelar</button>
         </div>
       </div>
     </div>

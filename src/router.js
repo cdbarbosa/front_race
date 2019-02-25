@@ -9,11 +9,11 @@ import Rh from './views/Dashboard/Rh.vue'
 import Service from './views/Dashboard/Services.vue'
 import Details from './views/Dashboard/services/Details.vue'
 import Receive from './views/Dashboard/services/Receive.vue'
-import Show from './views/Dashboard/client/show.vue'
+import ShowClients from './views/Dashboard/client/show.vue'
 import Create from './views/Dashboard/client/create.vue'
-import RhShow from './views/Dashboard/rh/show.vue'
+import ShowRhs from './views/Dashboard/rh/show.vue'
 import RhCreate from './views/Dashboard/rh/create.vue'
-import ServiceShow from './views/Dashboard/services/show.vue'
+import ShowServices from './views/Dashboard/services/show.vue'
 import ServiceCreate from './views/Dashboard/services/create.vue'
 
 Vue.use(Router)
@@ -41,13 +41,13 @@ export default new Router({
           component: Clients,
           children: [
             {
-              path: 'show',
-              name: 'show',
-              component: Show
+              path: '',
+              name: 'clients',
+              component: ShowClients
             },
             {
               path: 'create',
-              name: 'create',
+              name: 'createClient',
               component: Create
             }
           ]
@@ -58,8 +58,8 @@ export default new Router({
           children: [
             {
               path: 'show',
-              name: 'serviceShow',
-              component: ServiceShow
+              name: 'showServices',
+              component: ShowServices 
             },
             {
               path: 'create/:code',
@@ -84,8 +84,8 @@ export default new Router({
           children: [
             {
               path: 'show',
-              name: 'rhShow',
-              component: RhShow
+              name: 'showRhs',
+              component: ShowRhs 
             },
             {
               path: 'create',

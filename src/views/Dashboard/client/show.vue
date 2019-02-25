@@ -1,5 +1,5 @@
 <template>
-  <main v-if="clients.length" id="show" >
+  <main v-if="clients.length" id="show">
     <div class="information">
       <div class="client">
         <h3>Cliente</h3>
@@ -66,7 +66,6 @@
         <b-field label="Atividade">
           <b-input placeholder="Produçaõ de PANIC"></b-input>
         </b-field>
-        <button class="buttons is-primary">Cadastrar novo serviço</button>
       </div>
     </div>
 <!--     <div class="tableClients">
