@@ -16,7 +16,7 @@ const mutations = {
 
 const actions = {
   getServices ({ commit }, that) {
-    that.$http.get(that.$api({ target: 'service' }), {
+    that.$http.get(that.$api({ target: 'services' }), {
       headers: header()
     }).then(response => {
       commit('SET_SERVICES', response.data)

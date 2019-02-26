@@ -67,7 +67,7 @@ export default new Router({
               component: ServiceCreate
             },
             {
-              path: 'details',
+              path: 'details/:id',
               name: 'details',
               component: Details
             },

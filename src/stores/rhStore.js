@@ -16,7 +16,7 @@ const mutations = {
 
 const actions = {
   getRhs ({ commit }, that) {
-    that.$http.get(that.$api({ target: 'rh' }), {
+    that.$http.get(that.$api({ target: 'rhs' }), {
       headers: header()
     }).then(response => {
       commit('SET_RHS', response.data)

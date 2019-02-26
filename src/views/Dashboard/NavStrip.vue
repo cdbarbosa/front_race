@@ -13,7 +13,8 @@
         </router-link>
         <router-link tag="li" :to="{ name: 'showRhs' }">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'serviceShow'}" :class="{__active: this.$route.name == 'serviceShow' || this.$route.name == 'details' || this.$route.name == 'receive'}">
+          <router-link tag="li" :to="{ name: 'showServices'}" :class="{__active: this.$route.name == 'serviceShow' || this.$route.name == 'details' || this.$route.name == 'receive'}">
+            Serviços
             <span @click="serviceSubMenuOpen = !serviceSubMenuOpen" class="toggleBtn">
               <b-icon  icon="fa-angle-down"></b-icon>
             </span>
