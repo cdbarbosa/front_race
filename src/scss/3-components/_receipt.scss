@@ -1,0 +1,65 @@
+#receipt {
+	height: 100%;
+  .content {
+    height: 100%;
+    h1 {
+      padding: 1rem 0;
+      margin: 0;
+    }
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1rem;
+    input, textarea, select {
+      font-size: 16px;
+    }
+    .infoClient {
+      padding: 1rem;
+      .client, .rh {
+        display: grid;
+        grid-template-columns: 10fr 1fr;
+        grid-gap: 1rem;
+      }
+      hr {
+        margin: 0 0 1rem 0;
+        border-bottom: 0px solid #ccc;
+        border-style: outset;
+      }
+      .appearAdd {
+        button {
+          padding: .5rem;
+          font-size: 12px;
+          background: #2B4E72;
+        }
+      }
+    }
+  }
+  .infoService {
+    background: #ccc;
+    .serviceTable {
+      padding: 1rem;
+      .headerTable {
+        h4 {
+          font-weight: 200;
+        }
+        position: relative;
+        .control {
+          position: absolute;
+          top: 0;
+          right: 0;
+          input {
+            font-size: 16px;
+            width: 330px;
+          }
+        }
+        .buttons {
+          position: absolute;
+          top: 1px;
+          right: 0;
+          padding: .5rem;
+          font-size: 12px;
+          background: #2B4E72;
+        }
+      }
+    }
+  }
+}

@@ -13,23 +13,23 @@
         </router-link>
         <router-link tag="li" :to="{ name: 'showRhs' }">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'showServices'}" :class="{__active: this.$route.name == 'serviceShow' || this.$route.name == 'details' || this.$route.name == 'receive'}">
+          <router-link tag="li" :to="{ name: 'showServices'}" :class="{__active: this.$route.name === 'serviceShow' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
             Serviços
             <span @click="serviceSubMenuOpen = !serviceSubMenuOpen" class="toggleBtn">
               <b-icon  icon="fa-angle-down"></b-icon>
             </span>
           </router-link>
         </div>
-        <div :class="[{ __open: serviceSubMenuOpen }, 'serviceSubMenu']">
+        <!-- <div :class="[{ __open: serviceSubMenuOpen }, 'serviceSubMenu']">
           <ul>
-            <router-link tag="li" :to="{ name: 'details' }">
+            <router-link tag="li" :to="{ name: 'vueDetails' }">
               Detalhes
             </router-link>
             <router-link tag="li" :to="{ name: 'receive' }">
               Recebimentos
             </router-link>
           </ul>
-        </div>
+        </div> -->
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
     </div>
@@ -51,6 +51,7 @@ export default {
   },
   beforeMount () {
     /* eslint-disable no-console */
+    console.log(this.$route)
   }
 }
 </script>

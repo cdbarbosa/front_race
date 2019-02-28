@@ -1,9 +1,12 @@
 @import '../3-components/_details.scss';
-@import '../3-components/receive.scss';
+@import '../3-components/receipt.scss';
 @import '../3-components/service/_show';
 @import '../3-components/service/_create';
 
 #service {
+  .info {
+    height: 100%;
+  }
   height: 100%;
   h2 {
     padding: 1rem 1rem 0 1rem;
@@ -45,6 +48,19 @@
     .description {
       textarea {
         font-size: 16px;
+      }
+    }
+  }
+  .buttonsRoutes {
+    display: inline;
+    button {
+      text-align: center;
+      width: 155px;
+      font-size: 12px;
+      margin-right: 1rem;
+      background: #2B4E72;
+      &:last-child {
+        background: #D36063;
       }
     }
   }

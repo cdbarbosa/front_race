@@ -6,15 +6,17 @@ import Dashboard from './views/Dashboard.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Overview from './views/Dashboard/Overview.vue'
 import Rh from './views/Dashboard/Rh.vue'
+
 import Service from './views/Dashboard/Services.vue'
-import Details from './views/Dashboard/services/Details.vue'
-import Receive from './views/Dashboard/services/Receive.vue'
+import Details from './views/Dashboard/services/details.vue'
+import Receipt from './views/Dashboard/services/Receipt.vue'
+import ServiceCreate from './views/Dashboard/services/create.vue'
+import ShowServices from './views/Dashboard/services/show.vue'
+
 import ShowClients from './views/Dashboard/client/show.vue'
 import Create from './views/Dashboard/client/create.vue'
 import ShowRhs from './views/Dashboard/rh/show.vue'
 import RhCreate from './views/Dashboard/rh/create.vue'
-import ShowServices from './views/Dashboard/services/show.vue'
-import ServiceCreate from './views/Dashboard/services/create.vue'
 
 Vue.use(Router)
 
@@ -67,14 +69,14 @@ export default new Router({
               component: ServiceCreate
             },
             {
-              path: 'details/:id',
-              name: 'details',
-              component: Details
+              path: 'receipt/:id',
+              name: 'receipt',
+              component: Receipt
             },
             {
-              path: 'receive',
-              name: 'receive',
-              component: Receive
+              path: 'details/:id',
+              name: 'vueDetails',
+              component: Details
             }
           ]
         },
