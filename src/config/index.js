@@ -1,4 +1,4 @@
-import { clientId, clientSecret } from '../../.env.js'
+import { clientId, clientSecret } from '../../.env'
 
 const env = process.env.NODE_ENV
 const dev = 'http://localhost:8000'

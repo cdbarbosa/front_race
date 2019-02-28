@@ -7,10 +7,10 @@
         </b-field>
         <div class="info-two">
           <b-field label="Previsão">
-            <b-input v-model="service.forecast" placeholder="data"></b-input>
+            <b-input v-model="service.forecast" v-mask="'##/##/####'" placeholder="data"></b-input>
           </b-field>
           <b-field label="Prazo">
-            <b-input v-model="service.due_date" placeholder="data"></b-input>
+            <b-input v-model="service.due_date" v-mask="'##/##/####'" placeholder="data"></b-input>
           </b-field>
         </div>
         <div class="info-three">

@@ -24,13 +24,6 @@
         border-bottom: 0px solid #ccc;
         border-style: outset;
       }
-      .appearAdd {
-        button {
-          padding: .5rem;
-          font-size: 12px;
-          background: #2B4E72;
-        }
-      }
     }
   }
   .infoService {
@@ -59,6 +52,25 @@
           font-size: 12px;
           background: #2B4E72;
         }
+      }
+    }
+  }
+  .modalCreate {
+    .appearAdd {
+      .inputs {
+        
+      }
+      background: #ccc;
+      padding: 1rem;
+      input {
+        font-size: 12px;
+        width: 200px;
+        padding: 1rem 1rem 1rem .5rem;
+      }
+      button {
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
       }
     }
   }

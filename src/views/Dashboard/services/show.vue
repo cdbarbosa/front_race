@@ -13,13 +13,13 @@
         </div>
         <div class="info-two">
           <b-field label="Data de registro">
-            <b-input :value="parseDate(selected.created_at)" placeholder="data"></b-input>
+            <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data"></b-input>
           </b-field>
           <b-field label="Previsão">
-            <b-input :value="parseDate(selected.created_at)" placeholder="data"></b-input>
+            <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data"></b-input>
           </b-field>
           <b-field label="Prazo">
-            <b-input :value="parseDate(selected.due_date)" placeholder="data"></b-input>
+            <b-input :value="parseDate(selected.due_date)" v-mask="'##/##/####'" placeholder="data"></b-input>
           </b-field>
         </div>
         <div class="info-three">

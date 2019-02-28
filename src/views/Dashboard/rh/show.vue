@@ -15,12 +15,12 @@
             <b-input :value="parseDate(selected.created_at)" placeholder="Cadastro" disabled></b-input>
           </b-field>
           <b-field label="Telefone">
-            <b-input v-model="selected.phone" placeholder="Telefone"></b-input>
+            <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
         </div>
         <div class="info-second">
           <b-field label="Email">
-            <b-input v-model="selected.user.email" placeholder="example@example.com"></b-input>
+            <b-input v-model="selected.user.email" type="email" placeholder="example@example.com"></b-input>
           </b-field>
           <div class="block">
             <b-radio v-model="selected.user.type.name" native-value="Fisico">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="selected.user.document" placeholder="cpf"></b-input>
+          <b-input v-model="selected.user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
         </b-field>
         <div class="address">
           <h3>Endereço</h3>
@@ -41,12 +41,12 @@
               <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input v-model="selected.user.address.state" placeholder="ES"></b-input>
+              <b-input v-model="selected.user.address.state" v-mask="'##'" placeholder="ES"></b-input>
             </b-field>
           </div>
           <div class="info-fourth">
             <b-field label="CEP">
-              <b-input v-model="selected.user.address.postal_code" placeholder="CEP"></b-input>
+              <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
               <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro"></b-input>

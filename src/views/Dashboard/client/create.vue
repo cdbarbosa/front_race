@@ -7,14 +7,14 @@
           <b-input v-model="client.name" placeholder="Nome"></b-input>
         </b-field>
         <b-field label="Telefone">
-          <b-input v-model="client.phone" placeholder="Telefone"></b-input>
+          <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
-          <b-input v-model="user.birthdate" placeholder="10/10/1994"></b-input>
+          <b-input v-model="user.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994"></b-input>
         </b-field>
         <div class="info-second">
           <b-field label="Email">
-            <b-input v-model="user.email" placeholder="example@example.com"></b-input>
+            <b-input v-model="user.email" type="email" placeholder="example@example.com"></b-input>
           </b-field>
           <div class="block">
             <b-radio v-model="user.type_id" native-value="1">
@@ -26,7 +26,7 @@
           </div>
         </div>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" placeholder="cpf"></b-input>
+          <b-input v-model="user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
         </b-field>
         <div class="address">
           <h3>Endereço</h3>
@@ -35,12 +35,12 @@
               <b-input v-model="address.address" placeholder="Rua"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input v-model="address.state" placeholder="ES"></b-input>
+              <b-input v-model="address.state" v-mask="'##'" laceholder="ES"></b-input>
             </b-field>
           </div>
           <div class="info-fourth">
             <b-field label="CEP">
-              <b-input v-model="address.postal_code" placeholder="CEP"></b-input>
+              <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
               <b-input v-model="address.neighborhood" placeholder="Bairro"></b-input>
