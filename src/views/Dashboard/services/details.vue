@@ -45,7 +45,7 @@
         <div class="serviceTable">
           <div class="headerTable">
             <h4>RHs responsáveis</h4>
-            <button class="buttons is-primary">Adicionar novo RH ao serviço</button>
+            <button class="buttons is-primary" @click="getRhNotService">Adicionar novo RH ao serviço</button>
           </div>
           <b-table :data="rhsService" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
             <template slot-scope="props">
@@ -69,34 +69,92 @@
         </div>
       </div>
     </div>
+    <b-modal :active.sync="isModalActive">
+      <div class="attachRh">
+        <b-field label="Adicionar Rh ao serviço">
+          <b-select v-model="rh_id" placeholder="Select a name">
+            <option
+              v-for="option in data"
+              :value="option.id"
+              :key="option.id">
+              {{ option.name }}
+            </option>
+          </b-select>
+        </b-field>
+        <button class="buttons is-primary" @click="attachRhService()">Adicionar</button>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
 import { header } from '../../../config/index.js'
+import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'vueDetails',
   data () {
     return {
       radio: '',
+      data: [],
+      rh_id: '',
+      isModalActive: false,
       serviceSelected: undefined,
-      rhsService: undefined
+      rhsService: undefined,
+      allRhs: undefined
     }
   },
   computed: {
+    ...mapGetters([
+      'rhs'
+    ]),
+    selected: {
+      get () {
+        return this.allRhs ? this.allRhs : this.rhs[0]
+      },
+      set (newValue) {
+        console.log(newValue)
+      }
+    }
   },
   beforeMount () {
+    this.getRhs(this)
     this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
       headers: header()
     }).then(response => {
-      console.log(response)
       this.serviceSelected = response.data
       this.rhsService = this.serviceSelected.rhs
     })
   },
   methods: {
+    ...mapActions([
+      'getRhs'
+    ]),
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
+    },
+    getRhNotService () {
+      let diferent = []
+      let rh = []
+      this.rhsService.forEach(function each (item, index, array) {
+        rh.push(item.name)
+      })
+      this.rhs.forEach(function each (item, index, array) {
+        rh.includes(item.name) ? diferent = [] : diferent.push(item)
+      })
+      this.data = diferent
+      this.isModalActive = true
+    },
+    attachRhService () {
+      let data = {
+        rh_id: this.rh_id,
+        service_id: this.serviceSelected.id
+      }
+      this.$http.post(this.$api({ target: 'rhservice' }), data, {
+        headers: header()
+      }).then(() => {
+        this.$router.push({ name: 'vueDetails', params: { id: this.serviceSelected.id } })
+      })
+      this.isModalActive = false
     }
   }
 }

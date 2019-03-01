@@ -86,4 +86,26 @@
       }
     }
   }
+  .animation-content {
+    width: 500px !important;
+  }
+  .attachRh {
+    .field {
+      .control {
+        .select {
+          width: 100%;
+        }
+      }
+    }
+    select {
+      width: 100%;
+    }
+    button {
+      text-align: center;
+      width: 155px;
+      font-size: 12px;
+      background: #2B4E72;
+    }
+    padding: 1rem;
+  }
 }

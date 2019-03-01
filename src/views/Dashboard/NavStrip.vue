@@ -11,9 +11,9 @@
         <router-link tag="li" :to="{ name: 'clients' }">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'showRhs' }">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'rh' }">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'showServices'}" :class="{__active: this.$route.name === 'serviceShow' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
+          <router-link tag="li" :to="{ name: 'services'}" :class="{__active: this.$route.name === 'services' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
             Serviços
             <span @click="serviceSubMenuOpen = !serviceSubMenuOpen" class="toggleBtn">
               <b-icon  icon="fa-angle-down"></b-icon>
@@ -51,7 +51,7 @@ export default {
   },
   beforeMount () {
     /* eslint-disable no-console */
-    console.log(this.$route)
+    // console.log(this.$route)
   }
 }
 </script>

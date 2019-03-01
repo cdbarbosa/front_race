@@ -1,6 +1,6 @@
 <template>
   <div id="receipt">
-    <div class="content" v-if="serviceSelected !== undefined">
+    <div class="content" style="margin-bottom: 0" v-if="serviceSelected !== undefined">
       <div class="infoClient">
         <h1>Recebimento</h1>
         <div class="client">
