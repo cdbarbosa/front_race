@@ -1,9 +1,9 @@
 <template>
   <div id="service">
     <div class="info">
-      <router-view></router-view>
+      <!--<router-view></router-view>-->
     </div>
-    <div id="showService" v-if="this.$route.name == 'services'">
+    <div id="showService">
       <h2>Serviços</h2>
       <div class="service-information" v-if="selected !== undefined">
         <div class="description-service">
@@ -17,13 +17,13 @@
           </div>
           <div class="info-two">
             <b-field label="Data de registro">
-              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data"></b-input>
+              <b-input :value="parseDate(selected.created_at)" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="register"></b-input>
             </b-field>
             <b-field label="Previsão">
-              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data"></b-input>
+              <b-input :value="parseDate(selected.created_at)" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
             </b-field>
             <b-field label="Prazo">
-              <b-input :value="parseDate(selected.due_date)" v-mask="'##/##/####'" placeholder="data"></b-input>
+              <b-input :value="parseDate(selected.due_date)" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date-duo"></b-input>
             </b-field>
           </div>
           <div class="info-three">
@@ -76,7 +76,6 @@
         <div class="headerTable">
           <h4>Serviços</h4>
           <button class="buttons is-primary" @click="isModalActive = true">Criar novo serviço</button>
-         <!--  <router-link v-if="selected !== undefined" class="buttons s-primary" tag="button" :to="{ name: 'serviceCreate', params: { client_name: selected.client.name, code: selected.client.id } }">Criar novo serviço</router-link> -->
           <b-input placeholder="Procurar..."></b-input>
         </div>
         <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
@@ -112,12 +111,14 @@
             </b-field>
             <div class="info-two">
               <b-field label="Previsão">
-                <b-input v-model="service.forecast" v-mask="'##/##/####'" placeholder="data"></b-input>
+                <b-input v-model="service.forecast" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
               </b-field>
               <b-field label="Prazo">
-                <b-input v-model="service.due_date" v-mask="'##/##/####'" placeholder="data"></b-input>
+                <b-input v-model="service.due_date" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date-duo"></b-input>
               </b-field>
             </div>
+            <span>{{ errors.first('date') }}</span>
+            <span>{{ errors.first('date-duo') }}</span>
             <div class="info-three">
               <b-field label="Cliente">
                 <b-input v-model="selected.client.name" placeholder="Cliente" disabled></b-input>
@@ -138,15 +139,18 @@
             </div>
             <div class="info-four">
               <b-field label="Margem">
-                <b-input v-model="service.profit" placeholder="50%"></b-input>
+                <b-input v-model="service.profit" v-validate="{regex: numbersRegex.regex}" placeholder="50%" name="margem"></b-input>
               </b-field>
               <b-field label="Valor">
-                <b-input v-model="service.value" placeholder="825"></b-input>
+                <b-input v-model="service.value" v-validate="{regex: numbersRegex.regex}" placeholder="825" name="valor"></b-input>
               </b-field>
               <b-field label="Recebido">
-                <b-input placeholder="825"></b-input>
+                <b-input placeholder="825" v-validate="{regex: numbersRegex.regex}" name="recebido"></b-input>
               </b-field>
             </div>
+            <span>{{ errors.first('margem') }}</span>
+            <span>{{ errors.first('valor') }}</span>
+            <span>{{ errors.first('recebido') }}</span>
             <b-field label="Situação">
               <b-select placeholder="Select a name">
                 <option value="">Selecione</option>
@@ -188,6 +192,15 @@ export default {
         profit: undefined,
         status_id: 1,
         value: undefined
+      },
+      dataRegex: {
+        regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
+      },
+      estadoRegex: {
+        regex: /^([a-zA-Z][a-zA-Z])$/
+      },
+      numbersRegex: {
+        regex: /^([0-9]+)$/
       }
     }
   },

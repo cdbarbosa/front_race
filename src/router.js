@@ -38,24 +38,18 @@ export default new Router({
         },
         {
           path: 'services',
-          component: Service,
-          children: [
-            {
-              path: '/',
-              name: 'services',
-              component: Service
-            },
-            {
-              path: 'receipt/:id',
-              name: 'receipt',
-              component: Receipt
-            },
-            {
-              path: 'details/:id',
-              name: 'vueDetails',
-              component: Details
-            }
-          ]
+          name: 'services',
+          component: Service
+        },
+        {
+          path: 'services/receipt/:id',
+          name: 'receipt',
+          component: Receipt
+        },
+        {
+          path: 'services/details/:id',
+          name: 'vueDetails',
+          component: Details
         },
         {
           path: 'rh',

@@ -43,8 +43,9 @@
               <b-input v-model="receiptSelec.value" placeholder="500"></b-input>
             </b-field>
             <b-field label="Date">
-              <b-input v-model="receiptSelec.date" v-mask="'##/##/####'" placeholder="DD/MM/YYYY"></b-input>
+              <b-input v-model="receiptSelec.date" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="DD/MM/YYYY" name="date"></b-input>
             </b-field>
+            <span>{{ errors.first('date') }}</span>
             <button @click="createReceipt">Adicionar recebimento</button>
           </div>
         </div>
@@ -67,6 +68,9 @@ export default {
       receiptSelec: {
         value: undefined,
         date: undefined
+      },
+      dataRegex: {
+        regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
       }
     }
   },

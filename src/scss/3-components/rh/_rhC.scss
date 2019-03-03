@@ -1,10 +1,10 @@
 #rhC {
   height: 100%;
   .content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
-  padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    padding: 1rem;
     .infoRh {
         input, textarea {
           font-size: 16px;

@@ -6,6 +6,7 @@ import store from './store'
 import './registerServiceWorker'
 import Buefy from 'buefy'
 import VueTheMask from 'vue-the-mask'
+import VeeValidate from 'vee-validate'
 
 import { api } from './config'
 
@@ -14,6 +15,7 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(Buefy)
 Vue.use(VueTheMask)
+Vue.use(VeeValidate)
 
 new Vue({
   router,

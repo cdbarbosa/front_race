@@ -43,7 +43,7 @@
                 <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" v-mask="'##'" placeholder="ES"></b-input>
+                <b-input v-model="selected.user.address.state" v-validate="{regex: estadoRegex.regex}" placeholder="ES"></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
@@ -120,8 +120,9 @@
               <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
             </b-field>
             <b-field label="Data de aniversário">
-              <b-input v-model="user.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994"></b-input>
+              <b-input v-model="user.birthdate" v-mask="'##/##/####'" v-validate="{regex: dataRegex.regex}" placeholder="10/10/1994" name="birthdate"></b-input>
             </b-field>
+            <span>{{ errors.first('birthdate') }}</span>
             <div class="info-second">
               <b-field label="Email">
                 <b-input v-model="user.email" type="email" placeholder="example@example.com"></b-input>
@@ -145,8 +146,9 @@
                   <b-input v-model="address.address" placeholder="Rua"></b-input>
                 </b-field>
                 <b-field label="Estado">
-                  <b-input v-model="address.state" v-mask="'##'" placeholder="ES"></b-input>
+                  <b-input v-model="address.state" v-validate="{regex: estadoRegex.regex}" placeholder="ES" name="state"></b-input>
                 </b-field>
+                <span>{{ errors.first('state') }}</span>
               </div>
               <div class="info-fourth">
                 <b-field label="CEP">
@@ -229,6 +231,12 @@ export default {
         phone: undefined,
         cost: undefined,
         competencies: undefined
+      },
+      dataRegex: {
+        regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
+      },
+      estadoRegex: {
+        regex: /^([a-zA-Z][a-zA-Z])$/
       }
     }
   },

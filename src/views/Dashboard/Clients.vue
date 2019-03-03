@@ -43,7 +43,7 @@
                 <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" v-mask="'##'" placeholder="ES"></b-input>
+                <b-input v-model="selected.user.address.state" placeholder="ES"></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
@@ -105,8 +105,9 @@
               <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
             </b-field>
             <b-field label="Data de Nascimento">
-              <b-input v-model="user.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994"></b-input>
+              <b-input v-model="user.birthdate" v-validate="{regex: cadastroRegex.regex}" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate"></b-input>
             </b-field>
+            <span>{{ errors.first('birthdate') }}</span>
             <div class="info-second">
               <b-field label="Email">
                 <b-input v-model="user.email" type="email" placeholder="example@example.com"></b-input>
@@ -130,9 +131,10 @@
                   <b-input v-model="address.address" placeholder="Rua"></b-input>
                 </b-field>
                 <b-field label="Estado">
-                  <b-input v-model="address.state" v-mask="'##'" laceholder="ES"></b-input>
+                  <b-input v-model="address.state"  v-validate="{regex: estadoRegex.regex}" laceholder="ES" name="state"></b-input>
                 </b-field>
               </div>
+              <span>{{ errors.first('state') }}</span>
               <div class="info-fourth">
                 <b-field label="CEP">
                   <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
@@ -197,7 +199,13 @@ export default {
         name: undefined,
         phone: undefined
       },
-      userSelected: undefined
+      userSelected: undefined,
+      cadastroRegex: {
+        regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
+      },
+      estadoRegex: {
+        regex: /^([a-zA-Z][a-zA-Z])$/
+      }
     }
   },
   computed: {
