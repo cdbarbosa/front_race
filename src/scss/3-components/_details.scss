@@ -89,7 +89,8 @@
   .animation-content {
     width: 500px !important;
   }
-  .attachRh {
+  .attachRh, .detachRh {
+    padding: 2rem;
     .field {
       .control {
         .select {
@@ -117,11 +118,11 @@
     .animation-content {
       width: 1192px !important;
     }
-    .content {
+    .contentRh {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 1rem;
-      padding: 1rem;
+      padding: 2rem;
       .infoRh {
           input, textarea {
             font-size: 16px;
@@ -180,4 +181,5 @@
       }
     }
   }
+
 }

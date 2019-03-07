@@ -1,9 +1,9 @@
 #createService {
-	.service-information {
+	.service-informations {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     input, textarea, select {
       font-size: 16px;
     }

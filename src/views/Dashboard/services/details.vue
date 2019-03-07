@@ -38,7 +38,7 @@
           <div class="field">
             <b-checkbox>Estado</b-checkbox>
           </div>
-          <button class="is-primary">Desassociar esse RH</button>
+          <button class="is-primary" @click="getRhService, isModalDesactive = true">Desassociar esse RH</button>
         </div>
       </div>
       <div class="description">
@@ -90,7 +90,7 @@
     <div class="createRhForService">
       <b-modal :active.sync="isCreateModalActive">
         <div id="rhForService">
-          <div class="content">
+          <div class="contentRh">
             <div class="infoRh">
               <b-field label="Nome">
                 <b-input v-model="rh.name" placeholder="Nome"></b-input>
@@ -175,6 +175,22 @@
         </div>
       </b-modal>
     </div>
+    <div class="detachRhFroService">
+      <b-modal :active.sync="isModalDesactive">
+        <div class="detachRh">
+          <b-field label="Desassociar Rh">
+            <b-select v-model="detachRh_id" placeholder="Select a name">
+              <option v-for="option in rhsService" :value="option.id" :key="option.id">
+                {{ option.name }}
+              </option>
+            </b-select>
+          </b-field>
+          <div class="buttonCreate">
+            <button class="buttons is-primary" @click="ditachRh()">Disassociar</button>
+          </div>
+        </div>
+      </b-modal>
+    </div>
   </div>
 </template>
 <script>
@@ -188,6 +204,8 @@ export default {
       radio: '',
       data: [],
       rh_id: '',
+      detachRh_id: '',
+      isModalDesactive: false,
       isModalActive: false,
       isCreateModalActive: false,
       serviceSelected: undefined,
@@ -255,7 +273,7 @@ export default {
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     },
-    getRhSrvice () {
+    getRhService () {
       this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
         headers: header()
       }).then(response => {
@@ -264,13 +282,15 @@ export default {
       })
     },
     getRhNotService () {
+      let d = []
       let diferent = []
       let rh = []
       this.rhsService.forEach(function each (item, index, array) {
         rh.push(item.name)
       })
       this.rhs.forEach(function each (item, index, array) {
-        rh.includes(item.name) ? diferent = diferent : diferent.push(item)
+        d = diferent
+        rh.includes(item.name) ? diferent = d : diferent.push(item)
       })
       this.data = diferent
       this.isModalActive = true
@@ -283,7 +303,7 @@ export default {
       this.$http.post(this.$api({ target: 'rhservice' }), data, {
         headers: header()
       }).then(() => {
-        this.getRhSrvice()
+        this.getRhService()
         this.$router.push({ name: 'vueDetails', params: { id: this.serviceSelected.id } })
       })
       this.isModalActive = false
@@ -309,13 +329,16 @@ export default {
           this.$http.post(this.$api({ target: 'rhs' }), data, {
             headers: header()
           }).then(() => {
-            this.getRhSrvice()
+            this.getRhService()
             this.getRhs(this)
             this.getRhNotService()
             this.isCreateModalActive = false
           })
         })
       })
+    },
+    detachRh () {
+
     }
   }
 }

@@ -111,7 +111,7 @@
     </div>
     <b-modal :active.sync="isModalActive">
       <div id="rhC">
-        <div class="content">
+        <div class="contents">
           <div class="infoRh">
             <b-field label="Nome">
               <b-input v-model="rh.name" placeholder="Nome"></b-input>
@@ -137,7 +137,7 @@
               </div>
             </div>
             <b-field label="CPF/CNPJ">
-              <b-input v-model="user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
+              <b-input v-model="user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf"></b-input>
             </b-field>
             <div class="address">
               <h3>Endereço</h3>
@@ -181,15 +181,15 @@
                 <b-input placeholder="Doutorado"></b-input>
               </b-field>
               <b-field label="Custo">
-                <b-input v-model="rh.cost" placeholder="R$ 131,00"></b-input>
+                <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00"></b-input>
               </b-field>
             </div>
             <b-field label="Atividade">
               <b-input placeholder="Produção de PANIC"></b-input>
             </b-field>
             <div class="buttonCreate">
-              <button class="is-primary">Cancelar</button>
               <button class="is-primary" @click="createRh">Cadastrar</button>
+              <button class="is-primary" @click="isModalActive = false">Cancelar</button>
             </div>
           </div>
         </div>
@@ -237,6 +237,12 @@ export default {
       },
       estadoRegex: {
         regex: /^([a-zA-Z][a-zA-Z])$/
+      },
+      money: {
+        decimal: '.',
+        thousands: ',',
+        prefix: 'R$ ',
+        precision: 2
       }
     }
   },
@@ -266,6 +272,7 @@ export default {
       return moment().format('DD/MM/YYYY')
     },
     createRh () {
+      this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
       let data = {
         user: this.user
       }
@@ -286,7 +293,9 @@ export default {
           this.$http.post(this.$api({ target: 'rhs' }), data, {
             headers: header()
           }).then(() => {
-            this.$router.push({ name: 'showRhs' })
+            this.getRhs(this)
+            this.$router.push({ name: 'rh' })
+            this.isModalActive = false
           })
         })
       })

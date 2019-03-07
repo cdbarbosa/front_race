@@ -34,7 +34,7 @@
             </div>
           </div>
           <b-field label="CPF/CNPJ">
-            <b-input v-model="selected.user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
+            <b-input v-model="selected.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf"></b-input>
           </b-field>
           <div class="address">
             <h3>Endereço</h3>
@@ -122,7 +122,7 @@
               </div>
             </div>
             <b-field label="CPF/CNPJ">
-              <b-input v-model="user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
+              <b-input v-model="user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf"></b-input>
             </b-field>
             <div class="address">
               <h3>Endereço</h3>
@@ -158,7 +158,7 @@
             </b-field>
             <div class="buttonClass">
               <button @click="createUser">Cadastrar</button>
-              <button @click="$router.push({ name: 'clients' })">Cancelar</button>
+              <button @click="isModalActive = false">Cancelar</button>
             </div>
           </div>
         </div>
@@ -240,7 +240,6 @@ export default {
       this.$http.post(this.$api({ target: 'users' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response.data.data.id)
         let datas = {
           user_id: response.data.id,
           address: this.address
@@ -255,7 +254,9 @@ export default {
           this.$http.post(this.$api({ target: 'clients' }), data, {
             headers: header()
           }).then(() => {
-            this.$router.push({ name: 'show' })
+            this.getClients(this)
+            this.$router.push({ name: 'clients' })
+            this.isModalActive = false
           })
         })
       })

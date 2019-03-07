@@ -1,15 +1,12 @@
 <template>
   <div id="service">
-    <div class="info">
-      <!--<router-view></router-view>-->
-    </div>
     <div id="showService">
       <h2>Serviços</h2>
       <div class="service-information" v-if="selected !== undefined">
         <div class="description-service">
           <div class="info-one">
             <b-field label="Título">
-              <textarea v-model="selected.name" name=""  cols="40" rows="2"></textarea>
+              <textarea v-model="selected.name" name=""  cols="50" rows="4"></textarea>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23"></b-input>
@@ -104,10 +101,10 @@
     </div>
     <b-modal :active.sync="isModalActive">
       <div id="createService">
-        <div class="service-information" v-if="selected != undefined">
+        <div class="service-informations" v-if="selected != undefined">
           <div class="description-service">
             <b-field label="Título">
-              <textarea v-model="service.name" name=""  cols="40" rows="2"></textarea>
+              <textarea v-model="service.name" name=""  cols="50" rows="2"></textarea>
             </b-field>
             <div class="info-two">
               <b-field label="Previsão">
@@ -142,10 +139,10 @@
                 <b-input v-model="service.profit" v-validate="{regex: numbersRegex.regex}" placeholder="50%" name="margem"></b-input>
               </b-field>
               <b-field label="Valor">
-                <b-input v-model="service.value" v-validate="{regex: numbersRegex.regex}" placeholder="825" name="valor"></b-input>
+                <b-input v-model.lazy="service.value" v-money="money" placeholder="825" name="valor"></b-input>
               </b-field>
               <b-field label="Recebido">
-                <b-input placeholder="825" v-validate="{regex: numbersRegex.regex}" name="recebido"></b-input>
+                <b-input placeholder="825" name="recebido"></b-input>
               </b-field>
             </div>
             <span>{{ errors.first('margem') }}</span>
@@ -163,8 +160,8 @@
               <textarea v-model="service.description" name="" id="" cols="35" rows="15"></textarea>
             </b-field>
             <div class="buttonsCreate">
-              <button class="is-primary">Cancelar</button>
               <button class="is-primary" @click="createService">Cadastrar</button>
+              <button class="is-primary" @click="isModalActive = false">Cancelar</button>
             </div>
           </div>
         </div>
@@ -200,7 +197,14 @@ export default {
         regex: /^([a-zA-Z][a-zA-Z])$/
       },
       numbersRegex: {
-        regex: /^([0-9]+)$/
+        regex: /^([0-9]+)(%)$/
+      },
+      money: {
+        decimal: '.',
+        thousands: ',',
+        prefix: 'R$ ',
+        precision: 2,
+        masked: false
       }
     }
   },
@@ -219,6 +223,7 @@ export default {
   },
   beforeMount () {
     this.getServices(this)
+    console.log(this.services)
   },
   methods: {
     ...mapActions([
@@ -228,7 +233,7 @@ export default {
       return moment().format('DD/MM/YYYY')
     },
     createService () {
-      console.log('here')
+      this.service.value = parseFloat(this.service.value.split(' ')[1])
       let data = {
         client_id: this.selected.client.id,
         service: this.service

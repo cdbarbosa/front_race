@@ -7,6 +7,7 @@ import './registerServiceWorker'
 import Buefy from 'buefy'
 import VueTheMask from 'vue-the-mask'
 import VeeValidate from 'vee-validate'
+import money from 'v-money'
 
 import { api } from './config'
 
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 Vue.use(Buefy)
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
+Vue.use(money, { precision: 2 })
 
 new Vue({
   router,
