@@ -186,7 +186,8 @@
             </b-select>
           </b-field>
           <div class="buttonCreate">
-            <button class="buttons is-primary" @click="ditachRh()">Disassociar</button>
+            <button class="buttons is-primary" @click="detachRh">Disassociar</button>
+            <button class="buttons is-primary" @click="isModalDesactive = false">Cancelar</button>
           </div>
         </div>
       </b-modal>
@@ -338,7 +339,17 @@ export default {
       })
     },
     detachRh () {
-
+      let data = {
+        rh_id: this.detachRh_id,
+        service_id: this.serviceSelected.id
+      }
+      this.$http.post(this.$api({ target: 'rhsservice' }), data, {
+        headers: header()
+      }).then(() => {
+        this.getRhService()
+        this.$router.push({ name: 'vueDetails', params: { id: this.serviceSelected.id } })
+      })
+      this.isModalDesactive = false
     }
   }
 }
