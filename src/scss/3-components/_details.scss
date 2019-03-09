@@ -30,16 +30,14 @@
         grid-gap: 1rem;
       }
       .cost {
-        position: relative;
-        padding-top: 1rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-gap: 1rem;
         button {
           background: #2B4E72;
           width: 155px;
           font-size: 12px;
           text-align: center;
-          position: absolute;
-          top: 0;
-          right: 0;
         }
         .b-checkbox {
           font-size: 16px;
