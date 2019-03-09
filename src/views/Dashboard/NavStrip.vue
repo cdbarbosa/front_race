@@ -5,15 +5,12 @@
     </div>
     <div class="links">
       <ul>
-        <!-- <router&#45;link tag="li" :to="{ name: 'overview' }" :class="{__active: this.$route.name == 'overview'}"> -->
-        <!--   Overview -->
-        <!-- </router&#45;link> -->
-        <router-link tag="li" :to="{ name: 'clients' }">
+        <router-link tag="li" :to="{ name: 'clients'}">
           Clientes
         </router-link>
         <router-link tag="li" :to="{ name: 'rh' }">RH's</router-link>
         <div class="selectService">
-          <router-link tag="li" :to="{ name: 'services'}" :class="{__active: this.$route.name === 'services' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
+          <router-link tag="li" :to="{ name: 'services' }" :class="{__active: this.$route.name === 'services' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
             Serviços
           </router-link>
         </div>
@@ -23,6 +20,7 @@
   </div>
 </template>
 <script>
+// import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'navstrip',
   data () {
@@ -33,12 +31,24 @@ export default {
       radio: ''
     }
   },
+  computed: {
+    // ...mapGetters([
+    //   'services',
+    //   'clients',
+    //   'rhs'
+    // ])
+  },
   methods: {
-    //
+    // ...mapActions([
+    //   'getRhs',
+    //   'getServices',
+    //   'getClients'
+    // ])
   },
   beforeMount () {
-    /* eslint-disable no-console */
-    // console.log(this.$route)
+    // this.getRhs(this)
+    // this.getServices(this)
+    // this.getClients(this)
   }
 }
 </script>

@@ -12,34 +12,36 @@
           </b-field>
         </div>
         <hr>
-        <div class="infoRh">
-          <b-field label="RH">
-            <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet"></b-input>
-          </b-field>
-          <b-field label="ID">
-            <b-input v-model="selected.id" placeholder="2"></b-input>
-          </b-field>
-        </div>
-        <b-field label="Especificidade e Serviço">
-          <textarea v-model="selected.observations" name="" id="" cols="55" rows="4"></textarea>
-        </b-field>
-        <div class="hours">
-          <b-field label="Custo">
-            <b-input v-model="selected.cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
-          </b-field>
-          <b-field label="Horas">
-            <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
-          </b-field>
-          <b-field label="Prazo">
-            <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
-          </b-field>
-        </div>
-        <div class="cost">
-          <div class="field">
-            <b-checkbox>Estado</b-checkbox>
+        <div class="rhOfService" v-if="selected !== undefined" >
+          <div class="infoRh">
+            <b-field label="RH">
+              <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet"></b-input>
+            </b-field>
+            <b-field label="ID">
+              <b-input v-model="selected.id" placeholder="2"></b-input>
+            </b-field>
           </div>
-          <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
-          <button class="is-primary" @click="isCreateModalActive = true">Cadastrar RH</button>
+          <b-field label="Especificidade e Serviço">
+            <textarea v-model="selected.observations" name="" id="" cols="55" rows="4"></textarea>
+          </b-field>
+          <div class="hours">
+            <b-field label="Custo">
+              <b-input v-model="selected.cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
+            </b-field>
+            <b-field label="Horas">
+              <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
+            </b-field>
+            <b-field label="Prazo">
+              <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
+            </b-field>
+          </div>
+          <div class="cost">
+            <div class="field">
+              <b-checkbox>Estado</b-checkbox>
+            </div>
+            <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
+            <button class="is-primary" @click="isCreateModalActive = true">Cadastrar RH</button>
+          </div>
         </div>
       </div>
       <div class="description">
@@ -70,23 +72,25 @@
         </div>
       </div>
     </div>
-    <b-modal :active.sync="isModalActive">
-      <div class="attachRh">
-        <b-field label="Adicionar Rh ao serviço">
-          <b-select v-model="rh_id" placeholder="Select a name">
-            <option
-              v-for="option in data"
-              :value="option.id"
-              :key="option.id">
-              {{ option.name }}
-            </option>
-          </b-select>
-        </b-field>
-        <div class="buttonCreate">
-          <button class="buttons is-primary" @click="attachRhService()">Adicionar</button>
+    <div class="attach">
+      <b-modal :active.sync="isModalActive">
+        <div class="attachRh">
+          <b-field label="Adicionar Rh ao serviço">
+            <b-select v-model="rh_id" placeholder="Select a name">
+              <option
+                v-for="option in data"
+                :value="option.id"
+                :key="option.id">
+                {{ option.name }}
+              </option>
+            </b-select>
+          </b-field>
+          <div class="buttonCreate">
+            <button class="buttons is-primary" @click="attachRhService()">Adicionar</button>
+          </div>
         </div>
-      </div>
-    </b-modal>
+      </b-modal>
+    </div>
     <createRh :open.sync="isCreateModalActive"></createRh>
   </div>
 </template>
@@ -129,8 +133,10 @@ export default {
     this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
       headers: header()
     }).then(response => {
+      console.log(response)
       this.serviceSelected = response.data
       this.rhsService = this.serviceSelected.rhs
+      // console.log(this.rhsService)
     })
   },
   methods: {

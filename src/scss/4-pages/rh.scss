@@ -1,4 +1,3 @@
-@import '../3-components/rh/rhC';
 #rhs {
 	height: 100%;
   h2 {
@@ -13,6 +12,7 @@
     .infoRh {
         input, textarea {
           font-size: 16px;
+          width: 100%;
         }
       .info-first {     
         display: grid;
@@ -47,6 +47,7 @@
     .competencias {
       input, textarea {
           font-size: 16px;
+          width: 100%;
         }
       .course {
         display: grid;
