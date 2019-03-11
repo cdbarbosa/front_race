@@ -9,14 +9,14 @@
             </b-field>
             <div class="info-two">
               <b-field label="Previsão">
-                <b-input v-model="service.forecast" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
+                <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="data" name="date" required></b-input>
               </b-field>
               <b-field label="Prazo">
-                <b-input v-model="service.due_date" v-validate="{regex: dataRegex.regex}" v-mask="'##/##/####'" placeholder="data" name="date-duo"></b-input>
+                <b-input v-model="service.due_date" ref="beforeTarget" v-validate="rules.date_before" v-mask="'##/##/####'" placeholder="data" name="beforeTarget" required></b-input>
               </b-field>
             </div>
             <span>{{ errors.first('date') }}</span>
-            <span>{{ errors.first('date-duo') }}</span>
+            <span>{{ errors.first('beforeTarget') }}</span>
             <div class="info-three">
               <b-field label="Cliente">
                 <b-input v-model="selected.client.name" placeholder="Cliente" disabled></b-input>
@@ -37,13 +37,13 @@
             </div>
             <div class="info-four">
               <b-field label="Margem">
-                <b-input v-model="service.profit" v-validate="{regex: numbersRegex.regex}" placeholder="50%" name="margem"></b-input>
+                <b-input v-model="service.profit" placeholder="50%" v-validate="rules.number"name="margem" required></b-input>
               </b-field>
               <b-field label="Valor">
-                <b-input v-model.lazy="service.value" v-money="money" placeholder="825" name="valor"></b-input>
+                <b-input v-model.lazy="service.value" v-money="money" placeholder="825" name="valor" required></b-input>
               </b-field>
               <b-field label="Recebido">
-                <b-input placeholder="825" name="recebido"></b-input>
+                <b-input placeholder="825" name="recebido" required></b-input>
               </b-field>
             </div>
             <span>{{ errors.first('margem') }}</span>
@@ -78,6 +78,7 @@ export default {
   data () {
     return {
       radio: '',
+      beforeTarget: '',
       service: {
         name: undefined,
         description: undefined,
@@ -87,14 +88,13 @@ export default {
         status_id: 1,
         value: undefined
       },
-      dataRegex: {
-        regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
-      },
-      estadoRegex: {
-        regex: /^([a-zA-Z][a-zA-Z])$/
-      },
-      numbersRegex: {
-        regex: /^([0-9]+)(%)$/
+      rules: {
+        date_before: {
+          regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
+        },
+        number: {
+          regex: /^([0-9]+)(%)$/
+        }
       },
       money: {
         decimal: '.',
