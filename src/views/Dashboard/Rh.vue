@@ -149,35 +149,6 @@ export default {
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     }
-    // createRh () {
-    //   this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
-    //   let data = {
-    //     user: this.user
-    //   }
-    //   this.$http.post(this.$api({ target: 'users' }), data, {
-    //     headers: header()
-    //   }).then(response => {
-    //     let datas = {
-    //       user_id: response.data.id,
-    //       address: this.address
-    //     }
-    //     this.$http.post(this.$api({ target: 'addresses' }), datas, {
-    //       headers: header()
-    //     }).then(() => {
-    //       let data = {
-    //         user_id: datas.user_id,
-    //         rh: this.rh
-    //       }
-    //       this.$http.post(this.$api({ target: 'rhs' }), data, {
-    //         headers: header()
-    //       }).then(() => {
-    //         this.getRhs(this)
-    //         this.$router.push({ name: 'rh' })
-    //         this.isModalActive = false
-    //       })
-    //     })
-    //   })
-    // }
   },
   components: {
     createRh

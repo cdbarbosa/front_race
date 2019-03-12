@@ -91,50 +91,13 @@
 <script>
 import { header } from '../../../config/index.js'
 import { mapActions } from 'vuex'
+import userCreate from '../../../mixins/userCreate'
 export default {
   name: 'create-rh',
   props: ['open'],
+  mixins: [userCreate],
   data () {
     return {
-      close: true,
-      birthdate: undefined,
-      rules: {
-        cadastro: {
-          regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
-        },
-        birthdate: {
-          // date_between: "01/01/1900",
-          regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
-        },
-        email: {
-          email: true
-        },
-        document: {
-          regex: /^(([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}))|([0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/
-        },
-        postal_code: {
-          regex: /^[0-9]{2}\.?[0-9]{3}-[\d]{3}$/
-        }
-      },
-      user: {
-        email: undefined,
-        type_id: undefined,
-        document: undefined,
-        birthdate: undefined,
-        role: {
-          name: 'user',
-          description: 'Usuário padrão'
-        },
-        password: 'sistema'
-      },
-      address: {
-        country: undefined,
-        state: undefined,
-        city: undefined,
-        neighborhood: undefined,
-        address: undefined,
-        postal_code: undefined
-      },
       rh: {
         name: undefined,
         phone: undefined,
@@ -150,34 +113,8 @@ export default {
     }
   },
   watch: {
-    birthdate (val) {
-      if (val.length === 10) {
-        var year = (new Date()).getFullYear()
-        var birth = parseInt(val.substr(val.length - 4))
-        if (birth > year) {
-          // exibir notificação de erro
-          console.log('false')
-          return false
-        } else if ((year - birth) > 100) {
-          console.log(false)
-          // exibir notificação de erro
-          return false
-        } else {
-          console.log(true)
-          return true
-        }
-      }
-    }
   },
   computed: {
-    // closeModal () {
-    //   if (this.close) {
-    //     this.open = false
-    //     return this.open
-    //   } else {
-    //     return this.open
-    //   }
-    // }
   },
   methods: {
     ...mapActions([
@@ -185,31 +122,20 @@ export default {
     ]),
     createRh () {
       this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
-      let data = {
-        user: this.user
-      }
-      this.$http.post(this.$api({ target: 'users' }), data, {
-        headers: header()
-      }).then(response => {
-        let datas = {
-          user_id: response.data.id,
-          address: this.address
+      this.createUser().then(userId => {
+        let data = {
+          user_id: userId,
+          rh: this.rh
         }
-        this.$http.post(this.$api({ target: 'addresses' }), datas, {
+        this.$http.post(this.$api({ target: 'rhs' }), data, {
           headers: header()
-        }).then(() => {
-          let data = {
-            user_id: datas.user_id,
-            rh: this.rh
-          }
-          this.$http.post(this.$api({ target: 'rhs' }), data, {
-            headers: header()
-          }).then(response => {
-            this.getRhs(this)
-            this.$route.name === 'rh' ? this.$router.push({ name: 'rh' }) : this.$router.push({ name: 'vueDetails', params: { id: this.$route.params.id } })
-            this.$emit('update:open', false)
-          })
+        }).then(response => {
+          this.getRhs(this)
+          this.$route.name === 'rh' ? this.$router.push({ name: 'rh' }) : this.$router.push({ name: 'vueDetails', params: { id: this.$route.params.id } })
+          this.$emit('update:open', false)
         })
+      }).catch(err => {
+        console.log(err)
       })
     }
   }

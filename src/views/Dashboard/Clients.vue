@@ -93,7 +93,11 @@
         </b-table>
       </div>
     </div>
-    <createClient :open.sync="isModalActive"></createClient>
+    <b-modal :active.sync="isModalActive">
+      <!--   Create client or display message    -->
+      <component :is="parseModal()" @clientCreated="" @creationgFailed=""></component>
+      <!-- <createClient></createClient> -->
+    </b-modal>
   </main>
 </template>
 
@@ -105,6 +109,7 @@ export default {
   name: 'clients',
   data () {
     return {
+      clientCreated: undefined,
       isModalActive: false,
       userSelected: undefined
     }
@@ -133,6 +138,11 @@ export default {
     ]),
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
+    },
+    parseModal () {
+      if (this.clientCreate === undefined) {
+        return 'createClient'
+      }
     }
   },
   components: {

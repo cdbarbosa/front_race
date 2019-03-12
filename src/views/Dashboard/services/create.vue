@@ -37,7 +37,7 @@
             </div>
             <div class="info-four">
               <b-field label="Margem">
-                <b-input v-model="service.profit" placeholder="50%" v-validate="rules.number"name="margem" required></b-input>
+                <b-input v-model="service.profit" placeholder="50%" v-validate="rules.number" name="margem" required></b-input>
               </b-field>
               <b-field label="Valor">
                 <b-input v-model.lazy="service.value" v-money="money" placeholder="825" name="valor" required></b-input>
