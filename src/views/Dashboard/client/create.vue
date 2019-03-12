@@ -4,14 +4,14 @@
       <div class="client">
         <h3>Cliente</h3>
         <b-field label="Nome">
-          <b-input v-model="client.name" v-validate="{ regex: /^[a-zA-Z]+$/ }" placeholder="Nome" name="name" required></b-input>
+          <b-input v-model="client.name" v-validate="{}" placeholder="Nome" name="name" required></b-input>
         </b-field>
         <span>{{ errors.first('name') }}</span>
         <b-field label="Telefone">
           <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
-          <b-input v-model="birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input>
+          <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input>
         </b-field>
         <span>{{ errors.first('birthdate') }}</span>
         <div class="info-second">
@@ -28,9 +28,9 @@
           </div>
         </div>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" v-validate="rules.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" name="document" required></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="cpf" name="document" required></b-input>
         </b-field>
-        <div class="address">
+        <address class="address">
           <h3>Endereço</h3>
           <div class="info-three">
             <b-field label="Rua">
@@ -52,7 +52,7 @@
               <b-input v-model="address.city" placeholder="Cidade" required></b-input>
             </b-field>
           </div>
-        </div>
+        </address>
       </div>
       <div class="others">
         <h3>Outros</h3>
@@ -64,7 +64,7 @@
         </b-field>
         <div class="buttonClass">
           <!-- Só cadastra quando a data de nascimento estiver correta -->
-          <button v-if="birthdate" @click="createUser">Cadastrar</button>
+          <button @click="createUser">Cadastrar</button>
           <!-- <button>Cancelar</button> -->
         </div>
       </div>
@@ -72,7 +72,6 @@
   </div>
 </template>
 <script>
-import { header } from '../../../config/index.js'
 import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 export default {
@@ -118,9 +117,11 @@ export default {
           headers: header()
         }).then(() => {
           this.getClients(this)
-          this.$router.push({ name: 'clients' })
+          this.emit('clientCreated')
+          // this.$router.push({ name: 'clients' })
         })
       }).catch(err => {
+        this.emit('creationFailed')
         console.log(err)
       })
     }

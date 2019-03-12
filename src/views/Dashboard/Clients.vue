@@ -95,7 +95,7 @@
     </div>
     <b-modal :active.sync="isModalActive">
       <!--   Create client or display message    -->
-      <component :is="parseModal()" @clientCreated="" @creationgFailed=""></component>
+      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false"></component>
       <!-- <createClient></createClient> -->
     </b-modal>
   </main>
@@ -104,6 +104,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import createClient from './client/create.vue'
+import success from './common/create-messages/success'
+import error from './common/create-messages/error'
 import moment from 'moment'
 export default {
   name: 'clients',
@@ -140,13 +142,18 @@ export default {
       return moment().format('DD/MM/YYYY')
     },
     parseModal () {
-      if (this.clientCreate === undefined) {
+      if (this.clientCreated === undefined) {
         return 'createClient'
+      } else if (this.clientCreated === true) {
+        return 'success'
       }
+      return 'error'
     }
   },
   components: {
-    createClient
+    createClient,
+    success,
+    error
   }
 }
 </script>

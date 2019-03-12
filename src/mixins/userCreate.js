@@ -1,3 +1,4 @@
+import { header } from '../config/index.js'
 export default {
   data () {
     return {
@@ -6,7 +7,7 @@ export default {
         email: undefined,
         type_id: undefined,
         document: undefined,
-        birthdate: undefined
+        birthdate: this.birthdate
       },
       address: {
         country: undefined,
