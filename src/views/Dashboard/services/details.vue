@@ -343,7 +343,7 @@ export default {
         rh_id: this.detachRh_id,
         service_id: this.serviceSelected.id
       }
-      this.$http.post(this.$api({ target: 'rhsservice' }), data, {
+      this.$http.post(this.$api({ target: 'rh-service' }), data, {
         headers: header()
       }).then(() => {
         this.getRhService()
