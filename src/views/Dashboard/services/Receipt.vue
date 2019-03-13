@@ -77,7 +77,7 @@ export default {
   computed: {
   },
   beforeMount () {
-    this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
+    this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
       headers: header()
     }).then(response => {
       console.log(response)
@@ -87,17 +87,17 @@ export default {
   },
   methods: {
     parseDate (date) {
-      return moment().format('DD/MM/YYYY')
+      return moment(date).format('DD/MM/YYYY')
     },
     createReceipt () {
       let data = {
-        service_id: this.$route.params.id,
+        service_id: this.$route.params.service_id,
         receipt: this.receiptSelec
       }
       this.$http.post(this.$api({ target: 'receipts' }), data, {
         headers: header()
       }).then(() => {
-        this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
+        this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
           headers: header()
         }).then(response => {
           this.serviceSelected = response.data

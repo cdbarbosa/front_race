@@ -47,12 +47,12 @@ export default new Router({
           component: Rh
         },
         {
-          path: 'services/:service_id/receipt/:receipt_id',
+          path: 'service/:service_id/receipt/:receipt_id',
           name: 'receipt',
           component: Receipt
         },
         {
-          path: 'services/:service_id/details/:rh_id',
+          path: 'service/:service_id/details/:rh_id',
           name: 'vueDetails',
           component: Details
         }

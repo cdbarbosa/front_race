@@ -50,7 +50,7 @@
             <h4>RHs responsáveis</h4>
             <button class="buttons is-primary" @click="getRhNotService">Adicionar novo RH ao serviço</button>
           </div>
-          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
+          <b-table :data="rhsService" @select="$router.push({ name: 'vueDetails', params: { rh_id: $event.id } })" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
             <template slot-scope="props">
               <b-table-column field="name" label="ID" sortable>
                 {{ props.row.id }}
@@ -91,10 +91,15 @@
         </div>
       </b-modal>
     </div>
-    <createRh :open.sync="isCreateModalActive"></createRh>
+    <b-modal :active.sync="isCreateModalActive">
+      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
+    </b-modal>
+    <!-- <createRh :open.sync="isCreateModalActive"></createRh> -->
   </div>
 </template>
 <script>
+import success from '../common/create-messages/success'
+import error from '../common/create-messages/error'
 import createRh from '../rh/create.vue'
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
@@ -112,7 +117,8 @@ export default {
       isCreateModalActive: false,
       serviceSelected: undefined,
       rhsService: undefined,
-      rhSelected: undefined
+      rhSelected: undefined,
+      rhCreated: undefined
     }
   },
   computed: {
@@ -128,9 +134,15 @@ export default {
       }
     }
   },
+  beforeRouterEnter (to, from, next) {
+    // next($this => {
+    //   if ($this.serviceSelected) next({ name: '' })
+    // })
+  },
   beforeMount () {
+    console.log(this.$route.params.service_id)
     this.getRhs(this)
-    this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
+    this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
       headers: header()
     }).then(response => {
       console.log(response)
@@ -146,8 +158,16 @@ export default {
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     },
+    parseModal () {
+      if (this.rhCreated === undefined) {
+        return 'createRh'
+      } else if (this.rhCreated === true) {
+        return 'success'
+      }
+      return 'error'
+    },
     getRhService () {
-      this.$http.get(this.$api({ target: `service/${this.$route.params.id}` }), {
+      this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
         this.serviceSelected = response.data
@@ -179,7 +199,7 @@ export default {
           headers: header()
         }).then(() => {
           this.getRhService()
-          this.$router.push({ name: 'vueDetails', params: { id: this.serviceSelected.id } })
+          this.$router.push({ name: 'vueDetails', params: { rh_id: this.rh_id } })
         })
         this.isCreateModalActive = false
         this.isModalActive = false
@@ -194,13 +214,15 @@ export default {
         headers: header()
       }).then(() => {
         this.getRhService()
-        this.$router.push({ name: 'vueDetails', params: { id: this.serviceSelected.id } })
+        this.$router.push({ name: 'vueDetails', params: { rh_id: this.rhs[0].id } })
       })
       this.isModalDesactive = false
     }
   },
   components: {
-    createRh
+    createRh,
+    error,
+    success
   }
 }
 </script>

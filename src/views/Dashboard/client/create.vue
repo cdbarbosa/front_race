@@ -34,10 +34,10 @@
           <h3>Endereço</h3>
           <div class="info-three">
             <b-field label="Rua">
-              <b-input v-model="address.address" placeholder="Rua" required></b-input>
+              <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input v-model="address.state"  v-validate="{regex: /^[a-zA-Z]+$/}" laceholder="ES" name="state" required></b-input>
+              <b-input v-model="address.state"  v-validate="'alpha'" laceholder="ES" name="state" required></b-input>
             </b-field>
           </div>
           <!-- <span>{{ errors.first('state') }}</span> -->
@@ -46,10 +46,10 @@
               <b-input v-model="address.postal_code" v-mask="'##.###-###'" v-validate="rules.postal_code" name="postal_code" placeholder="CEP" required></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input v-model="address.neighborhood" placeholder="Bairro" required></b-input>
+              <b-input v-model="address.neighborhood" v-validate="'alpha'" placeholder="Bairro"  name="neighborhood" required></b-input>
             </b-field>
             <b-field label="Cidade">
-              <b-input v-model="address.city" placeholder="Cidade" required></b-input>
+              <b-input v-model="address.city" v-validate="'alpha'" placeholder="Cidade" required name="city"></b-input>
             </b-field>
           </div>
         </address>

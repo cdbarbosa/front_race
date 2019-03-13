@@ -25,10 +25,10 @@
               <b-input v-model="selected.user.email" type="email" placeholder="example@example.com"></b-input>
             </b-field>
             <div class="block">
-              <b-radio v-model="selected.user.type.name" native-value="Fisico">
+              <b-radio v-model="selected.user.type.name" native-value="1">
                 Fisico
               </b-radio>
-              <b-radio v-model="selected.user.type.name" native-value="legal">
+              <b-radio v-model="selected.user.type.name" native-value="2">
                 Juridico
               </b-radio>
             </div>

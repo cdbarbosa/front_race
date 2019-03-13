@@ -109,17 +109,22 @@
         </b-table>
       </div>
     </div>
-    <createRh :open.sync="isModalActive"></createRh>
+    <b-modal :active.sync="isModalActive">
+      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
+    </b-modal>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import createRh from './rh/create.vue'
+import success from './common/create-messages/success'
+import error from './common/create-messages/error'
 import moment from 'moment'
 export default {
   name: 'rhs',
   data () {
     return {
+      rhCreated: undefined,
       isModalActive: false,
       rhSelected: undefined
     }
@@ -137,6 +142,11 @@ export default {
       }
     }
   },
+  beforeRouterEnter (to, from, next) {
+    next($this => {
+      if ($this.rhSelected) next({ name: 'rh', params: { rh_id: $this.rhSelected.id } })
+    })
+  },
   beforeMount () {
     this.getRhs(this)
   },
@@ -147,11 +157,21 @@ export default {
       'getRhs'
     ]),
     parseDate (date) {
-      return moment().format('DD/MM/YYYY')
+      return moment(date).format('DD/MM/YYYY')
+    },
+    parseModal () {
+      if (this.rhCreated === undefined) {
+        return 'createRh'
+      } else if (this.rhCreated === true) {
+        return 'success'
+      }
+      return 'error'
     }
   },
   components: {
-    createRh
+    createRh,
+    success,
+    error
   }
 }
 </script>

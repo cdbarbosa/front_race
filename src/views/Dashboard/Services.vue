@@ -65,8 +65,8 @@
           </b-field>
         </div>
         <div class="buttonsRoutes">
-          <router-link tag="button" class="is-primary" :to="{ name: 'vueDetails', params: { id: selected.id } }">Detalhes</router-link>
-          <router-link v-if="selected !== undefined" tag="button" class="is-primary" :to="{ name: 'receipt', params: { id: selected.id } }">Recebimentos</router-link>
+          <router-link tag="button" class="is-primary" :to="{ name: 'vueDetails', params: { rh_id: selected.rhs[0].id } }">Detalhes</router-link>
+          <router-link v-if="selected !== undefined" tag="button" class="is-primary" :to="{ name: 'receipt', params: { receipt_id: selected.id } }">Recebimentos</router-link>
         </div>
       </div>
        <div class="serviceTable">
@@ -99,18 +99,23 @@
         </b-table>
       </div>
     </div>
-    <createService :open.sync="isModalActive" :props="[selected.client.name, selected.client.id]"></createService>
+    <b-modal :active.sync="isModalActive">
+      <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false" :props="[selected.client.name, selected.client.id]"></component>
+    </b-modal>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
+import success from './common/create-messages/success'
+import error from './common/create-messages/error'
 import createService from './services/create.vue'
 export default {
   name: 'showService',
   data () {
     return {
       radio: '',
+      serviceCreated: undefined,
       serviceSelected: undefined,
       isModalActive: false
     }
@@ -128,6 +133,11 @@ export default {
       }
     }
   },
+  beforeRouteEnter (to, from, next) {
+    next($this => {
+      if ($this.serviceSelected) next({ name: 'service', parmas: { service_id: $this.serviceSelected.id } })
+    })
+  },
   beforeMount () {
     this.getServices(this)
   },
@@ -137,10 +147,20 @@ export default {
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    parseModal () {
+      if (this.serviceCreated === undefined) {
+        return 'createService'
+      } else if (this.serviceCreated === true) {
+        return 'success'
+      }
+      return 'error'
     }
   },
   components: {
-    createService
+    createService,
+    success,
+    error
   }
 }
 </script>

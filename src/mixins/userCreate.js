@@ -6,7 +6,7 @@ export default {
         email: undefined,
         type_id: undefined,
         document: undefined,
-        birthdate: undefined 
+        birthdate: undefined
       },
       address: {
         country: undefined,
@@ -28,12 +28,18 @@ export default {
         },
         postal_code: {
           regex: /^[0-9]{2}\.?[0-9]{3}-[\d]{3}$/
+        },
+        date_before: {
+          regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
+        },
+        number: {
+          regex: /^([0-9]+)(%)$/
         }
       }
     }
   },
   watch: {
-    birthdate (newVal) {
+    'user.birthdate' (newVal) {
       if (newVal.length === 10) {
         let year = (new Date()).getFullYear()
         let birth = parseInt(newVal.substr(newVal.length - 4))
