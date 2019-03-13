@@ -2,12 +2,11 @@ import { header } from '../config/index.js'
 export default {
   data () {
     return {
-      birthdate: undefined,
       user: {
         email: undefined,
         type_id: undefined,
         document: undefined,
-        birthdate: this.birthdate
+        birthdate: undefined 
       },
       address: {
         country: undefined,
@@ -40,14 +39,12 @@ export default {
         let birth = parseInt(newVal.substr(newVal.length - 4))
         if (birth > year) {
           // exibir notificação de erro
-          console.log('false')
           return false
         } else if ((year - birth) > 100) {
           console.log(false)
           // exibir notificação de erro
           return false
         } else {
-          console.log(true)
           return true
         }
       }

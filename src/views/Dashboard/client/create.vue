@@ -4,7 +4,7 @@
       <div class="client">
         <h3>Cliente</h3>
         <b-field label="Nome">
-          <b-input v-model="client.name" v-validate="{}" placeholder="Nome" name="name" required></b-input>
+          <b-input v-model="client.name" v-validate="'alpha'" placeholder="Nome" name="name" required></b-input>
         </b-field>
         <span>{{ errors.first('name') }}</span>
         <b-field label="Telefone">
@@ -64,7 +64,7 @@
         </b-field>
         <div class="buttonClass">
           <!-- Só cadastra quando a data de nascimento estiver correta -->
-          <button @click="createUser">Cadastrar</button>
+          <button @click="createClient">Cadastrar</button>
           <!-- <button>Cancelar</button> -->
         </div>
       </div>
@@ -74,6 +74,7 @@
 <script>
 import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
+import { header } from '../../../config/index.js'
 export default {
   name: 'createClient',
   mixins: [userCreate],
@@ -117,11 +118,10 @@ export default {
           headers: header()
         }).then(() => {
           this.getClients(this)
-          this.emit('clientCreated')
-          // this.$router.push({ name: 'clients' })
+          this.$emit('clientCreated')
         })
       }).catch(err => {
-        this.emit('creationFailed')
+        this.$emit('creationFailed')
         console.log(err)
       })
     }

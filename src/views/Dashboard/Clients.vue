@@ -14,7 +14,7 @@
           </div>
           <div class="info-second">
             <b-field label="Cadastro">
-              <b-input :value="parseDate(selected.create_at)" v-mask="'##/##/####'" disabled></b-input>
+              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
               <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
@@ -75,7 +75,7 @@
           <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
           <b-input placeholder="Procurar..."></b-input>
         </div>
-         <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+        <b-table :data="clients" @select="$router.push({ name: 'client', params: { client_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
           <template slot-scope="props">
             <b-table-column field="name" label="NOME" sortable>
               {{ props.row.name }}
@@ -124,10 +124,20 @@ export default {
       get () {
         return this.userSelected ? this.userSelected : this.clients[0]
       },
-      set (newValue) {
-        this.userSelected = newValue
+      set (newVal) {
+        this.userSelected = newVal
       }
     }
+  },
+  watch: {
+    '$route.params.id' (newVal) {
+
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next($this => {
+      if ($this.userSelected) next({ name: 'client', params: { client_id: $this.userSelected.id } })
+    })
   },
   beforeMount () {
     this.getClients(this)
@@ -138,8 +148,11 @@ export default {
     ...mapActions([
       'getClients'
     ]),
+    log (e) {
+      console.log(e)
+    },
     parseDate (date) {
-      return moment().format('DD/MM/YYYY')
+      return moment(date).format('DD/MM/YYYY')
     },
     parseModal () {
       if (this.clientCreated === undefined) {

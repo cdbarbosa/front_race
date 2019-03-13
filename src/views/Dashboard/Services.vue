@@ -75,7 +75,7 @@
           <button class="buttons is-primary" @click="isModalActive = true">Criar novo serviço</button>
           <b-input placeholder="Procurar..."></b-input>
         </div>
-        <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <b-table :data="services" @select="$router.push({ name: 'service', params: { service_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>
               {{ props.row.name }}
@@ -136,7 +136,7 @@ export default {
       'getServices'
     ]),
     parseDate (date) {
-      return moment().format('DD/MM/YYYY')
+      return moment(date).format('DD/MM/YYYY')
     }
   },
   components: {

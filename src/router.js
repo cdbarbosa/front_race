@@ -32,29 +32,29 @@ export default new Router({
           component: Overview
         },
         {
-          path: 'clients',
-          name: 'clients',
+          path: 'client/:client_id',
+          name: 'client',
           component: Clients
         },
         {
-          path: 'services',
-          name: 'services',
+          path: 'service/:service_id',
+          name: 'service',
           component: Service
         },
         {
-          path: 'services/receipt/:id',
+          path: 'rh/:rh_id',
+          name: 'rh',
+          component: Rh
+        },
+        {
+          path: 'services/:service_id/receipt/:receipt_id',
           name: 'receipt',
           component: Receipt
         },
         {
-          path: 'services/details/:id',
+          path: 'services/:service_id/details/:rh_id',
           name: 'vueDetails',
           component: Details
-        },
-        {
-          path: 'rh',
-          name: 'rh',
-          component: Rh
         }
       ]
     }

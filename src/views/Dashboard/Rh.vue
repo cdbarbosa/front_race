@@ -91,7 +91,7 @@
           <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo RH</button>
           <b-input placeholder="Procurar..."></b-input>
         </div>
-         <b-table :data="rhs" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+         <b-table :data="rhs" @select="$router.push({ name: 'rh', params: { rh_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="NOME" sortable>
               {{ props.row.name }}

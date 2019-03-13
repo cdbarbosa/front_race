@@ -6,7 +6,9 @@
       </div>
       <div class="content">
         <transition name="fade" mode="out-in">
-          <router-view></router-view>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </transition>
       </div>
     </div>
@@ -23,7 +25,7 @@ export default {
       'user'
     ])
   },
-  beforeRouteEnte (to, from, next) {
+  beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.user) next()
       else next({ name: 'login' })

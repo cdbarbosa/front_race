@@ -5,15 +5,13 @@
     </div>
     <div class="links">
       <ul>
-        <router-link tag="li" :to="{ name: 'clients'}">
+        <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id || 1 } }" exact>
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rh' }">RH's</router-link>
-        <div class="selectService">
-          <router-link tag="li" :to="{ name: 'services' }" :class="{__active: this.$route.name === 'services' || this.$route.name === 'vueDetails' || this.$route.name === 'receipt'}">
-            Serviços
-          </router-link>
-        </div>
+        <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id || 1 } }" exact>RH's</router-link>
+        <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id || 1 } }">
+          Serviços
+        </router-link>
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
     </div>
