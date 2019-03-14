@@ -52,7 +52,7 @@ export default new Router({
           component: Receipt
         },
         {
-          path: 'service/:service_id/details/:rh_id',
+          path: 'service/:service_id/details/:rh_id?',
           name: 'vueDetails',
           component: Details
         }

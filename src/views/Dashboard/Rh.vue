@@ -89,9 +89,9 @@
         <div class="headerTable">
           <h4>RH's</h4>
           <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo RH</button>
-          <b-input placeholder="Procurar..."></b-input>
+          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
         </div>
-         <b-table :data="rhs" @select="$router.push({ name: 'rh', params: { rh_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+         <b-table :data="rhs" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="NOME" sortable>
               {{ props.row.name }}
@@ -115,24 +115,32 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import createRh from './rh/create.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
+import { header } from '../../config/index.js'
+import _ from 'lodash'
 export default {
   name: 'rhs',
   data () {
     return {
       rhCreated: undefined,
       isModalActive: false,
-      rhSelected: undefined
+      rhSelected: undefined,
+      searchQuery: undefined
     }
   },
   computed: {
-    ...mapGetters([
-      'rhs'
-    ]),
+    rhs: {
+      get () {
+        return this.$store.getters.rhs
+      },
+      set (newVal) {
+        this.changeRh(this)
+      }
+    },
     selected: {
       get () {
         return this.rhSelected ? this.rhSelected : this.rhs[0]
@@ -140,6 +148,20 @@ export default {
       set (newVal) {
         this.rhSelected = newVal
       }
+    }
+  },
+  watch: {
+    searchQuery: _.debounce(function (newQuery, oldQuery) {
+      console.log(newQuery)
+      this.rhSelected = undefined
+      // if (newQuery === '' && newQuery === oldQuery) {
+      //   this.getRhs(this)
+      // } else {
+      this.searchRh(newQuery)
+      // }
+    }, 500),
+    selected (newVal) {
+      this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -154,7 +176,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getRhs'
+      'getRhs',
+      'changeRh'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -166,6 +189,16 @@ export default {
         return 'success'
       }
       return 'error'
+    },
+    searchRh (name) {
+      this.$http.get(this.$api({ target: 'rh' }), {
+        headers: header(),
+        params: {
+          search: name
+        }
+      }).then(response => {
+        this.changeRh(response.data)
+      })
     }
   },
   components: {

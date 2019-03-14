@@ -21,6 +21,9 @@ const actions = {
     }).then(response => {
       commit('SET_SERVICES', response.data)
     })
+  },
+  changeServices ({ commit }, services) {
+    commit('SET_SERVICES', services)
   }
 }
 

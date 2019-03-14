@@ -121,8 +121,8 @@ export default {
         headers: header()
       }).then(response => {
         console.log(response)
-        this.$router.push({ name: 'services' })
-        this.$emit('update:open', false)
+        this.$router.push({ name: 'service', params: { service_id: this.services[0].id } })
+        // this.$emit('update:open', false)
       })
     }
   }

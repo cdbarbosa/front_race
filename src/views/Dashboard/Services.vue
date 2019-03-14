@@ -61,11 +61,11 @@
         </div>
         <div class="description">
           <b-field label="Observações">
-            <textarea v-model="selected.description" name="" id="" cols="35" rows="15"></textarea>
+            <textarea v-model="selected.description" name="" cols="35" rows="15"></textarea>
           </b-field>
         </div>
         <div class="buttonsRoutes">
-          <router-link tag="button" class="is-primary" :to="{ name: 'vueDetails', params: { rh_id: selected.rhs[0].id } }">Detalhes</router-link>
+          <router-link tag="button" class="is-primary" :to="{ name: 'vueDetails' }">Detalhes</router-link>
           <router-link v-if="selected !== undefined" tag="button" class="is-primary" :to="{ name: 'receipt', params: { receipt_id: selected.id } }">Recebimentos</router-link>
         </div>
       </div>
@@ -73,9 +73,9 @@
         <div class="headerTable">
           <h4>Serviços</h4>
           <button class="buttons is-primary" @click="isModalActive = true">Criar novo serviço</button>
-          <b-input placeholder="Procurar..."></b-input>
+          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
         </div>
-        <b-table :data="services" @select="$router.push({ name: 'service', params: { service_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>
               {{ props.row.name }}
@@ -105,25 +105,33 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import moment from 'moment'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import createService from './services/create.vue'
+import _ from 'lodash'
+import { header } from '../../config/index.js'
 export default {
   name: 'showService',
   data () {
     return {
       radio: '',
+      searchQuery: undefined,
       serviceCreated: undefined,
       serviceSelected: undefined,
       isModalActive: false
     }
   },
   computed: {
-    ...mapGetters([
-      'services'
-    ]),
+    services: {
+      get () {
+        return this.$store.getters.services
+      },
+      set (newVal) {
+        this.changeServices(newVal)
+      }
+    },
     selected: {
       get () {
         return this.serviceSelected ? this.serviceSelected : this.services[0]
@@ -131,6 +139,19 @@ export default {
       set (newValue) {
         this.serviceSelected = newValue
       }
+    }
+  },
+  watch: {
+    searchQuery: _.debounce(function (newQuery, oldQuery) {
+      this.serviceSelected = undefined
+      if (newQuery === '' && newQuery === oldQuery) {
+        this.getServices(this)
+      } else {
+        this.searchServices(newQuery)
+      }
+    }, 500),
+    selected (newVal) {
+      this.$router.push({ name: 'service', params: { service_id: newVal.id } })
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -143,7 +164,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getServices'
+      'getServices',
+      'changeServices'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -155,6 +177,16 @@ export default {
         return 'success'
       }
       return 'error'
+    },
+    searchServices (title) {
+      this.$http.get(this.$api({ target: 'service' }), {
+        headers: header(),
+        params: {
+          search: title
+        }
+      }).then(response => {
+        this.changeServices(response.data)
+      })
     }
   },
   components: {

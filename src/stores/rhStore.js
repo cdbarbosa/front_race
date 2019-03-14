@@ -2,20 +2,20 @@ import { header } from '../config/index.js'
 
 const state = {
   rhs: [],
-  rhByIndex: undefined
+  rhByService: []
 }
 
 const getters = {
   rhs: () => state.rhs,
-  rhByIndex: () => state.rhByIndex
+  rhByService: () => state.rhByService
 }
 
 const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
   },
-  SET_RH (state, rhByIndex) {
-    state.rhByIndex = rhByIndex
+  SET_RH_SERVICE (state, rhByService) {
+    state.rhByService = rhByService
   }
 }
 
@@ -27,15 +27,18 @@ const actions = {
       commit('SET_RHS', response.data)
     })
   },
-  getRhByIndex ({ commit }, payload) {
+  getRhByService ({ commit }, payload) {
     let that = payload[0]
     let value = payload[1]
     that.$http.get(that.$api({ target: `rh/${value}` }), {
       headers: header()
     }).then(response => {
       console.log(response)
-      commit('SET_RH', response.data)
+      commit('SET_RH_SERVICE', response.data)
     })
+  },
+  changeRh ({ commit }, rhs) {
+    commit('SET_RHS', rhs)
   }
 }
 

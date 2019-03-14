@@ -50,7 +50,7 @@
             <h4>RHs responsáveis</h4>
             <button class="buttons is-primary" @click="getRhNotService">Adicionar novo RH ao serviço</button>
           </div>
-          <b-table :data="rhsService" @select="$router.push({ name: 'vueDetails', params: { rh_id: $event.id } })" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
+          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
             <template slot-scope="props">
               <b-table-column field="name" label="ID" sortable>
                 {{ props.row.id }}
@@ -94,7 +94,6 @@
     <b-modal :active.sync="isCreateModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
     </b-modal>
-    <!-- <createRh :open.sync="isCreateModalActive"></createRh> -->
   </div>
 </template>
 <script>
@@ -108,11 +107,8 @@ export default {
   name: 'vueDetails',
   data () {
     return {
-      radio: '',
       data: [],
       rh_id: '',
-      detachRh_id: '',
-      isModalDesactive: false,
       isModalActive: false,
       isCreateModalActive: false,
       serviceSelected: undefined,
@@ -123,36 +119,37 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'rhs',
-      'rhByIndex'
+      'rhs'
     ]),
     selected: {
       get () {
-        return this.rhSelected ? this.rhSelected : this.rhsService[0]
+        return this.rhSelected ? this.rhSelected : (this.rhsService === undefined ? undefined : this.rhsService[0])
       },
       set (newValue) {
         this.rhSelected = newValue
       }
     }
   },
+  watch: {
+    selected (newVal) {
+      this.$router.push({ name: 'vueDetails' })
+    }
+  },
   beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.rhSelected) next({ name: 'vueDetails', params: { rh_id: $this.rhSelected.id } })
-    })
-  },
-  beforeMount () {
-    this.getRhs(this)
-    this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
-      headers: header()
-    }).then(response => {
-      this.serviceSelected = response.data
-      this.rhsService = this.serviceSelected.rhs
+      $this.getRhs($this)
+      $this.$http.get($this.$api({ target: `service/${$this.$route.params.service_id}` }), {
+        headers: header()
+      }).then(response => {
+        $this.serviceSelected = response.data
+        $this.rhsService = $this.serviceSelected.rhs
+      })
     })
   },
   methods: {
     ...mapActions([
-      'getRhs',
-      'getRhByIndex'
+      'getRhs'
     ]),
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
@@ -166,11 +163,10 @@ export default {
       return 'error'
     },
     getRhService () {
-      this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({ target: `rhServices/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        this.serviceSelected = response.data
-        this.rhsService = this.serviceSelected.rhs
+        this.rhsService = response.data
       })
     },
     getRhNotService () {
@@ -185,10 +181,10 @@ export default {
         rh.includes(item.name) ? diferent = d : diferent.push(item)
       })
       this.data = diferent
-      this.isCreateModalActive = false
       this.isModalActive = true
     },
     attachRhService () {
+      this.rhSelected = undefined
       if (this.rh_id !== '') {
         let data = {
           rh_id: this.rh_id,
@@ -196,17 +192,14 @@ export default {
         }
         this.$http.post(this.$api({ target: 'rhservice' }), data, {
           headers: header()
-        }).then(() => {
+        }).then(response => {
           this.getRhService()
-          this.$router.push({ name: 'vueDetails', params: { rh_id: this.rh_id } })
+          this.isModalActive = false
         })
-        this.getRhByIndex([this, this.rh_id])
-        this.isCreateModalActive = false
-        this.isModalActive = false
-        this.rhSelected = this.rhs[0].id
       }
     },
     detachRh (id) {
+      this.rhSelected = undefined
       let data = {
         rh_id: id,
         service_id: this.serviceSelected.id
@@ -215,10 +208,7 @@ export default {
         headers: header()
       }).then(() => {
         this.getRhService()
-        this.$router.push({ name: 'vueDetails', params: { rh_id: this.rhs[0].id } })
       })
-      this.selected = this.rhs[0].id
-      this.isModalDesactive = false
     }
   },
   components: {

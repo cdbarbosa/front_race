@@ -76,23 +76,15 @@ export default {
   },
   computed: {
   },
-  beforeRouteUpdate (to, from, next) {
-    this.$http.get(this.$api({ target: `service/${this.$route.params.receipt_id}` }), {
-      headers: header()
-    }).then(response => {
-      this.serviceSelected = response.data
-      this.serviceReceipts = response.data.service_receipts
-    })
-    // console.log(from)
-    next()
-  },
-  beforeMount () {
-    this.$http.get(this.$api({ target: `service/${this.$route.params.receipt_id}` }), {
-      headers: header()
-    }).then(response => {
-      // console.log(1)
-      this.serviceSelected = response.data
-      this.serviceReceipts = response.data.service_receipts
+  beforeRouteEnter (to, from, next) {
+    next($this => {
+      $this.$http.get($this.$api({ target: `service/${$this.$route.params.receipt_id}` }), {
+        headers: header()
+      }).then(response => {
+        $this.serviceSelected = response.data
+        $this.serviceReceipts = response.data.service_receipts
+      })
+      // console.log(from)
     })
   },
   methods: {

@@ -73,9 +73,9 @@
         <div class="headerTable">
           <h4>Clientes</h4>
           <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
-          <b-input placeholder="Procurar..." v-model="searchClient"></b-input>
+          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
         </div>
-        <b-table :data="clients" @select="$router.push({ name: 'client', params: { client_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+        <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
           <template slot-scope="props">
             <b-table-column field="name" label="NOME" sortable>
               {{ props.row.name }}
@@ -113,8 +113,7 @@ export default {
   name: 'clients',
   data () {
     return {
-      searchClient: '',
-      client: this.clients[0],
+      searchQuery: '',
       clientCreated: undefined,
       isModalActive: false,
       userSelected: undefined
@@ -139,21 +138,17 @@ export default {
     }
   },
   watch: {
-    searchClient: _.debounce(function (newVal) {
-      if (newVal === '') {
+    searchQuery: _.debounce(function (newQuery, oldQuery) {
+      this.userSelected = undefined
+      if (newQuery === '' && newQuery === oldQuery) {
         this.getClients(this)
-        this.selected = this.clients[0]
-        console.log(this.selected)
       } else {
-        this.$http.get(this.$api({ target: `client/${newVal}` }), {
-          headers: header()
-        }).then(response => {
-          this.clients = response.data
-          this.clients.length > 0 ? this.selected = this.clients[0] : this.selected = this.clients
-          // console.log(this.selected)
-        })
+        this.searchClient(newQuery)
       }
-    }, 800)
+    }, 500),
+    selected (newVal) {
+      this.$router.push({ name: 'client', params: { client_id: newVal.id } })
+    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -168,7 +163,6 @@ export default {
   methods: {
     ...mapActions([
       'getClients',
-      // 'getClient',
       'changeClients'
     ]),
     log (e) {
@@ -184,6 +178,16 @@ export default {
         return 'success'
       }
       return 'error'
+    },
+    searchClient (name) {
+      this.$http.get(this.$api({ target: 'client' }), {
+        headers: header(),
+        params: {
+          search: name
+        }
+      }).then(response => {
+        this.clients = response.data
+      })
     }
   },
   components: {
