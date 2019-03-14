@@ -145,7 +145,7 @@ export default {
         this.selected = this.clients[0]
         console.log(this.selected)
       } else {
-       this.$http.get(this.$api({ target: `client/${newVal}` }), {
+        this.$http.get(this.$api({ target: `client/${newVal}` }), {
           headers: header()
         }).then(response => {
           this.clients = response.data
