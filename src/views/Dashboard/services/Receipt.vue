@@ -76,11 +76,21 @@ export default {
   },
   computed: {
   },
-  beforeMount () {
-    this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+  beforeRouteUpdate (to, from, next) {
+    this.$http.get(this.$api({ target: `service/${this.$route.params.receipt_id}` }), {
       headers: header()
     }).then(response => {
-      console.log(response)
+      this.serviceSelected = response.data
+      this.serviceReceipts = response.data.service_receipts
+    })
+    // console.log(from)
+    next()
+  },
+  beforeMount () {
+    this.$http.get(this.$api({ target: `service/${this.$route.params.receipt_id}` }), {
+      headers: header()
+    }).then(response => {
+      // console.log(1)
       this.serviceSelected = response.data
       this.serviceReceipts = response.data.service_receipts
     })
@@ -91,13 +101,13 @@ export default {
     },
     createReceipt () {
       let data = {
-        service_id: this.$route.params.service_id,
+        service_id: this.$route.params.receipt_id,
         receipt: this.receiptSelec
       }
       this.$http.post(this.$api({ target: 'receipts' }), data, {
         headers: header()
       }).then(() => {
-        this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+        this.$http.get(this.$api({ target: `service/${this.$route.params.receipt_id}` }), {
           headers: header()
         }).then(response => {
           this.serviceSelected = response.data

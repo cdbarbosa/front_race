@@ -123,7 +123,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'rhs'
+      'rhs',
+      'rhByIndex'
     ]),
     selected: {
       get () {
@@ -134,26 +135,24 @@ export default {
       }
     }
   },
-  beforeRouterEnter (to, from, next) {
-    // next($this => {
-    //   if ($this.serviceSelected) next({ name: '' })
-    // })
+  beforeRouteEnter (to, from, next) {
+    next($this => {
+      if ($this.rhSelected) next({ name: 'vueDetails', params: { rh_id: $this.rhSelected.id } })
+    })
   },
   beforeMount () {
-    console.log(this.$route.params.service_id)
     this.getRhs(this)
     this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
       headers: header()
     }).then(response => {
-      console.log(response)
       this.serviceSelected = response.data
       this.rhsService = this.serviceSelected.rhs
-      // console.log(this.rhsService)
     })
   },
   methods: {
     ...mapActions([
-      'getRhs'
+      'getRhs',
+      'getRhByIndex'
     ]),
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
@@ -201,8 +200,10 @@ export default {
           this.getRhService()
           this.$router.push({ name: 'vueDetails', params: { rh_id: this.rh_id } })
         })
+        this.getRhByIndex([this, this.rh_id])
         this.isCreateModalActive = false
         this.isModalActive = false
+        this.rhSelected = this.rhs[0].id
       }
     },
     detachRh (id) {
@@ -216,6 +217,7 @@ export default {
         this.getRhService()
         this.$router.push({ name: 'vueDetails', params: { rh_id: this.rhs[0].id } })
       })
+      this.selected = this.rhs[0].id
       this.isModalDesactive = false
     }
   },

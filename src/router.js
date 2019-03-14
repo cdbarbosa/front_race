@@ -32,6 +32,11 @@ export default new Router({
           component: Overview
         },
         {
+          path: 'rh/:rh_id',
+          name: 'rh',
+          component: Rh
+        },
+        {
           path: 'client/:client_id',
           name: 'client',
           component: Clients
@@ -40,11 +45,6 @@ export default new Router({
           path: 'service/:service_id',
           name: 'service',
           component: Service
-        },
-        {
-          path: 'rh/:rh_id',
-          name: 'rh',
-          component: Rh
         },
         {
           path: 'service/:service_id/receipt/:receipt_id',

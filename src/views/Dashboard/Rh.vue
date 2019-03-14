@@ -137,12 +137,12 @@ export default {
       get () {
         return this.rhSelected ? this.rhSelected : this.rhs[0]
       },
-      set (newValue) {
-        this.rhSelected = newValue
+      set (newVal) {
+        this.rhSelected = newVal
       }
     }
   },
-  beforeRouterEnter (to, from, next) {
+  beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.rhSelected) next({ name: 'rh', params: { rh_id: $this.rhSelected.id } })
     })

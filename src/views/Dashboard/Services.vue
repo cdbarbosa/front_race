@@ -135,7 +135,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
-      if ($this.serviceSelected) next({ name: 'service', parmas: { service_id: $this.serviceSelected.id } })
+      if ($this.serviceSelected) next({ name: 'service', params: { service_id: $this.serviceSelected.id } })
     })
   },
   beforeMount () {

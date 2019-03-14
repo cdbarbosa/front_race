@@ -1,7 +1,7 @@
 <template>
   <main id="clients" v-if="clients.length">
     <div id="info">
-      <div class="information">
+      <div class="information" v-if="selected !== undefined">
         <div class="client">
           <h3>Cliente</h3>
           <div class="info-first">
@@ -73,7 +73,7 @@
         <div class="headerTable">
           <h4>Clientes</h4>
           <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
-          <b-input placeholder="Procurar..."></b-input>
+          <b-input placeholder="Procurar..." v-model="searchClient"></b-input>
         </div>
         <b-table :data="clients" @select="$router.push({ name: 'client', params: { client_id: $event.id } })" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
           <template slot-scope="props">
@@ -102,24 +102,33 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import createClient from './client/create.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
+import _ from 'lodash'
+import { header } from '../../config/index.js'
 export default {
   name: 'clients',
   data () {
     return {
+      searchClient: '',
+      client: this.clients[0],
       clientCreated: undefined,
       isModalActive: false,
       userSelected: undefined
     }
   },
   computed: {
-    ...mapGetters([
-      'clients'
-    ]),
+    clients: {
+      get () {
+        return this.$store.getters.clients
+      },
+      set (newVal) {
+        this.changeClients(newVal)
+      }
+    },
     selected: {
       get () {
         return this.userSelected ? this.userSelected : this.clients[0]
@@ -130,9 +139,21 @@ export default {
     }
   },
   watch: {
-    '$route.params.id' (newVal) {
-
-    }
+    searchClient: _.debounce(function (newVal) {
+      if (newVal === '') {
+        this.getClients(this)
+        this.selected = this.clients[0]
+        console.log(this.selected)
+      } else {
+       this.$http.get(this.$api({ target: `client/${newVal}` }), {
+          headers: header()
+        }).then(response => {
+          this.clients = response.data
+          this.clients.length > 0 ? this.selected = this.clients[0] : this.selected = this.clients
+          // console.log(this.selected)
+        })
+      }
+    }, 800)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -146,7 +167,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getClients'
+      'getClients',
+      // 'getClient',
+      'changeClients'
     ]),
     log (e) {
       console.log(e)

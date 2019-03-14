@@ -21,6 +21,18 @@ const actions = {
     }).then(response => {
       commit('SET_CLIENTS', response.data)
     })
+  },
+  // getClient ({ commit }, payload) {
+  //   let that = payload[0]
+  //   let value = payload[1]
+  //   that.$http.get(that.$api({ target: `client/${value}` }), {
+  //     headers: header()
+  //   }).then(response => {
+  //     commit('SET_CLIENTS', response.data)
+  //   })
+  // }
+  changeClients({ commit }, clients) {
+    commit('SET_CLIENTS', clients)
   }
 }
 
