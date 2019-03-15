@@ -8,7 +8,7 @@
             <b-input v-model="serviceSelected.name" placeholder="Jessica Miles"></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input v-model="serviceSelected.id"></b-input>
+            <b-input v-model="serviceSelected.id" disabled></b-input>
           </b-field>
         </div>
         <hr>
@@ -56,7 +56,9 @@
 
 <script>
 import moment from 'moment'
+import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
+import _ from 'lodash'
 export default {
   name: 'VueReceive',
   data () {
@@ -76,6 +78,11 @@ export default {
   },
   computed: {
   },
+  watch: {
+    'selected.name': _.debounce(function (newVal, oldVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    }, 500)
+  },
   beforeRouteEnter (to, from, next) {
     next($this => {
       $this.$http.get($this.$api({ target: `service/${$this.$route.params.receipt_id}` }), {
@@ -88,6 +95,9 @@ export default {
     })
   },
   methods: {
+    ...mapActions([
+      'updateService'
+    ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },

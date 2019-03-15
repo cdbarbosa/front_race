@@ -9,7 +9,7 @@
               <b-input v-model="selected.name" placeholder="Nome"></b-input>
             </b-field>
             <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="23"></b-input>
+              <b-input v-model="selected.id" placeholder="23" disabled></b-input>
             </b-field>
           </div>
           <div class="info-second">
@@ -34,7 +34,7 @@
             </div>
           </div>
           <b-field label="CPF/CNPJ">
-            <b-input v-model="selected.user.document" v-mask="'###.###.###-##'" placeholder="cpf"></b-input>
+            <b-input v-model="selected.user.document" v-mask="'###.###.###-##'" placeholder="cpf" disabled></b-input>
           </b-field>
           <div class="address">
             <h3>Endereço</h3>
@@ -154,15 +154,45 @@ export default {
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       console.log(newQuery)
       this.rhSelected = undefined
-      // if (newQuery === '' && newQuery === oldQuery) {
-      //   this.getRhs(this)
-      // } else {
-      this.searchRh(newQuery)
-      // }
+      if (newQuery === '' && newQuery === oldQuery) {
+        this.getRhs(this)
+      } else {
+        this.searchRh(newQuery)
+      }
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
-    }
+    },
+    'selected.name': _.debounce(function (newVal, oldVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    }, 500),
+    'selected.phone': _.debounce(function (newVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
+    }, 500),
+    'selected.competencies': _.debounce(function (newVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'competencies', 'value': newVal }])
+    }, 500),
+    'selected.cost': _.debounce(function (newVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'cost', 'value': newVal }])
+    }, 500),
+    'selected.user.email': _.debounce(function (newVal) {
+      // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
+    }, 500),
+    'selected.user.address.address': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.state': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.postal_code': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.neighborhood': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.city': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -177,7 +207,9 @@ export default {
   methods: {
     ...mapActions([
       'getRhs',
-      'changeRh'
+      'changeRh',
+      'updateRh',
+      'updateUser'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

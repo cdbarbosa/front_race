@@ -39,6 +39,15 @@ const actions = {
   },
   changeRh ({ commit }, rhs) {
     commit('SET_RHS', rhs)
+  },
+  updateRh ({ commit }, payload) {
+    let that = payload[0]
+    let data = payload[1]
+    that.$http.put(that.$api({ target: 'rh' }), data, {
+      headers: header()
+    }).then(response => {
+      commit('SET_RHS', response.data)
+    })
   }
 }
 

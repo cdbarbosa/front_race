@@ -24,6 +24,15 @@ const actions = {
   },
   changeServices ({ commit }, services) {
     commit('SET_SERVICES', services)
+  },
+  updateService ({ commit }, payload) {
+    let that = payload[0]
+    let data = payload[1]
+    that.$http.put(that.$api({ target: 'service' }), data, {
+      headers: header()
+    }).then(response => {
+      commit('SET_SERVICES', response.data)
+    })
   }
 }
 

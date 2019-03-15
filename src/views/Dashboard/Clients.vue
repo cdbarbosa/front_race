@@ -9,7 +9,7 @@
               <b-input v-model="selected.name" placeholder="Nome"></b-input>
             </b-field>
             <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="23"></b-input>
+              <b-input v-model="selected.id" placeholder="23" disabled></b-input>
             </b-field>
           </div>
           <div class="info-second">
@@ -34,7 +34,7 @@
             </div>
           </div>
           <b-field label="CPF/CNPJ">
-            <b-input v-model="selected.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf"></b-input>
+            <b-input v-model="selected.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
           </b-field>
           <div class="address">
             <h3>Endereço</h3>
@@ -96,7 +96,6 @@
     <b-modal :active.sync="isModalActive">
       <!--   Create client or display message    -->
       <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false"></component>
-      <!-- <createClient></createClient> -->
     </b-modal>
   </main>
 </template>
@@ -109,6 +108,7 @@ import error from './common/create-messages/error'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
+// import { log } from 'util'
 export default {
   name: 'clients',
   data () {
@@ -148,7 +148,31 @@ export default {
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'client', params: { client_id: newVal.id } })
-    }
+    },
+    'selected.name': _.debounce(function (newVal, oldVal) {
+      // this.updateClient([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    }, 500),
+    'selected.phone': _.debounce(function (newVal) {
+      // this.updateClient([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
+    }, 500),
+    'selected.user.email': _.debounce(function (newVal) {
+      // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
+    }, 500),
+    'selected.user.address.address': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.state': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.postal_code': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.neighborhood': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500),
+    'selected.user.address.city': _.debounce(function (newVal) {
+      // this.updateAddress([this, ])
+    }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -163,7 +187,10 @@ export default {
   methods: {
     ...mapActions([
       'getClients',
-      'changeClients'
+      'changeClients',
+      'updateClient',
+      'updateUser',
+      'updateAddress'
     ]),
     log (e) {
       console.log(e)

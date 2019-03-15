@@ -9,7 +9,7 @@
               <textarea v-model="selected.name" name="" rows="4"></textarea>
             </b-field>
             <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="23"></b-input>
+              <b-input v-model="selected.id" placeholder="23" disabled></b-input>
             </b-field>
           </div>
           <div class="info-two">
@@ -25,7 +25,7 @@
           </div>
           <div class="info-three">
             <b-field label="Cliente">
-              <b-input v-model="selected.client.name" placeholder="Cliente"></b-input>
+              <b-input v-model="selected.client.name" placeholder="Cliente" disabled></b-input>
             </b-field>
             <b-field label="Sigilo">
               <div class="block">
@@ -152,7 +152,22 @@ export default {
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'service', params: { service_id: newVal.id } })
-    }
+    },
+    'selected.name': _.debounce(function (newVal, oldVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    }, 500),
+    'selected.due_date': _.debounce(function (newVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'due_date', 'value': newVal }])
+    }, 500),
+    'selected.profit': _.debounce(function (newVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'profit', 'value': newVal }])
+    }, 500),
+    'selected.value': _.debounce(function (newVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'value', 'value': newVal }])
+    }, 500),
+    'selected.description': _.debounce(function (newVal) {
+      // this.updateService([this, { 'id': this.selected.user.id, 'label': 'description', 'value': newVal }])
+    }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -165,7 +180,8 @@ export default {
   methods: {
     ...mapActions([
       'getServices',
-      'changeServices'
+      'changeServices',
+      'updateService'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

@@ -51,6 +51,14 @@
     }
     .description {
       background: #ccc;
+      button {
+        position: absolute;
+        right: 1rem;
+        // width: 150px;
+        padding: .5rem;
+        font-size: 12px;
+        background: #2B4E72;
+      }
       .serviceTable {
         padding: 1rem;
         .headerTable {

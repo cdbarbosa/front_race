@@ -83,6 +83,15 @@ const actions = {
   },
   setClientDetails ({ commit }, payload) {
     commit('SET_CLIENT_DETAILS', payload)
+  },
+  updateUser ({ commit }, payload) {
+    let that = payload[0]
+    let data = payload[1]
+    that.$http.put(that.$api({ target: 'user' }), data, {
+      headers: header()
+    }).then(response => {
+      commit('SET_USER', response.data)
+    })
   }
 }
 

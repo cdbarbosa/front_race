@@ -8,7 +8,7 @@
             <b-input v-model="serviceSelected.name"></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input v-model="serviceSelected.id"></b-input>
+            <b-input v-model="serviceSelected.id" disabled></b-input>
           </b-field>
         </div>
         <hr>
@@ -18,11 +18,11 @@
               <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet"></b-input>
             </b-field>
             <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="2"></b-input>
+              <b-input v-model="selected.id" placeholder="2" disabled></b-input>
             </b-field>
           </div>
           <b-field label="Especificidade e Serviço">
-            <textarea v-model="selected.observations" name="" id="" cols="55" rows="4"></textarea>
+            <textarea v-model="selected.competencies" name="" id="" cols="55" rows="4"></textarea>
           </b-field>
           <div class="hours">
             <b-field label="Custo">
@@ -70,6 +70,7 @@
             </template>
           </b-table>
         </div>
+        <button class="is-primary" @click="isCreateModalActive = true" v-if="rhsService.length == 0">Cadastrar RH</button>
       </div>
     </div>
     <div class="attach">
@@ -103,6 +104,7 @@ import createRh from '../rh/create.vue'
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
+import _ from 'lodash'
 export default {
   name: 'vueDetails',
   data () {
@@ -133,7 +135,16 @@ export default {
   watch: {
     selected (newVal) {
       this.$router.push({ name: 'vueDetails' })
-    }
+    },
+    'selected.name': _.debounce(function (newVal, oldVal) {
+      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    }, 500),
+    'selected.competencies': _.debounce(function (newVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'competencies', 'value': newVal }])
+    }, 500),
+    'selected.cost': _.debounce(function (newVal) {
+      // this.updateRh([this, { 'id': this.selected.id, 'label': 'cost', 'value': newVal }])
+    }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -149,7 +160,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getRhs'
+      'getRhs',
+      'updateService',
+      'updateRh'
     ]),
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
