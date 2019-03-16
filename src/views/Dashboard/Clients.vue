@@ -6,7 +6,7 @@
           <h3>Cliente</h3>
           <div class="info-first">
             <b-field label="Nome">
-              <b-input v-model="selected.name" placeholder="Nome"></b-input>
+              <b-input v-model="name" placeholder="Nome"></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -135,6 +135,27 @@ export default {
       set (newVal) {
         this.userSelected = newVal
       }
+    },
+    selectedIndex () {
+      return this.clients.findIndex(client => client.id === this.selected.id)
+    },
+    name: {
+      get () {
+        return this.selected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          label: 'name',
+          value: newVal,
+          id: this.selected.id
+        }
+        this.$http.put(this.$api({ target: 'client' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClient(payload)
+        })
+      }, 400)
     }
   },
   watch: {
@@ -148,31 +169,31 @@ export default {
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'client', params: { client_id: newVal.id } })
-    },
-    'selected.name': _.debounce(function (newVal, oldVal) {
-      // this.updateClient([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    }, 500),
-    'selected.phone': _.debounce(function (newVal) {
-      // this.updateClient([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
-    }, 500),
-    'selected.user.email': _.debounce(function (newVal) {
-      // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
-    }, 500),
-    'selected.user.address.address': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.state': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.postal_code': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.neighborhood': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.city': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500)
+    }
+    // 'selected.name': _.debounce(function (newVal, oldVal) {
+    //   // this.updateClient([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
+    // }, 500),
+    // 'selected.phone': _.debounce(function (newVal) {
+    //   // this.updateClient([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
+    // }, 500),
+    // 'selected.user.email': _.debounce(function (newVal) {
+    //   // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
+    // }, 500),
+    // 'selected.user.address.address': _.debounce(function (newVal) {
+    //   // this.updateAddress([this, ])
+    // }, 500),
+    // 'selected.user.address.state': _.debounce(function (newVal) {
+    //   // this.updateAddress([this, ])
+    // }, 500),
+    // 'selected.user.address.postal_code': _.debounce(function (newVal) {
+    //   // this.updateAddress([this, ])
+    // }, 500),
+    // 'selected.user.address.neighborhood': _.debounce(function (newVal) {
+    //   // this.updateAddress([this, ])
+    // }, 500),
+    // 'selected.user.address.city': _.debounce(function (newVal) {
+    //   // this.updateAddress([this, ])
+    // }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

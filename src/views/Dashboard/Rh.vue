@@ -145,9 +145,12 @@ export default {
       get () {
         return this.rhSelected ? this.rhSelected : this.rhs[0]
       },
-      set (newVal) {
+      set (newVal, oldVal) {
         this.rhSelected = newVal
       }
+    },
+    selectedIndex () {
+      return this.rhs.findIndex(rh => rh.id === this.selected.id)
     }
   },
   watch: {
