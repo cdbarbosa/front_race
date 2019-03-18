@@ -5,7 +5,7 @@
         <h1>Recebimento</h1>
         <div class="client">
           <b-field label="Serviço">
-            <b-input v-model="serviceSelected.name" placeholder="Jessica Miles"></b-input>
+            <b-input v-model="name" placeholder="Jessica Miles"></b-input>
           </b-field>
           <b-field label="ID">
             <b-input v-model="serviceSelected.id" disabled></b-input>
@@ -77,6 +77,14 @@ export default {
     }
   },
   computed: {
+    name: {
+      get () {
+        return this.serviceSelected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    }
   },
   watch: {
     'selected.name': _.debounce(function (newVal, oldVal) {

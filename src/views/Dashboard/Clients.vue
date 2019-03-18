@@ -17,12 +17,12 @@
               <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
-              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+              <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
             </b-field>
           </div>
           <div class="info-second">
             <b-field label="Email">
-              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com"></b-input>
+              <b-input v-model="email" type="email" placeholder="example@example.com"></b-input>
             </b-field>
             <div class="block">
               <b-radio v-model="selected.user.type.name" native-value="1">
@@ -40,21 +40,21 @@
             <h3>Endereço</h3>
             <div class="info-three">
               <b-field label="Rua">
-                <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
+                <b-input v-model="address" placeholder="Rua"></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" placeholder="ES"></b-input>
+                <b-input v-model="state" placeholder="ES"></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
               <b-field label="CEP">
-                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+                <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
               </b-field>
               <b-field label="Bairro">
-                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro"></b-input>
+                <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
               </b-field>
               <b-field label="Cidade">
-                <b-input v-model="selected.user.address.city" placeholder="Cidade"></b-input>
+                <b-input v-model="city" placeholder="Cidade"></b-input>
               </b-field>
             </div>
           </div>
@@ -108,9 +108,11 @@ import error from './common/create-messages/error'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
+import computedFields from '../../mixins/computedFields.js'
 // import { log } from 'util'
 export default {
   name: 'clients',
+  mixins: [computedFields],
   data () {
     return {
       searchQuery: '',
@@ -156,6 +158,24 @@ export default {
           this.updateClient(payload)
         })
       }, 400)
+    },
+    phone: {
+      get () {
+        return this.selected.phone
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          label: 'phone',
+          value: newVal,
+          id: this.selected.id
+        }
+        this.$http.put(this.$api({ target: 'client' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClient(payload)
+        })
+      }, 400)
     }
   },
   watch: {
@@ -170,30 +190,6 @@ export default {
     selected (newVal) {
       this.$router.push({ name: 'client', params: { client_id: newVal.id } })
     }
-    // 'selected.name': _.debounce(function (newVal, oldVal) {
-    //   // this.updateClient([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    // }, 500),
-    // 'selected.phone': _.debounce(function (newVal) {
-    //   // this.updateClient([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
-    // }, 500),
-    // 'selected.user.email': _.debounce(function (newVal) {
-    //   // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
-    // }, 500),
-    // 'selected.user.address.address': _.debounce(function (newVal) {
-    //   // this.updateAddress([this, ])
-    // }, 500),
-    // 'selected.user.address.state': _.debounce(function (newVal) {
-    //   // this.updateAddress([this, ])
-    // }, 500),
-    // 'selected.user.address.postal_code': _.debounce(function (newVal) {
-    //   // this.updateAddress([this, ])
-    // }, 500),
-    // 'selected.user.address.neighborhood': _.debounce(function (newVal) {
-    //   // this.updateAddress([this, ])
-    // }, 500),
-    // 'selected.user.address.city': _.debounce(function (newVal) {
-    //   // this.updateAddress([this, ])
-    // }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

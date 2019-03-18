@@ -5,7 +5,7 @@
         <h2>Detalhes</h2>
         <div class="info-service">
           <b-field label="Serviço">
-            <b-input v-model="serviceSelected.name"></b-input>
+            <b-input v-model="title"></b-input>
           </b-field>
           <b-field label="ID">
             <b-input v-model="serviceSelected.id" disabled></b-input>
@@ -15,18 +15,18 @@
         <div class="rhOfService" v-if="selected !== undefined" >
           <div class="infoRh">
             <b-field label="RH">
-              <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet"></b-input>
+              <b-input v-model="name" placeholder="Lorem ipsum dolor sit amet"></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="2" disabled></b-input>
             </b-field>
           </div>
           <b-field label="Especificidade e Serviço">
-            <textarea v-model="selected.competencies" name="" id="" cols="55" rows="4"></textarea>
+            <textarea v-model="competencies" name="" id="" cols="55" rows="4"></textarea>
           </b-field>
           <div class="hours">
             <b-field label="Custo">
-              <b-input v-model="selected.cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
+              <b-input v-model="cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
             </b-field>
             <b-field label="Horas">
               <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
@@ -130,21 +130,44 @@ export default {
       set (newValue) {
         this.rhSelected = newValue
       }
+    },
+    name: {
+      get () {
+        return this.selected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    title: {
+      get () {
+        return this.serviceSelected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    competencies: {
+      get () {
+        return this.selected.competencies
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    cost: {
+      get () {
+        return this.selected.cost
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
     }
   },
   watch: {
     selected (newVal) {
       this.$router.push({ name: 'vueDetails' })
-    },
-    'selected.name': _.debounce(function (newVal, oldVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    }, 500),
-    'selected.competencies': _.debounce(function (newVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'competencies', 'value': newVal }])
-    }, 500),
-    'selected.cost': _.debounce(function (newVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'cost', 'value': newVal }])
-    }, 500)
+    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

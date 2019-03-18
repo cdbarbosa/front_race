@@ -6,7 +6,7 @@
         <div class="description-service">
           <div class="info-one">
             <b-field label="Título">
-              <textarea v-model="selected.name" name="" rows="4"></textarea>
+              <textarea v-model="name" name="" rows="4"></textarea>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -43,13 +43,13 @@
           </div>
           <div class="info-four">
             <b-field label="Margem">
-              <b-input v-model="selected.profit" placeholder="50%"></b-input>
+              <b-input v-model="profit" placeholder="50%"></b-input>
             </b-field>
             <b-field label="Valor">
-              <b-input v-model="selected.value" placeholder="825"></b-input>
+              <b-input v-model="value" placeholder="825"></b-input>
             </b-field>
             <b-field label="Recebido">
-              <b-input v-model="selected.value" placeholder="825"></b-input>
+              <b-input v-model="value" placeholder="825"></b-input>
             </b-field>
           </div>
           <b-field label="Situação">
@@ -61,7 +61,7 @@
         </div>
         <div class="description">
           <b-field label="Observações">
-            <textarea v-model="selected.description" name="" cols="35" rows="15"></textarea>
+            <textarea v-model="description" name="" cols="35" rows="15"></textarea>
           </b-field>
         </div>
         <div class="buttonsRoutes">
@@ -139,6 +139,41 @@ export default {
       set (newValue) {
         this.serviceSelected = newValue
       }
+    },
+    selectedIndex () {
+      return this.rhs.findIndex(rh => rh.id === this.selected.id)
+    },
+    name: {
+      get () {
+        return this.selected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    profit: {
+      get () {
+        return this.selected.profit
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    value: {
+      get () {
+        return this.selected.value
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    description: {
+      get () {
+        return this.selected.description
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
     }
   },
   watch: {
@@ -152,22 +187,7 @@ export default {
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'service', params: { service_id: newVal.id } })
-    },
-    'selected.name': _.debounce(function (newVal, oldVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    }, 500),
-    'selected.due_date': _.debounce(function (newVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'due_date', 'value': newVal }])
-    }, 500),
-    'selected.profit': _.debounce(function (newVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'profit', 'value': newVal }])
-    }, 500),
-    'selected.value': _.debounce(function (newVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'value', 'value': newVal }])
-    }, 500),
-    'selected.description': _.debounce(function (newVal) {
-      // this.updateService([this, { 'id': this.selected.user.id, 'label': 'description', 'value': newVal }])
-    }, 500)
+    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

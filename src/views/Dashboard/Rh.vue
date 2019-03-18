@@ -6,7 +6,7 @@
         <div class="infoRh">
           <div class="info-first">
             <b-field label="Nome">
-              <b-input v-model="selected.name" placeholder="Nome"></b-input>
+              <b-input v-model="name" placeholder="Nome"></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -17,12 +17,12 @@
               <b-input :value="parseDate(selected.created_at)" placeholder="Cadastro" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
-              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+              <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
             </b-field>
           </div>
           <div class="info-second">
             <b-field label="Email">
-              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com"></b-input>
+              <b-input v-model="email" type="email" placeholder="example@example.com"></b-input>
             </b-field>
             <div class="block">
               <b-radio v-model="selected.user.type" native-value="Fisico">
@@ -40,28 +40,28 @@
             <h3>Endereço</h3>
             <div class="info-three">
               <b-field label="Rua">
-                <b-input v-model="selected.user.address.address" placeholder="Rua"></b-input>
+                <b-input v-model="address" placeholder="Rua"></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" placeholder="ES"></b-input>
+                <b-input v-model="state" placeholder="ES"></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
               <b-field label="CEP">
-                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+                <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
               </b-field>
               <b-field label="Bairro">
-                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro"></b-input>
+                <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
               </b-field>
               <b-field label="Cidade">
-                <b-input v-model="selected.user.address.city" placeholder="Cidade"></b-input>
+                <b-input v-model="city" placeholder="Cidade"></b-input>
               </b-field>
             </div>
           </div>
         </div>
         <div class="competencias">
           <b-field label="Competências">
-            <b-input v-model="selected.competencies" placeholder="Analise de dados"></b-input>
+            <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
           </b-field>
           <b-field label="Experiência">
             <b-input placeholder="Analise de dados"></b-input>
@@ -77,7 +77,7 @@
               <b-input placeholder="Doutorado"></b-input>
             </b-field>
             <b-field label="Custo">
-              <b-input v-model="selected.cost" placeholder="R$ 131,00"></b-input>
+              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
             </b-field>
           </div>
           <b-field label="Atividade">
@@ -122,8 +122,10 @@ import error from './common/create-messages/error'
 import moment from 'moment'
 import { header } from '../../config/index.js'
 import _ from 'lodash'
+import computedFields from '../../mixins/computedFields.js'
 export default {
   name: 'rhs',
+  mixins: [computedFields],
   data () {
     return {
       rhCreated: undefined,
@@ -151,6 +153,38 @@ export default {
     },
     selectedIndex () {
       return this.rhs.findIndex(rh => rh.id === this.selected.id)
+    },
+    name: {
+      get () {
+        return this.selected.name
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    phone: {
+      get () {
+        return this.selected.phone
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    competencies: {
+      get () {
+        return this.selected.competencies
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
+    },
+    cost: {
+      get () {
+        return this.selected.cost
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      }, 400)
     }
   },
   watch: {
@@ -165,37 +199,7 @@ export default {
     }, 500),
     selected (newVal) {
       this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
-    },
-    'selected.name': _.debounce(function (newVal, oldVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    }, 500),
-    'selected.phone': _.debounce(function (newVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'phone', 'value': newVal }])
-    }, 500),
-    'selected.competencies': _.debounce(function (newVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'competencies', 'value': newVal }])
-    }, 500),
-    'selected.cost': _.debounce(function (newVal) {
-      // this.updateRh([this, { 'id': this.selected.id, 'label': 'cost', 'value': newVal }])
-    }, 500),
-    'selected.user.email': _.debounce(function (newVal) {
-      // this.updateUser([this, { 'id': this.selected.user.id, 'label': 'email', 'value': newVal }])
-    }, 500),
-    'selected.user.address.address': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.state': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.postal_code': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.neighborhood': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500),
-    'selected.user.address.city': _.debounce(function (newVal) {
-      // this.updateAddress([this, ])
-    }, 500)
+    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
