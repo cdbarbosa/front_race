@@ -141,14 +141,24 @@ export default {
       }
     },
     selectedIndex () {
-      return this.rhs.findIndex(rh => rh.id === this.selected.id)
+      return this.services.findIndex(service => service.id === this.selected.id)
     },
     name: {
       get () {
         return this.selected.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'name',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     },
     profit: {
@@ -156,7 +166,17 @@ export default {
         return this.selected.profit
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'profit',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     },
     value: {
@@ -164,7 +184,17 @@ export default {
         return this.selected.value
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'value',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     },
     description: {
@@ -172,7 +202,17 @@ export default {
         return this.selected.description
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'description',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     }
   },

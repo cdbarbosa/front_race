@@ -159,7 +159,18 @@ export default {
         return this.selected.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'name',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          console.log(response)
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     },
     phone: {
@@ -167,7 +178,17 @@ export default {
         return this.selected.phone
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'phone',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     },
     competencies: {
@@ -175,7 +196,17 @@ export default {
         return this.selected.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'competencies',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     },
     cost: {
@@ -183,7 +214,17 @@ export default {
         return this.selected.cost
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'cost',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     }
   },
@@ -209,14 +250,11 @@ export default {
   beforeMount () {
     this.getRhs(this)
   },
-  mounted () {
-  },
   methods: {
     ...mapActions([
       'getRhs',
       'changeRh',
-      'updateRh',
-      'updateUser'
+      'updateRh'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

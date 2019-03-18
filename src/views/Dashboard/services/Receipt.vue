@@ -82,14 +82,19 @@ export default {
         return this.serviceSelected.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.serviceSelected.id,
+          'label': 'name',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     }
-  },
-  watch: {
-    'selected.name': _.debounce(function (newVal, oldVal) {
-      // this.updateService([this, { 'id': this.selected.id, 'label': 'name', 'value': newVal }])
-    }, 500)
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

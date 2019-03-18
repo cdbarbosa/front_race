@@ -11,6 +11,11 @@ const getters = {
 const mutations = {
   SET_SERVICES (state, services) {
     state.services = services
+  },
+  UPDATE_SERVICE (state, payload) {
+    const service = payload[0]
+    const index = payload[1]
+    state.services.splice(index, 1, service)
   }
 }
 
@@ -26,13 +31,7 @@ const actions = {
     commit('SET_SERVICES', services)
   },
   updateService ({ commit }, payload) {
-    let that = payload[0]
-    let data = payload[1]
-    that.$http.put(that.$api({ target: 'service' }), data, {
-      headers: header()
-    }).then(response => {
-      commit('SET_SERVICES', response.data)
-    })
+    commit('UPDATE_SERVICE', payload)
   }
 }
 

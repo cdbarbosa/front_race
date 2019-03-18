@@ -131,12 +131,25 @@ export default {
         this.rhSelected = newValue
       }
     },
+    selectedIndex () {
+      return this.rhs.findIndex(rh => rh.id === this.selected.id)
+    },
     name: {
       get () {
         return this.selected.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'name',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     },
     title: {
@@ -144,7 +157,17 @@ export default {
         return this.serviceSelected.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.serviceSelected.id,
+          'label': 'name',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+        })
       }, 400)
     },
     competencies: {
@@ -152,7 +175,17 @@ export default {
         return this.selected.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'competencies',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     },
     cost: {
@@ -160,7 +193,17 @@ export default {
         return this.selected.cost
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
+        let data = {
+          'id': this.selected.id,
+          'label': 'cost',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+        })
       }, 400)
     }
   },

@@ -16,6 +16,12 @@ const mutations = {
   },
   SET_RH_SERVICE (state, rhByService) {
     state.rhByService = rhByService
+  },
+  UPDATE_RH (state, payload) {
+    console.log(payload)
+    const rh = payload[0]
+    const index = payload[1]
+    state.rhs.splice(index, 1, rh)
   }
 }
 
@@ -41,13 +47,7 @@ const actions = {
     commit('SET_RHS', rhs)
   },
   updateRh ({ commit }, payload) {
-    let that = payload[0]
-    let data = payload[1]
-    that.$http.put(that.$api({ target: 'rh' }), data, {
-      headers: header()
-    }).then(response => {
-      commit('SET_RHS', response.data)
-    })
+    commit('UPDATE_RH', payload)
   }
 }
 
