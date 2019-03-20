@@ -64,24 +64,24 @@
             <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
           </b-field>
           <b-field label="Experiência">
-            <b-input placeholder="Analise de dados"></b-input>
+            <b-input v-model="selected.experience" placeholder="Analise de dados"></b-input>
           </b-field>
           <b-field label="Observações">
-            <textarea name="" id="" cols="40" rows="4"></textarea>
+            <textarea v-model="selected.observations" name="" id="" cols="40" rows="4"></textarea>
           </b-field>
           <div class="course">
             <b-field label="Bacharelado">
-              <b-input placeholder="Matemática"></b-input>
+              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
             </b-field>
             <b-field label="Título">
-              <b-input placeholder="Doutorado"></b-input>
+              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
             </b-field>
             <b-field label="Custo">
               <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
             </b-field>
           </div>
           <b-field label="Atividade">
-            <b-input placeholder="Produção de PANIC"></b-input>
+            <b-input v-model="selected.activity" placeholder="Produção de PANIC"></b-input>
           </b-field>
         </div>
       </div>
@@ -173,6 +173,22 @@ export default {
         })
       }, 400)
     },
+    bacharel: {
+      get () {
+        return (this.selected.academics === undefined ? undefined : (this.selected.academics.length === 0 ? undefined : this.selected.academics[0].description))
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      })
+    },
+    titulo: {
+      get () {
+        return (this.selected.academics === undefined ? undefined : (this.selected.academics.length === 0 ? undefined : this.selected.academics[1].description))
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      })
+    },
     phone: {
       get () {
         return this.selected.phone
@@ -249,6 +265,7 @@ export default {
   },
   beforeMount () {
     this.getRhs(this)
+    // console.log(this.rhs[2].academics[0])
   },
   methods: {
     ...mapActions([

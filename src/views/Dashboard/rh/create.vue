@@ -58,24 +58,24 @@
             <b-input v-model="rh.competencies" placeholder="Analise de dados" required></b-input>
           </b-field>
           <b-field label="Experiência">
-            <b-input placeholder="Analise de dados" required></b-input>
+            <b-input v-model="rh.experience" placeholder="Analise de dados" required></b-input>
           </b-field>
           <b-field label="Observações">
-            <textarea name="" id="" cols="40" rows="4" required></textarea>
+            <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
           </b-field>
           <div class="course">
             <b-field label="Bacharelado">
-              <b-input placeholder="Matemática" required></b-input>
+              <b-input v-model="rh.academic.bacharelado" placeholder="Matemática" required></b-input>
             </b-field>
             <b-field label="Título">
-              <b-input placeholder="Doutorado" required></b-input>
+              <b-input v-model="rh.academic.titulo" placeholder="Doutorado" required></b-input>
             </b-field>
             <b-field label="Custo">
               <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
             </b-field>
           </div>
           <b-field label="Atividade">
-            <b-input placeholder="Produção de PANIC" required></b-input>
+            <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
           </b-field>
           <div class="buttonCreate">
             <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
@@ -100,7 +100,14 @@ export default {
         name: undefined,
         phone: undefined,
         cost: undefined,
-        competencies: undefined
+        competencies: undefined,
+        observatios: undefined,
+        experience: undefined,
+        academic: {
+          bacharelado: undefined,
+          titulo: undefined
+        },
+        activity: undefined
       },
       money: {
         decimal: '.',

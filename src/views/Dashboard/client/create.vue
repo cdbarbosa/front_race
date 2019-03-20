@@ -57,10 +57,10 @@
       <div class="others">
         <h3>Outros</h3>
         <b-field label="Observações">
-          <textarea name="" id="" cols="30" rows="11" required></textarea>
+          <textarea v-model="client.observations" name="" id="" cols="30" rows="11" required></textarea>
         </b-field>
         <b-field label="Atividade">
-          <b-input placeholder="Produçaõ de PANIC" required></b-input>
+          <b-input v-model="client.activity" placeholder="Produçaõ de PANIC" required></b-input>
         </b-field>
         <div class="buttonClass">
           <!-- Só cadastra quando a data de nascimento estiver correta -->
@@ -82,7 +82,9 @@ export default {
     return {
       client: {
         name: undefined,
-        phone: undefined
+        phone: undefined,
+        activity: undefined,
+        observations: undefined
       }
     }
   },

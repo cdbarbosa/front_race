@@ -62,10 +62,10 @@
         <div class="others">
           <h3>Outros</h3>
           <b-field label="Observações">
-            <textarea name="" id="" cols="30" rows="11" style="width: 100%"></textarea>
+            <textarea v-model="selected.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea>
           </b-field>
           <b-field label="Atividade">
-            <b-input placeholder="Produçaõ de PANIC"></b-input>
+            <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC"></b-input>
           </b-field>
         </div>
       </div>
