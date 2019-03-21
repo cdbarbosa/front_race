@@ -5,7 +5,7 @@
         <div class="client">
           <h3>
             Cliente
-            <div @click="isEditActive = true">
+            <div id="edit" @click="isEditActive = true">
               <b-icon icon="edit"></b-icon>
             </div>
           </h3>
@@ -197,8 +197,7 @@ export default {
     },
     parseModal () {
       if (this.clientCreated === undefined) {
-        return ''
-        // return 'createClient'
+        return 'createClient'
       } else if (this.clientCreated === true) {
         return 'success'
       }

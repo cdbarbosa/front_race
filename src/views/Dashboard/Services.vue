@@ -1,9 +1,14 @@
 <template>
-  <div id="service" v-if="selected !== undefined">
+  <main id="service" v-if="selected !== undefined">
     <div id="showService">
-      <h2>Serviços</h2>
       <div class="service-information">
         <div class="description-service">
+          <h3>
+            Serviços
+            <div id="edit" @click="isEditActive = true">
+              <b-icon icon="edit"></b-icon>
+            </div>
+          </h3>
           <div class="info-one">
             <b-field label="Título">
               <textarea v-model="name" name="" rows="4"></textarea>
@@ -102,7 +107,7 @@
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false" :props="[selected.client.name, selected.client.id]"></component>
     </b-modal>
-  </div>
+  </main>
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -116,6 +121,7 @@ export default {
   name: 'showService',
   data () {
     return {
+      isEditActive: false,
       radio: '',
       searchQuery: undefined,
       serviceCreated: undefined,

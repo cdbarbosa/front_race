@@ -1,9 +1,14 @@
 <template>
-  <div id="rhs" v-if="selected !== undefined">
-    <h2>RH's</h2>
+  <main id="rhs" v-if="selected !== undefined">
     <div class="info">
       <div class="content">
-        <div class="infoRh">
+        <div class="rh">
+          <h3>
+            RH's
+            <div id="edit" @click="isEditActive = true">
+              <b-icon icon="edit"></b-icon>
+            </div>
+          </h3>
           <div class="info-first">
             <b-field label="Nome">
               <b-input v-model="name" placeholder="Nome"></b-input>
@@ -112,7 +117,7 @@
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
     </b-modal>
-  </div>
+  </main>
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -128,6 +133,7 @@ export default {
   mixins: [computedFields],
   data () {
     return {
+      isEditActive: false,
       rhCreated: undefined,
       isModalActive: false,
       rhSelected: undefined,
