@@ -1,12 +1,17 @@
 <template>
-  <main id="clients" v-if="clients.length">
+  <main id="clients" v-if="selected">
     <div id="info">
       <div class="information" v-if="selected !== undefined">
         <div class="client">
-          <h3>Cliente</h3>
+          <h3>
+            Cliente
+            <div @click="isEditActive = true">
+              <b-icon icon="edit"></b-icon>
+            </div>
+          </h3>
           <div class="info-first">
             <b-field label="Nome">
-              <b-input v-model="name" placeholder="Nome"></b-input>
+              <b-input v-model="selected.name" placeholder="Nome" disabled></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -17,19 +22,19 @@
               <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
-              <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" disabled></b-input>
             </b-field>
           </div>
           <div class="info-second">
             <b-field label="Email">
-              <b-input v-model="email" type="email" placeholder="example@example.com"></b-input>
+              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com" disabled></b-input>
             </b-field>
             <div class="block">
-              <b-radio v-model="selected.user.type.name" native-value="1">
-                Fisico
-              </b-radio>
-              <b-radio v-model="selected.user.type.name" native-value="2">
+              <b-radio v-model="selected.user.type.id" native-value="1" disabled>
                 Juridico
+              </b-radio>
+              <b-radio v-model="selected.user.type.id" native-value="2" disabled>
+                Fisico
               </b-radio>
             </div>
           </div>
@@ -40,21 +45,21 @@
             <h3>Endereço</h3>
             <div class="info-three">
               <b-field label="Rua">
-                <b-input v-model="address" placeholder="Rua"></b-input>
+                <b-input v-model="selected.user.address.address" placeholder="Rua" disabled></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="state" placeholder="ES"></b-input>
+                <b-input v-model="selected.user.address.state" placeholder="ES" disabled></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
               <b-field label="CEP">
-                <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP" disabled></b-input>
               </b-field>
               <b-field label="Bairro">
-                <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
+                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro" disabled></b-input>
               </b-field>
               <b-field label="Cidade">
-                <b-input v-model="city" placeholder="Cidade"></b-input>
+                <b-input v-model="selected.user.address.city" placeholder="Cidade" disabled></b-input>
               </b-field>
             </div>
           </div>
@@ -62,10 +67,10 @@
         <div class="others">
           <h3>Outros</h3>
           <b-field label="Observações">
-            <textarea v-model="selected.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea>
+            <textarea v-model="selected.observations" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea>
           </b-field>
           <b-field label="Atividade">
-            <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC"></b-input>
+            <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
           </b-field>
         </div>
       </div>
@@ -97,19 +102,22 @@
       <!--   Create client or display message    -->
       <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false"></component>
     </b-modal>
+    <b-modal :active.sync="isEditActive">
+      <edit-client :client="selected" :selectedIndex="selectedIndex" @updated="userSelected = clients[selectedIndex]"></edit-client>
+    </b-modal>
   </main>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import createClient from './client/create.vue'
+import editClient from './client/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
 import computedFields from '../../mixins/computedFields.js'
-// import { log } from 'util'
 export default {
   name: 'clients',
   mixins: [computedFields],
@@ -118,6 +126,7 @@ export default {
       searchQuery: '',
       clientCreated: undefined,
       isModalActive: false,
+      isEditActive: false,
       userSelected: undefined
     }
   },
@@ -140,45 +149,12 @@ export default {
     },
     selectedIndex () {
       return this.clients.findIndex(client => client.id === this.selected.id)
-    },
-    name: {
-      get () {
-        return this.selected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'name',
-          value: newVal,
-          id: this.selected.id
-        }
-        this.$http.put(this.$api({ target: 'client' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
-        })
-      }, 400)
-    },
-    phone: {
-      get () {
-        return this.selected.phone
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'phone',
-          value: newVal,
-          id: this.selected.id
-        }
-        this.$http.put(this.$api({ target: 'client' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
-        })
-      }, 400)
     }
   },
   watch: {
+    isModalActive (newVal) {
+      if (!newVal) this.clientCreated = undefined
+    },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.userSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
@@ -236,6 +212,7 @@ export default {
   },
   components: {
     createClient,
+    editClient,
     success,
     error
   }

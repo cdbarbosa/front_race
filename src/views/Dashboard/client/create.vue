@@ -20,15 +20,15 @@
           </b-field>
           <div class="block">
             <b-radio v-model="user.type_id" native-value="1">
-              Fisico
+              Juridico
             </b-radio>
             <b-radio v-model="user.type_id" native-value="2">
-              Juridico
+              Fisico
             </b-radio>
           </div>
         </div>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="cpf" name="document" required></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="cpf" name="document" required></b-input>
         </b-field>
         <address class="address">
           <h3>Endereço</h3>

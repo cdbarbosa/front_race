@@ -46,10 +46,10 @@
               <b-input v-model="profit" placeholder="50%"></b-input>
             </b-field>
             <b-field label="Valor">
-              <b-input v-model="value" placeholder="825"></b-input>
+              <b-input v-model="selected.value" placeholder="825" disabled></b-input>
             </b-field>
             <b-field label="Recebido">
-              <b-input v-model="value" placeholder="825"></b-input>
+              <b-input v-model="selected.received_value" placeholder="825" disabled></b-input>
             </b-field>
           </div>
           <b-field label="Situação">

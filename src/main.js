@@ -14,7 +14,9 @@ import { api } from './config'
 Vue.prototype.$api = api
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
-Vue.use(Buefy)
+Vue.use(Buefy, {
+  defaultIconPack: 'fas'
+})
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
 Vue.use(money, { precision: 2 })
