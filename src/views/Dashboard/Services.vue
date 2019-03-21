@@ -65,6 +65,7 @@
           </b-field>
         </div>
         <div class="description">
+          <h3>Outros</h3>
           <b-field label="Observações">
             <textarea v-model="description" name="" cols="35" rows="15"></textarea>
           </b-field>

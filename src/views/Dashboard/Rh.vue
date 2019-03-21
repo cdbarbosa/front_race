@@ -62,32 +62,33 @@
                 <b-input v-model="city" placeholder="Cidade"></b-input>
               </b-field>
             </div>
+            <div class="course">
+              <b-field label="Bacharelado">
+                <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+              </b-field>
+              <b-field label="Título">
+                <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+              </b-field>
+              <b-field label="Custo">
+                <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+              </b-field>
+            </div>
           </div>
         </div>
         <div class="competencias">
+          <h3>Outros</h3>
           <b-field label="Competências">
-            <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
+            <textarea placeholder="Analise de dados" v-model="competencies" name="" id="" cols="40" rows="4"></textarea>
           </b-field>
           <b-field label="Experiência">
-            <b-input v-model="selected.experience" placeholder="Analise de dados"></b-input>
+            <textarea placeholder="Analise de dados" v-model="selected.experience" name="" id="" cols="40" rows="4"></textarea>
           </b-field>
           <b-field label="Observações">
             <textarea v-model="selected.observations" name="" id="" cols="40" rows="4"></textarea>
           </b-field>
-          <div class="course">
-            <b-field label="Bacharelado">
-              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
-            </b-field>
-            <b-field label="Título">
-              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
-            </b-field>
-            <b-field label="Custo">
-              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
-            </b-field>
-          </div>
-          <b-field label="Atividade">
-            <b-input v-model="selected.activity" placeholder="Produção de PANIC"></b-input>
-          </b-field>
+          <!-- <b&#45;field label="Atividade"> -->
+          <!--   <b&#45;input v&#45;model="selected.activity" placeholder="Produção de PANIC"></b&#45;input> -->
+          <!-- </b&#45;field> -->
         </div>
       </div>
       <div class="serviceTable">

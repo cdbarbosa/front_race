@@ -63,8 +63,9 @@
         </div>
         <div class="others">
           <h3>Outros</h3>
-          <b-field label="Observações">
-            <textarea v-model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea>
+          <b-field label="Observações 1">
+            <!-- <textarea v&#45;model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea> -->
+            <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
           </b-field>
           <b-field label="Atividade">
             <b-input v-model="client.activity" placeholder="Produçaõ de PANIC"></b-input>
@@ -76,6 +77,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import { VueEditor } from 'vue2-editor'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
 import moment from 'moment'
@@ -85,6 +87,10 @@ export default {
   props: ['client', 'selectedIndex'],
   data () {
     return {
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
+      ]
     }
   },
   watch: {
@@ -196,6 +202,13 @@ export default {
         //   id: this.selected.user.id
         // }
       })
+    },
+    observations: {
+      get () {
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        console.log(newVal)
+      }, 400)
     }
   },
   methods: {
@@ -205,6 +218,9 @@ export default {
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     }
+  },
+  components: {
+    VueEditor
   }
 }
 </script>
