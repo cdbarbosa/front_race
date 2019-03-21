@@ -100,7 +100,11 @@
     </div>
     <b-modal :active.sync="isModalActive">
       <!--   Create client or display message    -->
-      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false"></component>
+      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false">
+        <template v-slot:message>
+            <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
+        </template>
+      </component>
     </b-modal>
     <b-modal :active.sync="isEditActive">
       <edit-client :client="selected" :selectedIndex="selectedIndex" @updated="userSelected = clients[selectedIndex]"></edit-client>
@@ -193,7 +197,8 @@ export default {
     },
     parseModal () {
       if (this.clientCreated === undefined) {
-        return 'createClient'
+        return ''
+        // return 'createClient'
       } else if (this.clientCreated === true) {
         return 'success'
       }

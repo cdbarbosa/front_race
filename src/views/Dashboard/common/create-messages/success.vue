@@ -1,6 +1,6 @@
 <template>
-  <div class="modalMessage" id="sucess">
-    <h2>Sucesso</h2>
+  <div class="modalMessage" id="success">
+    <slot name="message"></slot>
   </div>
 </template>
 <script charset="utf-8">

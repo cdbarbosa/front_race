@@ -1,6 +1,6 @@
 <template>
   <div class="modalMessage" id="error">
-    <h3>Erro</h3>
+    <slot name="message"></slot>
   </div>
 </template>
 <script charset="utf-8">

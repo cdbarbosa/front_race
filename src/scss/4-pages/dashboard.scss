@@ -1,8 +1,25 @@
 #dashboard {
- height: 100%;
- .component {
-   height: 100%;
-   display: grid;
-   grid-template-columns: 1fr 6fr;
- }
+  height: 100%;
+  .component {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+  }
+  .modalMessage{
+    height: 400px;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2{
+      color: white;
+      text-align: center;
+    }
+    &#success{
+      background: #009688;
+    }
+    &#error{
+      background: #F44336;
+    }
+  }
 }
