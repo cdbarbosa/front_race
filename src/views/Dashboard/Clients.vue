@@ -1,68 +1,15 @@
 <template>
   <main id="clients" v-if="selected">
-    <div id="info">
-      <div class="information" v-if="selected !== undefined">
-        <div class="client">
+    <div class="info">
+      <div class="content" v-if="selected !== undefined">
+        <div class="basic">
           <h3>
             Cliente
             <div id="edit" @click="isEditActive = true">
               <b-icon icon="edit"></b-icon>
             </div>
           </h3>
-          <div class="info-first">
-            <b-field label="Nome">
-              <b-input v-model="selected.name" placeholder="Nome" disabled></b-input>
-            </b-field>
-            <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="23" disabled></b-input>
-            </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Cadastro">
-              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" disabled></b-input>
-            </b-field>
-            <b-field label="Telefone">
-              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" disabled></b-input>
-            </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Email">
-              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com" disabled></b-input>
-            </b-field>
-            <div class="block">
-              <b-radio v-model="selected.user.type.id" native-value="1" disabled>
-                Juridico
-              </b-radio>
-              <b-radio v-model="selected.user.type.id" native-value="2" disabled>
-                Fisico
-              </b-radio>
-            </div>
-          </div>
-          <b-field label="CPF/CNPJ">
-            <b-input v-model="selected.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
-          </b-field>
-          <div class="address">
-            <h3>Endereço</h3>
-            <div class="info-three">
-              <b-field label="Rua">
-                <b-input v-model="selected.user.address.address" placeholder="Rua" disabled></b-input>
-              </b-field>
-              <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" placeholder="ES" disabled></b-input>
-              </b-field>
-            </div>
-            <div class="info-fourth">
-              <b-field label="CEP">
-                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP" disabled></b-input>
-              </b-field>
-              <b-field label="Bairro">
-                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro" disabled></b-input>
-              </b-field>
-              <b-field label="Cidade">
-                <b-input v-model="selected.user.address.city" placeholder="Cidade" disabled></b-input>
-              </b-field>
-            </div>
-          </div>
+          <client :person="selected" ></client>
         </div>
         <div class="others">
           <h3>Outros</h3>
@@ -119,6 +66,7 @@ import createClient from './client/create.vue'
 import editClient from './client/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
+import client from './common/ComponentGeneric.vue'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
@@ -215,6 +163,7 @@ export default {
   },
   components: {
     createClient,
+    client,
     editClient,
     success,
     error

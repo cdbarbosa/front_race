@@ -56,6 +56,17 @@
                 <b-input v-model="city" placeholder="Cidade"></b-input>
               </b-field>
             </div>
+            <div class="course">
+            <b-field label="Bacharelado">
+              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+            </b-field>
+            <b-field label="Título">
+              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+            </b-field>
+            <b-field label="Custo">
+              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+            </b-field>
+          </div>
           </div>
         </div>
         <div class="competencias">
@@ -68,17 +79,6 @@
           <b-field label="Observações">
             <textarea v-model="rh.observations" name="" id="" cols="40" rows="4"></textarea>
           </b-field>
-          <div class="course">
-            <b-field label="Bacharelado">
-              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
-            </b-field>
-            <b-field label="Título">
-              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
-            </b-field>
-            <b-field label="Custo">
-              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
-            </b-field>
-          </div>
           <b-field label="Atividade">
             <b-input v-model="rh.activity" placeholder="Produção de PANIC"></b-input>
           </b-field>
