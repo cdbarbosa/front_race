@@ -1,22 +1,19 @@
 <template>
-  <div class="clientScreen" id="updateClient">
-    <div class="content">
-      <div class="information">
-        <div class="client">
-          <h3>
-            Cliente
-          </h3>
+  <div class="rhScreen" id="updateRh">
+     <div class="content">
+        <div class="rh">
+          <h3>RH's</h3>
           <div class="info-first">
             <b-field label="Nome">
               <b-input v-model="name" placeholder="Nome"></b-input>
             </b-field>
             <b-field label="ID">
-              <b-input v-model="client.id" placeholder="23" disabled></b-input>
+              <b-input v-model="rh.id" placeholder="23" disabled></b-input>
             </b-field>
           </div>
           <div class="info-second">
             <b-field label="Cadastro">
-              <b-input :value="parseDate(client.created_at)" v-mask="'##/##/####'" disabled></b-input>
+              <b-input :value="parseDate(rh.created_at)" placeholder="Cadastro" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
               <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
@@ -24,19 +21,19 @@
           </div>
           <div class="info-second">
             <b-field label="Email">
-              <b-input v-model="client.user.email" type="email" placeholder="example@example.com" disabled></b-input>
+              <b-input v-model="rh.user.email" type="email" placeholder="example@example.com" disabled></b-input>
             </b-field>
             <div class="block">
-              <b-radio v-model="client.user.type.id" native-value="1" disabled>
+              <b-radio v-model="rh.user.type.id" native-value="1" disabled>
                 Juridico
               </b-radio>
-              <b-radio v-model="client.user.type.id" native-value="2" disabled>
+              <b-radio v-model="rh.user.type.id" native-value="2" disabled>
                 Fisico
               </b-radio>
             </div>
           </div>
           <b-field label="CPF/CNPJ">
-            <b-input v-model="client.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
+            <b-input v-model="rh.user.document" v-mask="'###.###.###-##'" placeholder="cpf" disabled></b-input>
           </b-field>
           <div class="address">
             <h3>Endereço</h3>
@@ -61,36 +58,44 @@
             </div>
           </div>
         </div>
-        <div class="others">
-          <h3>Outros</h3>
-          <b-field label="Observações 1">
-            <!-- <textarea v&#45;model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea> -->
-            <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
+        <div class="competencias">
+          <b-field label="Competências">
+            <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
           </b-field>
+          <b-field label="Experiência">
+            <b-input v-model="rh.experience" placeholder="Analise de dados"></b-input>
+          </b-field>
+          <b-field label="Observações">
+            <textarea v-model="rh.observations" name="" id="" cols="40" rows="4"></textarea>
+          </b-field>
+          <div class="course">
+            <b-field label="Bacharelado">
+              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+            </b-field>
+            <b-field label="Título">
+              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+            </b-field>
+            <b-field label="Custo">
+              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+            </b-field>
+          </div>
           <b-field label="Atividade">
-            <b-input v-model="client.activity" placeholder="Produçaõ de PANIC"></b-input>
+            <b-input v-model="rh.activity" placeholder="Produção de PANIC"></b-input>
           </b-field>
         </div>
-      </div>
     </div>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
-import { VueEditor } from 'vue2-editor'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
 import moment from 'moment'
-// import userCreate from '../../../mixins/userCreate'
 export default {
-  name: 'updateClient',
-  props: ['client', 'selectedIndex'],
+  name: 'updateRh',
+  props: ['rh', 'selectedIndex'],
   data () {
     return {
-      customToolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
-      ]
     }
   },
   watch: {
@@ -100,64 +105,80 @@ export default {
   computed: {
     name: {
       get () {
-        return this.client.name
+        return this.rh.name
       },
       set: _.debounce(function (newVal, oldVal) {
         let data = {
           label: 'name',
           value: newVal,
-          id: this.client.id
+          id: this.rh.id
         }
-        this.$http.put(this.$api({ target: 'client' }), data, {
+        this.$http.put(this.$api({ target: 'rh' }), data, {
           headers: header()
         }).then(response => {
           let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
+          this.updaterh(payload)
           this.$emit('updated')
         })
       }, 400)
     },
     phone: {
       get () {
-        return this.client.phone
+        return this.rh.phone
       },
       set: _.debounce(function (newVal, oldVal) {
         let data = {
           label: 'phone',
           value: newVal,
-          id: this.client.id
+          id: this.rh.id
         }
-        this.$http.put(this.$api({ target: 'client' }), data, {
+        this.$http.put(this.$api({ target: 'rh' }), data, {
           headers: header()
         }).then(response => {
           let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
+          this.updaterh(payload)
           this.$emit('updated')
         })
       }, 400)
     },
+    bacharel: {
+      get () {
+        return (this.rh.academics === undefined ? undefined : (this.rh.academics.length === 0 ? undefined : this.rh.academics[0].description))
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      })
+    },
+    titulo: {
+      get () {
+        return (this.rh.academics === undefined ? undefined : (this.rh.academics.length === 0 ? undefined : this.rh.academics[1].description))
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        //
+      })
+    },
     email: {
       get () {
-        return this.client.user.email
+        return this.rh.user.email
       },
       set: _.debounce(function (newVal, oldVal) {
       }, 400)
     },
     address: {
       get () {
-        return this.client.user.address.address
+        return this.rh.user.address.address
       },
       set: _.debounce(function (newVal, oldVal) {
         // let data = {
         //   label: 'address',
         //   value: newVal,
-        //   id: this.selected.user.id
+        //   id: this.rh.user.id
         // }
       })
     },
     state: {
       get () {
-        return this.client.user.address.state
+        return this.rh.user.address.state
       },
       set: _.debounce(function (newVal, oldVal) {
         // let data = {
@@ -169,7 +190,7 @@ export default {
     },
     postal_code: {
       get () {
-        return this.client.user.address.postal_code
+        return this.rh.user.address.postal_code
       },
       set: _.debounce(function (newVal, oldVal) {
         // let data = {
@@ -181,7 +202,7 @@ export default {
     },
     neighborhood: {
       get () {
-        return this.client.user.address.neighborhood
+        return this.rh.user.address.neighborhood
       },
       set: _.debounce(function (newVal, oldVal) {
         // let data = {
@@ -193,7 +214,7 @@ export default {
     },
     city: {
       get () {
-        return this.client.user.address.city
+        return this.rh.user.address.city
       },
       set: _.debounce(function (newVal, oldVal) {
         // let data = {
@@ -202,26 +223,15 @@ export default {
         //   id: this.selected.user.id
         // }
       })
-    },
-    observations: {
-      get () {
-        return this.client.observations
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal)
-      }, 400)
     }
   },
   methods: {
     ...mapActions([
-      'updateClient'
+      'updateRh'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     }
-  },
-  components: {
-    VueEditor
   }
 }
 </script>

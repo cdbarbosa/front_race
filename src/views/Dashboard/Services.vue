@@ -11,7 +11,7 @@
           </h3>
           <div class="info-one">
             <b-field label="Título">
-              <textarea v-model="name" name="" rows="4"></textarea>
+              <textarea v-model="selected.name" name="" rows="4" disabled></textarea>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -19,13 +19,13 @@
           </div>
           <div class="info-two">
             <b-field label="Data de registro">
-              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="register"></b-input>
+              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
             </b-field>
             <b-field label="Previsão">
-              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
+              <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="date" disabled></b-input>
             </b-field>
             <b-field label="Prazo">
-              <b-input :value="parseDate(selected.due_date)" v-mask="'##/##/####'" placeholder="data" name="date-duo"></b-input>
+              <b-input :value="parseDate(selected.due_date)" v-mask="'##/##/####'" placeholder="data" name="date-duo" disabled></b-input>
             </b-field>
           </div>
           <div class="info-three">
@@ -34,13 +34,13 @@
             </b-field>
             <b-field label="Sigilo">
               <div class="block">
-                <b-radio v-model="radio" native-value="Nenhum">
+                <b-radio v-model="radio" native-value="Nenhum" disabled>
                   Nenhum
                 </b-radio>
-                <b-radio v-model="radio" native-value="Parcial">
+                <b-radio v-model="radio" native-value="Parcial" disabled>
                   Parcial
                 </b-radio>
-                <b-radio v-model="radio" native-value="Total">
+                <b-radio v-model="radio" native-value="Total" disabled>
                   Total
                 </b-radio>
               </div>
@@ -48,7 +48,7 @@
           </div>
           <div class="info-four">
             <b-field label="Margem">
-              <b-input v-model="profit" placeholder="50%"></b-input>
+              <b-input v-model="selected.profit" placeholder="50%" disabled></b-input>
             </b-field>
             <b-field label="Valor">
               <b-input v-model="selected.value" placeholder="825" disabled></b-input>
@@ -67,7 +67,7 @@
         <div class="description">
           <h3>Outros</h3>
           <b-field label="Observações">
-            <textarea v-model="description" name="" cols="35" rows="15"></textarea>
+            <textarea v-model="selected.description" name="" cols="35" rows="15" disabled></textarea>
           </b-field>
         </div>
         <div class="buttonsRoutes">
@@ -108,11 +108,16 @@
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false" :props="[selected.client.name, selected.client.id]"></component>
     </b-modal>
+
+    <b-modal :active.sync="isEditActive">
+      <service-edit :service="selected" :selectedIndex="selectedIndex" @update="serviceSelected = services[selectedIndex]"></service-edit>
+    </b-modal>
   </main>
 </template>
 <script>
 import { mapActions } from 'vuex'
 import moment from 'moment'
+import serviceEdit from './services/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import createService from './services/create.vue'
@@ -149,78 +154,6 @@ export default {
     },
     selectedIndex () {
       return this.services.findIndex(service => service.id === this.selected.id)
-    },
-    name: {
-      get () {
-        return this.selected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
-    },
-    profit: {
-      get () {
-        return this.selected.profit
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'profit',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
-    },
-    value: {
-      get () {
-        return this.selected.value
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'value',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
-    },
-    description: {
-      get () {
-        return this.selected.description
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'description',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
     }
   },
   watch: {
@@ -247,8 +180,7 @@ export default {
   methods: {
     ...mapActions([
       'getServices',
-      'changeServices',
-      'updateService'
+      'changeServices'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -274,6 +206,7 @@ export default {
   },
   components: {
     createService,
+    serviceEdit,
     success,
     error
   }
