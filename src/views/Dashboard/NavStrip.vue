@@ -12,6 +12,7 @@
         <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id || 1 } }">
           Serviços
         </router-link>
+        <li @click="logout">Sair</li>
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
     </div>
@@ -30,23 +31,10 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters([
-    //   'services',
-    //   'clients',
-    //   'rhs'
-    // ])
   },
   methods: {
-    // ...mapActions([
-    //   'getRhs',
-    //   'getServices',
-    //   'getClients'
-    // ])
-  },
-  beforeMount () {
-    // this.getRhs(this)
-    // this.getServices(this)
-    // this.getClients(this)
+    logout () {
+    }
   }
 }
 </script>

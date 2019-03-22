@@ -73,7 +73,7 @@
         </div>
         <div class="buttonsRoutes">
           <router-link tag="button" class="is-primary" :to="{ name: 'vueDetails' }">Detalhes</router-link>
-          <router-link v-if="selected !== undefined" tag="button" class="is-primary" :to="{ name: 'receipt', params: { receipt_id: selected.id } }">Recebimentos</router-link>
+          <router-link v-if="selected !== undefined" tag="button" class="is-primary" :to="{ name: 'receipt', params: { service_id: selected.id } }">Recebimentos</router-link>
         </div>
       </div>
        <div class="serviceTable">

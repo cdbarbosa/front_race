@@ -61,11 +61,6 @@ const actions = {
       }), {
         headers: header()
       }).then(response => {
-        // that.$http.get(that.$api({ target: 'client' }), {
-        //   headers: header()
-        // }).then(response => {
-        //   commit('SET_CLIENT', response.data)
-        // })
         resolve(response)
       }).catch(err => {
         reject(err)

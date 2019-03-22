@@ -47,7 +47,7 @@ export default new Router({
           component: Service
         },
         {
-          path: 'service/:service_id/receipt/:receipt_id',
+          path: 'service/:service_id/receipt/:receipt_id?',
           name: 'receipt',
           component: Receipt
         },
