@@ -18,10 +18,19 @@ const mutations = {
     state.rhByService = rhByService
   },
   UPDATE_RH (state, payload) {
-    console.log(payload)
     const rh = payload[0]
     const index = payload[1]
     state.rhs.splice(index, 1, rh)
+  },
+  UPDATE_RH_ADDRESS (state, payload) {
+    const address = payload[0]
+    const index = payload[1]
+    state.rhs[index].user.address = address
+  },
+  UPDATE_RH_ACADEMICS (state, payload) {
+    const academic = payload[0]
+    const index = payload[1]
+    state.rhs[index].academics = academic
   }
 }
 
@@ -48,6 +57,12 @@ const actions = {
   },
   updateRh ({ commit }, payload) {
     commit('UPDATE_RH', payload)
+  },
+  updateRhAddress ({ commit }, payload) {
+    commit('UPDATE_RH_ADDRESS', payload)
+  },
+  updateRhAcademics ({ commit }, payload) {
+    commit('UPDATE_RH_ACADEMICS', payload)
   }
 }
 

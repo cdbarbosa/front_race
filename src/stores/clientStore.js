@@ -16,6 +16,11 @@ const mutations = {
     const client = payload[0] // the new object
     const index = payload[1] // the index where i shoud but it
     state.clients.splice(index, 1, client)
+  },
+  UPDATE_CLIENT_ADDRESS (state, payload) {
+    const address = payload[0]
+    const index = payload[1]
+    state.clients[index].user.address = address
   }
 }
 
@@ -32,6 +37,9 @@ const actions = {
   },
   updateClient ({ commit }, payload) {
     commit('UPDATE_CLIENT', payload)
+  },
+  updateClientAddress ({ commit }, payload) {
+    commit('UPDATE_CLIENT_ADDRESS', payload)
   }
 }
 

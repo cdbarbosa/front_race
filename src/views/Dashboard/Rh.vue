@@ -63,14 +63,16 @@
               </b-field>
             </div>
             <div class="course">
+              <!-- <p>Academics</p>
+              {{ selected.academics[0].area }} -->
               <b-field label="Bacharelado">
-                <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+                <b-input v-model="area" placeholder="Matemática" disabled></b-input>
               </b-field>
               <b-field label="Título">
-                <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+                <b-input v-model="degree" placeholder="Doutorado" disabled></b-input>
               </b-field>
               <b-field label="Custo">
-                <b-input v-model="selected.cost" placeholder="R$ 131,00"></b-input>
+                <b-input v-model="selected.cost" placeholder="R$ 131,00" disabled></b-input>
               </b-field>
             </div>
           </div>
@@ -78,11 +80,11 @@
         <div class="competencias">
           <h3>Outros</h3>
           <b-field label="Competências">
-            <div class="textarea" v-html="selected.competencies"></div>
+            <div class="textarea" v-html="selected.competencies" disabled></div>
             <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
           </b-field>
           <b-field label="Experiência">
-            <textarea placeholder="Analise de dados" v-model="selected.experience" name="" id="" cols="40" rows="4"></textarea>
+            <textarea placeholder="Analise de dados" v-model="selected.experience" name="" id="" cols="40" rows="4" disabled></textarea>
           </b-field>
           <b-field label="Observações">
             <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
@@ -161,75 +163,15 @@ export default {
     selectedIndex () {
       return this.rhs.findIndex(rh => rh.id === this.selected.id)
     },
-    bacharel: {
+    area: {
       get () {
-        return (this.selected.academics === undefined ? undefined : (this.selected.academics.length === 0 ? undefined : this.selected.academics[0].description))
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        //
-      })
+        return this.selected.academics.length > 0 ? this.selected.academics[0].area : undefined
+      }
     },
-    titulo: {
+    degree: {
       get () {
-        return (this.selected.academics === undefined ? undefined : (this.selected.academics.length === 0 ? undefined : this.selected.academics[1].description))
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        //
-      })
-    },
-    phone: {
-      get () {
-        return this.selected.phone
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   'id': this.selected.id,
-        //   'label': 'phone',
-        //   'value': newVal
-        // }
-        // this.$http.put(this.$api({ target: 'rh' }), data, {
-        //   headers: header()
-        // }).then(response => {
-        //   let payload = [response.data, this.selectedIndex]
-        //   this.updateRh(payload)
-        // })
-      }, 400)
-    },
-    competencies: {
-      get () {
-        return this.selected.competencies
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   'id': this.selected.id,
-        //   'label': 'competencies',
-        //   'value': newVal
-        // }
-        // this.$http.put(this.$api({ target: 'rh' }), data, {
-        //   headers: header()
-        // }).then(response => {
-        //   let payload = [response.data, this.selectedIndex]
-        //   this.updateRh(payload)
-        // })
-      }, 400)
-    },
-    cost: {
-      get () {
-        return this.selected.cost
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   'id': this.selected.id,
-        //   'label': 'cost',
-        //   'value': newVal
-        // }
-        // this.$http.put(this.$api({ target: 'rh' }), data, {
-        //   headers: header()
-        // }).then(response => {
-        //   let payload = [response.data, this.selectedIndex]
-        //   this.updateRh(payload)
-        // })
-      }, 400)
+        return this.selected.academics.length > 0 ? this.selected.academics[0].degree : undefined
+      }
     }
   },
   watch: {
@@ -253,7 +195,7 @@ export default {
   },
   beforeMount () {
     this.getRhs(this)
-    // console.log(this.rhs[2].academics[0])
+    // console.log(this.rhs[0].academics)
   },
   methods: {
     ...mapActions([

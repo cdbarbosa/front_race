@@ -65,10 +65,10 @@
           </b-field>
           <div class="course">
             <b-field label="Bacharelado">
-              <b-input v-model="rh.academic.bacharelado" placeholder="Matemática" required></b-input>
+              <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
             </b-field>
             <b-field label="Título">
-              <b-input v-model="rh.academic.titulo" placeholder="Doutorado" required></b-input>
+              <b-input v-model="rh.academic.degree" placeholder="Doutorado" required></b-input>
             </b-field>
             <b-field label="Custo">
               <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
@@ -104,8 +104,8 @@ export default {
         observatios: undefined,
         experience: undefined,
         academic: {
-          bacharelado: undefined,
-          titulo: undefined
+          area: undefined,
+          degree: undefined
         },
         activity: undefined
       },

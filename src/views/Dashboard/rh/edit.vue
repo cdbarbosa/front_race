@@ -117,7 +117,7 @@ export default {
           headers: header()
         }).then(response => {
           let payload = [response.data, this.selectedIndex]
-          this.updaterh(payload)
+          this.updateRh(payload)
           this.$emit('updated')
         })
       }, 400)
@@ -136,32 +136,89 @@ export default {
           headers: header()
         }).then(response => {
           let payload = [response.data, this.selectedIndex]
-          this.updaterh(payload)
+          this.updateRh(payload)
+          this.$emit('updated')
+        })
+      }, 400)
+    },
+    competencies: {
+      get () {
+        return this.rh.competencies
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          label: 'competencies',
+          value: newVal,
+          id: this.rh.id
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
+          this.$emit('updated')
+        })
+      }, 400)
+    },
+    cost: {
+      get () {
+        return this.rh.cost
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          label: 'cost',
+          value: newVal,
+          id: this.rh.id
+        }
+        this.$http.put(this.$api({ target: 'rh' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRh(payload)
           this.$emit('updated')
         })
       }, 400)
     },
     bacharel: {
       get () {
-        return (this.rh.academics === undefined ? undefined : (this.rh.academics.length === 0 ? undefined : this.rh.academics[0].description))
+        return this.rh.academics ? this.rh.academics.area : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
-      })
+        let data = {
+          label: 'area',
+          value: newVal,
+          id: this.rh.academics.id,
+          rh_id: this.rh.id
+        }
+        this.$http.put(this.$api({ target: 'rhacademic' }), data, {
+          headers: header()
+        }).then(response => {
+          console.log(response.data)
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAcademics(payload)
+          this.$emit('update')
+        })
+      }, 400)
     },
     titulo: {
       get () {
-        return (this.rh.academics === undefined ? undefined : (this.rh.academics.length === 0 ? undefined : this.rh.academics[1].description))
+        return this.academics ? this.rh.academics.degree : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        //
-      })
-    },
-    email: {
-      get () {
-        return this.rh.user.email
-      },
-      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          label: 'degree',
+          value: newVal,
+          id: this.rh.academics.id,
+          rh_id: this.rh.id
+        }
+        this.$http.put(this.$api({ target: 'rhacademic' }), data, {
+          headers: header()
+        }).then(response => {
+          console.log(response.data)
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAcademics(payload)
+          this.$emit('update')
+        })
       }, 400)
     },
     address: {
@@ -169,11 +226,18 @@ export default {
         return this.rh.user.address.address
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'address',
-        //   value: newVal,
-        //   id: this.rh.user.id
-        // }
+        let data = {
+          label: 'address',
+          value: newVal,
+          id: this.rh.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     state: {
@@ -181,11 +245,18 @@ export default {
         return this.rh.user.address.state
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'state',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'state',
+          value: newVal,
+          id: this.rh.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     postal_code: {
@@ -193,11 +264,18 @@ export default {
         return this.rh.user.address.postal_code
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'postal_code',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'postal_code',
+          value: newVal,
+          id: this.rh.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     neighborhood: {
@@ -205,11 +283,18 @@ export default {
         return this.rh.user.address.neighborhood
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'neighborhood',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'neighborhood',
+          value: newVal,
+          id: this.rh.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     city: {
@@ -217,17 +302,26 @@ export default {
         return this.rh.user.address.city
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'city',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'city',
+          value: newVal,
+          id: this.rh.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateRhAddress(payload)
+          this.$emit('updated')
+        })
       })
     }
   },
   methods: {
     ...mapActions([
-      'updateRh'
+      'updateRh',
+      'updateRhAddress',
+      'updateRhAcademics'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

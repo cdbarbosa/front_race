@@ -136,23 +136,23 @@ export default {
         })
       }, 400)
     },
-    email: {
-      get () {
-        return this.client.user.email
-      },
-      set: _.debounce(function (newVal, oldVal) {
-      }, 400)
-    },
     address: {
       get () {
         return this.client.user.address.address
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'address',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'address',
+          value: newVal,
+          id: this.client.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClientAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     state: {
@@ -160,11 +160,18 @@ export default {
         return this.client.user.address.state
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'state',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'state',
+          value: newVal,
+          id: this.client.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClientAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     postal_code: {
@@ -172,11 +179,18 @@ export default {
         return this.client.user.address.postal_code
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'postal_code',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'postal_code',
+          value: newVal,
+          id: this.client.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClientAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     neighborhood: {
@@ -184,11 +198,18 @@ export default {
         return this.client.user.address.neighborhood
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'neighborhood',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'neighborhood',
+          value: newVal,
+          id: this.client.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClientAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     city: {
@@ -196,11 +217,18 @@ export default {
         return this.client.user.address.city
       },
       set: _.debounce(function (newVal, oldVal) {
-        // let data = {
-        //   label: 'city',
-        //   value: newVal,
-        //   id: this.selected.user.id
-        // }
+        let data = {
+          label: 'city',
+          value: newVal,
+          id: this.client.user.address.id
+        }
+        this.$http.put(this.$api({ target: 'address' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClientAddress(payload)
+          this.$emit('updated')
+        })
       })
     },
     observations: {
@@ -225,7 +253,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'updateClient'
+      'updateClient',
+      'updateClientAddress'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
