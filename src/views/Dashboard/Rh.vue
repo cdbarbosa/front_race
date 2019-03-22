@@ -78,7 +78,8 @@
         <div class="competencias">
           <h3>Outros</h3>
           <b-field label="Competências">
-            <textarea placeholder="Analise de dados" v-model="competencies" name="" id="" cols="40" rows="4"></textarea>
+            <div class="input" v-html="selected.competencies"></div>
+            <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
           </b-field>
           <b-field label="Experiência">
             <textarea placeholder="Analise de dados" v-model="selected.experience" name="" id="" cols="40" rows="4"></textarea>
@@ -201,17 +202,17 @@ export default {
         return this.selected.phone
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'phone',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
+        // let data = {
+        //   'id': this.selected.id,
+        //   'label': 'phone',
+        //   'value': newVal
+        // }
+        // this.$http.put(this.$api({ target: 'rh' }), data, {
+        //   headers: header()
+        // }).then(response => {
+        //   let payload = [response.data, this.selectedIndex]
+        //   this.updateRh(payload)
+        // })
       }, 400)
     },
     competencies: {
@@ -219,17 +220,17 @@ export default {
         return this.selected.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'competencies',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
+        // let data = {
+        //   'id': this.selected.id,
+        //   'label': 'competencies',
+        //   'value': newVal
+        // }
+        // this.$http.put(this.$api({ target: 'rh' }), data, {
+        //   headers: header()
+        // }).then(response => {
+        //   let payload = [response.data, this.selectedIndex]
+        //   this.updateRh(payload)
+        // })
       }, 400)
     },
     cost: {
@@ -237,17 +238,17 @@ export default {
         return this.selected.cost
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'cost',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
+        // let data = {
+        //   'id': this.selected.id,
+        //   'label': 'cost',
+        //   'value': newVal
+        // }
+        // this.$http.put(this.$api({ target: 'rh' }), data, {
+        //   headers: header()
+        // }).then(response => {
+        //   let payload = [response.data, this.selectedIndex]
+        //   this.updateRh(payload)
+        // })
       }, 400)
     }
   },
