@@ -67,7 +67,8 @@
         <div class="description">
           <h3>Outros</h3>
           <b-field label="Observações">
-            <textarea v-model="selected.description" name="" cols="35" rows="15" disabled></textarea>
+            <div class="textarea" v-html="selected.description"></div>
+            <!-- <textarea v&#45;model="selected.description" name="" cols="35" rows="15" disabled></textarea> -->
           </b-field>
         </div>
         <div class="buttonsRoutes">
