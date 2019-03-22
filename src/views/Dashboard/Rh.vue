@@ -9,72 +9,19 @@
               <b-icon icon="edit"></b-icon>
             </div>
           </h3>
-          <div class="info-first">
-            <b-field label="Nome">
-              <b-input v-model="selected.name" placeholder="Nome" disabled></b-input>
+          <basic-rh :person="selected"></basic-rh>
+          <div class="course">
+            <!-- <p>Academics</p>
+            {{ selected.academics[0].area }} -->
+            <b-field label="Bacharelado">
+              <b-input v-model="area" placeholder="Matemática" disabled></b-input>
             </b-field>
-            <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="23" disabled></b-input>
+            <b-field label="Título">
+              <b-input v-model="degree" placeholder="Doutorado" disabled></b-input>
             </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Cadastro">
-              <b-input :value="parseDate(selected.created_at)" placeholder="Cadastro" disabled></b-input>
+            <b-field label="Custo">
+              <b-input v-model="selected.cost" placeholder="R$ 131,00" disabled></b-input>
             </b-field>
-            <b-field label="Telefone">
-              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" disabled></b-input>
-            </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Email">
-              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com" disabled></b-input>
-            </b-field>
-            <div class="block">
-              <b-radio v-model="selected.user.type.id" native-value="1" disabled>
-                Juridico
-              </b-radio>
-              <b-radio v-model="selected.user.type.id" native-value="2" disabled>
-                Fisico
-              </b-radio>
-            </div>
-          </div>
-          <b-field label="CPF/CNPJ">
-            <b-input v-model="selected.user.document" v-mask="'###.###.###-##'" placeholder="cpf" disabled></b-input>
-          </b-field>
-          <div class="address">
-            <h3>Endereço</h3>
-            <div class="info-three">
-              <b-field label="Rua">
-                <b-input v-model="selected.user.address.address" placeholder="Rua" disabled></b-input>
-              </b-field>
-              <b-field label="Estado">
-                <b-input v-model="selected.user.address.state" placeholder="ES" disabled></b-input>
-              </b-field>
-            </div>
-            <div class="info-fourth">
-              <b-field label="CEP">
-                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP" disabled></b-input>
-              </b-field>
-              <b-field label="Bairro">
-                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro" disabled></b-input>
-              </b-field>
-              <b-field label="Cidade">
-                <b-input v-model="selected.user.address.city" placeholder="Cidade" disabled></b-input>
-              </b-field>
-            </div>
-            <div class="course">
-              <!-- <p>Academics</p>
-              {{ selected.academics[0].area }} -->
-              <b-field label="Bacharelado">
-                <b-input v-model="area" placeholder="Matemática" disabled></b-input>
-              </b-field>
-              <b-field label="Título">
-                <b-input v-model="degree" placeholder="Doutorado" disabled></b-input>
-              </b-field>
-              <b-field label="Custo">
-                <b-input v-model="selected.cost" placeholder="R$ 131,00" disabled></b-input>
-              </b-field>
-            </div>
           </div>
         </div>
         <div class="competencias">
@@ -127,6 +74,7 @@
 import { mapActions } from 'vuex'
 import createRh from './rh/create.vue'
 import editRh from './rh/edit.vue'
+import BasicRh from './common/ComponentGeneric.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
@@ -227,6 +175,7 @@ export default {
   },
   components: {
     createRh,
+    BasicRh,
     editRh,
     success,
     error

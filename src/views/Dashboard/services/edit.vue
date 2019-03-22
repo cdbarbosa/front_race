@@ -57,7 +57,6 @@
             <option value="1">ORCA - Orçamento (em aberto)</option>
           </b-select>
         </b-field>
-        </article>
       </section>
       <section class="description">
         <b-field label="Observações">

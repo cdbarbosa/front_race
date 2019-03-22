@@ -1,7 +1,7 @@
 @import '../3-components/clients/create';
 #clients {
   height: 100%;
-  .information {
+  .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;

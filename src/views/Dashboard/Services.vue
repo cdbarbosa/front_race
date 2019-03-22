@@ -79,7 +79,7 @@
        <div class="serviceTable">
         <div class="headerTable">
           <h4>Serviços</h4>
-          <button class="buttons is-primary" @click="isModalActive = true">Criar novo serviço</button>
+          <button class="buttons is-primary" @click="log">Criar novo serviço</button>
           <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
         </div>
         <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
@@ -106,8 +106,8 @@
         </b-table>
       </div>
     </div>
-    <b-modal :active.sync="isModalActive">
-      <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false" :props="[selected.client.name, selected.client.id]"></component>
+    <b-modal :active.sync="isServiceModalActive">
+      <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false"></component>
     </b-modal>
 
     <b-modal :active.sync="isEditActive">
@@ -133,7 +133,7 @@ export default {
       searchQuery: undefined,
       serviceCreated: undefined,
       serviceSelected: undefined,
-      isModalActive: false
+      isServiceModalActive: false
     }
   },
   computed: {
@@ -203,6 +203,10 @@ export default {
       }).then(response => {
         this.changeServices(response.data)
       })
+    },
+    log () {
+      this.isServiceModalActive = true
+      console.log('here')
     }
   },
   components: {

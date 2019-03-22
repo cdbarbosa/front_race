@@ -6,8 +6,15 @@
         <b-field label="Título">
           <textarea v-model="service.name" name=""  cols="50" rows="2"></textarea>
         </b-field>
-        <b-field label="Cliente">
-          <b-input v-model="selected.client.name" placeholder="Cliente" disabled></b-input>
+        <b-field label="Simple">
+          <b-select placeholder="Select a name" v-model="client_id">
+            <option
+              v-for="option in clients"
+              :value="option.id"
+              :key="option.id">
+              {{ option.name }}
+            </option>
+          </b-select>
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
@@ -69,13 +76,12 @@
   </main>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 import userCreate from '../../../mixins/userCreate'
 import { VueEditor } from 'vue2-editor'
 export default {
   name: 'createService',
-  props: ['open', 'selected.client.name', 'selected.client.id'],
   mixins: [userCreate],
   data () {
     return {
@@ -94,6 +100,7 @@ export default {
         status_id: 1,
         value: undefined
       },
+      client_id: undefined,
       money: {
         decimal: '.',
         thousands: ',',
@@ -103,24 +110,24 @@ export default {
       }
     }
   },
+  beforeMount () {
+    this.getClients(this)
+    // console.log(this.clients)
+  },
   computed: {
     ...mapGetters([
-      'services'
-    ]),
-    selected: {
-      get () {
-        return this.serviceSelected ? this.serviceSelected : this.services[0]
-      },
-      set (newValue) {
-        // this.serviceSelected = newValue
-      }
-    }
+      'services',
+      'clients'
+    ])
   },
   methods: {
+    ...mapActions([
+      'getClients'
+    ]),
     create () {
       this.service.value = parseFloat(this.service.value.split(' ')[1])
       let data = {
-        client_id: this.selected.client.id,
+        client_id: this.sclient_id,
         service: this.service
       }
       this.$http.post(this.$api({ target: 'services' }), data, {
@@ -128,7 +135,6 @@ export default {
       }).then(response => {
         console.log(response)
         this.$router.push({ name: 'service', params: { service_id: this.services[0].id } })
-        // this.$emit('update:open', false)
       })
     }
   },
