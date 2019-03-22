@@ -5,7 +5,7 @@
         <h2>Detalhes</h2>
         <div class="info-service">
           <b-field label="Serviço">
-            <b-input v-model="title"></b-input>
+            <b-input v-model="serviceSelected.title" disabled></b-input>
           </b-field>
           <b-field label="ID">
             <b-input v-model="serviceSelected.id" disabled></b-input>
@@ -15,18 +15,18 @@
         <div class="rhOfService" v-if="selected !== undefined" >
           <div class="infoRh">
             <b-field label="RH">
-              <b-input v-model="name" placeholder="Lorem ipsum dolor sit amet"></b-input>
+              <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet" disabled></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="2" disabled></b-input>
             </b-field>
           </div>
           <b-field label="Especificidade e Serviço">
-            <textarea v-model="competencies" name="" id="" cols="55" rows="4"></textarea>
+            <textarea v-model="selected.competencies" name="" id="" cols="55" rows="4" disabled></textarea>
           </b-field>
           <div class="hours">
             <b-field label="Custo">
-              <b-input v-model="cost" placeholder="ORCA - Orçamento (em aberto)"></b-input>
+              <b-input v-model="selected.cost" placeholder="ORCA - Orçamento (em aberto)" disabled></b-input>
             </b-field>
             <b-field label="Horas">
               <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
@@ -104,7 +104,6 @@ import createRh from '../rh/create.vue'
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
-import _ from 'lodash'
 export default {
   name: 'vueDetails',
   data () {
@@ -133,78 +132,6 @@ export default {
     },
     selectedIndex () {
       return this.rhs.findIndex(rh => rh.id === this.selected.id)
-    },
-    name: {
-      get () {
-        return this.selected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
-    },
-    title: {
-      get () {
-        return this.serviceSelected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.serviceSelected.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
-    },
-    competencies: {
-      get () {
-        return this.selected.competencies
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'competencies',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
-    },
-    cost: {
-      get () {
-        return this.selected.cost
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'cost',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
     }
   },
   watch: {

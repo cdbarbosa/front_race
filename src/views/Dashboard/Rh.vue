@@ -11,7 +11,7 @@
           </h3>
           <div class="info-first">
             <b-field label="Nome">
-              <b-input v-model="name" placeholder="Nome"></b-input>
+              <b-input v-model="selected.name" placeholder="Nome" disabled></b-input>
             </b-field>
             <b-field label="ID">
               <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -22,19 +22,19 @@
               <b-input :value="parseDate(selected.created_at)" placeholder="Cadastro" disabled></b-input>
             </b-field>
             <b-field label="Telefone">
-              <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+              <b-input v-model="selected.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" disabled></b-input>
             </b-field>
           </div>
           <div class="info-second">
             <b-field label="Email">
-              <b-input v-model="email" type="email" placeholder="example@example.com"></b-input>
+              <b-input v-model="selected.user.email" type="email" placeholder="example@example.com" disabled></b-input>
             </b-field>
             <div class="block">
-              <b-radio v-model="selected.user.type" native-value="Fisico">
-                Fisico
-              </b-radio>
-              <b-radio v-model="selected.user.type" native-value="Juridico">
+              <b-radio v-model="selected.user.type.id" native-value="1" disabled>
                 Juridico
+              </b-radio>
+              <b-radio v-model="selected.user.type.id" native-value="2" disabled>
+                Fisico
               </b-radio>
             </div>
           </div>
@@ -45,48 +45,48 @@
             <h3>Endereço</h3>
             <div class="info-three">
               <b-field label="Rua">
-                <b-input v-model="address" placeholder="Rua"></b-input>
+                <b-input v-model="selected.user.address.address" placeholder="Rua" disabled></b-input>
               </b-field>
               <b-field label="Estado">
-                <b-input v-model="state" placeholder="ES"></b-input>
+                <b-input v-model="selected.user.address.state" placeholder="ES" disabled></b-input>
               </b-field>
             </div>
             <div class="info-fourth">
               <b-field label="CEP">
-                <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+                <b-input v-model="selected.user.address.postal_code" v-mask="'##.###-###'" placeholder="CEP" disabled></b-input>
               </b-field>
               <b-field label="Bairro">
-                <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
+                <b-input v-model="selected.user.address.neighborhood" placeholder="Bairro" disabled></b-input>
               </b-field>
               <b-field label="Cidade">
-                <b-input v-model="city" placeholder="Cidade"></b-input>
+                <b-input v-model="selected.user.address.city" placeholder="Cidade" disabled></b-input>
               </b-field>
             </div>
           </div>
         </div>
         <div class="competencias">
           <b-field label="Competências">
-            <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
+            <b-input v-model="selected.competencies" placeholder="Analise de dados" disabled></b-input>
           </b-field>
           <b-field label="Experiência">
-            <b-input v-model="selected.experience" placeholder="Analise de dados"></b-input>
+            <b-input v-model="selected.experience" placeholder="Analise de dados" disabled></b-input>
           </b-field>
           <b-field label="Observações">
-            <textarea v-model="selected.observations" name="" id="" cols="40" rows="4"></textarea>
+            <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
           </b-field>
           <div class="course">
             <b-field label="Bacharelado">
-              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+              <b-input v-model="bacharel" placeholder="Matemática" disabled></b-input>
             </b-field>
             <b-field label="Título">
-              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+              <b-input v-model="titulo" placeholder="Doutorado" disabled></b-input>
             </b-field>
             <b-field label="Custo">
-              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+              <b-input v-model="selected.cost" placeholder="R$ 131,00" disabled></b-input>
             </b-field>
           </div>
           <b-field label="Atividade">
-            <b-input v-model="selected.activity" placeholder="Produção de PANIC"></b-input>
+            <b-input v-model="selected.activity" placeholder="Produção de PANIC" disabled></b-input>
           </b-field>
         </div>
       </div>
@@ -117,20 +117,22 @@
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
     </b-modal>
+    <b-modal :active.sync="isEditActive">
+      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
+    </b-modal>
   </main>
 </template>
 <script>
 import { mapActions } from 'vuex'
 import createRh from './rh/create.vue'
+import editRh from './rh/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
 import { header } from '../../config/index.js'
 import _ from 'lodash'
-import computedFields from '../../mixins/computedFields.js'
 export default {
   name: 'rhs',
-  mixins: [computedFields],
   data () {
     return {
       isEditActive: false,
@@ -160,25 +162,6 @@ export default {
     selectedIndex () {
       return this.rhs.findIndex(rh => rh.id === this.selected.id)
     },
-    name: {
-      get () {
-        return this.selected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          console.log(response)
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
-    },
     bacharel: {
       get () {
         return (this.selected.academics === undefined ? undefined : (this.selected.academics.length === 0 ? undefined : this.selected.academics[0].description))
@@ -194,60 +177,6 @@ export default {
       set: _.debounce(function (newVal, oldVal) {
         //
       })
-    },
-    phone: {
-      get () {
-        return this.selected.phone
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'phone',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
-    },
-    competencies: {
-      get () {
-        return this.selected.competencies
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'competencies',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
-    },
-    cost: {
-      get () {
-        return this.selected.cost
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.selected.id,
-          'label': 'cost',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-        })
-      }, 400)
     }
   },
   watch: {
@@ -303,6 +232,7 @@ export default {
   },
   components: {
     createRh,
+    editRh,
     success,
     error
   }

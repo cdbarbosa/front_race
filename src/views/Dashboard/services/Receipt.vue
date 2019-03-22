@@ -5,7 +5,7 @@
         <h1>Recebimento</h1>
         <div class="client">
           <b-field label="Serviço">
-            <b-input v-model="name" placeholder="Jessica Miles"></b-input>
+            <b-input v-model="serviceSelected.name" placeholder="Jessica Miles" disabled></b-input>
           </b-field>
           <b-field label="ID">
             <b-input v-model="serviceSelected.id" disabled></b-input>
@@ -58,7 +58,6 @@
 import moment from 'moment'
 import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
-import _ from 'lodash'
 export default {
   name: 'VueReceive',
   data () {
@@ -77,24 +76,6 @@ export default {
     }
   },
   computed: {
-    name: {
-      get () {
-        return this.serviceSelected.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.serviceSelected.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-        })
-      }, 400)
-    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {

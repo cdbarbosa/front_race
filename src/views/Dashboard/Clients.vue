@@ -121,10 +121,8 @@ import error from './common/create-messages/error'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
-import computedFields from '../../mixins/computedFields.js'
 export default {
   name: 'clients',
-  mixins: [computedFields],
   data () {
     return {
       searchQuery: '',
