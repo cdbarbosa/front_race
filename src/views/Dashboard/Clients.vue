@@ -67,7 +67,8 @@
         <div class="others">
           <h3>Outros</h3>
           <b-field label="Observações">
-            <textarea v-model="selected.observations" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea>
+            <div class="textarea" v-html="selected.observations"></div>
+            <!-- <textarea v&#45;model="" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea> -->
           </b-field>
           <b-field label="Atividade">
             <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>

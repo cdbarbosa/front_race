@@ -78,7 +78,7 @@
         <div class="competencias">
           <h3>Outros</h3>
           <b-field label="Competências">
-            <div class="input" v-html="selected.competencies"></div>
+            <div class="textarea" v-html="selected.competencies"></div>
             <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
           </b-field>
           <b-field label="Experiência">
@@ -176,7 +176,6 @@ export default {
       set: _.debounce(function (newVal, oldVal) {
         //
       })
-<<<<<<< HEAD
     },
     phone: {
       get () {
@@ -231,8 +230,6 @@ export default {
         //   this.updateRh(payload)
         // })
       }, 400)
-=======
->>>>>>> 781048b462f8d952b2e23f51f7055edd6957badb
     }
   },
   watch: {

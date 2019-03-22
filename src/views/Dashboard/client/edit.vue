@@ -208,7 +208,18 @@ export default {
         return this.client.observations
       },
       set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal)
+        let data = {
+          label: 'observations',
+          value: newVal,
+          id: this.client.id
+        }
+        this.$http.put(this.$api({ target: 'client' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateClient(payload)
+          this.$emit('updated')
+        })
       }, 400)
     }
   },
