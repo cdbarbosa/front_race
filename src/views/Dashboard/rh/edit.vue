@@ -1,75 +1,9 @@
 <template>
   <div class="rhScreen" id="updateRh">
      <div class="content">
-        <div class="rh">
-          <h3>RH's</h3>
-          <div class="info-first">
-            <b-field label="Nome">
-              <b-input v-model="name" placeholder="Nome"></b-input>
-            </b-field>
-            <b-field label="ID">
-              <b-input v-model="rh.id" placeholder="23" disabled></b-input>
-            </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Cadastro">
-              <b-input :value="parseDate(rh.created_at)" placeholder="Cadastro" disabled></b-input>
-            </b-field>
-            <b-field label="Telefone">
-              <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
-            </b-field>
-          </div>
-          <div class="info-second">
-            <b-field label="Email">
-              <b-input v-model="rh.user.email" type="email" placeholder="example@example.com" disabled></b-input>
-            </b-field>
-            <div class="block">
-              <b-radio v-model="rh.user.type.id" native-value="1" disabled>
-                Juridico
-              </b-radio>
-              <b-radio v-model="rh.user.type.id" native-value="2" disabled>
-                Fisico
-              </b-radio>
-            </div>
-          </div>
-          <b-field label="CPF/CNPJ">
-            <b-input v-model="rh.user.document" v-mask="'###.###.###-##'" placeholder="cpf" disabled></b-input>
-          </b-field>
-          <div class="address">
-            <h3>Endereço</h3>
-            <div class="info-three">
-              <b-field label="Rua">
-                <b-input v-model="address" placeholder="Rua"></b-input>
-              </b-field>
-              <b-field label="Estado">
-                <b-input v-model="state" placeholder="ES"></b-input>
-              </b-field>
-            </div>
-            <div class="info-fourth">
-              <b-field label="CEP">
-                <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
-              </b-field>
-              <b-field label="Bairro">
-                <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
-              </b-field>
-              <b-field label="Cidade">
-                <b-input v-model="city" placeholder="Cidade"></b-input>
-              </b-field>
-            </div>
-            <div class="course">
-            <b-field label="Bacharelado">
-              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
-            </b-field>
-            <b-field label="Título">
-              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
-            </b-field>
-            <b-field label="Custo">
-              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
-            </b-field>
-          </div>
-          </div>
-        </div>
+       <edit-rh :person="rh" :title="'Rh'" @change="updateFunction($event)"></edit-rh>
         <div class="competencias">
+          <h3>Competências</h3>
           <b-field label="Competências">
             <b-input v-model="competencies" placeholder="Analise de dados"></b-input>
           </b-field>
@@ -82,6 +16,17 @@
           <b-field label="Atividade">
             <b-input v-model="rh.activity" placeholder="Produção de PANIC"></b-input>
           </b-field>
+         <div class="course">
+            <b-field label="Bacharelado">
+              <b-input v-model="bacharel" placeholder="Matemática"></b-input>
+            </b-field>
+            <b-field label="Título">
+              <b-input v-model="titulo" placeholder="Doutorado"></b-input>
+            </b-field>
+            <b-field label="Custo">
+              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+            </b-field>
+          </div>
         </div>
     </div>
   </div>
@@ -89,6 +34,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
+import editRh from '../common/editGeneric.vue'
 import _ from 'lodash'
 import moment from 'moment'
 export default {
@@ -325,7 +271,25 @@ export default {
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    updateFunction (e) {
+      console.log(e)
+      let data = {
+        label: e[0],
+        value: e[1],
+        id: e[2] === 'rh' ? this.rh.id : this.rh.user.address.id
+      }
+      this.$http.put(this.$api({ target: `${e[2]}` }), data, {
+        headers: header()
+      }).then(response => {
+        let payload = [response.data, this.selectedIndex]
+        e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
+        this.$emit('updated')
+      })
     }
+  },
+  components: {
+    editRh
   }
 }
 </script>

@@ -1,65 +1,7 @@
 <template>
   <div class="clientScreen" id="updateClient">
     <div class="content">
-     <div class="client">
-        <h3>
-          Cliente
-        </h3>
-        <div class="info-first">
-          <b-field label="Nome">
-            <b-input v-model="name" placeholder="Nome"></b-input>
-          </b-field>
-          <b-field label="ID">
-            <b-input v-model="client.id" placeholder="23" disabled></b-input>
-          </b-field>
-        </div>
-        <div class="info-second">
-          <b-field label="Cadastro">
-            <b-input :value="parseDate(client.created_at)" v-mask="'##/##/####'" disabled></b-input>
-          </b-field>
-          <b-field label="Telefone">
-            <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
-          </b-field>
-        </div>
-        <div class="info-second">
-          <b-field label="Email">
-            <b-input v-model="client.user.email" type="email" placeholder="example@example.com" disabled></b-input>
-          </b-field>
-          <div class="block">
-            <b-radio v-model="client.user.type.id" native-value="1" disabled>
-              Juridico
-            </b-radio>
-            <b-radio v-model="client.user.type.id" native-value="2" disabled>
-              Fisico
-            </b-radio>
-          </div>
-        </div>
-        <b-field label="CPF/CNPJ">
-          <b-input v-model="client.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
-        </b-field>
-        <div class="address">
-          <h3>Endereço</h3>
-          <div class="info-three">
-            <b-field label="Rua">
-              <b-input v-model="address" placeholder="Rua"></b-input>
-            </b-field>
-            <b-field label="Estado">
-              <b-input v-model="state" placeholder="ES"></b-input>
-            </b-field>
-          </div>
-          <div class="info-fourth">
-            <b-field label="CEP">
-              <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
-            </b-field>
-            <b-field label="Bairro">
-              <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
-            </b-field>
-            <b-field label="Cidade">
-              <b-input v-model="city" placeholder="Cidade"></b-input>
-            </b-field>
-          </div>
-        </div>
-      </div>
+      <edit-client :person="client" :title="'Cliente'" @change="updateFunction($event)"></edit-client>
       <div class="others">
         <h3>Outros</h3>
         <b-field label="Observações 1">
@@ -78,8 +20,8 @@ import { mapActions } from 'vuex'
 import { VueEditor } from 'vue2-editor'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
+import editClient from '../common/editGeneric.vue'
 import moment from 'moment'
-// import userCreate from '../../../mixins/userCreate'
 export default {
   name: 'updateClient',
   props: ['client', 'selectedIndex'],
@@ -256,10 +198,26 @@ export default {
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    updateFunction (e) {
+      console.log(e)
+      let data = {
+        label: e[0],
+        value: e[1],
+        id: e[2] === 'client' ? this.client.id : this.client.user.address.id
+      }
+      this.$http.put(this.$api({ target: `${e[2]}` }), data, {
+        headers: header()
+      }).then(response => {
+        let payload = [response.data, this.selectedIndex]
+        e[2] === 'client' ? this.updateClient(payload) : this.updateClientAddress(payload)
+        this.$emit('updated')
+      })
     }
   },
   components: {
-    VueEditor
+    VueEditor,
+    editClient
   }
 }
 </script>
