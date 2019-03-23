@@ -1,101 +1,100 @@
 <template>
-  <div id="vueDetails">
-    <div class="details-information" v-if="serviceSelected !== undefined">
-      <div class="description-service">
-        <h2>Detalhes</h2>
-        <div class="info-service">
+  <main class="details" id="serviceDetails" v-if="service">
+    <h3>Detalhes do Serviço</h3>
+    <div class="content">
+      <section>
+        <article class="info-service">
           <b-field label="Serviço">
-            <b-input v-model="serviceSelected.title" disabled></b-input>
+            <b-input v-model="service.name" disabled></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input v-model="serviceSelected.id" disabled></b-input>
+            <b-input v-model="service.id" disabled></b-input>
           </b-field>
-        </div>
-        <hr>
-        <div class="rhOfService" v-if="selected !== undefined" >
-          <div class="infoRh">
-            <b-field label="RH">
-              <b-input v-model="selected.name" placeholder="Lorem ipsum dolor sit amet" disabled></b-input>
-            </b-field>
-            <b-field label="ID">
-              <b-input v-model="selected.id" placeholder="2" disabled></b-input>
-            </b-field>
-          </div>
-          <b-field label="Especificidade e Serviço">
-            <textarea v-model="selected.competencies" name="" id="" cols="55" rows="4" disabled></textarea>
-          </b-field>
-          <div class="hours">
-            <b-field label="Custo">
-              <b-input v-model="selected.cost" placeholder="ORCA - Orçamento (em aberto)" disabled></b-input>
-            </b-field>
-            <b-field label="Horas">
-              <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
-            </b-field>
-            <b-field label="Prazo">
-              <b-input placeholder="ORCA - Orçamento (em aberto)"></b-input>
-            </b-field>
-          </div>
-          <div class="cost">
-            <div class="field">
-              <b-checkbox>Estado</b-checkbox>
-            </div>
-            <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
-            <button class="is-primary" @click="isCreateModalActive = true">Cadastrar RH</button>
-          </div>
-        </div>
-      </div>
+        </article>
+      </section>
+      <section class="__secundary">
+        <header>
+          <h4>RHs responsáveis</h4>
+        </header>
+        <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
+          <template slot-scope="props">
+            <b-table-column field="name" label="NOME" sortable>
+              {{ props.row.name }}
+            </b-table-column>
+            <b-table-column field="created_at" label="Custo">
+              {{ props.row.cost }}
+            </b-table-column>
+            <b-table-column field="user.email" label="Horas">
+              {{ parseDate(props.row.created_at) }}
+            </b-table-column>
+          </template>
+        </b-table>
+      </section>
+    </div>
+    <!-- <div class="details&#45;information"> -->
+    <!--   <div class="description&#45;service"> -->
+    <!--     <hr> -->
+    <!--     <div class="rhOfService" v&#45;if="selected !== undefined" > -->
+    <!--       <div class="infoRh"> -->
+    <!--         <b&#45;field label="RH"> -->
+    <!--           <b&#45;input v&#45;model="selected.name" placeholder="Lorem ipsum dolor sit amet" disabled></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="ID"> -->
+    <!--           <b&#45;input v&#45;model="selected.id" placeholder="2" disabled></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--       </div> -->
+    <!--       <b&#45;field label="Especificidade e Serviço"> -->
+    <!--         <textarea v&#45;model="selected.competencies" name="" id="" cols="55" rows="4" disabled></textarea> -->
+    <!--       </b&#45;field> -->
+    <!--       <div class="hours"> -->
+    <!--         <b&#45;field label="Custo"> -->
+    <!--           <b&#45;input v&#45;model="selected.cost" placeholder="ORCA &#45; Orçamento (em aberto)" disabled></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="Horas"> -->
+    <!--           <b&#45;input placeholder="ORCA &#45; Orçamento (em aberto)"></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="Prazo"> -->
+    <!--           <b&#45;input placeholder="ORCA &#45; Orçamento (em aberto)"></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--       </div> -->
+    <!--       <div class="cost"> -->
+    <!--         <div class="field"> -->
+    <!--           <b&#45;checkbox>Estado</b&#45;checkbox> -->
+    <!--         </div> -->
+    <!--         <button class="is&#45;primary" @click="detachRh(selected.id)">Desassociar esse RH</button> -->
+    <!--         <button class="is&#45;primary" @click="isCreateModalActive = true">Cadastrar RH</button> -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--   </div> -->
       <div class="description">
         <div class="serviceTable">
-          <div class="headerTable">
-            <h4>RHs responsáveis</h4>
-            <button class="buttons is-primary" @click="getRhNotService">Adicionar novo RH ao serviço</button>
-          </div>
-          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
-            <template slot-scope="props">
-              <b-table-column field="name" label="ID" sortable>
-                {{ props.row.id }}
-              </b-table-column>
-              <b-table-column field="name" label="NOME" sortable>
-                {{ props.row.name }}
-              </b-table-column>
-              <b-table-column field="created_at" label="Custo">
-                {{ props.row.cost }}
-              </b-table-column>
-              <b-table-column field="user.email" label="Horas">
-                {{ parseDate(props.row.created_at) }}
-              </b-table-column>
-              <b-table-column field="phone" label="Prazo">
-                {{ parseDate(props.row.created_at) }}
-              </b-table-column>
-            </template>
-          </b-table>
         </div>
-        <button class="is-primary" @click="isCreateModalActive = true" v-if="rhsService.length == 0">Cadastrar RH</button>
+        <!-- <button class="is&#45;primary" @click="isCreateModalActive = true" v&#45;if="rhsService.length == 0">Cadastrar RH</button> -->
       </div>
-    </div>
-    <div class="attach">
-      <b-modal :active.sync="isModalActive">
-        <div class="attachRh">
-          <b-field label="Adicionar Rh ao serviço">
-            <b-select v-model="rh_id" placeholder="Select a name">
-              <option
-                v-for="option in data"
-                :value="option.id"
-                :key="option.id">
-                {{ option.name }}
-              </option>
-            </b-select>
-          </b-field>
-          <div class="buttonCreate">
-            <button class="buttons is-primary" @click="attachRhService()">Adicionar</button>
-          </div>
-        </div>
-      </b-modal>
-    </div>
-    <b-modal :active.sync="isCreateModalActive">
-      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
-    </b-modal>
-  </div>
+    <!-- </div> -->
+    <!-- <div class="attach"> -->
+    <!--   <b&#45;modal :active.sync="isModalActive"> -->
+    <!--     <div class="attachRh"> -->
+    <!--       <b&#45;field label="Adicionar Rh ao serviço"> -->
+    <!--         <b&#45;select v&#45;model="rh_id" placeholder="Select a name"> -->
+    <!--           <option -->
+    <!--             v&#45;for="option in data" -->
+    <!--             :value="option.id" -->
+    <!--             :key="option.id"> -->
+    <!--             {{ option.name }} -->
+    <!--           </option> -->
+    <!--         </b&#45;select> -->
+    <!--       </b&#45;field> -->
+    <!--       <div class="buttonCreate"> -->
+    <!--         <button class="buttons is&#45;primary" @click="attachRhService()">Adicionar</button> -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--   </b&#45;modal> -->
+    <!-- </div> -->
+    <!-- <b&#45;modal :active.sync="isCreateModalActive"> -->
+    <!--   <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component> -->
+    <!-- </b&#45;modal> -->
+  </main>
 </template>
 <script>
 import success from '../common/create-messages/success'
@@ -105,15 +104,17 @@ import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
-  name: 'vueDetails',
+  name: 'serviceDetails',
   data () {
     return {
+      service: undefined,
+      rhsService: undefined,
+      rhsNotInService: undefined,
       data: [],
       rh_id: '',
       isModalActive: false,
       isCreateModalActive: false,
       serviceSelected: undefined,
-      rhsService: undefined,
       rhSelected: undefined,
       rhCreated: undefined
     }
@@ -136,20 +137,31 @@ export default {
   },
   watch: {
     selected (newVal) {
-      this.$router.push({ name: 'vueDetails' })
+      // this.$router.push({ name: 'vueDetails' })
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next($this => {
-      if ($this.rhSelected) next({ name: 'vueDetails', params: { rh_id: $this.rhSelected.id } })
-      $this.getRhs($this)
-      $this.$http.get($this.$api({ target: `service/${$this.$route.params.service_id}` }), {
-        headers: header()
-      }).then(response => {
-        $this.serviceSelected = response.data
-        $this.rhsService = $this.serviceSelected.rhs
-      })
-    })
+  // beforeRouteEnter (to, from, next) {
+    // next($this => {
+    //   if ($this.serviceSelected) next({ name: 'service', params: { service_id: $this.serviceSelected.id } })
+    //   else next({ name: 'service', params: { service_id: $this.selected.id } })
+    // })
+  // },
+  // beforeRouteEnter (to, from, next) {
+  //   next($this => {
+  //     if ($this.rhSelected) next({ name: 'vueDetails', params: { rh_id: $this.rhSelected.id } })
+  //     $this.getRhs($this)
+  //     $this.$http.get($this.$api({ target: `service/${$this.$route.params.service_id}` }), {
+  //       headers: header()
+  //     }).then(response => {
+  //       $this.serviceSelected = response.data
+  //       $this.rhsService = $this.serviceSelected.rhs
+  //     })
+  //   })
+  // },
+  beforeMount () {
+    this.getService()
+    this.getRhService()
+    // this.getRhNotInService()
   },
   methods: {
     ...mapActions([
@@ -168,14 +180,21 @@ export default {
       }
       return 'error'
     },
+    getService () {
+      this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+        headers: header()
+      }).then(response => {
+        this.service = response.data
+      })
+    },
     getRhService () {
-      this.$http.get(this.$api({ target: `rhServices/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({ target: `rhs-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
         this.rhsService = response.data
       })
     },
-    getRhNotService () {
+    getRhNotInService () {
       let d = []
       let diferent = []
       let rh = []
@@ -186,7 +205,7 @@ export default {
         d = diferent
         rh.includes(item.name) ? diferent = d : diferent.push(item)
       })
-      this.data = diferent
+      this.rhsNotInService = diferent
       this.isModalActive = true
     },
     attachRhService () {

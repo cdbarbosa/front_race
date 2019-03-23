@@ -24,7 +24,5 @@ Vue.use(money, { precision: 2 })
 new Vue({
   router,
   store,
-  beforeMount () {
-  },
   render: h => h(App)
 }).$mount('#app')

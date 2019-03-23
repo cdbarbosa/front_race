@@ -3,7 +3,56 @@
 @import '../3-components/service/_show';
 @import '../3-components/service/_create';
 
-#service {
+#dashboard #services{
+  .content{
+    section{
+      article{
+        &:nth-child(1){
+          grid-template-columns: 11fr 1fr;
+        }
+        &:nth-child(3), &:nth-child(4) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+    &#table{
+      grid-template-columns: 1fr;
+      header{
+        h4 {
+          font-weight: 200;
+        }
+        position: relative;
+        .control {
+          position: absolute;
+          top: 0;
+          right: 0;
+          input {
+            width: 330px;
+            font-size: 16px;
+          }
+        }
+        .buttons {
+          position: absolute;
+          top: 1px;
+          right: 340px;
+          padding: .5rem;
+          font-size: 0.8rem;
+          background: #2B4E72;
+        }
+      }
+    }
+  }
+}
+#dashboard #serviceDetails{
+  .content{
+    section{
+      article{
+        grid-template-columns: 11fr 1fr;
+      }
+    }
+  }
+}
+#services {
   .info {
     height: 100%;
   }
@@ -11,86 +60,5 @@
   h2 {
     padding: 1rem 1rem 0 1rem;
     margin: 0;
-  }
-  .service-information {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 1rem;
-    padding: 1rem;
-    input, textarea, select, .select {
-      font-size: 16px;
-      width: 100%;
-    }
-    .description-service {
-      .info-one {
-        display: grid;
-        grid-template-columns: 10fr 1fr;
-        grid-gap: 1rem;
-      }
-      .info-two {
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr;
-        grid-gap: 1rem;
-      }
-      .info-three {
-       display: grid;
-       grid-template-columns: 2fr 2fr;
-       grid-gap: 1rem; 
-       .block {
-        font-size: 12px;
-       }
-      }
-      .info-four {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 1rem;
-      }
-    }
-    .description {
-      textarea {
-        width: 100%;
-        font-size: 16px;
-      }
-    }
-  }
-  .buttonsRoutes {
-    display: inline;
-    button {
-      text-align: center;
-      width: 155px;
-      font-size: 12px;
-      margin-right: 1rem;
-      background: #2B4E72;
-      &:last-child {
-        background: #D36063;
-      }
-    }
-  }
-  .serviceTable {
-    background: #ccc;
-    padding: 1rem;
-    .headerTable {
-      h4 {
-        font-weight: 200;
-      }
-      position: relative;
-      .control {
-        position: absolute;
-        top: 0;
-        right: 0;
-        input {
-          width: 330px;
-          font-size: 16px;
-        }
-      }
-      .buttons {
-        position: absolute;
-        top: 1px;
-        right: 340px;
-        padding: .5rem;
-        font-size: 12px;
-        background: #2B4E72;
-      }
-    }
   }
 }

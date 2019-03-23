@@ -26,11 +26,18 @@ const mutations = {
 
 const actions = {
   getClients ({ commit }, that) {
-    that.$http.get(that.$api({ target: 'clients' }), {
-      headers: header()
-    }).then(response => {
-      commit('SET_CLIENTS', response.data)
+    return new Promise((resolve, reject) => {
+      that.$http.get(that.$api({ target: 'clients' }), {
+        headers: header()
+      }).then(response => {
+        resolve(response.data)
+      }).catch(err => {
+        reject(err)
+      })
     })
+  },
+  setClients ({ commit }, clients) {
+    commit('SET_CLIENTS', clients)
   },
   changeClients ({ commit }, clients) {
     commit('SET_CLIENTS', clients)

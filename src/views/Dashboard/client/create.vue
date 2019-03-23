@@ -5,7 +5,7 @@
       <section class="client">
         <article>
           <b-field label="Nome">
-            <b-input v-model="client.name" v-validate="'alpha'" placeholder="Nome" name="name" required></b-input>
+            <b-input v-model="client.name" v-validate="'alpha_spaces'" placeholder="Nome" name="name" required></b-input>
           </b-field>
           <span>{{ errors.first('name') }}</span>
           <b-field label="Telefone">

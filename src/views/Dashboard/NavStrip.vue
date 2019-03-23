@@ -5,11 +5,11 @@
     </div>
     <div class="links">
       <ul>
-        <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id || 1 } }" exact>
+        <router-link tag="li" :to="{ name: 'client' }">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id || 1 } }" exact>RH's</router-link>
-        <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id || 1 } }">
+        <router-link tag="li" :to="{ name: 'rh' }">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'service' }">
           Serviços
         </router-link>
         <li @click="logout">Sair</li>

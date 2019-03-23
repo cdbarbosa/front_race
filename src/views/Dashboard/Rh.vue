@@ -9,7 +9,7 @@
               <b-icon icon="edit"></b-icon>
             </div>
           </h3>
-          <basic-rh :person="selected"></basic-rh>
+          <generic-user :person="selected"></generic-user>
           <div class="course">
             <!-- <p>Academics</p>
             {{ selected.academics[0].area }} -->
@@ -74,7 +74,7 @@
 import { mapActions } from 'vuex'
 import createRh from './rh/create.vue'
 import editRh from './rh/edit.vue'
-import BasicRh from './common/ComponentGeneric.vue'
+import genericUser from './common/genericUser.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import moment from 'moment'
@@ -139,6 +139,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.rhSelected) next({ name: 'rh', params: { rh_id: $this.rhSelected.id } })
+      else next({ name: 'rh', params: { rh_id: $this.selected.id } })
     })
   },
   beforeMount () {
@@ -175,7 +176,7 @@ export default {
   },
   components: {
     createRh,
-    BasicRh,
+    genericUser,
     editRh,
     success,
     error

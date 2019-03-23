@@ -9,7 +9,7 @@
               <b-icon icon="edit"></b-icon>
             </div>
           </h3>
-          <client :person="selected" ></client>
+          <generic-user :person="selected"></generic-user>
         </div>
         <div class="others">
           <h3>Outros</h3>
@@ -66,7 +66,7 @@ import createClient from './client/create.vue'
 import editClient from './client/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
-import client from './common/ComponentGeneric.vue'
+import genericUser from './common/genericUser.vue'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../config/index.js'
@@ -109,7 +109,9 @@ export default {
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.userSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
-        this.getClients(this)
+        this.getClients(this).then(clients => {
+          console.log(clients)
+        })
       } else {
         this.searchClient(newQuery)
       }
@@ -121,16 +123,20 @@ export default {
   beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.userSelected) next({ name: 'client', params: { client_id: $this.userSelected.id } })
+      else next({ name: 'client', params: { client_id: $this.selected.id } })
     })
   },
   beforeMount () {
-    this.getClients(this)
+    this.getClients(this).then(clients => {
+      this.setClients(clients)
+    })
   },
   mounted () {
   },
   methods: {
     ...mapActions([
       'getClients',
+      'setClients',
       'changeClients',
       'updateClient',
       'updateUser',
@@ -163,7 +169,7 @@ export default {
   },
   components: {
     createClient,
-    client,
+    genericUser,
     editClient,
     success,
     error

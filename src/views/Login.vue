@@ -22,8 +22,11 @@ export default {
   data () {
     return {
       login: 'admin@admin.com',
-      password: null
+      password: 'nit_admin'
     }
+  },
+  beforeMount () {
+    this.reLogin()
   },
   mounted () {
   },
@@ -46,6 +49,18 @@ export default {
           })
         })
       })
+    },
+    reLogin () {
+      const authTokens = JSON.parse(window.localStorage.getItem('authTokens'))
+      if (authTokens) {
+        this.setAuthToken(authTokens).then(() => {
+          this.getAuthUser(this).then(response => {
+            this.setAuthUser(response.data).then(status => {
+              this.$router.push({ name: 'client' })
+            })
+          })
+        })
+      }
     }
   }
 }

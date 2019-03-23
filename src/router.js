@@ -3,11 +3,13 @@ import Router from 'vue-router'
 // import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
-import Clients from './views/Dashboard/Clients.vue'
 import Overview from './views/Dashboard/Overview.vue'
-import Rh from './views/Dashboard/Rh.vue'
 
-import Service from './views/Dashboard/Services.vue'
+import Clients from './views/Dashboard/Clients.vue'
+import Rh from './views/Dashboard/Rh.vue'
+import Services from './views/Dashboard/Services.vue'
+import ShowServices from './views/Dashboard/services/showServices.vue'
+
 import Details from './views/Dashboard/services/details.vue'
 import Receipt from './views/Dashboard/services/Receipt.vue'
 
@@ -32,29 +34,35 @@ export default new Router({
           component: Overview
         },
         {
-          path: 'rh/:rh_id',
+          path: 'rh/:rh_id?',
           name: 'rh',
           component: Rh
         },
         {
-          path: 'client/:client_id',
+          path: 'client/:client_id?',
           name: 'client',
           component: Clients
         },
         {
-          path: 'service/:service_id',
-          name: 'service',
-          component: Service
-        },
-        {
-          path: 'service/:service_id/receipt/:receipt_id?',
-          name: 'receipt',
-          component: Receipt
-        },
-        {
-          path: 'service/:service_id/details/:rh_id?',
-          name: 'vueDetails',
-          component: Details
+          path: 'service/:service_id?',
+          component: Services,
+          children: [
+            {
+              path: '',
+              name: 'service',
+              component: ShowServices
+            },
+            {
+              path: 'receipt',
+              name: 'serviceReceipts',
+              component: Receipt
+            },
+            {
+              path: 'details',
+              name: 'serviceDetails',
+              component: Details
+            }
+          ]
         }
       ]
     }
