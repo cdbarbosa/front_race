@@ -1,8 +1,10 @@
 <template>
-  <div class="createRhForService">
-    <div id="rhForService">
-      <div class="contentRh">
-        <div class="infoRh">
+  <div id="createRh">
+    <div class="content">
+      <!-- <basic-rh :person="rh" :name="'Rh'"></basic-rh> -->
+      <section class="rh">
+        <article>
+          <h3>Rh</h3>
           <b-field label="Nome">
             <b-input v-model="rh.name" placeholder="Nome" v-validate="'alpha'" name="name" required></b-input>
           </b-field>
@@ -26,63 +28,64 @@
               </b-radio>
             </div>
           </div>
-          <b-field label="CPF/CNPJ">
-            <b-input v-model="user.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" v-validate="rules.document" placeholder="cpf" name="document" required></b-input>
-          </b-field>
-          <div class="address">
-            <h3>Endereço</h3>
-            <div class="info-three">
-              <b-field label="Rua">
-                <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
-              </b-field>
-              <b-field label="Estado">
-                <b-input v-model="address.state" v-validate="'alpha'" placeholder="ES" name="state" required></b-input>
-              </b-field>
-              <span>{{ errors.first('state') }}</span>
-            </div>
-            <div class="info-fourth">
-              <b-field label="CEP">
-                <b-input v-model="address.postal_code" v-validate="rules.postal_code" v-mask="'##.###-###'" placeholder="CEP" name="postal_code" required></b-input>
-              </b-field>
-              <b-field label="Bairro">
-                <b-input v-model="address.neighborhood" v-validate="'alpha'" placeholder="bairro" name="neighborhood" required></b-input>
-              </b-field>
-              <b-field label="Cidade">
-                <b-input v-model="address.city" v-validate="'alpha'" placeholder="Cidade" name="city" required></b-input>
-              </b-field>
-            </div>
+        </article>
+        <b-field label="CPF/CNPJ">
+          <b-input v-model="user.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" v-validate="rules.document" placeholder="cpf" name="document" required></b-input>
+        </b-field>
+        <address class="address">
+          <h3>Endereço</h3>
+          <div class="info-three">
+            <b-field label="Rua">
+              <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
+            </b-field>
+            <b-field label="Estado">
+              <b-input v-model="address.state" v-validate="'alpha'" placeholder="ES" name="state" required></b-input>
+            </b-field>
+            <span>{{ errors.first('state') }}</span>
           </div>
+          <div class="info-fourth">
+            <b-field label="CEP">
+              <b-input v-model="address.postal_code" v-validate="rules.postal_code" v-mask="'##.###-###'" placeholder="CEP" name="postal_code" required></b-input>
+            </b-field>
+            <b-field label="Bairro">
+              <b-input v-model="address.neighborhood" v-validate="'alpha'" placeholder="bairro" name="neighborhood" required></b-input>
+            </b-field>
+            <b-field label="Cidade">
+              <b-input v-model="address.city" v-validate="'alpha'" placeholder="Cidade" name="city" required></b-input>
+            </b-field>
+          </div>
+        </address>
+      </section>
+      <aside class="competencias">
+        <h3>Competências</h3>
+        <b-field label="Competências">
+          <b-input v-model="rh.competencies" placeholder="Analise de dados" required></b-input>
+        </b-field>
+        <b-field label="Experiência">
+          <b-input v-model="rh.experience" placeholder="Analise de dados" required></b-input>
+        </b-field>
+        <b-field label="Observações">
+          <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
+        </b-field>
+        <div class="course">
+          <b-field label="Bacharelado">
+            <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
+          </b-field>
+          <b-field label="Título">
+            <b-input v-model="rh.academic.degree" placeholder="Doutorado" required></b-input>
+          </b-field>
+          <b-field label="Custo">
+            <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
+          </b-field>
         </div>
-        <div class="competencias">
-          <b-field label="Competências">
-            <b-input v-model="rh.competencies" placeholder="Analise de dados" required></b-input>
-          </b-field>
-          <b-field label="Experiência">
-            <b-input v-model="rh.experience" placeholder="Analise de dados" required></b-input>
-          </b-field>
-          <b-field label="Observações">
-            <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
-          </b-field>
-          <div class="course">
-            <b-field label="Bacharelado">
-              <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
-            </b-field>
-            <b-field label="Título">
-              <b-input v-model="rh.academic.degree" placeholder="Doutorado" required></b-input>
-            </b-field>
-            <b-field label="Custo">
-              <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
-            </b-field>
-          </div>
-          <b-field label="Atividade">
-            <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
-          </b-field>
-          <div class="buttonCreate">
-            <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
-            <button class="is-primary" @click="createRh">Cadastrar</button>
-          </div>
+        <b-field label="Atividade">
+          <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
+        </b-field>
+        <div class="buttonCreate">
+          <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
+          <button class="is-primary" @click="createRh">Cadastrar</button>
         </div>
-      </div>
+      </aside>
     </div>
   </div>
 </template>
@@ -90,6 +93,7 @@
 import { header } from '../../../config/index.js'
 import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
+import basicRh from '../common/createGeneric.vue'
 export default {
   name: 'create-rh',
   props: ['open'],
@@ -142,6 +146,9 @@ export default {
         console.log(err)
       })
     }
+  },
+  components: {
+    basicRh
   }
 }
 </script>

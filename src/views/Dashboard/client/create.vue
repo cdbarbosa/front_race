@@ -1,9 +1,10 @@
 <template>
   <main id="createClient">
-    <h3>Cliente</h3>
     <div class="content">
+      <!-- <basic-client :person="client" :name="'Cliente'"></basic-client> -->
       <section class="client">
         <article>
+          <h3>Cliente</h3>
           <b-field label="Nome">
             <b-input v-model="client.name" v-validate="'alpha'" placeholder="Nome" name="name" required></b-input>
           </b-field>
@@ -77,6 +78,7 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
+import basicClient from '../common/createGeneric.vue'
 export default {
   name: 'createClient',
   mixins: [userCreate],
@@ -135,7 +137,8 @@ export default {
     }
   },
   components: {
-    VueEditor
+    VueEditor,
+    basicClient
   }
 }
 </script>

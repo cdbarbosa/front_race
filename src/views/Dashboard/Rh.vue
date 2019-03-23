@@ -13,7 +13,7 @@
           <div class="course">
             <!-- <p>Academics</p>
             {{ selected.academics[0].area }} -->
-            <b-field label="Bacharelado">
+            <!-- <b-field label="Bacharelado">
               <b-input v-model="area" placeholder="Matemática" disabled></b-input>
             </b-field>
             <b-field label="Título">
@@ -21,7 +21,7 @@
             </b-field>
             <b-field label="Custo">
               <b-input v-model="selected.cost" placeholder="R$ 131,00" disabled></b-input>
-            </b-field>
+            </b-field> -->
           </div>
         </div>
         <div class="competencias">

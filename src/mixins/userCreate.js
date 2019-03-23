@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     createUser () {
+      console.log(this.user)
       let data = {
         user: this.user
       }
