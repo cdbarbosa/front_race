@@ -3,7 +3,7 @@
     <h3>Detalhes do Serviço</h3>
     <div class="content">
       <section>
-        <article class="info-service">
+        <article>
           <b-field label="Serviço">
             <b-input v-model="service.name" disabled></b-input>
           </b-field>
@@ -11,24 +11,78 @@
             <b-input v-model="service.id" disabled></b-input>
           </b-field>
         </article>
+        <hr>
+        <article class="__display">
+          <b-field label="Rh">
+            <b-input v-model="selected.name" disabled></b-input>
+          </b-field>
+          <b-field label="Comepetências">
+            <div class="textarea __disabled" v-html="selected.competencies"></div>
+          </b-field>
+        </article>
+        <article>
+          <b-field label="Custo por Hora">
+            <b-input v-model="selected.cost" disabled></b-input>
+          </b-field>
+          <b-field label="Horas">
+            <b-input></b-input>
+          </b-field>
+          <b-field label="Custo para o Serviço">
+            <b-input v-model="selected.cost"></b-input>
+          </b-field>
+        </article>
+        <div class="actions">
+          <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
+        </div>
       </section>
       <section class="__secundary">
-        <header>
-          <h4>RHs responsáveis</h4>
-        </header>
-        <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
-          <template slot-scope="props">
-            <b-table-column field="name" label="NOME" sortable>
-              {{ props.row.name }}
-            </b-table-column>
-            <b-table-column field="created_at" label="Custo">
-              {{ props.row.cost }}
-            </b-table-column>
-            <b-table-column field="user.email" label="Horas">
-              {{ parseDate(props.row.created_at) }}
-            </b-table-column>
-          </template>
-        </b-table>
+        <div class="tableContainer">
+          <header>
+            <h4>
+              RHs responsáveis
+              <div id="edit" @click="isEditActive = true">
+                <b-icon icon="cog"></b-icon>
+              </div>
+            </h4>
+          </header>
+          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
+            <template slot-scope="props">
+              <b-table-column field="name" label="NOME" sortable>
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column field="created_at" label="Custo">
+                {{ props.row.cost }}
+              </b-table-column>
+              <b-table-column field="user.email" label="Horas">
+                {{ parseDate(props.row.created_at) }}
+              </b-table-column>
+            </template>
+          </b-table>
+        </div>
+        <hr>
+        <div class="tableContainer">
+          <header>
+            <h4>
+              RHs
+              <div id="edit" @click="isEditActive = true">
+                <b-icon icon="cog"></b-icon>
+              </div>
+            </h4>
+          </header>
+          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
+            <template slot-scope="props">
+              <b-table-column field="name" label="NOME" sortable>
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column field="created_at" label="Custo">
+                {{ props.row.cost }}
+              </b-table-column>
+              <b-table-column field="user.email" label="Horas">
+                {{ parseDate(props.row.created_at) }}
+              </b-table-column>
+            </template>
+          </b-table>
+        </div>
       </section>
     </div>
     <!-- <div class="details&#45;information"> -->
@@ -61,16 +115,11 @@
     <!--         <div class="field"> -->
     <!--           <b&#45;checkbox>Estado</b&#45;checkbox> -->
     <!--         </div> -->
-    <!--         <button class="is&#45;primary" @click="detachRh(selected.id)">Desassociar esse RH</button> -->
     <!--         <button class="is&#45;primary" @click="isCreateModalActive = true">Cadastrar RH</button> -->
     <!--       </div> -->
     <!--     </div> -->
     <!--   </div> -->
-      <div class="description">
-        <div class="serviceTable">
-        </div>
-        <!-- <button class="is&#45;primary" @click="isCreateModalActive = true" v&#45;if="rhsService.length == 0">Cadastrar RH</button> -->
-      </div>
+    <!-- <button class="is&#45;primary" @click="isCreateModalActive = true" v&#45;if="rhsService.length == 0">Cadastrar RH</button> -->
     <!-- </div> -->
     <!-- <div class="attach"> -->
     <!--   <b&#45;modal :active.sync="isModalActive"> -->

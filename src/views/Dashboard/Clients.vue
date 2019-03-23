@@ -1,7 +1,7 @@
 <template>
   <main id="clients" v-if="selected">
     <div class="info">
-      <div class="content" v-if="selected !== undefined">
+      <div class="content">
         <div class="basic">
           <h3>
             Cliente
