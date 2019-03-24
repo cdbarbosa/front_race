@@ -35,55 +35,7 @@
           <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
         </div>
       </section>
-      <section class="__secundary">
-        <div class="tableContainer">
-          <header>
-            <h4>
-              RHs responsáveis
-              <div id="edit" @click="isEditActive = true">
-                <b-icon icon="cog"></b-icon>
-              </div>
-            </h4>
-          </header>
-          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
-            <template slot-scope="props">
-              <b-table-column field="name" label="NOME" sortable>
-                {{ props.row.name }}
-              </b-table-column>
-              <b-table-column field="created_at" label="Custo">
-                {{ props.row.cost }}
-              </b-table-column>
-              <b-table-column field="user.email" label="Horas">
-                {{ parseDate(props.row.created_at) }}
-              </b-table-column>
-            </template>
-          </b-table>
-        </div>
-        <hr>
-        <div class="tableContainer">
-          <header>
-            <h4>
-              RHs
-              <div id="edit" @click="isEditActive = true">
-                <b-icon icon="cog"></b-icon>
-              </div>
-            </h4>
-          </header>
-          <b-table :data="rhsService" :paginated="true" :selected.sync="selected" :per-page="5" focusable style="padding-top: 1rem">
-            <template slot-scope="props">
-              <b-table-column field="name" label="NOME" sortable>
-                {{ props.row.name }}
-              </b-table-column>
-              <b-table-column field="created_at" label="Custo">
-                {{ props.row.cost }}
-              </b-table-column>
-              <b-table-column field="user.email" label="Horas">
-                {{ parseDate(props.row.created_at) }}
-              </b-table-column>
-            </template>
-          </b-table>
-        </div>
-      </section>
+      <rh-table :rhs="rhsService" :selected.sync="selected"></rh-table>
     </div>
     <!-- <div class="details&#45;information"> -->
     <!--   <div class="description&#45;service"> -->
@@ -140,9 +92,9 @@
     <!--     </div> -->
     <!--   </b&#45;modal> -->
     <!-- </div> -->
-    <!-- <b&#45;modal :active.sync="isCreateModalActive"> -->
-    <!--   <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component> -->
-    <!-- </b&#45;modal> -->
+    <b-modal :active.sync="isSearchModalActive">
+      <component></component>
+    </b-modal>
   </main>
 </template>
 <script>
@@ -152,6 +104,7 @@ import createRh from '../rh/create.vue'
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
+import rhTable from '../common/rhTable.vue'
 export default {
   name: 'serviceDetails',
   data () {
@@ -159,6 +112,7 @@ export default {
       service: undefined,
       rhsService: undefined,
       rhsNotInService: undefined,
+      isSearchModalActive: false,
       data: [],
       rh_id: '',
       isModalActive: false,
@@ -286,6 +240,7 @@ export default {
     }
   },
   components: {
+    rhTable,
     createRh,
     error,
     success

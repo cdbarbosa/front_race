@@ -1,33 +1,30 @@
 <template>
-  <main id="clients" v-if="selected">
-    <div class="info">
-      <div class="content">
-        <div class="basic">
-          <h3>
-            Cliente
-            <div id="edit" @click="isEditActive = true">
-              <b-icon icon="edit"></b-icon>
-            </div>
-          </h3>
-          <generic-user :person="selected"></generic-user>
-        </div>
-        <div class="others">
-          <h3>Outros</h3>
-          <b-field label="Observações">
-            <div class="textarea" v-html="selected.observations"></div>
-            <!-- <textarea v&#45;model="" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea> -->
-          </b-field>
-          <b-field label="Atividade">
-            <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
-          </b-field>
-        </div>
+  <main id="clients">
+    <h3>
+      Cliente
+      <div id="edit" @click="isEditActive = true">
+        <b-icon icon="edit"></b-icon>
       </div>
-      <div class="tableClients">
-        <div class="headerTable">
+    </h3>
+    <div class="content">
+      <generic-user :person="selected"></generic-user>
+      <section>
+        <b-field label="Observações">
+          <div class="textarea" v-html="selected.observations"></div>
+          <!-- <textarea v&#45;model="" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea> -->
+        </b-field>
+        <b-field label="Atividade">
+          <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
+        </b-field>
+      </section>
+    </div>
+    <div class="content __display tableContainer">
+      <section class="__secundary">
+        <header>
           <h4>Clientes</h4>
-          <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
-          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
-        </div>
+          <!-- <button class="buttons is&#45;primary" @click="isModalActive = true">Cadastrar novo cliente</button> -->
+          <!-- <b&#45;input placeholder="Procurar..." v&#45;model="searchQuery"></b&#45;input> -->
+        </header>
         <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
           <template slot-scope="props">
             <b-table-column field="name" label="NOME" sortable>
@@ -44,10 +41,9 @@
             </b-table-column>
           </template>
         </b-table>
-      </div>
+      </section>
     </div>
     <b-modal :active.sync="isModalActive">
-      <!--   Create client or display message    -->
       <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false">
         <template v-slot:message>
             <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>

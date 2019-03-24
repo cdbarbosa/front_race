@@ -18,8 +18,11 @@
     padding: 1rem;
     .content{
       display: grid;
-      grid-gap: 1rem;
       grid-template-columns: 2fr 1fr;
+      grid-gap: 1rem;
+      &.__display{
+        display: block;
+      }
       section{
         border-radius: 0.5rem;
         &.__secundary{
@@ -42,6 +45,40 @@
           grid-template-columns: 2fr 1fr;
           &.__display{
             display: block;
+          }
+        }
+        &.genericUser{
+          article{
+            &:nth-child(1){
+              grid-template-columns: 11fr 1fr;
+            }
+            &:nth-child(2){
+              grid-template-columns: 9fr 3fr;
+            }
+            &:nth-child(3){
+              grid-template-columns: 9fr 3fr;
+              .field{
+                &:nth-child(2){
+                  margin-top: 1.4rem;
+                }
+              }
+            }
+          }
+          address{
+            font-style: normal;
+            h3 {
+              margin-bottom: 0;
+            }
+            article{
+              &:nth-child(3){
+                grid-template-columns: repeat(3, 1fr);
+                .field{
+                  &:nth-child(2){
+                    margin-top: 0;
+                  }
+                }
+              }
+            }
           }
         }
       }
