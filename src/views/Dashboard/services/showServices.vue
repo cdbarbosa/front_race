@@ -99,9 +99,13 @@ export default {
       this.$router.push({ name: 'service', params: { service_id: newVal.id } })
     }
   },
+  beforeRouteEnter (to, from, next) {
+    console.log('enter')
+    next()
+  },
   activated () {
     if (this.selected) {
-      if ($this.serviceSelected) this.$router.push({ name: 'service', params: { service_id: this.serviceSelected.id } })
+      if (this.serviceSelected) this.$router.push({ name: 'service', params: { service_id: this.serviceSelected.id } })
       else this.$router.push({ name: 'service', params: { service_id: this.selected.id } })
     }
   },

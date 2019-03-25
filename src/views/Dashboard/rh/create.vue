@@ -1,10 +1,10 @@
 <template>
-  <div id="createRh">
+  <div class="create" id="createRh">
     <div class="content">
       <!-- <basic-rh :person="rh" :name="'Rh'"></basic-rh> -->
       <section class="rh">
+        <h3>Rh</h3>
         <article>
-          <h3>Rh</h3>
           <b-field label="Nome">
             <b-input v-model="rh.name" placeholder="Nome" v-validate="'alpha'" name="name" required></b-input>
           </b-field>

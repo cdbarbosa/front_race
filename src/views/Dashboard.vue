@@ -6,9 +6,7 @@
       </div>
       <div class="content">
         <transition name="fade" mode="out-in">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
+          <router-view></router-view>
         </transition>
       </div>
     </div>

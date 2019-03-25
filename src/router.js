@@ -44,7 +44,7 @@ export default new Router({
           component: Clients
         },
         {
-          path: 'service/:service_id?',
+          path: 'service/:service_id?/',
           component: Services,
           children: [
             {

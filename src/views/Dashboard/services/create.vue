@@ -1,5 +1,5 @@
 <template>
-  <main id="createService">
+  <main class="create" id="createService">
     <h3>Serviço</h3>
     <div class="content">
       <section class="service">
@@ -23,10 +23,6 @@
           <b-field label="Prazo">
             <b-input v-model="service.due_date" ref="beforeTarget" v-validate="rules.date_before" v-mask="'##/##/####'" placeholder="data" name="beforeTarget" required></b-input>
           </b-field>
-          <span>{{ errors.first('date') }}</span>
-          <span>{{ errors.first('beforeTarget') }}</span>
-        </article>
-        <article class="info-three">
           <b-field label="Sigilo">
             <div class="block">
               <b-radio v-model="radio" native-value="Nenhum">
@@ -40,6 +36,10 @@
               </b-radio>
             </div>
           </b-field>
+          <span>{{ errors.first('date') }}</span>
+          <span>{{ errors.first('beforeTarget') }}</span>
+        </article>
+        <article class="info-three">
         </article>
         <article class="info-four">
           <b-field label="Margem">

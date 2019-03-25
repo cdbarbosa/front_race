@@ -2,8 +2,18 @@
 	#createService, #updateService{
 		.content{
 			input, textarea, select, .select {
-				font-size: 16px;
+				font-size: 1rem;
 				width: 100%;
+			}
+			.block{
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				input{
+					margin-bottom: 0;
+				}
+				.b-radio.radio .control-label{
+					font-size: 1rem;
+				}
 			}
 			.info-one {
 				grid-template-columns: 11fr 1fr;

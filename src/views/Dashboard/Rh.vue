@@ -22,7 +22,9 @@
       </section>
     </div>
     <div class="content __display">
-      <rh-table :rhs="rhs" @update="rhSelected = $event"></rh-table>
+      <rh-table :create="true" :rhs="rhs" @update="rhSelected = $event">
+        <span slot="title">Rhs</span>
+      </rh-table>
     </div>
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
