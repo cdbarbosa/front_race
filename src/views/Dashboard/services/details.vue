@@ -38,7 +38,7 @@
           
         </div>
       </section>
-      <rh-table :rhs="rhsService" :selected.sync="selected">
+      <rh-table v-if="rhsService" :rhs="rhsService" @update="rhSelected = $event">
         <span slot="title">Rhs Responsáveis</span>
       </rh-table>
     </div>
@@ -154,10 +154,13 @@ export default {
     //   else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
     // }
   },
-  // beforeRouteEnter (to, from, next) {
-    // next($this => {
-    // })
-  // },
+  beforeRouteEnter (to, from, next) {
+    console.log('enter')
+    next($this => {
+      if ($this.$route.params.service_id) next()
+      else next({ name: 'service' })
+    })
+  },
   // beforeRouteEnter (to, from, next) {
   //   next($this => {
   //     if ($this.rhSelected) next({ name: 'vueDetails', params: { rh_id: $this.rhSelected.id } })
