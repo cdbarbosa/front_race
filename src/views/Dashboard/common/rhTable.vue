@@ -3,7 +3,7 @@
 		<div class="tableContainer">
 			<header>
 				<h4>
-					RHs
+					<slot name="title"></slot>
 					<div id="edit" @click="isEditActive = true">
 						<b-icon icon="search"></b-icon>
 					</div>

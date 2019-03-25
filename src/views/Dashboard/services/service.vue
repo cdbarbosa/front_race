@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="content" v-if="selected">
 		<section>
 			<article>
 				<b-field label="Título">

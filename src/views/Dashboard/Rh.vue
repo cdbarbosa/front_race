@@ -99,11 +99,11 @@ export default {
       this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next($this => {
-      if ($this.rhSelected) next({ name: 'rh', params: { rh_id: $this.rhSelected.id } })
-      else next({ name: 'rh', params: { rh_id: $this.selected.id } })
-    })
+  activated () {
+    if (this.selected) {
+      if (this.rhSelected) this.$router.push({ name: 'rh', params: { rh_id: this.rhSelected.id } })
+      else this.$router.push({ name: 'rh', params: { rh_id: this.selected.id } })
+    }
   },
   beforeMount () {
     this.getRhs(this)

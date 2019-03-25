@@ -1,9 +1,8 @@
 <template>
-  <main id="services">
+  <main id="services" v-if="selected">
     <h3>
       Serviços
       <div id="edit" @click="isEditActive = true">
-        Editar
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
@@ -100,11 +99,11 @@ export default {
       this.$router.push({ name: 'service', params: { service_id: newVal.id } })
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next($this => {
-      if ($this.serviceSelected) next({ name: 'service', params: { service_id: $this.serviceSelected.id } })
-      else next({ name: 'service', params: { service_id: $this.selected.id } })
-    })
+  activated () {
+    if (this.selected) {
+      if ($this.serviceSelected) this.$router.push({ name: 'service', params: { service_id: this.serviceSelected.id } })
+      else this.$router.push({ name: 'service', params: { service_id: this.selected.id } })
+    }
   },
   beforeMount () {
     this.getServices(this)

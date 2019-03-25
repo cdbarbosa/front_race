@@ -12,30 +12,35 @@
           </b-field>
         </article>
         <hr>
-        <article class="__display">
-          <b-field label="Rh">
-            <b-input v-model="selected.name" disabled></b-input>
-          </b-field>
-          <b-field label="Comepetências">
-            <div class="textarea __disabled" v-html="selected.competencies"></div>
-          </b-field>
-        </article>
-        <article>
-          <b-field label="Custo por Hora">
-            <b-input v-model="selected.cost" disabled></b-input>
-          </b-field>
-          <b-field label="Horas">
-            <b-input></b-input>
-          </b-field>
-          <b-field label="Custo para o Serviço">
-            <b-input v-model="selected.cost"></b-input>
-          </b-field>
-        </article>
-        <div class="actions">
-          <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
+        <div v-if="selected" id="rh">
+          <article class="__display">
+            <b-field label="Rh">
+              <b-input v-model="selected.name" disabled></b-input>
+            </b-field>
+            <b-field label="Comepetências">
+              <div class="textarea __disabled" v-html="selected.competencies"></div>
+            </b-field>
+          </article>
+          <article>
+            <b-field label="Custo por Hora Padrão">
+              <b-input v-model="selected.cost" disabled></b-input>
+            </b-field>
+            <b-field label="Numero de Horas">
+              <b-input></b-input>
+            </b-field>
+            <b-field label="Custo por Hora para o Serviço">
+              <b-input v-model="selected.cost"></b-input>
+            </b-field>
+          </article>
+          <div class="actions">
+            <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
+          </div>
+          
         </div>
       </section>
-      <rh-table :rhs="rhsService" :selected.sync="selected"></rh-table>
+      <rh-table :rhs="rhsService" :selected.sync="selected">
+        <span slot="title">Rhs Responsáveis</span>
+      </rh-table>
     </div>
     <!-- <div class="details&#45;information"> -->
     <!--   <div class="description&#45;service"> -->
@@ -143,10 +148,14 @@ export default {
       // this.$router.push({ name: 'vueDetails' })
     }
   },
+  activated () {
+    // if (this.selected) {
+    //   if (this.serviceSelected) this.$router.push({ name: 'serviceDetails', params: { service_id: this.serviceSelected.id } })
+    //   else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
+    // }
+  },
   // beforeRouteEnter (to, from, next) {
     // next($this => {
-    //   if ($this.serviceSelected) next({ name: 'service', params: { service_id: $this.serviceSelected.id } })
-    //   else next({ name: 'service', params: { service_id: $this.selected.id } })
     // })
   // },
   // beforeRouteEnter (to, from, next) {

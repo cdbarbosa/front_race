@@ -53,6 +53,11 @@
           grid-template-columns: repeat(3, 1fr);
         }
       }
+      #rh{
+        article{
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
     }
   }
 }

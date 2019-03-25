@@ -1,5 +1,5 @@
 <template>
-  <main id="clients">
+  <main id="clients" v-if="selected">
     <h3>
       Cliente
       <div id="edit" @click="isEditActive = true">
@@ -116,13 +116,13 @@ export default {
       this.$router.push({ name: 'client', params: { client_id: newVal.id } })
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next($this => {
-      if ($this.userSelected) next({ name: 'client', params: { client_id: $this.userSelected.id } })
-      else next({ name: 'client', params: { client_id: $this.selected.id } })
-    })
+  activated () {
+    if (this.selected) {
+      if (this.userSelected) this.$router.push({ name: 'client', params: { client_id: this.userSelected.id } })
+      else this.$router.push({ name: 'client', params: { client_id: this.clients[0].id } })
+    }
   },
-  beforeMount () {
+  created () {
     this.getClients(this).then(clients => {
       this.setClients(clients)
     })
