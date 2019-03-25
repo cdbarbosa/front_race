@@ -127,7 +127,7 @@ export default {
     create () {
       this.service.value = parseFloat(this.service.value.split(' ')[1])
       let data = {
-        client_id: this.sclient_id,
+        client_id: this.client_id,
         service: this.service
       }
       this.$http.post(this.$api({ target: 'services' }), data, {
