@@ -13,6 +13,24 @@
           <h4>Serviços</h4>
           <button class="buttons is-primary" @click="log">Criar novo serviço</button>
           <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
+          <div class="block">
+            <b-checkbox v-model="checkboxGroup"
+                native-value="Silver">
+                Silver
+            </b-checkbox>
+            <b-checkbox v-model="checkboxGroup"
+                native-value="Flint">
+                Flint
+            </b-checkbox>
+            <b-checkbox v-model="checkboxGroup"
+                native-value="Vane">
+                Vane
+            </b-checkbox>
+            <b-checkbox v-model="checkboxGroup"
+                native-value="Billy">
+                Billy
+            </b-checkbox>
+        </div>
         </header>
         <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
@@ -58,6 +76,7 @@ export default {
   data () {
     return {
       isEditActive: false,
+      checkboxGroup: [],
       radio: '',
       searchQuery: undefined,
       serviceCreated: undefined,

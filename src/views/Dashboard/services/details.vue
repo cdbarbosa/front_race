@@ -35,7 +35,6 @@
           <div class="actions">
             <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
           </div>
-          
         </div>
       </section>
       <rh-table v-if="rhsService" :rhs="rhsService" @update="rhSelected = $event">
@@ -98,7 +97,7 @@
     <!--   </b&#45;modal> -->
     <!-- </div> -->
     <b-modal :active.sync="isSearchModalActive">
-      <component></component>
+      <!-- <component></component> -->
     </b-modal>
   </main>
 </template>
@@ -155,7 +154,6 @@ export default {
     // }
   },
   beforeRouteEnter (to, from, next) {
-    console.log('enter')
     next($this => {
       if ($this.$route.params.service_id) next()
       else next({ name: 'service' })
@@ -206,22 +204,16 @@ export default {
       this.$http.get(this.$api({ target: `rhs-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.rhsService = response.data
       })
     },
     getRhNotInService () {
-      let d = []
-      let diferent = []
-      let rh = []
-      this.rhsService.forEach(function each (item, index, array) {
-        rh.push(item.name)
+      this.$http.get(this.$api({ target: `rhNotServices/${this.$route.params.service_id}` }), {
+        headers: header()
+      }).then(response => {
+        this.rhsNotInService = response.data
       })
-      this.rhs.forEach(function each (item, index, array) {
-        d = diferent
-        rh.includes(item.name) ? diferent = d : diferent.push(item)
-      })
-      this.rhsNotInService = diferent
-      this.isModalActive = true
     },
     attachRhService () {
       this.rhSelected = undefined
