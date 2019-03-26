@@ -5,7 +5,7 @@
       <section>
         <article>
           <b-field label="Serviço">
-            <b-input v-model="service.name" disabled></b-input>
+            <b-input v-model="service.name" disabled :title="service.name"></b-input>
           </b-field>
           <b-field label="ID">
             <b-input v-model="service.id" disabled></b-input>
@@ -23,13 +23,13 @@
           </article>
           <article>
             <b-field label="Custo por Hora Padrão">
-              <b-input v-model="selected.cost" disabled></b-input>
+              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
             <b-field label="Numero de Horas">
-              <b-input></b-input>
+              <b-input :value="selected.pivot.hours" disabled></b-input>
             </b-field>
             <b-field label="Custo por Hora para o Serviço">
-              <b-input v-model="selected.cost"></b-input>
+              <money class="input" :value="selected.pivot.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
           </article>
           <div class="actions">
@@ -113,6 +113,13 @@ export default {
   name: 'serviceDetails',
   data () {
     return {
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        precision: 2,
+				masked: true
+      },
       service: undefined,
       rhsService: undefined,
       rhsNotInService: undefined,
