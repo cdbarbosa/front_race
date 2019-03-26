@@ -118,7 +118,7 @@ export default {
         thousands: '.',
         prefix: 'R$ ',
         precision: 2,
-				masked: true
+        masked: true
       },
       service: undefined,
       rhsService: undefined,
