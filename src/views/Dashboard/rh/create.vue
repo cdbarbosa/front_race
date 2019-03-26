@@ -72,7 +72,7 @@
             <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
           </b-field>
           <b-field label="Título">
-            <b-input v-model="rh.academic.degree" placeholder="Doutorado" required></b-input>
+            <b-input v-model="rh.academic.titulation" placeholder="Doutorado" required></b-input>
           </b-field>
           <b-field label="Custo">
             <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
@@ -109,7 +109,7 @@ export default {
         experience: undefined,
         academic: {
           area: undefined,
-          degree: undefined
+          titulation: undefined
         },
         activity: undefined
       },
