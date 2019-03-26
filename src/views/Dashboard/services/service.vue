@@ -34,13 +34,15 @@
       </article>
       <article>
         <b-field label="Margem">
-          <b-input v-model="selected.profit" placeholder="50%" disabled></b-input>
+					<b-input :value="`${selected.profit} %`" placeholder="50%" disabled></b-input>
         </b-field>
         <b-field label="Valor">
-          <b-input v-model="selected.value" placeholder="825" disabled></b-input>
+					<money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>
+          <!-- <b&#45;input :value="selected.total_cost" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
         <b-field label="Recebido">
-          <b-input v-model="selected.received_value" placeholder="825" disabled></b-input>
+					<money class="input" :value="selected.received_value" v-money="money" :masked="true" disabled></money>
+          <!-- <b&#45;input :value="" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
       </article>
       <b-field label="Situação">
@@ -70,6 +72,13 @@ export default {
   props: ['selected'],
   data () {
     return {
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        precision: 2,
+				masked: true
+      },
       radio: ''
     }
   },
