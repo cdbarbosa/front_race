@@ -20,26 +20,36 @@
             <b-field label="Comepetências">
               <div class="textarea __disabled" v-html="selected.competencies"></div>
             </b-field>
+            <b-field label="Atividades">
+              <b-input v-model="goal" placeholder="Atividade"></b-input>
+            </b-field>
           </article>
           <article>
             <b-field label="Custo por Hora Padrão">
               <b-input v-model="selected.cost" disabled></b-input>
             </b-field>
             <b-field label="Numero de Horas">
-              <b-input></b-input>
+              <b-input v-model="hours"></b-input>
             </b-field>
             <b-field label="Custo por Hora para o Serviço">
               <b-input v-model="selected.cost"></b-input>
             </b-field>
           </article>
           <div class="actions">
-            <button class="is-primary" @click="detachRh(selected.id)">Desassociar esse RH</button>
+            <button class="is-primary" @click="detachRh(selected.id)" v-if="isResponseble">Desassociar esse RH</button>
+            <button class="buttons is-primary" @click="attachRhService" v-if="!isResponseble">Associar este Rh</button>
           </div>
         </div>
       </section>
-      <rh-table v-if="rhsService" :rhs="rhsService" @update="rhSelected = $event">
-        <span slot="title">Rhs Responsáveis</span>
-      </rh-table>
+      <section>
+        <rh-table v-if="rhsService" :filters="false" :attach="false" :create="false" :rhs="rhsService" @update="showAttached($event)">
+          <span slot="title">Rhs Responsáveis</span>
+        </rh-table>
+        <hr>
+        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @update="showDetached($event)">
+          <span slot="title">Rhs</span>
+        </rh-table>
+      </section>
     </div>
     <!-- <div class="details&#45;information"> -->
     <!--   <div class="description&#45;service"> -->
@@ -123,7 +133,10 @@ export default {
       isCreateModalActive: false,
       serviceSelected: undefined,
       rhSelected: undefined,
-      rhCreated: undefined
+      rhCreated: undefined,
+      isResponseble: true,
+      hours: undefined,
+      goal: undefined
     }
   },
   computed: {
@@ -174,7 +187,7 @@ export default {
   beforeMount () {
     this.getService()
     this.getRhService()
-    // this.getRhNotInService()
+    this.getRhNotInService()
   },
   methods: {
     ...mapActions([
@@ -209,32 +222,45 @@ export default {
       })
     },
     getRhNotInService () {
-      this.$http.get(this.$api({ target: `rhNotServices/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({ target: `rhsNotService/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.rhsNotInService = response.data
       })
     },
     attachRhService () {
-      this.rhSelected = undefined
-      if (this.rh_id !== '') {
-        let data = {
-          rh_id: this.rh_id,
-          service_id: this.serviceSelected.id
-        }
-        this.$http.post(this.$api({ target: 'rhservice' }), data, {
-          headers: header()
-        }).then(response => {
-          this.getRhService()
-          this.isModalActive = false
-        })
+      let data = {
+        rh_id: this.selected.id,
+        service_id: this.service.id,
+        cost: this.selected.cost,
+        hours: this.hours,
+        goal: this.goal
       }
+      this.$http.post(this.$api({ target: 'rhservice' }), data, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.rhSelected = undefined
+        this.getRhService()
+        this.getRhNotInService()
+        // this.isModalActive = false
+      })
+    },
+    showDetached(e) {
+      this.rhSelected = e[0]
+      this.isResponseble = !e[1]
+    },
+    showAttached(e) {
+      console.log(e)
+      this.rhSelected = e[0]
+      this.isResponseble = e[1]
     },
     detachRh (id) {
       this.rhSelected = undefined
       let data = {
         rh_id: id,
-        service_id: this.serviceSelected.id
+        service_id: this.service.id
       }
       this.$http.post(this.$api({ target: 'rh-service' }), data, {
         headers: header()
