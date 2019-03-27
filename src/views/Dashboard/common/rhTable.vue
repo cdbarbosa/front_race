@@ -231,7 +231,7 @@ export default {
       this.$http.post(this.$api({ target: 'rh' }), data, {
         headers: header()
       }).then(response => {
-        console.log(respo)
+        console.log(response)
         this.changeRh(response.data)
         this.isFilterModalActive = false
       })
