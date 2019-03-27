@@ -112,9 +112,9 @@
   </main>
 </template>
 <script>
-import success from '../common/create-messages/success'
-import error from '../common/create-messages/error'
-import createRh from '../rh/create.vue'
+// import success from '../common/create-messages/success'
+// import error from '../common/create-messages/error'
+// import createRh from '../rh/create.vue'
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
@@ -254,11 +254,11 @@ export default {
         // this.isModalActive = false
       })
     },
-    showDetached(e) {
+    showDetached (e) {
       this.rhSelected = e[0]
       this.isResponseble = !e[1]
     },
-    showAttached(e) {
+    showAttached (e) {
       console.log(e)
       this.rhSelected = e[0]
       this.isResponseble = e[1]
@@ -277,10 +277,7 @@ export default {
     }
   },
   components: {
-    rhTable,
-    createRh,
-    error,
-    success
+    rhTable
   }
 }
 </script>

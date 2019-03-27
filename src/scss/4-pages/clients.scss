@@ -1,6 +1,18 @@
 @import '../3-components/clients/create';
 main#clients {
   height: 100%;
+  .content{
+    .__secundary{
+      .tableContainer{
+        header{
+          grid-template-columns: 4fr 2fr 4fr;
+          input{
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
   // .content {
   //   section{
   //     article{

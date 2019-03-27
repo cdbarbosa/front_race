@@ -27,7 +27,7 @@
         <b-radio v-model="person.user.type.id" native-value="2" disabled>
           Fisico
         </b-radio>
-			</b-field>
+      </b-field>
     </article>
     <b-field label="CPF/CNPJ">
       <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>

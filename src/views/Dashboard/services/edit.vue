@@ -65,7 +65,7 @@ import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
 import moment from 'moment'
-import { VueEditor } from 'vue2-editor'
+// import { VueEditor } from 'vue2-editor'
 export default {
   name: 'serviceUpdate',
   props: ['service', 'selectedIndex'],
@@ -173,26 +173,26 @@ export default {
           this.$emit('updated')
         })
       }, 400)
-    },
-    received_value: {
-      get () {
-        return this.service.confidentiality_id
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'confidentiality_id',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
-      }, 400)
     }
+    // received_value: {
+    //   get () {
+    //     return this.service.confidentiality_id
+    //   },
+    //   set: _.debounce(function (newVal, oldVal) {
+    //     let data = {
+    //       'id': this.service.id,
+    //       'label': 'confidentiality_id',
+    //       'value': newVal
+    //     }
+    //     this.$http.put(this.$api({ target: 'service' }), data, {
+    //       headers: header()
+    //     }).then(response => {
+    //       let payload = [response.data, this.selectedIndex]
+    //       this.updateService(payload)
+    //       this.$emit('updated')
+    //     })
+    //   }, 400)
+    // }
   },
   methods: {
     ...mapActions([
@@ -203,7 +203,6 @@ export default {
     }
   },
   components: {
-    VueEditor
   }
 }
 </script>

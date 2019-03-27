@@ -1,10 +1,9 @@
 <template>
-  <div class="clientScreen" id="updateClient">
+  <main class="clientScreen" id="updateClient">
     <div class="content">
       <edit-client :person="client" :title="'Cliente'" @change="updateFunction($event)"></edit-client>
       <div class="others">
-        <h3>Outros</h3>
-        <b-field label="Observações 1">
+        <b-field label="Observações">
           <!-- <textarea v&#45;model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea> -->
           <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
@@ -13,7 +12,7 @@
         </b-field>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 <script>
 import { mapActions } from 'vuex'

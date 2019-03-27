@@ -52,7 +52,7 @@
         <b-field label="Situação">
           <b-select placeholder="Select a name">
             <option value="">Selecione</option>
-            <option v-for="(st, index) in serviceStatuses" :value="st.id">{{ st.abbreviation }} - {{ st.description }}</option>
+            <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
         </b-field>
       </section>

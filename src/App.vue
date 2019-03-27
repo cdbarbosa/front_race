@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { header } from './config'
 export default {
   name: 'app',
   data () {
