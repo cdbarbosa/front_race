@@ -21,7 +21,7 @@
         </b-field>
       </section>
     </div>
-    <div class="content __display">rhSelected = $event
+    <div class="content __display">
       <rh-table :create="true" :rhs="rhs" @update="table($emit)">
         <span slot="title">Rhs</span>
       </rh-table>

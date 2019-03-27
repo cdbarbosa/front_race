@@ -80,7 +80,7 @@ export default {
     rhs: {
       required: true,
       type: Array
-    }, 
+    },
     create: {
       default: true
     },

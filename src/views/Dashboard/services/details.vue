@@ -232,7 +232,7 @@ export default {
       this.$http.get(this.$api({ target: `rhsNotService/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log(response)
+        // console.log(response)
         this.rhsNotInService = response.data
       })
     },
@@ -254,12 +254,12 @@ export default {
         // this.isModalActive = false
       })
     },
-    showDetached(e) {
+    showDetached (e) {
       this.rhSelected = e[0]
       this.isResponseble = !e[1]
     },
-    showAttached(e) {
-      console.log(e)
+    showAttached (e) {
+      // console.log(e)
       this.rhSelected = e[0]
       this.isResponseble = e[1]
     },
