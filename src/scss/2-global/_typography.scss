@@ -122,6 +122,16 @@ body{
     background: white;
     border-radius: 0.25rem;
     font-size: 1.25em;
+    &[disabled]{
+      color: #333;
+    }
+    &.__disabled{
+      border: none;
+      box-shadow: none;
+      background: whitesmoke;
+      cursor: not-allowed;
+      color: #333;
+    }
   }
   input, textarea, .input, .textarea{
     margin-bottom: 0.5rem;

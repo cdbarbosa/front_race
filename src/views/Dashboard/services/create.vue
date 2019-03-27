@@ -25,15 +25,9 @@
           </b-field>
           <b-field label="Sigilo">
             <div class="block">
-              <b-radio v-model="radio" native-value="Nenhum">
-                Nenhum
-              </b-radio>
-              <b-radio v-model="radio" native-value="Parcial">
-                Parcial
-              </b-radio>
-              <b-radio v-model="radio" native-value="Total">
-                Total
-              </b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="1">Nenhum</b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="2">Parcial</b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="3">Total</b-radio>
             </div>
           </b-field>
           <span>{{ errors.first('date') }}</span>
@@ -58,7 +52,7 @@
         <b-field label="Situação">
           <b-select placeholder="Select a name">
             <option value="">Selecione</option>
-            <option value="1">ORCA - Orçamento (em aberto)</option>
+            <option v-for="(st, index) in serviceStatuses" :value="st.id">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
         </b-field>
       </section>
@@ -98,9 +92,11 @@ export default {
         forecast: undefined,
         profit: undefined,
         status_id: 1,
-        value: undefined
+        value: undefined,
+        confidentiality_id: undefined
       },
       client_id: undefined,
+      serviceStatuses: [],
       money: {
         decimal: '.',
         thousands: ',',
@@ -112,6 +108,7 @@ export default {
   },
   beforeMount () {
     this.getClients(this)
+    this.getServiceStatuses()
     // console.log(this.clients)
   },
   computed: {
@@ -124,6 +121,13 @@ export default {
     ...mapActions([
       'getClients'
     ]),
+    getServiceStatuses () {
+      this.$http.get(this.$api({ target: 'service-status' }), {
+        headers: header()
+      }).then(response => {
+        this.serviceStatuses = response.data
+      })
+    },
     create () {
       this.service.value = parseFloat(this.service.value.split(' ')[1])
       let data = {

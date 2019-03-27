@@ -28,15 +28,9 @@
           </b-field>
           <b-field label="Sigilo">
             <div class="block">
-              <b-radio v-model="radio" native-value="Nenhum">
-                Nenhum
-              </b-radio>
-              <b-radio v-model="radio" native-value="Parcial">
-                Parcial
-              </b-radio>
-              <b-radio v-model="radio" native-value="Total">
-                Total
-              </b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="1">Nenhum</b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="2">Parcial</b-radio>
+              <b-radio v-model="service.confidentiality_id" :native-value="3">Total</b-radio>
             </div>
           </b-field>
         </article>
@@ -169,6 +163,25 @@ export default {
         let data = {
           'id': this.service.id,
           'label': 'received_value',
+          'value': newVal
+        }
+        this.$http.put(this.$api({ target: 'service' }), data, {
+          headers: header()
+        }).then(response => {
+          let payload = [response.data, this.selectedIndex]
+          this.updateService(payload)
+          this.$emit('updated')
+        })
+      }, 400)
+    },
+    received_value: {
+      get () {
+        return this.service.confidentiality_id
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        let data = {
+          'id': this.service.id,
+          'label': 'confidentiality_id',
           'value': newVal
         }
         this.$http.put(this.$api({ target: 'service' }), data, {

@@ -15,9 +15,9 @@
         </b-field>
         <b-field label="Sigilo">
           <div class="block">
-            <b-radio v-model="radio" native-value="Nenhum">Nenhum</b-radio>
-            <b-radio v-model="radio" native-value="Parcial">Parcial</b-radio>
-            <b-radio v-model="radio" native-value="Total">Total</b-radio>
+            <b-radio v-model="selected.confidentiality_id" :native-value="1" disabled>Nenhum</b-radio>
+            <b-radio v-model="selected.confidentiality_id" :native-value="2" disabled>Parcial</b-radio>
+            <b-radio v-model="selected.confidentiality_id" :native-value="3" disabled>Total</b-radio>
           </div>
         </b-field>
       </article>
@@ -34,22 +34,23 @@
       </article>
       <article>
         <b-field label="Margem">
-					<b-input :value="`${selected.profit} %`" placeholder="50%" disabled></b-input>
+          <b-input :value="`${selected.profit} %`" placeholder="50%" disabled></b-input>
         </b-field>
         <b-field label="Valor">
-					<money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>
+          <money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>
           <!-- <b&#45;input :value="selected.total_cost" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
         <b-field label="Recebido">
-					<money class="input" :value="selected.received_value" v-money="money" :masked="true" disabled></money>
+          <money class="input" :value="selected.received_value" v-money="money" :masked="true" disabled></money>
           <!-- <b&#45;input :value="" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
       </article>
       <b-field label="Situação">
-        <b-select placeholder="Select a name">
-          <option value="">Selecione</option>
-          <option value="1">ORCA - Orçamento (em aberto)</option>
-        </b-select>
+        <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>
+        <!-- <b&#45;select placeholder="Select a name"> -->
+        <!--   <option value="">Selecione</option> -->
+        <!--   <option value="1">ORCA &#45; Orçamento (em aberto)</option> -->
+        <!-- </b&#45;select> -->
       </b-field>
       <div class="actions">
         <router-link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router-link>
@@ -77,7 +78,7 @@ export default {
         thousands: '.',
         prefix: 'R$ ',
         precision: 2,
-				masked: true
+        masked: true
       },
       radio: ''
     }
