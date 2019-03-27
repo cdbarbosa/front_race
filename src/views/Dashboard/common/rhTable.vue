@@ -9,11 +9,11 @@
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
-        <div id="edit" @click="isFilterModalActive = true">
+        <div id="edit" v-if="filters" @click="isFilterModalActive = true">
           <b-icon icon="cog"></b-icon>
         </div>
       </header>
-      <b-table :data="rhs" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', $event)" focusable style="padding-top: 1rem">
+      <b-table :data="rhs" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -39,9 +39,9 @@
               {{ filter.label }}
             </b-checkbox>
             <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
-            <b-select v-if="filter.operator && filter.active">
+            <b-select v-if="filter.active && filter.key == 'cost'" v-model="filter.operator">
                 <option
-                    v-for="option in filter.operator"
+                    v-for="option in operator"
                     :value="option"
                     :key="option">
                     {{ option }}
@@ -57,7 +57,10 @@
             </b-checkbox>
             <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
           </div>
-          <button @click="search(searchRh)">Ok</button>
+          <div class="bottonFilter">
+            <button @click="search(searchRh)">Ok</button>
+            <button @click="resetFilters">Resetar</button>
+          </div>
         </section>
       </div>
     </b-modal>
@@ -73,9 +76,29 @@ import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 export default {
   name: 'rhTable',
-  props: ['rhs', 'create'],
+  props: {
+    rhs: {
+      required: true,
+      type: Array
+    }, 
+    create: {
+      default: true
+    },
+    filters: {
+      default: true
+    },
+    attach: {
+      default: false
+    },
+    service_id: Number
+  },
   data () {
     return {
+      operator: [
+        '>',
+        '<',
+        '='
+      ],
       isModalActive: false,
       rhSelected: undefined,
       rhCreated: undefined,
@@ -89,11 +112,7 @@ export default {
           label: 'Custo',
           value: undefined,
           active: false,
-          operator: [
-            '>',
-            '<',
-            '='
-          ]
+          operator: undefined
         },
         {
           key: 'competencies',
@@ -132,8 +151,8 @@ export default {
           active: false
         },
         {
-          key: 'degree',
-          label: 'Grau',
+          key: 'titulation',
+          label: 'Titulação',
           value: undefined,
           active: false
         }
@@ -177,8 +196,33 @@ export default {
       }
       return 'error'
     },
+    resetFilters () {
+      this.basicFilter.forEach(function (item, index) {
+        item.active = false
+        item.value = undefined
+      })
+      this.academicFilter.forEach(function (item, index) {
+        item.active = false
+        item.value = undefined
+      })
+      this.getRhs(this)
+    },
+    attachRhService () {
+      this.rhSelected = undefined
+      let data = {
+        rh_id: this.selected.id,
+        service_id: this.service_id
+      }
+      this.$http.post(this.$api({ target: 'rhservice' }), data, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.$emit('update', [true])
+        // this.getRhService()
+        // this.isModalActive = false
+      })
+    },
     search (title) {
-      // console.log(title)
       let data = {
         search: title,
         basicFilter: this.basicFilter.filter(f => f.active),

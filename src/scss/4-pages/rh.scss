@@ -81,7 +81,7 @@
       }
     }
   }
-  .basic-filter, .academic-filte {
+  .basic-filter, .academic-filter {
     display: grid;
     grid-template-columns: 1fr 3fr 4rem;
     grid-gap: 1rem;
@@ -91,6 +91,12 @@
     }
     input {
       margin-bottom: 0;
+    }
+  }
+  .bottonFilter {
+    button {
+      width: 100px;
+      margin-right: 1rem;
     }
   }
 }

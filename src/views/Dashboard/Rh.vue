@@ -21,8 +21,8 @@
         </b-field>
       </section>
     </div>
-    <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @update="rhSelected = $event">
+    <div class="content __display">rhSelected = $event
+      <rh-table :create="true" :rhs="rhs" @update="table($emit)">
         <span slot="title">Rhs</span>
       </rh-table>
     </div>
@@ -137,6 +137,10 @@ export default {
       }).then(response => {
         this.changeRh(response.data)
       })
+    },
+    table (e) {
+      console.log(e)
+      this.rhSelected = e[0]
     }
   },
   components: {
