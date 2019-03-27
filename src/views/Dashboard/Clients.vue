@@ -18,29 +18,31 @@
         </b-field>
       </section>
     </div>
-    <div class="content __display tableContainer">
+    <div class="content __display">
       <section class="__secundary">
-        <header>
-          <h4>Clientes</h4>
-          <!-- <button class="buttons is&#45;primary" @click="isModalActive = true">Cadastrar novo cliente</button> -->
-          <!-- <b&#45;input placeholder="Procurar..." v&#45;model="searchQuery"></b&#45;input> -->
-        </header>
-        <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
-          <template slot-scope="props">
-            <b-table-column field="name" label="NOME" sortable>
-              {{ props.row.name }}
-            </b-table-column>
-            <b-table-column field="created_at" label="CADASTRO">
-              {{ parseDate(props.row.created_at) }}
-            </b-table-column>
-            <b-table-column field="user.email" label="EMAIL">
-              {{ props.row.user.email }}
-            </b-table-column>
-            <b-table-column field="phone" label="TELEFONE">
-              {{ props.row.phone }}
-            </b-table-column>
-          </template>
-        </b-table>
+        <div class="tableContainer">
+          <header>
+            <h4>Clientes</h4>
+            <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
+            <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
+          </header>
+          <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+            <template slot-scope="props">
+              <b-table-column field="name" label="NOME" sortable>
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column field="created_at" label="CADASTRO">
+                {{ parseDate(props.row.created_at) }}
+              </b-table-column>
+              <b-table-column field="user.email" label="EMAIL">
+                {{ props.row.user.email }}
+              </b-table-column>
+              <b-table-column field="phone" label="TELEFONE">
+                {{ props.row.phone }}
+              </b-table-column>
+            </template>
+          </b-table>
+        </div>
       </section>
     </div>
     <b-modal :active.sync="isModalActive">

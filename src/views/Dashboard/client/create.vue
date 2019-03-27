@@ -78,7 +78,6 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
-import basicClient from '../common/createGeneric.vue'
 export default {
   name: 'createClient',
   mixins: [userCreate],
@@ -137,8 +136,7 @@ export default {
     }
   },
   components: {
-    VueEditor,
-    basicClient
+    VueEditor
   }
 }
 </script>
