@@ -30,7 +30,7 @@
               <b-radio v-model="service.confidentiality_id" :native-value="3">Total</b-radio>
             </div>
           </b-field>
-          <span>{{ errors.first('date') }}</span>
+          <!-- <span>{{ errors.first('date') }}</span> -->
           <span>{{ errors.first('beforeTarget') }}</span>
         </article>
         <article class="info-three">
@@ -47,7 +47,7 @@
           </b-field>
         </article>
         <span>{{ errors.first('margem') }}</span>
-        <span>{{ errors.first('valor') }}</span>
+        <!-- <span>{{ errors.first('valor') }}</span> -->
         <span>{{ errors.first('recebido') }}</span>
         <b-field label="Situação">
           <b-select placeholder="Select a name">
@@ -89,10 +89,10 @@ export default {
         name: undefined,
         description: undefined,
         due_date: undefined,
-        forecast: undefined,
+        // forecast: undefined,
         profit: undefined,
         status_id: 1,
-        value: undefined,
+        // value: undefined,
         confidentiality_id: undefined
       },
       client_id: undefined,
