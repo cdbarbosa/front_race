@@ -46,7 +46,7 @@
           <span slot="title">Rhs Responsáveis</span>
         </rh-table>
         <hr>
-        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @update="showDetached($event)">
+        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @update="showDetached($event)">
           <span slot="title">Rhs</span>
         </rh-table>
       </section>
@@ -236,15 +236,11 @@ export default {
         this.rhsNotInService = response.data
       })
     },
-    attachRhService () {
+    attachRhService (values) {
       let data = {
-        rh_id: this.selected.id,
-        service_id: this.service.id,
-        cost: this.selected.cost,
-        hours: this.selected.pivot.hours,
-        goal: this.goal
+        service_id: this.service.id
       }
-      this.$http.post(this.$api({ target: 'rhservice' }), data, {
+      this.$http.post(this.$api({ target: 'rhservice' }), Object.assign(values, data), {
         headers: header()
       }).then(response => {
         this.rhSelected = undefined

@@ -21,7 +21,7 @@
       </section>
     </div>
     <b-modal :active.sync="isEditActive">
-      <edit-rh :rh="[selected]" :selectedIndex="0" @updated="getPerfil"></edit-rh>
+      <edit-rh :rh="selected" :selectedIndex="0" @updated="getPerfil"></edit-rh>
     </b-modal>
   </main>
 </template>

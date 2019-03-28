@@ -66,8 +66,8 @@
       </div>
     </b-modal>
     <b-modal :active.sync="isAttachModalOpen">
-      <h3>Associar RH</h3>
-      <div class="content" style="padding: 1rem">
+      <div class="" id="attachScreen">
+        <h3>Associar RH</h3>
         <section>
           <article>
             <b-field label="Rh">
@@ -77,7 +77,24 @@
               <b-input v-model="selected.id" disabled></b-input>
             </b-field>
           </article>
+          <article>
+            <b-field label="Objetivo">
+              <b-input placeholder="Qual serviço o rh irá realizar?" v-model="rhServiceFields.goal"></b-input>
+            </b-field>
+          </article>
+          <article>
+            <b-field label="Custo por Hora Padrão">
+              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+            </b-field>
+            <b-field label="Numero de Horas">
+              <b-input  v-model="rhServiceFields.hours"></b-input>
+            </b-field>
+            <b-field label="Custo por Hora para o Serviço (R$)">
+              <b-input v-money="money" v-model="rhServiceFields.cost"></b-input>
+            </b-field>
+          </article>
         </section>
+        <button @click="$emit('attachRh', Object.assign(rhServiceFields, {rh_id: selected.id})); isAttachModalOpen = false">Associar</button>
       </div>
     </b-modal>
   </section>
@@ -110,6 +127,13 @@ export default {
   },
   data () {
     return {
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        precision: 2,
+        masked: true
+      },
       operator: [
         '>',
         '<',
@@ -174,7 +198,12 @@ export default {
           active: false
         }
       ],
-      isFilterModalActive: false
+      isFilterModalActive: false,
+      rhServiceFields: {
+        cost: undefined,
+        hours: undefined,
+        goal: undefined
+      }
     }
   },
   computed: {
@@ -223,21 +252,6 @@ export default {
         item.value = undefined
       })
       this.getRhs(this)
-    },
-    attachRhService () {
-      this.rhSelected = undefined
-      let data = {
-        rh_id: this.selected.id,
-        service_id: this.service_id
-      }
-      this.$http.post(this.$api({ target: 'rhservice' }), data, {
-        headers: header()
-      }).then(response => {
-        console.log(response)
-        this.$emit('update', [true])
-        // this.getRhService()
-        // this.isModalActive = false
-      })
     },
     search (title) {
       let data = {

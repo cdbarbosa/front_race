@@ -26,8 +26,8 @@ export default {
   name: 'login',
   data () {
     return {
-      login: 'eniojelihovs@gmail.com',
-      password: 'client_grant',
+      login: 'admin@admin.com',
+      password: 'nit_admin',
       message: ''
     }
   },
