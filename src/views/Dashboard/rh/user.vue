@@ -21,12 +21,12 @@
       </section>
     </div>
     <b-modal :active.sync="isEditActive">
-      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
+      <edit-rh :rh="[selected]" :selectedIndex="0" @updated="getPerfil"></edit-rh>
     </b-modal>
   </main>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import editRh from './edit.vue'
 import genericUser from '../common/genericUser.vue'
 import moment from 'moment'
@@ -39,10 +39,14 @@ export default {
       rhCreated: undefined,
       isModalActive: false,
       rhSelected: undefined,
-      searchQuery: undefined
+      searchQuery: undefined,
+      selected: undefined
     }
   },
   computed: {
+    ...mapGetters([
+      'user'
+    ]),
     rhs: {
       get () {
         return this.$store.getters.rhs
@@ -50,17 +54,6 @@ export default {
       set (newVal) {
         this.changeRh(this)
       }
-    },
-    selected: {
-      get () {
-        return this.rhSelected ? this.rhSelected : this.rhs[0]
-      },
-      set (newVal, oldVal) {
-        this.rhSelected = newVal
-      }
-    },
-    selectedIndex () {
-      return this.rhs.findIndex(rh => rh.id === this.selected.id)
     },
     area: {
       get () {
@@ -76,11 +69,7 @@ export default {
   watch: {
   },
   beforeMount () {
-    this.$http.get(this.$api({ target: `rh/${this.$store.getters.user.id}` }), {
-      headers: header()
-    }).then(response => {
-      this.rhSelected = response.data
-    })
+    this.getPerfil()
   },
   methods: {
     ...mapActions([
@@ -89,6 +78,13 @@ export default {
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    getPerfil () {
+      this.$http.get(this.$api({ target: `rh/${this.$store.getters.user.id}` }), {
+        headers: header()
+      }).then(response => {
+        this.selected = response.data
+      })
     }
   },
   components: {

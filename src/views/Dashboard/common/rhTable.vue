@@ -26,6 +26,7 @@
           </b-table-column>
         </template>
       </b-table>
+      <button v-if="attach" @click="isAttachModalOpen = true">Associar esse Rh</button>
       <b-modal :active.sync="isModalActive">
         <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
       </b-modal>
@@ -40,12 +41,12 @@
             </b-checkbox>
             <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
             <b-select v-if="filter.active && filter.key == 'cost'" v-model="filter.operator">
-                <option
-                    v-for="option in operator"
-                    :value="option"
-                    :key="option">
-                    {{ option }}
-                </option>
+              <option
+                v-for="option in operator"
+                :value="option"
+                :key="option">
+              {{ option }}
+              </option>
             </b-select>
           </div>
         </section>
@@ -61,6 +62,21 @@
             <button @click="search(searchRh)">Ok</button>
             <button @click="resetFilters">Resetar</button>
           </div>
+        </section>
+      </div>
+    </b-modal>
+    <b-modal :active.sync="isAttachModalOpen">
+      <h3>Associar RH</h3>
+      <div class="content" style="padding: 1rem">
+        <section>
+          <article>
+            <b-field label="Rh">
+              <b-input v-model="selected.name" disabled></b-input>
+            </b-field>
+            <b-field label="Rh">
+              <b-input v-model="selected.id" disabled></b-input>
+            </b-field>
+          </article>
         </section>
       </div>
     </b-modal>
@@ -99,6 +115,7 @@ export default {
         '<',
         '='
       ],
+      isAttachModalOpen: false,
       isModalActive: false,
       rhSelected: undefined,
       rhCreated: undefined,
