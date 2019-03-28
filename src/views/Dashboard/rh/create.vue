@@ -32,33 +32,53 @@
         <b-field label="CPF/CNPJ">
           <b-input v-model="user.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" v-validate="rules.document" placeholder="cpf" name="document" required></b-input>
         </b-field>
-        <address class="address">
+         <address class="address">
           <h3>Endereço</h3>
-          <div class="info-three">
+          <article class="info-three">
             <b-field label="Rua">
-              <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
-              <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
+              <b-input v-model="address.address" placeholder="Rua"></b-input>
             </b-field>
-            <div class="course">
-              <b-field label="Bacharelado">
-                <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
-              </b-field>
-              <b-field label="Título">
-                <b-input v-model="rh.academic.titulation" placeholder="Doutorado" required></b-input>
-              </b-field>
-              <b-field label="Custo">
-                <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
-              </b-field>
-            </div>
-            <b-field label="Atividade">
-              <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
+            <b-field label="Estado">
+              <b-input v-model="address.state" placeholder="ES"></b-input>
             </b-field>
-            <div class="buttonCreate">
-              <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
-              <button class="is-primary" @click="createRh">Cadastrar</button>
-            </div>
-          </div>
+          </article>
+          <article class="info-fourth">
+            <b-field label="CEP">
+              <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+            </b-field>
+            <b-field label="Bairro">
+              <b-input v-model="address.neighborhood" placeholder="Bairro"></b-input>
+            </b-field>
+            <b-field label="Cidade">
+              <b-input v-model="address.city" placeholder="Cidade"></b-input>
+            </b-field>
+          </article>
         </address>
+        <div class="course">
+          <b-field label="Bacharelado">
+            <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
+          </b-field>
+          <b-field label="Título">
+            <b-input v-model="rh.academic.titulation" placeholder="Doutorado" required></b-input>
+          </b-field>
+          <b-field label="Custo">
+            <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
+          </b-field>
+        </div>
+      </section>
+      <section>
+        <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
+        <textarea v-model="rh.competencies" name="" id="" cols="40" rows="4" required></textarea>
+        <b-field label="Atividade">
+          <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
+        </b-field>
+        <b-field label="Atividade">
+          <b-input v-model="rh.experience" placeholder="Produção de PANIC" required></b-input>
+        </b-field>
+        <div class="buttonCreate">
+          <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
+          <button class="is-primary" @click="createRh">Cadastrar</button>
+        </div>
       </section>
     </div>
   </div>
