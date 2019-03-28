@@ -3,14 +3,9 @@
     <div class="columns">
       <div class=" column is-one-quarter">
         <navstrip></navstrip>
-         <!-- <h1>Nav</h1> -->
       </div>
       <div class="column is-full">
-        <!-- <transition name="fade" mdoe="out-in">
-          <router-view></router-view>
-        </transition> -->
         <dashboard></dashboard>
-        <!-- <h1>Dashboard</h1> -->
       </div>
     </div>
   </div>
