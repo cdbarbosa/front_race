@@ -10,7 +10,7 @@
       <generic-user :person="selected"></generic-user>
       <section>
         <b-field label="Observações">
-          <div class="textarea" v-html="selected.observations"></div>
+          <div class="textarea __disabled" v-html="selected.observations"></div>
           <!-- <textarea v&#45;model="" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea> -->
         </b-field>
         <b-field label="Atividade">

@@ -150,7 +150,7 @@ body{
     }
     &:not([rows]){
       // max-height: 10000px;
-      min-height: auto;
+      min-height: 45px;
 
     }
   }

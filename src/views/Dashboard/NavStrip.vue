@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'navstrip',
   data () {
@@ -33,7 +33,13 @@ export default {
   computed: {
   },
   methods: {
+    ...mapActions([
+      'destroyUserStore'
+    ]),
     logout () {
+      window.localStorage.removeItem('authTokens')
+      this.$router.push({ name: 'login' })
+      this.destroyUserStore()
     }
   }
 }

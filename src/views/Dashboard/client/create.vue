@@ -1,14 +1,19 @@
 <template>
   <main id="createClient">
-    <div class="content">
+    <header class="createHeader">
+      <h3>Cliente</h3>
+      <h3>Outros</h3>
+    </header>
+    <div class="content __create">
       <!-- <basic-client :person="client" :name="'Cliente'"></basic-client> -->
-      <section class="client">
+      <section>
         <article>
-          <h3>Cliente</h3>
           <b-field label="Nome">
             <b-input v-model="client.name" v-validate="'alpha_spaces'" placeholder="Nome" name="name" required></b-input>
           </b-field>
           <span>{{ errors.first('name') }}</span>
+        </article>
+        <article>
           <b-field label="Telefone">
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
           </b-field>
@@ -58,7 +63,6 @@
         </address>
       </section>
       <aside class="others">
-        <h3>Outros</h3>
         <b-field label="Observações">
           <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
@@ -69,7 +73,6 @@
           <button @click="createClient">Cadastrar</button>
         </div>
       </aside>
-
     </div>
   </main>
 </template>

@@ -9,7 +9,7 @@
           <b-field label="Título">
             <b-input v-model="titulation" placeholder="Doutorado"></b-input>
           </b-field>
-          <b-field label="Custo">
+          <b-field label="Custo (R$)">
             <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
           </b-field>
         </article>

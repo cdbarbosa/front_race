@@ -10,11 +10,11 @@
       <generic-user :person="selected"></generic-user>
       <section>
         <b-field label="Competências">
-          <div class="textarea" v-html="selected.competencies" disabled></div>
+          <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
           <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
         </b-field>
         <b-field label="Experiência">
-          <textarea placeholder="Analise de dados" v-model="selected.experience" name="" id="" cols="40" rows="4" disabled></textarea>
+          <div class="textarea __disabled" v-html="selected.experience"></div>
         </b-field>
         <b-field label="Observações">
           <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>

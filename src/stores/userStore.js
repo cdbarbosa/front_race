@@ -31,6 +31,10 @@ const mutations = {
     const label = payload[0]
     const value = payload[1]
     state.user.client[label] = value
+  },
+  DESTROY_USER_STORE (state) {
+    state.user = undefined
+    state.authTokens = {}
   }
 }
 
@@ -87,6 +91,10 @@ const actions = {
     }).then(response => {
       commit('SET_USER', response.data)
     })
+  },
+
+  destroyUserStore ({ commit }) {
+    commit('DESTROY_USER_STORE')
   }
 }
 

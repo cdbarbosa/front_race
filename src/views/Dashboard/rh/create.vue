@@ -1,13 +1,18 @@
 <template>
-  <div class="create" id="createRh">
-    <div class="content">
+  <main id="createRh">
+    <header class="createHeader">
+      <h3>Rh</h3>
+      <h3>Competências</h3>
+    </header>
+    <div class="content __create">
       <!-- <basic-rh :person="rh" :name="'Rh'"></basic-rh> -->
-      <section class="rh">
-        <h3>Rh</h3>
+      <section>
         <article>
           <b-field label="Nome">
             <b-input v-model="rh.name" placeholder="Nome" v-validate="'alpha'" name="name" required></b-input>
           </b-field>
+        </article>
+        <article>
           <b-field label="Telefone">
             <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
           </b-field>
@@ -15,18 +20,18 @@
             <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input>
           </b-field>
           <span>{{ errors.first('birthdate') }}</span>
-          <div class="info-second">
-            <b-field label="Email">
-              <b-input v-model="user.email" v-validate="rules.email" type="email" placeholder="example@example.com" name="email" required></b-input>
-            </b-field>
-            <div class="block">
-              <b-radio v-model="user.type_id" native-value="1">
-                Fisico
-              </b-radio>
-              <b-radio v-model="user.type_id" native-value="2">
-                Juridico
-              </b-radio>
-            </div>
+        </article>
+        <article>
+          <b-field label="Email">
+            <b-input v-model="user.email" v-validate="rules.email" type="email" placeholder="example@example.com" name="email" required></b-input>
+          </b-field>
+          <div class="block">
+            <b-radio v-model="user.type_id" native-value="1">
+              Fisico
+            </b-radio>
+            <b-radio v-model="user.type_id" native-value="2">
+              Juridico
+            </b-radio>
           </div>
         </article>
         <b-field label="CPF/CNPJ">
@@ -54,7 +59,7 @@
             </b-field>
           </article>
         </address>
-        <div class="course">
+        <article class="course">
           <b-field label="Bacharelado">
             <b-input v-model="rh.academic.area" placeholder="Matemática" required></b-input>
           </b-field>
@@ -64,35 +69,50 @@
           <b-field label="Custo">
             <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00" required></b-input>
           </b-field>
-        </div>
+        </article>
       </section>
       <section>
-        <textarea v-model="rh.observations" name="" id="" cols="40" rows="4" required></textarea>
-        <textarea v-model="rh.competencies" name="" id="" cols="40" rows="4" required></textarea>
-        <b-field label="Atividade">
-          <b-input v-model="rh.activity" placeholder="Produção de PANIC" required></b-input>
+        <b-field label="Experiência">
+          <b-input v-model="rh.experience" placeholder="Analise de dados"></b-input>
         </b-field>
-        <b-field label="Atividade">
-          <b-input v-model="rh.experience" placeholder="Produção de PANIC" required></b-input>
+        <b-field label="Competências">
+          <vue-editor :editorToolbar="customToolbar" v-model="rh.competencies" placeholder="Analise de dados"></vue-editor>
         </b-field>
+        <b-field label="Observações">
+          <vue-editor :editorToolbar="customToolbar" v-model="rh.observations"></vue-editor>
+        </b-field>
+
+        <!-- <b&#45;field label="Atividade"> -->
+        <!--   <b&#45;input v&#45;model="rh.activity" placeholder="Produção de PANIC" required></b&#45;input> -->
+        <!-- </b&#45;field> -->
+        <!-- <b&#45;field label="Experiência"> -->
+        <!--   <b&#45;input v&#45;model="rh.experience" placeholder="Produção de PANIC" required></b&#45;input> -->
+        <!-- </b&#45;field> -->
         <div class="buttonCreate">
           <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
           <button class="is-primary" @click="createRh">Cadastrar</button>
         </div>
       </section>
     </div>
-  </div>
+    <!-- <div class="content"> -->
+    <!-- </div> -->
+  </main>
 </template>
 <script>
 import { header } from '../../../config/index.js'
 import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
+import { VueEditor } from 'vue2-editor'
 export default {
   name: 'create-rh',
   props: ['open'],
   mixins: [userCreate],
   data () {
     return {
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
+      ],
       rh: {
         name: undefined,
         phone: undefined,
@@ -141,6 +161,7 @@ export default {
     }
   },
   components: {
+    VueEditor
   }
 }
 </script>
