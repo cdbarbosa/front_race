@@ -8,6 +8,7 @@ import Buefy from 'buefy'
 import VueTheMask from 'vue-the-mask'
 import VeeValidate from 'vee-validate'
 import money from 'v-money'
+import Toasted from 'vue-toasted'
 
 import { api } from './config'
 
@@ -20,6 +21,7 @@ Vue.use(Buefy, {
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
 Vue.use(money, { precision: 2 })
+Vue.use(Toasted)
 
 new Vue({
   router,

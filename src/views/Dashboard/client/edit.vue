@@ -37,139 +37,6 @@ export default {
   mounted () {
   },
   computed: {
-    name: {
-      get () {
-        return this.client.name
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'name',
-          value: newVal,
-          id: this.client.id
-        }
-        this.$http.put(this.$api({ target: 'client' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
-          this.$emit('updated')
-        })
-      }, 400)
-    },
-    phone: {
-      get () {
-        return this.client.phone
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'phone',
-          value: newVal,
-          id: this.client.id
-        }
-        this.$http.put(this.$api({ target: 'client' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
-          this.$emit('updated')
-        })
-      }, 400)
-    },
-    address: {
-      get () {
-        return this.client.user.address.address
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'address',
-          value: newVal,
-          id: this.client.user.address.id
-        }
-        this.$http.put(this.$api({ target: 'address' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClientAddress(payload)
-          this.$emit('updated')
-        })
-      })
-    },
-    state: {
-      get () {
-        return this.client.user.address.state
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'state',
-          value: newVal,
-          id: this.client.user.address.id
-        }
-        this.$http.put(this.$api({ target: 'address' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClientAddress(payload)
-          this.$emit('updated')
-        })
-      })
-    },
-    postal_code: {
-      get () {
-        return this.client.user.address.postal_code
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'postal_code',
-          value: newVal,
-          id: this.client.user.address.id
-        }
-        this.$http.put(this.$api({ target: 'address' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClientAddress(payload)
-          this.$emit('updated')
-        })
-      })
-    },
-    neighborhood: {
-      get () {
-        return this.client.user.address.neighborhood
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'neighborhood',
-          value: newVal,
-          id: this.client.user.address.id
-        }
-        this.$http.put(this.$api({ target: 'address' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClientAddress(payload)
-          this.$emit('updated')
-        })
-      })
-    },
-    city: {
-      get () {
-        return this.client.user.address.city
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'city',
-          value: newVal,
-          id: this.client.user.address.id
-        }
-        this.$http.put(this.$api({ target: 'address' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClientAddress(payload)
-          this.$emit('updated')
-        })
-      })
-    },
     observations: {
       get () {
         return this.client.observations
@@ -187,7 +54,7 @@ export default {
           this.updateClient(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     }
   },
   methods: {
@@ -199,7 +66,6 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      console.log(e)
       let data = {
         label: e[0],
         value: e[1],
@@ -211,6 +77,11 @@ export default {
         let payload = [response.data, this.selectedIndex]
         e[2] === 'client' ? this.updateClient(payload) : this.updateClientAddress(payload)
         this.$emit('updated')
+        this.$toasted.success('Perfil do cliente atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 2000
+        })
       })
     }
   },

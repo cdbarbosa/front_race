@@ -6,7 +6,7 @@
           <b-input v-model="selected.name" disabled></b-input>
         </b-field>
         <b-field label="ID">
-          <b-input v-model="selected.id" placeholder="23"></b-input>
+          <b-input v-model="selected.id" placeholder="23" disabled></b-input>
         </b-field>
       </article>
       <article>
@@ -60,7 +60,7 @@
     <section>
       <div class="description">
         <b-field label="Observações">
-          <div class="textarea" v-html="selected.description"></div>
+          <div class="textarea __disabled" v-html="selected.description"></div>
         </b-field>
       </div>
     </section>

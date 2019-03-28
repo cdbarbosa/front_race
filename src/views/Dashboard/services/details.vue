@@ -247,7 +247,6 @@ export default {
       this.$http.post(this.$api({ target: 'rhservice' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.rhSelected = undefined
         this.getRhService()
         this.getRhNotInService()

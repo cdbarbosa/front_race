@@ -136,101 +136,6 @@ export default {
         })
       }, 400)
     }
-    // address: {
-    //   get () {
-    //     return this.rh.user.address.address
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       label: 'address',
-    //       value: newVal,
-    //       id: this.rh.user.address.id
-    //     }
-    //     this.$http.put(this.$api({ target: 'address' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateRhAddress(payload)
-    //       this.$emit('updated')
-    //     })
-    //   })
-    // },
-    // state: {
-    //   get () {
-    //     return this.rh.user.address.state
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       label: 'state',
-    //       value: newVal,
-    //       id: this.rh.user.address.id
-    //     }
-    //     this.$http.put(this.$api({ target: 'address' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateRhAddress(payload)
-    //       this.$emit('updated')
-    //     })
-    //   })
-    // },
-    // postal_code: {
-    //   get () {
-    //     return this.rh.user.address.postal_code
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       label: 'postal_code',
-    //       value: newVal,
-    //       id: this.rh.user.address.id
-    //     }
-    //     this.$http.put(this.$api({ target: 'address' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateRhAddress(payload)
-    //       this.$emit('updated')
-    //     })
-    //   })
-    // },
-    // neighborhood: {
-    //   get () {
-    //     return this.rh.user.address.neighborhood
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       label: 'neighborhood',
-    //       value: newVal,
-    //       id: this.rh.user.address.id
-    //     }
-    //     this.$http.put(this.$api({ target: 'address' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateRhAddress(payload)
-    //       this.$emit('updated')
-    //     })
-    //   })
-    // },
-    // city: {
-    //   get () {
-    //     return this.rh.user.address.city
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       label: 'city',
-    //       value: newVal,
-    //       id: this.rh.user.address.id
-    //     }
-    //     this.$http.put(this.$api({ target: 'address' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateRhAddress(payload)
-    //       this.$emit('updated')
-    //     })
-    //   })
-    // }
   },
   methods: {
     ...mapActions([
@@ -253,6 +158,11 @@ export default {
         let payload = [response.data, this.selectedIndex]
         e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
         this.$emit('updated')
+        this.$toasted.success('Perfil do rh atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 2000
+        })
       })
     }
   },
