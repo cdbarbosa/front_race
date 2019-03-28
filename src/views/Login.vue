@@ -55,9 +55,11 @@ export default {
           this.message = 'Armazenando o token'
           this.getAuthUser(this).then(response => {
             this.message = 'Validando o token'
-            this.setAuthUser(response.data).then(status => {
+            let authUser = response.data
+            this.setAuthUser(authUser).then(status => {
               this.message = 'Token Validado'
-              this.$router.push({ name: 'client', params: { client_id: 1 } })
+              this.$router.push({ name: authUser.role_id === 1 ? 'client' : 'rh' })
+              // this.$router.push({ name: 'rh' })
             })
           }).catch(err => {
             console.log(err)
@@ -77,8 +79,9 @@ export default {
         this.message = 'Validando token'
         this.getAuthUser(this).then(response => {
           this.message = 'Token Validado'
-          this.setAuthUser(response.data).then(status => {
-            this.$router.push({ name: 'client' })
+          let authUser = response.data
+          this.setAuthUser(authUser).then(status => {
+            this.$router.push({ name: authUser.role_id === 1 ? 'client' : 'rh' })
           })
         }).catch(err => {
           console.log(err)

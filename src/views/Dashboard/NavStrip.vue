@@ -1,11 +1,11 @@
 <template>
-  <div id="navstrip">
+  <div id="navstrip" v-if="user">
     <div class="logo">
       <img src="/img/logo.png" alt=""/>
     </div>
     <div class="links">
       <ul>
-        <router-link tag="li" :to="{ name: 'client' }">
+        <router-link tag="li" :to="{ name: 'client' }" v-if="user.role_id == 1">
           Clientes
         </router-link>
         <router-link tag="li" :to="{ name: 'rh' }">RH's</router-link>
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'navstrip',
   data () {
@@ -31,6 +31,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'user'
+    ])
   },
   methods: {
     ...mapActions([
