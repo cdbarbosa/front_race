@@ -1,7 +1,7 @@
 <template>
   <main id="rhs" v-if="selected !== undefined">
     <h3>
-      RH's User
+      RH's
       <div id="edit" @click="isEditActive = true">
         <b-icon icon="edit"></b-icon>
       </div>
