@@ -44,6 +44,10 @@
         h3{
         }
         .tableContainer{
+          ul{
+            list-style: none;
+            margin: 0;
+          }
           &.create{
             header{
               grid-template-columns: 8fr 2fr 5fr 1.5rem;

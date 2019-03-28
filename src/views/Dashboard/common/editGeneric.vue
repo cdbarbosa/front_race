@@ -20,19 +20,19 @@
       </article>
       <article class="info-second">
         <b-field label="Email">
-          <b-input v-model="person.user.email" type="email" placeholder="example@example.com" disabled></b-input>
+          <b-input v-model="person.user.email" type="email" placeholder="example@example.com" ></b-input>
         </b-field>
         <div class="block">
-          <b-radio v-model="person.user.type.id" native-value="1" disabled>
+          <b-radio v-model="person.user.type.id" native-value="1" >
             Juridico
           </b-radio>
-          <b-radio v-model="person.user.type.id" native-value="2" disabled>
+          <b-radio v-model="person.user.type.id" native-value="2" >
             Fisico
           </b-radio>
         </div>
       </article>
       <b-field label="CPF/CNPJ">
-        <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
+        <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" ></b-input>
       </b-field>
       <address class="address">
         <h3>Endereço</h3>
@@ -86,16 +86,15 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['name', newVal, this.update])
-      }, 400)
+      }, 1000)
     },
     phone: {
       get () {
         return this.person.phone
       },
       set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal, oldVal)
-        // this.$emit('change', ['phone', newVal, this.update])
-      }, 400)
+        this.$emit('change', ['phone', newVal, this.update])
+      }, 1000)
     },
     address: {
       get () {
@@ -103,7 +102,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['address', newVal, 'address'])
-      }, 400)
+      }, 1000)
     },
     state: {
       get () {
@@ -111,7 +110,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['state', newVal, 'address'])
-      }, 400)
+      }, 1000)
     },
     postal_code: {
       get () {
@@ -119,7 +118,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['postal_code', newVal, 'address'])
-      }, 400)
+      }, 1000)
     },
     neighborhood: {
       get () {
@@ -127,7 +126,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['neighborhood', newVal, 'address'])
-      }, 400)
+      }, 1000)
     },
     city: {
       get () {
@@ -135,7 +134,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.$emit('change', ['city', newVal, 'address'])
-      }, 400)
+      }, 1000)
     }
   }
 }

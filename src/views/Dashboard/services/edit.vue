@@ -24,7 +24,7 @@
         </article>
         <article class="info-three">
           <b-field label="Cliente">
-            <b-input v-model="service.client.name" placeholder="Cliente" disabled></b-input>
+            <b-input v-model="service.client.name" placeholder="Cliente" ></b-input>
           </b-field>
           <b-field label="Sigilo">
             <div class="block">
@@ -54,7 +54,7 @@
       </section>
       <section class="description">
         <b-field label="Observações">
-          <textarea v-model="description" name="" cols="35" rows="15" disabled></textarea>
+          <textarea v-model="description" name="" cols="35" rows="15" ></textarea>
         </b-field>
       </section>
     </div>

@@ -17,12 +17,12 @@
           <div class="textarea __disabled" v-html="selected.experience"></div>
         </b-field>
         <b-field label="Observações">
-          <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
+          <div class="textarea __disabled" v-html="selected.observations"></div>
         </b-field>
       </section>
     </div>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @update="table($emit)">
+      <rh-table :create="true" :rhs="rhs" @update="rhSelected = $event[0]">
         <span slot="title">Rhs</span>
       </rh-table>
     </div>
@@ -89,7 +89,6 @@ export default {
   },
   watch: {
     searchQuery: _.debounce(function (newQuery, oldQuery) {
-      console.log(newQuery)
       this.rhSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
         this.getRhs(this)
@@ -109,7 +108,6 @@ export default {
   },
   beforeMount () {
     this.getRhs(this)
-    // console.log(this.rhs[0].academics)
   },
   methods: {
     ...mapActions([
