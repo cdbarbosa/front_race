@@ -52,7 +52,7 @@
         <!--   <option value="1">ORCA &#45; Orçamento (em aberto)</option> -->
         <!-- </b&#45;select> -->
       </b-field>
-      <div class="actions">
+      <div class="actions" v-if="$store.getters.user.role_id === 1">
         <router-link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router-link>
         <router-link tag="button" :to="{ name: 'serviceDetails', params: { service_id: this.$route.params.service_id } }">Detalhes</router-link>
       </div>
@@ -67,6 +67,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'service',
@@ -82,6 +83,11 @@ export default {
       },
       radio: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
   },
   methods: {
     parseDate (date) {

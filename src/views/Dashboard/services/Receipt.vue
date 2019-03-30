@@ -79,7 +79,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
-      $this.$http.get($this.$api({ target: `service/${$this.$route.params.receipt_id}` }), {
+      $this.$http.get($this.$api({ target: `service/${$this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
         $this.serviceSelected = response.data
