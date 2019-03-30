@@ -18,11 +18,11 @@
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
           </b-table-column>
-          <b-table-column field="created_at" label="Custo">
-            {{ props.row.cost }}
+          <b-table-column field="pivot.hours" label="Horas">
+            {{ props.row.pivot.hours }}
           </b-table-column>
-          <b-table-column field="user.email" label="Horas">
-            {{ parseDate(props.row.created_at) }}
+          <b-table-column field="pivot.cost" label="Custo">
+            {{ props.row.pivot.cost }}
           </b-table-column>
         </template>
       </b-table>
@@ -90,7 +90,7 @@
               <b-input  v-model="rhServiceFields.hours"></b-input>
             </b-field>
             <b-field label="Custo por Hora para o Serviço (R$)">
-              <b-input v-money="money" v-model="rhServiceFields.cost"></b-input>
+              <b-input v-model="rhServiceFields.cost"></b-input>
             </b-field>
           </article>
         </section>

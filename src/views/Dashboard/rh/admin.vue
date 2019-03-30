@@ -22,7 +22,7 @@
       </section>
     </div>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @update="table($emit)">
+      <rh-table :create="true" :rhs="rhs" @update="table($event)">
         <span slot="title">Rhs</span>
       </rh-table>
     </div>
@@ -34,6 +34,7 @@
     </b-modal>
   </main>
 </template>
+
 <script>
 import { mapActions } from 'vuex'
 import createRh from './create.vue'

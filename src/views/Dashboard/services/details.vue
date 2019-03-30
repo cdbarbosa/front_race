@@ -21,7 +21,7 @@
               <div class="textarea __disabled" v-html="selected.competencies"></div>
             </b-field>
             <b-field label="Atividades">
-              <b-input v-model="goal" placeholder="Atividade"></b-input>
+              <b-input v-model="selected.pivot.goal" placeholder="Atividade"></b-input>
             </b-field>
           </article>
           <article>
