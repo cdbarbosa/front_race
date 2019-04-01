@@ -36,11 +36,19 @@ const mutations = {
 
 const actions = {
   getRhs ({ commit }, that) {
-    that.$http.get(that.$api({ target: 'rhs' }), {
-      headers: header()
-    }).then(response => {
-      commit('SET_RHS', response.data)
+    return new Promise((resolve, reject) => {
+      that.$http.get(that.$api({ target: 'rhs' }), {
+        headers: header()
+      }).then(response => {
+        resolve(response.data)
+      }).catch(err => {
+        reject(err)
+        console.log(err)
+      })
     })
+  },
+  setRhs ({ commit }, rhs) {
+    commit('SET_RHS', rhs)
   },
   getRhByService ({ commit }, payload) {
     let that = payload[0]

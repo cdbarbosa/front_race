@@ -1,14 +1,14 @@
 <template>
   <main class="clientScreen" id="updateClient">
     <div class="content">
-      <edit-client :person="client" :title="'Cliente'" @change="updateFunction($event)"></edit-client>
+      <edit-generic :person="client" :title="'Cliente'" @change="updateFunction($event)"></edit-generic>
       <div class="others">
         <b-field label="Observações">
           <!-- <textarea v&#45;model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea> -->
           <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Atividade">
-          <b-input v-model="client.activity" placeholder="Produçaõ de PANIC"></b-input>
+          <b-input v-model="activity" placeholder="Produçaõ de PANIC"></b-input>
         </b-field>
       </div>
     </div>
@@ -19,10 +19,10 @@ import { mapActions } from 'vuex'
 import { VueEditor } from 'vue2-editor'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
-import editClient from '../common/editGeneric.vue'
+import editGeneric from '../common/editGeneric.vue'
 import moment from 'moment'
 export default {
-  name: 'updateClient',
+  name: 'editClient',
   props: ['client', 'selectedIndex'],
   data () {
     return {
@@ -41,19 +41,16 @@ export default {
       get () {
         return this.client.observations
       },
-      set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'observations',
-          value: newVal,
-          id: this.client.id
-        }
-        this.$http.put(this.$api({ target: 'client' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateClient(payload)
-          this.$emit('updated')
-        })
+      set: _.debounce(function (newVal) {
+        this.updateFunction(['observations', newVal, 'client'])
+      }, 1000)
+    },
+    activity: {
+      get () {
+        return this.client.activity
+      },
+      set: _.debounce(function (newVal) {
+        this.updateFunction(['activity', newVal, 'client'])
       }, 1000)
     }
   },
@@ -87,7 +84,7 @@ export default {
   },
   components: {
     VueEditor,
-    editClient
+    editGeneric
   }
 }
 </script>

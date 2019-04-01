@@ -8,7 +8,7 @@
         <b-input v-model="person.id" placeholder="23" disabled></b-input>
       </b-field>
     </article>
-    <article class="info-second">
+    <article>
       <b-field label="Cadastro">
         <b-input :value="parseDate(person.created_at)" v-mask="'##/##/####'" disabled></b-input>
       </b-field>
@@ -16,10 +16,12 @@
         <b-input v-model="person.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" disabled></b-input>
       </b-field>
     </article>
-    <article class="info-second">
+    <article>
       <b-field label="Email">
         <b-input v-model="person.user.email" type="email" placeholder="example@example.com" disabled></b-input>
       </b-field>
+    </article>
+    <article>
       <b-field>
         <b-radio v-model="person.user.type.id" native-value="1" disabled>
           Juridico
@@ -28,13 +30,13 @@
           Fisico
         </b-radio>
       </b-field>
+      <b-field label="CPF/CNPJ">
+        <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
+      </b-field>
     </article>
-    <b-field label="CPF/CNPJ">
-      <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
-    </b-field>
     <address class="address">
       <h3>Endereço</h3>
-      <article class="info-three">
+      <article>
         <b-field label="Rua">
           <b-input v-model="person.user.address.address" placeholder="Rua" disabled></b-input>
         </b-field>

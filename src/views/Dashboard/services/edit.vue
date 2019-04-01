@@ -13,7 +13,7 @@
         </article>
         <article class="info-two">
           <b-field label="Data de registro">
-            <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register"></b-input>
+            <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
           </b-field>
           <b-field label="Previsão">
             <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
@@ -38,9 +38,6 @@
           <b-field label="Margem">
             <b-input v-model="profit" placeholder="50%"></b-input>
           </b-field>
-          <b-field label="Valor">
-            <b-input v-model="value" placeholder="825"></b-input>
-          </b-field>
           <b-field label="Recebido">
             <b-input v-model="received_value" placeholder="825"></b-input>
           </b-field>
@@ -54,7 +51,7 @@
       </section>
       <section class="description">
         <b-field label="Observações">
-          <textarea v-model="description" name="" cols="35" rows="15" ></textarea>
+          <vue-editor :editorToolbar="customToolbar" v-model="description"></vue-editor>
         </b-field>
       </section>
     </div>
@@ -64,6 +61,7 @@
 import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
+import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
 // import { VueEditor } from 'vue2-editor'
 export default {
@@ -71,6 +69,10 @@ export default {
   props: ['service', 'selectedIndex'],
   data () {
     return {
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
+      ],
       radio: ''
     }
   },
@@ -96,7 +98,7 @@ export default {
           this.updateService(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     },
     profit: {
       get () {
@@ -115,7 +117,7 @@ export default {
           this.updateService(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     },
     value: {
       get () {
@@ -134,7 +136,7 @@ export default {
           this.updateService(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     },
     description: {
       get () {
@@ -153,7 +155,7 @@ export default {
           this.updateService(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     },
     received_value: {
       get () {
@@ -172,7 +174,7 @@ export default {
           this.updateService(payload)
           this.$emit('updated')
         })
-      }, 400)
+      }, 1000)
     }
     // received_value: {
     //   get () {
@@ -191,7 +193,7 @@ export default {
     //       this.updateService(payload)
     //       this.$emit('updated')
     //     })
-    //   }, 400)
+    //   }, 1000)
     // }
   },
   methods: {
@@ -203,6 +205,7 @@ export default {
     }
   },
   components: {
+    VueEditor
   }
 }
 </script>

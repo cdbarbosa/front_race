@@ -1,5 +1,4 @@
 #dashboard {
-  height: 100%;
   .component {
     height: 100%;
     display: grid;
@@ -48,12 +47,12 @@
             list-style: none;
             margin: 0;
           }
-          button{
-            font-size: 1em;
-            background: $primary;
-            margin-bottom: 0;
-            justify-content: center;
-          }
+          // button{
+          //   font-size: 1em;
+          //   background: $primary;
+          //   margin-bottom: 0;
+          //   justify-content: center;
+          // }
           .b-table .level{
             padding-bottom: 0;
           }
@@ -68,6 +67,12 @@
             grid-template-columns: 8fr 6fr 1.5rem;
             align-items: center;
             margin-bottom: 1rem;
+            button{
+              font-size: 1em;
+              background: $primary;
+              margin-bottom: 0;
+              justify-content: center;
+            }
             h4{
               margin-bottom: 0;
               // .icon{
@@ -110,13 +115,16 @@
               grid-template-columns: 9fr 3fr;
             }
             &:nth-child(3){
-              grid-template-columns: 9fr 3fr;
+              grid-template-columns: 1fr;
+            }
+						&:nth-child(4){
+							grid-template-columns: 1fr 1fr;
               .field{
-                &:nth-child(2){
+                &:nth-child(1){
                   margin-top: 1.4rem;
                 }
               }
-            }
+						}
           }
           address{
             font-style: normal;
@@ -210,7 +218,7 @@
           }
           .block {
             font-size: 12px;
-            margin-top: 2.5rem;
+            margin-top: 1rem;
           }
           &.academics{
             grid-template-columns: 4fr 2fr 2fr;

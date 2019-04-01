@@ -118,7 +118,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getClients'
+      'getClients',
+      'setClients'
     ]),
     createClient () {
       this.createUser().then(userId => {
@@ -129,8 +130,10 @@ export default {
         this.$http.post(this.$api({ target: 'clients' }), data, {
           headers: header()
         }).then(() => {
-          this.getClients(this)
-          this.$emit('clientCreated')
+          this.getClients(this).then(clients => {
+            this.setClients(clients)
+            this.$emit('clientCreated')
+          })
         })
       }).catch(err => {
         this.$emit('creationFailed')

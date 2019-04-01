@@ -17,7 +17,7 @@
           <div class="textarea __disabled" v-html="selected.experience"></div>
         </b-field>
         <b-field label="Observações">
-          <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
+          <div class="textarea __disabled" v-html="selected.observations"></div>
         </b-field>
       </section>
     </div>

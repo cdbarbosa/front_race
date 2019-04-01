@@ -20,9 +20,9 @@
           <b-field label="Previsão">
             <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="data" name="date" required></b-input>
           </b-field>
-          <b-field label="Prazo">
-            <b-input v-model="service.due_date" ref="beforeTarget" v-validate="rules.date_before" v-mask="'##/##/####'" placeholder="data" name="beforeTarget" required></b-input>
-          </b-field>
+          <!-- <b&#45;field label="Prazo"> -->
+          <!--   <b&#45;input v&#45;model="service.due_date" ref="beforeTarget" v&#45;validate="rules.date_before" v&#45;mask="'##/##/####'" placeholder="data" name="beforeTarget" required></b&#45;input> -->
+          <!-- </b&#45;field> -->
           <b-field label="Sigilo">
             <div class="block">
               <b-radio v-model="service.confidentiality_id" :native-value="1">Nenhum</b-radio>
@@ -39,15 +39,8 @@
           <b-field label="Margem">
             <b-input v-model="service.profit" placeholder="50%" v-validate="rules.number" name="margem" required></b-input>
           </b-field>
-          <b-field label="Valor">
-            <b-input v-model.lazy="service.value" v-money="money" placeholder="825" name="valor" required></b-input>
-          </b-field>
-          <b-field label="Recebido">
-            <b-input placeholder="825" name="recebido" required></b-input>
-          </b-field>
         </article>
         <span>{{ errors.first('margem') }}</span>
-        <!-- <span>{{ errors.first('valor') }}</span> -->
         <span>{{ errors.first('recebido') }}</span>
         <b-field label="Situação">
           <b-select placeholder="Select a name">
@@ -109,7 +102,6 @@ export default {
   beforeMount () {
     this.getClients(this)
     this.getServiceStatuses()
-    // console.log(this.clients)
   },
   computed: {
     ...mapGetters([
@@ -119,7 +111,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getClients'
+      'getClients',
+      'getServices'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({ target: 'service-status' }), {
@@ -129,7 +122,6 @@ export default {
       })
     },
     create () {
-      this.service.value = parseFloat(this.service.value.split(' ')[1])
       let data = {
         client_id: this.client_id,
         service: this.service
@@ -137,8 +129,12 @@ export default {
       this.$http.post(this.$api({ target: 'services' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
-        this.$router.push({ name: 'service', params: { service_id: this.services[0].id } })
+        this.getServices(this).then(response => {
+          this.$emit('serviceCreated')
+        })
+      }).catch(err => {
+        this.$emit('creationFailed')
+        console.log(err)
       })
     }
   },

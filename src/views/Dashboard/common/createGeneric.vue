@@ -55,7 +55,6 @@
         </article>
       </address>
     </section>
-
   </div>
 </template>
 <script>

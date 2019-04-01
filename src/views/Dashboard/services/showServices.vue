@@ -11,9 +11,7 @@ const SERVICE = {
 }
 export default {
   render (h) {
-    if (this.$store.getters.user !== undefined) {
-      return h(this.$store.getters.user.role_id === 1 ? SERVICE.admin : SERVICE.user)
-    }
+    return h(this.$store.getters.user.role_id === 1 ? SERVICE.admin : SERVICE.user)
   }
 }
 </script>

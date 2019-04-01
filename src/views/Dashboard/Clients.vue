@@ -48,7 +48,7 @@
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false">
         <template v-slot:message>
-            <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
+          <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
         </template>
       </component>
     </b-modal>

@@ -36,7 +36,11 @@
       </section>
     </div>
     <b-modal :active.sync="isServiceModalActive">
-      <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false"></component>
+      <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false">
+        <template v-slot:message>
+          <h2>{{ serviceCreated ? 'Sucesso ao cadastrar um serviço' : 'Algo de errado aconteceu' }}</h2>
+        </template>
+      </component>
     </b-modal>
     <b-modal :active.sync="isEditActive">
       <service-edit :service="selected" :selectedIndex="selectedIndex" @update="serviceSelected = services[selectedIndex]"></service-edit>
@@ -88,6 +92,9 @@ export default {
     }
   },
   watch: {
+    isModalActive (newVal) {
+      if (!newVal) this.serviceCreated = undefined
+    },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.serviceSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
@@ -110,12 +117,15 @@ export default {
     }
   },
   beforeMount () {
-    this.getServices(this)
+    this.getServices(this).then(services => {
+      this.setServices(services)
+    })
   },
   methods: {
     ...mapActions([
       'getServices',
-      'changeServices'
+      'changeServices',
+      'setServices'
     ]),
     parseModal () {
       if (this.serviceCreated === undefined) {

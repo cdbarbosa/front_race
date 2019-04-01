@@ -15,7 +15,7 @@
           <b-input :value="parseDate(person.created_at)" v-mask="'##/##/####'" disabled></b-input>
         </b-field>
         <b-field label="Telefone">
-          <b-input v-model="phone" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="Telefone"></b-input>
+          <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
         </b-field>
       </article>
       <article class="info-second">
@@ -93,6 +93,7 @@ export default {
         return this.person.phone
       },
       set: _.debounce(function (newVal, oldVal) {
+        console.log(newVal, oldVal)
         this.$emit('change', ['phone', newVal, this.update])
       }, 1000)
     },

@@ -18,11 +18,8 @@
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
           </b-table-column>
-          <b-table-column field="pivot.hours" label="Horas">
-            {{ props.row.pivot.hours }}
-          </b-table-column>
-          <b-table-column field="pivot.cost" label="Custo">
-            {{ props.row.pivot.cost }}
+          <b-table-column field="user.email" label="Email">
+            {{ props.row.user.email }}
           </b-table-column>
         </template>
       </b-table>

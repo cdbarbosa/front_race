@@ -1,7 +1,7 @@
 <template>
   <div class="rhScreen" id="updateRh">
     <div class="content">
-      <edit-rh :person="rh" :title="'Rh'" @change="updateFunction($event)">
+      <edit-generic :person="rh" :title="'Rh'" @change="updateFunction($event)">
         <article class="academics">
           <b-field label="Bacharelado">
             <b-input v-model="bacharel" placeholder="Matemática"></b-input>
@@ -13,7 +13,7 @@
             <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
           </b-field>
         </article>
-      </edit-rh>
+      </edit-generic>
       <div class="competencias">
         <h3>Competências</h3>
         <b-field label="Experiência">
@@ -32,7 +32,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
-import editRh from '../common/editGeneric.vue'
+import editGeneric from '../common/editGeneric.vue'
 import _ from 'lodash'
 import moment from 'moment'
 import { VueEditor } from 'vue2-editor'
@@ -63,78 +63,32 @@ export default {
         return this.rh.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'competencies',
-          value: newVal,
-          id: this.rh.id
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-          this.$emit('updated')
-        })
-      }, 400)
+        this.updateFunction(['competencies', newVal, 'rh'])
+      }, 1000)
     },
     cost: {
       get () {
         return this.rh.cost
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'cost',
-          value: newVal,
-          id: this.rh.id
-        }
-        this.$http.put(this.$api({ target: 'rh' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRh(payload)
-          this.$emit('updated')
-        })
-      }, 400)
+        this.updateFunction(['cost', newVal, 'rh'])
+      }, 1000)
     },
     bacharel: {
       get () {
         return this.rh.academics ? this.rh.academics.area : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'area',
-          value: newVal,
-          id: this.rh.academics.id,
-          rh_id: this.rh.id
-        }
-        this.$http.put(this.$api({ target: 'rhacademic' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRhAcademics(payload)
-          this.$emit('update')
-        })
-      }, 400)
+        this.updateFunction(['area', newVal, 'rh'])
+      }, 1000)
     },
     titulation: {
       get () {
         return this.academics ? this.rh.academics.degree : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          label: 'degree',
-          value: newVal,
-          id: this.rh.academics.id,
-          rh_id: this.rh.id
-        }
-        this.$http.put(this.$api({ target: 'rhacademic' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateRhAcademics(payload)
-          this.$emit('update')
-        })
-      }, 400)
+        this.updateFunction(['degree', newVal, 'rh'])
+      }, 1000)
     }
   },
   methods: {
@@ -152,7 +106,6 @@ export default {
         value: e[1],
         id: e[2] === 'rh' ? this.rh.id : this.rh.user.address.id
       }
-      console.log(data)
       this.$http.put(this.$api({ target: `${e[2]}` }), data, {
         headers: header()
       }).then(response => {
@@ -168,7 +121,7 @@ export default {
     }
   },
   components: {
-    editRh,
+    editGeneric,
     VueEditor
   }
 }
