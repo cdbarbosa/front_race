@@ -27,7 +27,11 @@
       </rh-table>
     </div>
     <b-modal :active.sync="isModalActive">
-      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
+      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">
+        <template v-slot:message>
+          <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
+        </template>
+      </component>
     </b-modal>
     <b-modal :active.sync="isEditActive">
       <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
@@ -109,12 +113,15 @@ export default {
     }
   },
   beforeMount () {
-    this.getRhs(this)
+    this.getRhs(this).then(rhs => {
+      this.setRhs(rhs)
+    })
     // console.log(this.rhs[0].academics)
   },
   methods: {
     ...mapActions([
       'getRhs',
+      'setRhs',
       'changeRh',
       'updateRh'
     ]),

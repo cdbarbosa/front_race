@@ -25,14 +25,16 @@
           <b-field label="Email">
             <b-input v-model="user.email" v-validate="rules.email" type="email" placeholder="example@example.com" name="email" required></b-input>
           </b-field>
-          <div class="block">
-            <b-radio v-model="user.type_id" native-value="1">
-              Fisico
-            </b-radio>
-            <b-radio v-model="user.type_id" native-value="2">
-              Juridico
-            </b-radio>
-          </div>
+          <b-field label="Tipo">
+            <div class="block">
+              <b-radio v-model="user.type_id" native-value="1">
+                Fisico
+              </b-radio>
+              <b-radio v-model="user.type_id" native-value="2">
+                Juridico
+              </b-radio>
+            </div>
+          </b-field>
         </article>
         <b-field label="CPF/CNPJ">
           <b-input v-model="user.document" v-mask="user.type_id === '1' ? '###.###.###-##' : '##.###.###/####-##'" v-validate="rules.document" placeholder="cpf" name="document" required></b-input>
@@ -140,7 +142,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getRhs'
+      'getRhs',
+      'setRhs'
     ]),
     createRh () {
       this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
@@ -152,8 +155,13 @@ export default {
         this.$http.post(this.$api({ target: 'rhs' }), data, {
           headers: header()
         }).then(response => {
-          this.getRhs(this)
-          this.$route.name === 'rh' ? this.$router.push({ name: 'rh' }) : this.$router.push({ name: 'vueDetails', params: { id: this.$route.params.id } })
+          this.getRhs(this).then(rhs => {
+            this.setRhs(rhs)
+            this.$emit('rhCreated')
+          })
+        }).catch(err => {
+          this.$emit('creationFailed')
+          console.log(err)
         })
       }).catch(err => {
         console.log(err)
