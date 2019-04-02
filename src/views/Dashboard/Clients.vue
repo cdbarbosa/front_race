@@ -1,12 +1,12 @@
 <template>
-  <main id="clients" v-if="selected">
+  <main id="clients">
     <h3>
       Cliente
-      <div id="edit" @click="isEditActive = true">
+      <div id="edit" @click="isEditActive = true" v-if="selected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content">
+    <div class="content" v-if="selected">
       <generic-user :person="selected"></generic-user>
       <section>
         <b-field label="Observações">
@@ -18,6 +18,9 @@
         </b-field>
       </section>
     </div>
+    <div class="content" v-else>
+      <h2>Nenhum cliente cadastrado ou encontrado</h2>
+    </div>
     <div class="content __display">
       <section class="__secundary">
         <div class="tableContainer">
@@ -26,7 +29,7 @@
             <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
             <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
           </header>
-          <b-table :data="clients" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+          <b-table :data="clients ? clients : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
             <template slot-scope="props">
               <b-table-column field="name" label="NOME" sortable>
                 {{ props.row.name }}
@@ -40,6 +43,16 @@
               <b-table-column field="phone" label="TELEFONE">
                 {{ props.row.phone }}
               </b-table-column>
+            </template>
+            <template slot="empty">
+              <section class="section">
+                <div class="empty has-text-grey has-text-centered">
+                  <p>
+                    <b-icon icon="frown" size="is-large"></b-icon>
+                  </p>
+                  <p>Nothing here.</p>
+                </div>
+              </section>
             </template>
           </b-table>
         </div>
@@ -115,7 +128,9 @@ export default {
       }
     }, 500),
     selected (newVal) {
-      this.$router.push({ name: 'client', params: { client_id: newVal.id } })
+      if (this.clients.length > 0) {
+        this.$router.push({ name: 'client', params: { client_id: newVal.id } })
+      }
     }
   },
   activated () {

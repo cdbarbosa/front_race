@@ -1,12 +1,12 @@
 <template>
-  <main id="rhs" v-if="selected !== undefined">
+  <main id="rhs">
     <h3>
       RH's Admin
-      <div id="edit" @click="isEditActive = true">
+      <div id="edit" @click="isEditActive = true" v-if="selected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content">
+    <div class="content" v-if="selected">
       <generic-user :person="selected"></generic-user>
       <section>
         <b-field label="Competências">
@@ -20,6 +20,9 @@
           <div class="textarea __disabled" v-html="selected.observations"></div>
         </b-field>
       </section>
+    </div>
+    <div class="content" v-else>
+      <h2>Rh não cadastrado ou não encontrado</h2>
     </div>
     <div class="content __display">
       <rh-table :create="true" :rhs="rhs" @update="table($event)">
@@ -103,7 +106,9 @@ export default {
       }
     }, 500),
     selected (newVal) {
-      this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
+      if (this.rhs.length > 0) {
+        this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
+      }
     }
   },
   activated () {

@@ -1,12 +1,15 @@
 <template>
-  <main id="services" v-if="selected">
+  <main id="services">
     <h3>
       Serviços
-      <div id="edit" @click="isEditActive = true">
+      <div id="edit" @click="isEditActive = true" v-if="selected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <service :selected="selected"></service>
+    <service :selected="selected"  v-if="selected"></service>
+    <div class="content" v-else>
+       <h2>Nenhum cliente cadastrado ou encontrado</h2>
+    </div>
     <div class="content" id="table">
       <section class="__secundary">
         <header>
@@ -14,7 +17,7 @@
           <button class="buttons is-primary" @click="log">Criar novo serviço</button>
           <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
         </header>
-        <b-table :data="services" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <b-table :data="services ? services : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>
               {{ props.row.name }}
@@ -31,6 +34,16 @@
             <b-table-column field="name" label="Situação">
               {{ props.row.status.abbreviation }}
             </b-table-column>
+          </template>
+          <template slot="empty">
+            <section class="section">
+              <div class="empty has-text-grey has-text-centered">
+                <p>
+                  <b-icon icon="frown" size="is-large"></b-icon>
+                </p>
+                <p>Nothing here.</p>
+              </div>
+            </section>
           </template>
         </b-table>
       </section>
@@ -104,11 +117,10 @@ export default {
       }
     }, 500),
     selected (newVal) {
-      this.$router.push({ name: 'service', params: { service_id: newVal.id } })
+      if (this.services.length > 0) {
+        this.$router.push({ name: 'service', params: { service_id: newVal.id } })
+      }
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next()
   },
   activated () {
     if (this.selected) {

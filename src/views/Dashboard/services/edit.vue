@@ -121,14 +121,6 @@ export default {
         this.updateFunction(['forecast', newVal])
       }, 1000)
     },
-    for: {
-      get () {
-        return this.service.for
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['for', newVal])
-      }, 1000)
-    },
     received_value: {
       get () {
         return this.service.received_value

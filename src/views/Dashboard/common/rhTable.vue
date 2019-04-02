@@ -13,7 +13,7 @@
           <b-icon icon="cog"></b-icon>
         </div>
       </header>
-      <b-table :data="rhs" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
+      <b-table :data="rhs ? rhs : []" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -21,6 +21,16 @@
           <b-table-column field="user.email" label="Email">
             {{ props.row.user.email }}
           </b-table-column>
+        </template>
+        <template slot="empty">
+          <section class="section">
+            <div class="empty has-text-grey has-text-centered">
+              <p>
+                <b-icon icon="frown" size="is-large"></b-icon>
+              </p>
+              <p>Nothing here.</p>
+            </div>
+          </section>
         </template>
       </b-table>
       <button v-if="attach" @click="isAttachModalOpen = true">Associar esse Rh</button>
@@ -62,7 +72,7 @@
         </section>
       </div>
     </b-modal>
-    <b-modal :active.sync="isAttachModalOpen">
+    <b-modal :active.sync="isAttachModalOpen" v-if="selected">
       <div class="" id="attachScreen">
         <h3>Associar RH</h3>
         <section>
@@ -216,8 +226,10 @@ export default {
   watch: {
     searchRh: _.debounce(function (newVal, oldVal) {
       this.rhSelected = undefined
-      if (newVal === '') {
-        this.getRhs(this)
+      if (newVal === '' && newVal === oldVal) {
+        this.getRhs(this).then(rhs => {
+          // console.log(rhs)
+        })
       } else {
         this.search(newVal)
       }
@@ -259,7 +271,6 @@ export default {
       this.$http.post(this.$api({ target: 'rh' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.changeRh(response.data)
         this.isFilterModalActive = false
       })

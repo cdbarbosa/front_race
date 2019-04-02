@@ -84,7 +84,7 @@ export default {
     ])
   },
   beforeMount () {
-    console.log(this.selected)
+    // console.log(this.selected)
   },
   methods: {
     parseDate (date) {

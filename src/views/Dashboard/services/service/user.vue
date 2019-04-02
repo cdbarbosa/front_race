@@ -32,6 +32,9 @@
       </section>
     </div>
   </main>
+  <main v-else>
+    <h2>Não há serviço associado</h2>
+  </main>
 </template>
 <script>
 import service from '../service'
@@ -71,12 +74,14 @@ export default {
     }
   },
   beforeMount () {
+    console.log('here')
     this.$http.get(this.$api({ target: `rh/${this.$store.getters.user.id}` }), {
       headers: header()
     }).then(response => {
       this.rh_id = response.data.id
       this.getServiceRh(this.rh_id)
     })
+    console.log(this.services)
   },
   methods: {
     searchServices (title) {
