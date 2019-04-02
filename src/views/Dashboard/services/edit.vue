@@ -86,18 +86,7 @@ export default {
         return this.service.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'name',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
+        this.updateFunction(['name', newVal])
       }, 1000)
     },
     profit: {
@@ -105,18 +94,7 @@ export default {
         return this.service.profit
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'profit',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
+        this.updateFunction(['profit', newVal])
       }, 1000)
     },
     value: {
@@ -124,18 +102,7 @@ export default {
         return this.service.value
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'value',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
+        this.updateFunction(['value', newVal])
       }, 1000)
     },
     description: {
@@ -143,18 +110,7 @@ export default {
         return this.service.description
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'description',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
+        this.updateFunction(['description', newVal])
       }, 1000)
     },
     received_value: {
@@ -162,39 +118,9 @@ export default {
         return this.service.received_value
       },
       set: _.debounce(function (newVal, oldVal) {
-        let data = {
-          'id': this.service.id,
-          'label': 'received_value',
-          'value': newVal
-        }
-        this.$http.put(this.$api({ target: 'service' }), data, {
-          headers: header()
-        }).then(response => {
-          let payload = [response.data, this.selectedIndex]
-          this.updateService(payload)
-          this.$emit('updated')
-        })
+        this.updateFunction(['received_value', newVal])
       }, 1000)
     }
-    // received_value: {
-    //   get () {
-    //     return this.service.confidentiality_id
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     let data = {
-    //       'id': this.service.id,
-    //       'label': 'confidentiality_id',
-    //       'value': newVal
-    //     }
-    //     this.$http.put(this.$api({ target: 'service' }), data, {
-    //       headers: header()
-    //     }).then(response => {
-    //       let payload = [response.data, this.selectedIndex]
-    //       this.updateService(payload)
-    //       this.$emit('updated')
-    //     })
-    //   }, 1000)
-    // }
   },
   methods: {
     ...mapActions([
@@ -202,6 +128,25 @@ export default {
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    updateFunction (e) {
+      let data = {
+        label: e[0],
+        value: e[1],
+        id: this.service.id
+      }
+      this.$http.put(this.$api({ target: 'service' }), data, {
+        headers: header()
+      }).then(response => {
+        let payload = [response.data, this.selectedIndex]
+        this.updateService(payload)
+        this.$emit('updated')
+        this.$toasted.success('Serviço atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 2000
+        })
+      })
     }
   },
   components: {
