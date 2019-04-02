@@ -26,10 +26,10 @@
           <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
         </b-field>
         <b-field label="Previsão">
-          <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="date" disabled></b-input>
+          <b-input :value="parseDate(selected.forecast)" v-mask="'##/##/####'" placeholder="data" name="date" disabled></b-input>
         </b-field>
-        <b-field label="Prazo">
-          <b-input :value="parseDate(selected.due_date)" v-mask="'##/##/####'" placeholder="data" name="date-duo" disabled></b-input>
+        <b-field label="Entrega">
+          <b-input :value="parseDate(selected.delivered)" v-mask="'##/##/####'" placeholder="data" name="delivered" disabled></b-input>
         </b-field>
       </article>
       <article>
@@ -38,19 +38,13 @@
         </b-field>
         <b-field label="Valor">
           <money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>
-          <!-- <b&#45;input :value="selected.total_cost" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
         <b-field label="Recebido">
           <money class="input" :value="selected.received_value" v-money="money" :masked="true" disabled></money>
-          <!-- <b&#45;input :value="" v&#45;money="money" placeholder="825" disabled></b&#45;input> -->
         </b-field>
       </article>
       <b-field label="Situação">
         <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>
-        <!-- <b&#45;select placeholder="Select a name"> -->
-        <!--   <option value="">Selecione</option> -->
-        <!--   <option value="1">ORCA &#45; Orçamento (em aberto)</option> -->
-        <!-- </b&#45;select> -->
       </b-field>
       <div class="actions" v-if="$store.getters.user.role_id === 1">
         <router-link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router-link>
@@ -88,6 +82,9 @@ export default {
     ...mapGetters([
       'user'
     ])
+  },
+  beforeMount () {
+    console.log(this.selected)
   },
   methods: {
     parseDate (date) {

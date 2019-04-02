@@ -20,9 +20,6 @@
           <b-field label="Previsão">
             <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="data" name="date" required></b-input>
           </b-field>
-          <!-- <b&#45;field label="Prazo"> -->
-          <!--   <b&#45;input v&#45;model="service.due_date" ref="beforeTarget" v&#45;validate="rules.date_before" v&#45;mask="'##/##/####'" placeholder="data" name="beforeTarget" required></b&#45;input> -->
-          <!-- </b&#45;field> -->
           <b-field label="Sigilo">
             <div class="block">
               <b-radio v-model="service.confidentiality_id" :native-value="1">Nenhum</b-radio>
@@ -82,10 +79,9 @@ export default {
         name: undefined,
         description: undefined,
         due_date: undefined,
-        // forecast: undefined,
+        forecast: undefined,
         profit: undefined,
         status_id: 1,
-        // value: undefined,
         confidentiality_id: undefined
       },
       client_id: undefined,

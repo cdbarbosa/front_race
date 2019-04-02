@@ -16,10 +16,10 @@
             <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
           </b-field>
           <b-field label="Previsão">
-            <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
+            <b-input :value="parseDate(service.forecast)" v-model="forecast" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
           </b-field>
-          <b-field label="Prazo">
-            <b-input :value="parseDate(service.due_date)" v-mask="'##/##/####'" placeholder="data" name="date-duo"></b-input>
+          <b-field label="Entrega">
+            <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input>
           </b-field>
         </article>
         <article class="info-three">
@@ -97,20 +97,36 @@ export default {
         this.updateFunction(['profit', newVal])
       }, 1000)
     },
-    value: {
-      get () {
-        return this.service.value
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['value', newVal])
-      }, 1000)
-    },
     description: {
       get () {
         return this.service.description
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateFunction(['description', newVal])
+      }, 1000)
+    },
+    delivered: {
+      get () {
+        return this.service.delivered
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateFunction(['delivered', newVal])
+      }, 1000)
+    },
+    forecast: {
+      get () {
+        return this.service.forecast
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateFunction(['forecast', newVal])
+      }, 1000)
+    },
+    for: {
+      get () {
+        return this.service.for
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateFunction(['for', newVal])
       }, 1000)
     },
     received_value: {
@@ -138,6 +154,7 @@ export default {
       this.$http.put(this.$api({ target: 'service' }), data, {
         headers: header()
       }).then(response => {
+        console.log(response.data)
         let payload = [response.data, this.selectedIndex]
         this.updateService(payload)
         this.$emit('updated')
