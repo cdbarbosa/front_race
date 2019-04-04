@@ -4,7 +4,7 @@
       <h3>Cliente</h3>
       <h3>Outros</h3>
     </header>
-    <div class="content __create">
+    <form @submit.prevent="createClient" class="content __create">
       <!-- <basic-client :person="client" :name="'Cliente'"></basic-client> -->
       <section>
         <article>
@@ -26,14 +26,16 @@
           <b-field label="Email">
             <b-input v-model="user.email" type="email"  v-validate="rules.email" placeholder="exemplo@exemplo.com" name="Email" required></b-input>
           </b-field>
-          <div class="block">
-            <b-radio v-model="user.type_id" native-value="1">
-              Juridico
-            </b-radio>
-            <b-radio v-model="user.type_id" native-value="2">
-              Fisico
-            </b-radio>
-          </div>
+          <b-field label="Tipo">
+            <div class="block">
+              <b-radio v-model="user.type_id" native-value="1">
+                Juridico
+              </b-radio>
+              <b-radio v-model="user.type_id" native-value="2">
+                Fisico
+              </b-radio>
+            </div>
+          </b-field>
         </article>
         <b-field label="CPF/CNPJ">
           <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" required></b-input>
@@ -67,13 +69,13 @@
           <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Atividade">
-          <b-input v-model="client.activity" placeholder="Produçaõ de PANIC" required></b-input>
+          <b-input v-model="client.activity" placeholder="Produçaõ de PANIC"></b-input>
         </b-field>
         <div class="buttonClass">
-          <button @click="createClient">Cadastrar</button>
+          <button type="submit">Cadastrar</button>
         </div>
       </aside>
-    </div>
+    </form>
   </main>
 </template>
 <script>
@@ -91,10 +93,10 @@ export default {
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
       client: {
-        name: undefined,
-        phone: undefined,
-        activity: undefined,
-        observations: undefined
+        name: null,
+        phone: null,
+        activity: null,
+        observations: null
       }
     }
   },
@@ -127,6 +129,7 @@ export default {
           user_id: userId,
           client: this.client
         }
+        console.log(data)
         this.$http.post(this.$api({ target: 'clients' }), data, {
           headers: header()
         }).then(() => {
@@ -134,6 +137,9 @@ export default {
             this.setClients(clients)
             this.$emit('clientCreated')
           })
+        }).catch(err => {
+          this.$emit('creationFailed')
+          console.log(err)
         })
       }).catch(err => {
         this.$emit('creationFailed')
