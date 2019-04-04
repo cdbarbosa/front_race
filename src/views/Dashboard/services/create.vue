@@ -1,24 +1,24 @@
 <template>
   <main class="create" id="createService">
     <h3>Serviço</h3>
-    <div class="content">
+    <form @submit.prevent="create" class="content">
       <section class="service">
         <b-field label="Título">
-          <textarea v-model="service.name" name=""  cols="50" rows="2"></textarea>
+          <textarea v-model="service.name" placeholder="Titulo do serviço" cols="50" rows="2"></textarea>
         </b-field>
-        <b-field label="Simple">
-          <b-select placeholder="Select a name" v-model="client_id">
+        <b-field label="Cliente">
+          <b-select placeholder="Selecione um cliente" v-model="client_id">
             <option
               v-for="option in clients"
               :value="option.id"
               :key="option.id">
-              {{ option.name }}
+            {{ option.name }}
             </option>
           </b-select>
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
-            <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="data" name="date" required></b-input>
+            <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input>
           </b-field>
           <b-field label="Sigilo">
             <div class="block">
@@ -40,8 +40,8 @@
         <span>{{ errors.first('margem') }}</span>
         <span>{{ errors.first('recebido') }}</span>
         <b-field label="Situação">
-          <b-select placeholder="Select a name">
-            <option value="">Selecione</option>
+          <b-select placeholder="Selecione um status para o cliente">
+            <!-- <option value="">Selecione</option> -->
             <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
         </b-field>
@@ -52,11 +52,11 @@
             <vue-editor :editorToolbar="customToolbar" v-model="service.description" placeholder="Analise de dados"></vue-editor>
           </b-field>
           <div class="buttonClass">
-            <button class="is-primary" @click="create">Cadastrar</button>
+            <button type="submit" class="is-primary" >Cadastrar</button>
           </div>
         </div>
       </section>
-    </div>
+    </form>
   </main>
 </template>
 <script>
@@ -76,15 +76,15 @@ export default {
       radio: '',
       beforeTarget: '',
       service: {
-        name: undefined,
-        description: undefined,
-        due_date: undefined,
-        forecast: undefined,
-        profit: undefined,
+        name: null,
+        description: null,
+        due_date: null,
+        forecast: null,
+        profit: null,
         status_id: 1,
-        confidentiality_id: undefined
+        confidentiality_id: 1
       },
-      client_id: undefined,
+      client_id: null,
       serviceStatuses: [],
       money: {
         decimal: '.',
@@ -108,7 +108,8 @@ export default {
   methods: {
     ...mapActions([
       'getClients',
-      'getServices'
+      'getServices',
+      'setServices'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({ target: 'service-status' }), {
@@ -125,7 +126,8 @@ export default {
       this.$http.post(this.$api({ target: 'services' }), data, {
         headers: header()
       }).then(response => {
-        this.getServices(this).then(response => {
+        this.getServices(this).then(services => {
+          this.setServices(services)
           this.$emit('serviceCreated')
         })
       }).catch(err => {
