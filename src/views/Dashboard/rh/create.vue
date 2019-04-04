@@ -4,7 +4,7 @@
       <h3>Rh</h3>
       <h3>Competências</h3>
     </header>
-    <div class="content __create">
+    <form @submit.prevent="createRh" class="content __create">
       <!-- <basic-rh :person="rh" :name="'Rh'"></basic-rh> -->
       <section>
         <article>
@@ -83,19 +83,11 @@
         <b-field label="Observações">
           <vue-editor :editorToolbar="customToolbar" v-model="rh.observations"></vue-editor>
         </b-field>
-
-        <!-- <b&#45;field label="Atividade"> -->
-        <!--   <b&#45;input v&#45;model="rh.activity" placeholder="Produção de PANIC" required></b&#45;input> -->
-        <!-- </b&#45;field> -->
-        <!-- <b&#45;field label="Experiência"> -->
-        <!--   <b&#45;input v&#45;model="rh.experience" placeholder="Produção de PANIC" required></b&#45;input> -->
-        <!-- </b&#45;field> -->
-        <div class="buttonCreate">
-          <!-- <button class="is-primary" @click="open = false">Cancelar</button> -->
-          <button class="is-primary" @click="createRh">Cadastrar</button>
+        <div class="buttonClass">
+          <button type="submit">Cadastrar</button>
         </div>
       </section>
-    </div>
+    </form>
     <!-- <div class="content"> -->
     <!-- </div> -->
   </main>
@@ -116,17 +108,17 @@ export default {
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
       rh: {
-        name: undefined,
-        phone: undefined,
-        cost: undefined,
-        competencies: undefined,
-        observatios: undefined,
-        experience: undefined,
+        name: null,
+        phone: null,
+        cost: null,
+        competencies: null,
+        observatios: null,
+        experience: null,
         academic: {
-          area: undefined,
-          titulation: undefined
+          area: null,
+          titulation: null
         },
-        activity: undefined
+        activity: null
       },
       money: {
         decimal: '.',
