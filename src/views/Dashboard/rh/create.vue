@@ -88,8 +88,6 @@
         </div>
       </section>
     </form>
-    <!-- <div class="content"> -->
-    <!-- </div> -->
   </main>
 </template>
 <script>
@@ -156,6 +154,7 @@ export default {
           console.log(err)
         })
       }).catch(err => {
+        this.$emit('creationFailed')
         console.log(err)
       })
     }
