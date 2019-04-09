@@ -1,9 +1,9 @@
 <script>
 const user = () => ({
-  component: import('./rh/user.vue')
+  component: import('./rhs/user.vue')
 })
 const admin = () => ({
-  component: import('./rh/admin.vue')
+  component: import('./rhs/admin.vue')
 })
 const RH = {
   user: user,

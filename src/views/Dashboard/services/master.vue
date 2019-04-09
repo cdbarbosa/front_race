@@ -62,14 +62,14 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import service from '../service'
+import service from './service'
 import moment from 'moment'
-import serviceEdit from '../edit.vue'
-import success from '../../common/create-messages/success'
-import error from '../../common/create-messages/error'
-import createService from '../create.vue'
+import serviceEdit from './edit.vue'
+import success from '../common/create-messages/success'
+import error from '../common/create-messages/error'
+import createService from './create.vue'
 import _ from 'lodash'
-import { header } from '../../../../config/index.js'
+import { header } from '../../../config/index.js'
 export default {
   name: 'showServices',
   data () {

@@ -108,7 +108,7 @@
 </template>
 <script>
 import moment from 'moment'
-import createRh from '../rh/create.vue'
+import createRh from '../rhs/create.vue'
 import success from './create-messages/success'
 import error from './create-messages/error'
 import _ from 'lodash'

@@ -73,8 +73,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import createClient from './client/create.vue'
-import editClient from './client/edit.vue'
+import createClient from './clients/create.vue'
+import editClient from './clients/edit.vue'
 import success from './common/create-messages/success'
 import error from './common/create-messages/error'
 import genericUser from './common/genericUser.vue'

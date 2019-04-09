@@ -6,7 +6,7 @@ import Dashboard from './views/Dashboard.vue'
 import Overview from './views/Dashboard/Overview.vue'
 
 import Clients from './views/Dashboard/Clients.vue'
-import Rh from './views/Dashboard/Rh.vue'
+import Rhs from './views/Dashboard/Rhs.vue'
 import Services from './views/Dashboard/Services.vue'
 
 Vue.use(Router)
@@ -35,7 +35,7 @@ export default new Router({
         {
           path: 'rh/:rh_id?',
           name: 'rh',
-          component: Rh
+          component: Rhs
         },
         {
           path: 'client/:client_id?',
