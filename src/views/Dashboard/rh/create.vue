@@ -5,7 +5,6 @@
       <h3>Competências</h3>
     </header>
     <form @submit.prevent="createRh" class="content __create">
-      <!-- <basic-rh :person="rh" :name="'Rh'"></basic-rh> -->
       <section>
         <article>
           <b-field label="Nome">

@@ -13,128 +13,136 @@
 		}
 	}
 }
-#vueDetails {
-  height: 100%;
-  .details-information {
-    height: 100%;
-    h2 {
-      padding: 1rem 0;
-      margin: 0;
+
+#dashboard main .content section.__secundary{
+  &#detailsTable{
+    header{
+      grid-template-columns: 4fr 6fr 1.5rem; 
     }
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    input, textarea, select {
-      font-size: 16px;
-    }
-    .description-service {
-      hr {
-        margin: 0 0 1rem 0;
-        border-bottom: 0px solid #ccc;
-        border-style: outset;
-      }
-      padding: 1rem;
-      .info-service {
-        display: grid;
-        grid-template-columns: 10fr 1fr;
-        grid-gap: 1rem;
-      }
-      .infoRh {
-        display: grid;
-        grid-template-columns: 10fr 1fr;
-        grid-gap: 1rem;
-      }
-      .cost {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-gap: 1rem;
-        button {
-          background: #2B4E72;
-          width: 155px;
-          font-size: 12px;
-          text-align: center;
-        }
-        .b-checkbox {
-          font-size: 16px;
-        }
-      }
-      .hours {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 1rem;
-      }
-    }
-    .description {
-      background: #ccc;
-      button {
-        position: absolute;
-        right: 1rem;
-        // width: 150px;
-        padding: .5rem;
-        font-size: 12px;
-        background: #2B4E72;
-      }
-      .serviceTable {
-        padding: 1rem;
-        .headerTable {
-          h4 {
-            font-weight: 200;
-          }
-          position: relative;
-          .control {
-            position: absolute;
-            top: 0;
-            right: 0;
-            input {
-              font-size: 16px;
-              width: 330px;
-            }
-          }
-          .buttons {
-            position: absolute;
-            top: 1px;
-            right: 0;
-            padding: .5rem;
-            font-size: 12px;
-            background: #2B4E72;
-          }
-        }
-        .b-table {
-          table {
-            font-size: 13px;
-          }
-        }
-      }
-    }
-  }
-  .attach {
-    .animation-content {
-      width: 500px !important;
-    }
-  }
-  .attachRh, .detachRh {
-    padding: 2rem;
-    .field {
-      .control {
-        .select {
-          width: 100%;
-        }
-      }
-    }
-    select {
-      width: 100%;
-    }
-    .buttonCreate {
-      display: flex;
-    }
-    button {
-      text-align: center;
-      width: 155px;
-      font-size: 12px;
-      background: #2B4E72;
-      height: 40px;
-      margin-right: 1rem;
-    }
-    padding: 1rem;
   }
 }
+// #vueDetails {
+//   height: 100%;
+//   .details-information {
+//     height: 100%;
+//     h2 {
+//       padding: 1rem 0;
+//       margin: 0;
+//     }
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     grid-gap: 1rem;
+//     input, textarea, select {
+//       font-size: 16px;
+//     }
+//     .description-service {
+//       hr {
+//         margin: 0 0 1rem 0;
+//         border-bottom: 0px solid #ccc;
+//         border-style: outset;
+//       }
+//       padding: 1rem;
+//       .info-service {
+//         display: grid;
+//         grid-template-columns: 10fr 1fr;
+//         grid-gap: 1rem;
+//       }
+//       .infoRh {
+//         display: grid;
+//         grid-template-columns: 10fr 1fr;
+//         grid-gap: 1rem;
+//       }
+//       .cost {
+//         display: grid;
+//         grid-template-columns: 2fr 1fr 1fr;
+//         grid-gap: 1rem;
+//         button {
+//           background: #2B4E72;
+//           width: 155px;
+//           font-size: 12px;
+//           text-align: center;
+//         }
+//         .b-checkbox {
+//           font-size: 16px;
+//         }
+//       }
+//       .hours {
+//         display: grid;
+//         grid-template-columns: repeat(3, 1fr);
+//         grid-gap: 1rem;
+//       }
+//     }
+//     .description {
+//       background: #ccc;
+//       button {
+//         position: absolute;
+//         right: 1rem;
+//         // width: 150px;
+//         padding: .5rem;
+//         font-size: 12px;
+//         background: #2B4E72;
+//       }
+//       .serviceTable {
+//         padding: 1rem;
+//         .headerTable {
+//           h4 {
+//             font-weight: 200;
+//           }
+//           position: relative;
+//           .control {
+//             position: absolute;
+//             top: 0;
+//             right: 0;
+//             input {
+//               font-size: 16px;
+//               width: 330px;
+//             }
+//           }
+//           .buttons {
+//             position: absolute;
+//             top: 1px;
+//             right: 0;
+//             padding: .5rem;
+//             font-size: 12px;
+//             background: #2B4E72;
+//           }
+//         }
+//         .b-table {
+//           table {
+//             font-size: 13px;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .attach {
+//     .animation-content {
+//       width: 500px !important;
+//     }
+//   }
+//   .attachRh, .detachRh {
+//     padding: 2rem;
+//     .field {
+//       .control {
+//         .select {
+//           width: 100%;
+//         }
+//       }
+//     }
+//     select {
+//       width: 100%;
+//     }
+//     .buttonCreate {
+//       display: flex;
+//     }
+//     button {
+//       text-align: center;
+//       width: 155px;
+//       font-size: 12px;
+//       background: #2B4E72;
+//       height: 40px;
+//       margin-right: 1rem;
+//     }
+//     padding: 1rem;
+//   }
+// }

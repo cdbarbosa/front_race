@@ -42,11 +42,13 @@
         </div>
       </section>
       <section>
-        <rh-table v-if="rhsService" :filters="false" :attach="false" :create="false" :rhs="rhsService" @update="showAttached($event)">
+        <rh-table-details v-if="rhsService" :rhs="rhsService" @update="showAttached($event)">
           <span slot="title">Rhs Responsáveis</span>
-        </rh-table>
+        </rh-table-details>
+        <!-- <rh&#45;table v&#45;if="rhsService" :filters="false" :attach="false" :create="false" :rhs="rhsService" @update="showAttached($event)"> -->
+        <!-- </rh&#45;table> -->
         <hr>
-        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @update="showDetached($event)">
+        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)">
           <span slot="title">Rhs</span>
         </rh-table>
       </section>
@@ -119,6 +121,7 @@ import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 import rhTable from '../common/rhTable.vue'
+import rhTableDetails from './details/rhTable.vue'
 export default {
   name: 'serviceDetails',
   data () {
@@ -268,11 +271,13 @@ export default {
         headers: header()
       }).then(() => {
         this.getRhService()
+        this.getRhNotInService()
       })
     }
   },
   components: {
-    rhTable
+    rhTable,
+    rhTableDetails
   }
 }
 </script>

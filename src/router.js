@@ -8,10 +8,6 @@ import Overview from './views/Dashboard/Overview.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Rh from './views/Dashboard/Rh.vue'
 import Services from './views/Dashboard/Services.vue'
-import ShowServices from './views/Dashboard/services/showServices.vue'
-
-import Details from './views/Dashboard/services/details.vue'
-import Receipt from './views/Dashboard/services/Receipt.vue'
 
 Vue.use(Router)
 
@@ -48,23 +44,24 @@ export default new Router({
         },
         {
           path: 'service/:service_id?/',
+          name: 'service',
           component: Services,
           children: [
-            {
-              path: '',
-              name: 'service',
-              component: ShowServices
-            },
-            {
-              path: 'receipt',
-              name: 'serviceReceipts',
-              component: Receipt
-            },
-            {
-              path: 'details',
-              name: 'serviceDetails',
-              component: Details
-            }
+            // {
+            //   path: '',
+            //   name: 'service',
+            //   component: ShowServices
+            // },
+            // {
+            //   path: 'receipt',
+            //   name: 'serviceReceipts',
+            //   component: receipt
+            // },
+            // {
+            //   path: 'details',
+            //   name: 'serviceDetails',
+            //   component: Details
+            // }
           ]
         }
       ]

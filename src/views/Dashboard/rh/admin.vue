@@ -9,6 +9,11 @@
     <div class="content" v-if="selected">
       <generic-user :person="selected"></generic-user>
       <section>
+        <b-field label="Custo por Hora">
+          <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+          <!-- <div class="textarea __disabled" v&#45;html="selected.cost" disabled></div> -->
+          <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
+        </b-field>
         <b-field label="Competências">
           <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
           <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
@@ -57,6 +62,13 @@ export default {
   name: 'rhs',
   data () {
     return {
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        precision: 2,
+        masked: true
+      },
       isEditActive: false,
       rhCreated: undefined,
       isModalActive: false,

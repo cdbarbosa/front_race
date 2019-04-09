@@ -19,6 +19,9 @@
   }
   main{
     padding: 1rem;
+    main{
+      padding: 0;
+    }
     h3{
       position: relative;
       #edit{
@@ -183,6 +186,9 @@
 
 #dashboard {
   .modal{
+    .modal-content{
+      padding: 1rem;
+    }
     .rhScreen{
       padding: 2rem;
     }

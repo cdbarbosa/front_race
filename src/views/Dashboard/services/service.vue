@@ -3,7 +3,8 @@
     <section>
       <article>
         <b-field label="Título">
-          <b-input v-model="selected.name" disabled></b-input>
+          <textarea v-model="selected.name" disabled></textarea>
+          <!-- <b&#45;input type="" ></b&#45;input> -->
         </b-field>
         <b-field label="ID">
           <b-input v-model="selected.id" placeholder="23" disabled></b-input>
@@ -46,10 +47,10 @@
       <b-field label="Situação">
         <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>
       </b-field>
-      <div class="actions" v-if="$store.getters.user.role_id === 1">
-        <router-link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router-link>
-        <router-link tag="button" :to="{ name: 'serviceDetails', params: { service_id: this.$route.params.service_id } }">Detalhes</router-link>
-      </div>
+      <!-- <div class="actions" v&#45;if="$store.getters.user.role_id === 1"> -->
+      <!--   <router&#45;link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router&#45;link> -->
+      <!--   <router&#45;link tag="button" :to="{ name: 'serviceDetails', params: { service_id: this.$route.params.service_id } }">Detalhes</router&#45;link> -->
+      <!-- </div> -->
     </section>
     <section>
       <div class="description">

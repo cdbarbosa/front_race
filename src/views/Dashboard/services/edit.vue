@@ -43,9 +43,9 @@
           </b-field>
         </article>
         <b-field label="Situação">
-          <b-select placeholder="Select a name">
-            <option value="">Selecione</option>
-            <option value="1">ORCA - Orçamento (em aberto)</option>
+          <b-select placeholder="Selecione um status para o cliente" v-model="status">
+            <!-- <option value="">Selecione</option> -->
+            <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
         </b-field>
       </section>
@@ -69,6 +69,7 @@ export default {
   props: ['service', 'selectedIndex'],
   data () {
     return {
+      serviceStatuses: [],
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
@@ -77,6 +78,9 @@ export default {
     }
   },
   watch: {
+  },
+  beforeMount () {
+    this.getServiceStatuses()
   },
   mounted () {
   },
@@ -128,12 +132,27 @@ export default {
       set: _.debounce(function (newVal, oldVal) {
         this.updateFunction(['received_value', newVal])
       }, 1000)
+    },
+    status: {
+      get () {
+        return this.service.status_id
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateFunction(['status_id', newVal])
+      })
     }
   },
   methods: {
     ...mapActions([
       'updateService'
     ]),
+    getServiceStatuses () {
+      this.$http.get(this.$api({ target: 'service-status' }), {
+        headers: header()
+      }).then(response => {
+        this.serviceStatuses = response.data
+      })
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
