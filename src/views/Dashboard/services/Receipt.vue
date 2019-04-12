@@ -91,8 +91,8 @@ export default {
       serviceSelected: undefined,
       client: undefined,
       receipt: {
-        value: undefined,
-        date: undefined
+        value: null,
+        date: null
       },
       dataRegex: {
         regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/

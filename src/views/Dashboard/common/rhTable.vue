@@ -153,63 +153,63 @@ export default {
       isCost: false,
       isCity: false,
       isExperience: false,
-      searchRh: undefined,
+      searchRh: null,
       basicFilter: [
         {
           key: 'cost',
           label: 'Custo',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'competencies',
           label: 'Competências',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'activity',
           label: 'Atividades',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'experience',
           label: 'Experiências',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'active',
           label: 'Ativo',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         }
       ],
       academicFilter: [
         {
           key: 'area',
           label: 'Área',
-          value: undefined,
+          value: null,
           active: false
         },
         {
           key: 'titulation',
           label: 'Titulação',
-          value: undefined,
+          value: null,
           active: false
         }
       ],
       isFilterModalActive: false,
       rhServiceFields: {
-        cost: undefined,
-        hours: undefined,
-        goal: undefined
+        cost: null,
+        hours: null,
+        goal: null
       }
     }
   },
@@ -255,12 +255,14 @@ export default {
       this.basicFilter.forEach(function (item, index) {
         item.active = false
         item.value = undefined
+        item.operator = null
       })
       this.academicFilter.forEach(function (item, index) {
         item.active = false
         item.value = undefined
       })
       this.getRhs(this)
+      this.rhSelected = this.rhs[0]
     },
     search (title) {
       let data = {

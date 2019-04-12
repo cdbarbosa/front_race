@@ -19,7 +19,7 @@
 <script>
 import vmaster from './master.vue'
 import vdetails from './details'
-import vreceipt from './receipt'
+import vreceipt from './Receipt'
 export default {
   name: 'services',
   components: {
