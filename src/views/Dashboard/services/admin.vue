@@ -19,8 +19,8 @@
 <script>
 import vmaster from './vmaster.vue'
 import vdetails from './details'
-import vreceipt from './receipt'
 import vhistory from './vhistory'
+import vreceipt from './Receipt'
 export default {
   name: 'services',
   data () {
