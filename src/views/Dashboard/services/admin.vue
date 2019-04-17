@@ -1,8 +1,11 @@
 <template>
   <main id="services">
-    <b-tabs type="is-boxed">
+    <b-tabs v-model="active" type="is-boxed">
       <b-tab-item label="Master">
         <vmaster></vmaster>
+      </b-tab-item>
+      <b-tab-item label="Histórico">
+        <vhistory :active="active" v-if="$route.params.service_id"></vhistory>
       </b-tab-item>
       <b-tab-item label="Detalhes">
         <vdetails v-if="$route.params.service_id"></vdetails>
@@ -12,18 +15,22 @@
       </b-tab-item>
     </b-tabs>
   </main>
-  <!-- <transition name="fade" mode="out&#45;in"> -->
-  <!--   <router&#45;view></router&#45;view> -->
-  <!-- </transition> -->
 </template>
 <script>
-import vmaster from './master.vue'
+import vmaster from './vmaster.vue'
 import vdetails from './details'
 import vreceipt from './receipt'
+import vhistory from './vhistory'
 export default {
   name: 'services',
+  data () {
+    return {
+      active: 0
+    }
+  },
   components: {
     vmaster,
+    vhistory,
     vdetails,
     vreceipt
   }

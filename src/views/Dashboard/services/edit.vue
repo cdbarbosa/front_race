@@ -111,7 +111,7 @@ export default {
     },
     delivered: {
       get () {
-        return this.service.delivered
+        return this.service.delivered ? this.parseDate(this.service.delivered) : null
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateFunction(['delivered', newVal])
@@ -119,7 +119,7 @@ export default {
     },
     forecast: {
       get () {
-        return this.service.forecast
+        return this.parseDate(this.service.forecast)
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateFunction(['forecast', newVal])

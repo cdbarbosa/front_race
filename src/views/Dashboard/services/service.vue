@@ -30,7 +30,7 @@
           <b-input :value="parseDate(selected.forecast)" v-mask="'##/##/####'" placeholder="data" name="date" disabled></b-input>
         </b-field>
         <b-field label="Entrega">
-          <b-input :value="parseDate(selected.delivered)" v-mask="'##/##/####'" placeholder="data" name="delivered" disabled></b-input>
+          <b-input :value="selected.delivered ? parseDate(selected.delivered) : null" v-mask="'##/##/####'" placeholder="data" name="delivered" disabled></b-input>
         </b-field>
       </article>
       <article>

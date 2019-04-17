@@ -81,7 +81,7 @@ export default {
         due_date: null,
         forecast: null,
         profit: null,
-        status_id: 1,
+        service_status_id: 1,
         confidentiality_id: 1
       },
       client_id: null,

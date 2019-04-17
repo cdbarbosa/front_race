@@ -1,27 +1,64 @@
-<template>
-  <main id="rhs">
-    <b-tabs type="is-boxed">
-      <b-tab-item label="Master">
-        <vmaster></vmaster>
-      </b-tab-item>
-      <!-- <b&#45;tab&#45;item label="Detalhes"> -->
-      <!--   <vdetails v&#45;if="$route.params.service_id"></vdetails> -->
-      <!-- </b&#45;tab&#45;item> -->
-      <!-- <b&#45;tab&#45;item label="Recebimentos"> -->
-      <!--   <vreceipt v&#45;if="$route.params.service_id"></vreceipt> -->
-      <!-- </b&#45;tab&#45;item> -->
-    </b-tabs>
+<template id="">
+  <main id="master">
+    <h3>
+      RH's
+      <div id="edit" @click="isEditActive = true" v-if="selected">
+        <b-icon icon="edit"></b-icon>
+      </div>
+    </h3>
+    <div class="content" v-if="selected">
+      <generic-user :person="selected"></generic-user>
+      <section>
+        <b-field label="Custo por Hora">
+          <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+          <!-- <div class="textarea __disabled" v&#45;html="selected.cost" disabled></div> -->
+          <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
+        </b-field>
+        <b-field label="Competências">
+          <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
+          <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
+        </b-field>
+        <b-field label="Experiência">
+          <div class="textarea __disabled" v-html="selected.experience"></div>
+        </b-field>
+        <b-field label="Observações">
+          <div class="textarea __disabled" v-html="selected.observations"></div>
+        </b-field>
+      </section>
+    </div>
+    <div class="content" v-else>
+      <h2>Rh não cadastrado ou não encontrado</h2>
+    </div>
+    <div class="content __display">
+      <rh-table :create="true" :rhs="rhs" @update="table($event)">
+        <span slot="title">Rhs</span>
+      </rh-table>
+    </div>
+    <b-modal :active.sync="isModalActive">
+      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">
+        <template v-slot:message>
+          <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
+        </template>
+      </component>
+    </b-modal>
+    <b-modal :active.sync="isEditActive">
+      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
+    </b-modal>
   </main>
 </template>
-
-<script>
+<script charset="utf-8">
 import { mapActions } from 'vuex'
+import createRh from './create.vue'
+import editRh from './edit.vue'
+import rhTable from '../common/rhTable.vue'
+import genericUser from '../common/genericUser.vue'
+import success from '../common/create-messages/success'
+import error from '../common/create-messages/error'
 import moment from 'moment'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
-import vmaster from './vmaster.vue'
 export default {
-  name: 'rhs',
+  name: 'masterRh',
   data () {
     return {
       money: {
@@ -131,7 +168,12 @@ export default {
     }
   },
   components: {
-    vmaster
+    rhTable,
+    createRh,
+    genericUser,
+    editRh,
+    success,
+    error
   }
 }
 </script>
