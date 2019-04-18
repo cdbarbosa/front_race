@@ -33,7 +33,7 @@
           </section>
         </template>
       </b-table>
-      <button v-if="attach" @click="isAttachModalOpen = true">Associar esse Rh</button>
+      <button v-if="attach" @click="isAttachModalOpen = true">Associar esse RH</button>
       <b-modal :active.sync="isModalActive">
         <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
       </b-modal>
@@ -77,10 +77,10 @@
         <h3>Associar RH</h3>
         <section>
           <article>
-            <b-field label="Rh">
+            <b-field label="RH">
               <b-input v-model="selected.name" disabled></b-input>
             </b-field>
-            <b-field label="Rh">
+            <b-field label="RH">
               <b-input v-model="selected.id" disabled></b-input>
             </b-field>
           </article>

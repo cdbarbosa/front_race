@@ -72,10 +72,10 @@
         <h3>Associar RH</h3>
         <section>
           <article>
-            <b-field label="Rh">
+            <b-field label="RH">
               <b-input v-model="selected.name" disabled></b-input>
             </b-field>
-            <b-field label="Rh">
+            <b-field label="RH">
               <b-input v-model="selected.id" disabled></b-input>
             </b-field>
           </article>

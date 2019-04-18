@@ -17,6 +17,19 @@
     cursor: pointer;
     display: block;
   }
+  .b-table .level{
+    ul{
+      margin: 0;
+      list-style: none;
+      li{
+        a{
+          text-decoration: none;
+        }
+        
+      }
+    }
+    padding-bottom: 0;
+  }
   main{
     padding: 1rem;
     main{
@@ -56,9 +69,6 @@
           //   margin-bottom: 0;
           //   justify-content: center;
           // }
-          .b-table .level{
-            padding-bottom: 0;
-          }
           &.create{
             header{
               grid-template-columns: 8fr 2fr 5fr 1.5rem;

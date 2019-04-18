@@ -27,11 +27,11 @@
       </section>
     </div>
     <div class="content" v-else>
-      <h2>Rh não cadastrado ou não encontrado</h2>
+      <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <div class="content __display">
       <rh-table :create="true" :rhs="rhs" @update="table($event)">
-        <span slot="title">Rhs</span>
+        <span slot="title">RH's</span>
       </rh-table>
     </div>
     <b-modal :active.sync="isModalActive">

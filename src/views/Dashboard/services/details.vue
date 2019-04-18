@@ -14,7 +14,7 @@
         <hr>
         <div v-if="selected" id="rh">
           <article class="__display">
-            <b-field label="Rh">
+            <b-field label="RH">
               <b-input v-model="selected.name" disabled></b-input>
             </b-field>
             <b-field label="Comepetências">
@@ -43,13 +43,13 @@
       </section>
       <section>
         <rh-table-details v-if="rhsService" :rhs="rhsService" @update="showAttached($event)">
-          <span slot="title">Rhs Responsáveis</span>
+          <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
         <!-- <rh&#45;table v&#45;if="rhsService" :filters="false" :attach="false" :create="false" :rhs="rhsService" @update="showAttached($event)"> -->
         <!-- </rh&#45;table> -->
         <hr>
         <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)">
-          <span slot="title">Rhs</span>
+          <span slot="title">RH's</span>
         </rh-table>
       </section>
     </div>
