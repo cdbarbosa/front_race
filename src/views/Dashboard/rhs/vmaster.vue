@@ -36,7 +36,7 @@
     </div>
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">
-        <template v-slot:message>
+        <template slot="message">
           <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
         </template>
       </component>
@@ -107,6 +107,11 @@ export default {
     }
   },
   watch: {
+    isModalActive (newVal) {
+      if (!newVal) {
+        this.rhCreated = undefined
+      }
+    },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       console.log(newQuery)
       this.rhSelected = undefined

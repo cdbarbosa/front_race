@@ -39,7 +39,7 @@
             <b-input v-model="profit" placeholder="50%"></b-input>
           </b-field>
           <b-field label="Recebido">
-            <b-input v-model="received_value" placeholder="825"></b-input>
+            <b-input v-model="received_value" placeholder="825" disabled></b-input>
           </b-field>
         </article>
         <b-field label="Situação">

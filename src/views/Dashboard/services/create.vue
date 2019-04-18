@@ -4,14 +4,14 @@
     <form @submit.prevent="create" class="content">
       <section class="service">
         <b-field label="Título">
-          <textarea v-model="service.name" placeholder="Titulo do serviço" cols="50" rows="2"></textarea>
+          <textarea v-model="service.name" placeholder="Titulo do serviço" cols="50" rows="2" required></textarea>
         </b-field>
         <b-field label="Cliente">
           <b-select placeholder="Selecione um cliente" v-model="client_id">
             <option
               v-for="option in clients"
               :value="option.id"
-              :key="option.id">
+              :key="option.id" required>
             {{ option.name }}
             </option>
           </b-select>
@@ -38,7 +38,6 @@
           </b-field>
         </article>
         <span>{{ errors.first('margem') }}</span>
-        <span>{{ errors.first('recebido') }}</span>
         <b-field label="Situação">
           <b-select placeholder="Selecione um status para o cliente">
             <!-- <option value="">Selecione</option> -->
@@ -48,7 +47,7 @@
       </section>
       <section>
         <div class="description">
-          <b-field label="Observações">
+          <b-field label="Descrição">
             <vue-editor :editorToolbar="customToolbar" v-model="service.description" placeholder="Analise de dados"></vue-editor>
           </b-field>
           <div class="buttonClass">

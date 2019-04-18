@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     parseDate (date) {
-      return moment(date).format('DD/MM/YYYY HH:MM')
+      return moment(date).format('DD/MM/YYYY H:m')
     },
     getRecords () {
       this.$http.get(this.$api({ target: `service-history/${this.$route.params.service_id}` }), {

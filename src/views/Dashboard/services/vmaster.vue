@@ -25,13 +25,13 @@
             <b-table-column field="name" label="Cliente">
               {{ props.row == undefined ? undefined : props.row.client.name }}
             </b-table-column>
-            <b-table-column field="created_at" label="Registro">
+            <b-table-column field="created_at" label="Registro" sortable>
               {{ parseDate(props.row.created_at) }}
             </b-table-column>
             <b-table-column field="created_at" label="Previsão">
-              {{ parseDate(props.row.created_at) }}
+              {{ parseDate(props.row.forecast) }}
             </b-table-column>
-            <b-table-column field="name" label="Situação">
+            <b-table-column field="name" label="Situação" sortable>
               {{ props.row.status.abbreviation }}
             </b-table-column>
           </template>
@@ -105,6 +105,11 @@ export default {
     }
   },
   watch: {
+    isServiceModalActive (newVal) {
+      if (!newVal) {
+        this.serviceCreated = undefined
+      }
+    },
     isModalActive (newVal) {
       if (!newVal) this.serviceCreated = undefined
     },

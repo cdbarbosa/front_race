@@ -21,6 +21,9 @@
           <b-table-column field="user.email" label="Email">
             {{ props.row.user.email }}
           </b-table-column>
+          <b-table-column field="cost" label="Custo" sortable>
+            {{'R$ ' + props.row.cost }}
+          </b-table-column>
         </template>
         <template slot="empty">
           <section class="section">

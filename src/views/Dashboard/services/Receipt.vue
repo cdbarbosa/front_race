@@ -19,7 +19,7 @@
             <!-- <b&#45;input v&#45;model="" placeholder="500"></b&#45;input> -->
           </b-field>
           <b-field label="Data">
-            <b-input v-model="selected.date" v-mask="'##/##/####'" placeholder="DD/MM/YYYY" name="date" disabled></b-input>
+            <b-input :value="parseDate(selected.date)" v-mask="'##/##/####'" placeholder="DD/MM/YYYY" name="date" disabled></b-input>
           </b-field>
           <span>{{ errors.first('date') }}</span>
         </article>
@@ -35,11 +35,11 @@
           </header>
           <b-table :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected">
             <template slot-scope="props">
-              <b-table-column field="name" label="ID" sortable>
-                {{ props.row.id }}
-              </b-table-column>
+              <!-- <b&#45;table&#45;column field="name" label="ID" sortable> -->
+              <!--   {{ props.row.id }} -->
+              <!-- </b&#45;table&#45;column> -->
               <b-table-column field="created_at" label="Valor">
-                {{ props.row.value }}
+                {{ 'R$ ' + parseFloat(props.row.value) }}
               </b-table-column>
               <b-table-column field="user.email" label="Data">
                 {{ parseDate(props.row.date) }}
@@ -61,7 +61,7 @@
             <b-input v-model="receipt.date" v-mask="'##/##/####'" placeholder="10/10/1994" name="date" required></b-input>
           </b-field>
           <b-field label="Valor (R$)">
-            <b-input v-model="receipt.value" placeholder="10/10/1994" name="date" required></b-input>
+            <b-input v-model="receipt.value" placeholder="300,00" name="date" required></b-input>
           </b-field>
           <button type="submit">Criar</button>
         </form>
@@ -109,12 +109,6 @@ export default {
       }
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next($this => {
-      if ($this.$route.params.service_id) next()
-      else next({ name: 'service' })
-    })
-  },
   beforeMount () {
     this.getService()
   },
@@ -133,17 +127,21 @@ export default {
         this.serviceReceipts = response.data.service_receipts
       })
     },
-    getReceipts () {
+    parseValue () {
     },
     createReceipt () {
       let data = {
-        service_id: this.$route.params.receipt_id,
-        receipt: this.receipt
+        service_id: this.$route.params.service_id,
+        receipt: {
+          date: this.receipt.date,
+          value: this.receipt.value.split('.').join('').split(',').join('.')
+        }
       }
       this.$http.post(this.$api({ target: 'receipts' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
+        this.getService()
+        this.isModalActive = false
       })
       // this.$http.post(this.$api({ target: 'receipts' }), data, {
       //   headers: header()
