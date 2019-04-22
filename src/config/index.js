@@ -2,7 +2,7 @@ import { clientId, clientSecret } from '../../.env.js'
 
 const env = process.env.NODE_ENV
 const dev = 'http://localhost:8000'
-const prod = 'http://nit.uesc.br/sisnit-server/public'
+const prod = 'https://back.race.srv.br'
 
 const client = () => {
   return {

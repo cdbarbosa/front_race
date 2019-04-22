@@ -17,7 +17,6 @@ export default {
   mounted () {
   },
   methods: {
-    //
   },
   components: {
     //
