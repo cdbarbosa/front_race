@@ -15,7 +15,7 @@
           <b-input :value="parseDate(person.created_at)" v-mask="'##/##/####'" disabled></b-input>
         </b-field>
         <b-field label="Telefone">
-          <b-input v-model="phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+          <b-input v-model="phone" v-mask="['(##) ####-####', '(##) #####-####']" placeholder="Telefone"></b-input>
         </b-field>
       </article>
       <article class="info-second">
@@ -46,7 +46,7 @@
         </article>
         <article>
           <b-field label="CEP">
-            <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+            <b-input v-model="postal_code" v-mask="'#####-###'" placeholder="CEP"></b-input>
           </b-field>
           <b-field label="Bairro">
             <b-input v-model="neighborhood" placeholder="Bairro"></b-input>

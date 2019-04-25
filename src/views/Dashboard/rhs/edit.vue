@@ -23,7 +23,7 @@
           <vue-editor :editorToolbar="customToolbar" v-model="competencies" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Observações">
-          <vue-editor :editorToolbar="customToolbar" v-model="rh.observations"></vue-editor>
+          <vue-editor :editorToolbar="customToolbar" v-model="observations"></vue-editor>
         </b-field>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default {
         return this.rh.academics ? this.rh.academics.area : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['area', newVal, 'rh'])
+        this.updateRhAcademics(['area', newVal, 'rh'])
       }, 1000)
     },
     titulation: {
@@ -87,7 +87,15 @@ export default {
         return this.academics ? this.rh.academics.degree : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['degree', newVal, 'rh'])
+        this.updateRhAcademics(['degree', newVal, 'rh'])
+      }, 1000)
+    },
+    observations: {
+      get () {
+        return this.rh.observations
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateFunction(['observations', newVal, 'rh'])
       }, 1000)
     }
   },
@@ -118,6 +126,26 @@ export default {
           duration: 2000
         })
       })
+    },
+    updateAcademics (e) {
+      let data = {
+        label: e[0],
+        value: e[1],
+        id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
+      }
+      console.log(data)
+      // this.$http.put(this.$api({ target: `rh-acamedic` }), data, {
+      //   headers: header()
+      // }).then(response => {
+      //   let payload = [response.data, this.selectedIndex]
+      //   e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
+      //   this.$emit('updated')
+      //   this.$toasted.success('Perfil do rh atualizado com sucesso!', {
+      //     theme: 'bubble',
+      //     position: 'top-center',
+      //     duration: 2000
+      //   })
+      // })
     }
   },
   components: {
