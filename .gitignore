@@ -26,3 +26,4 @@ yarn-error.log*
 .env.js
 /.gtm/
 tags
+tags.*

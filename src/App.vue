@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="height: 100%">
     <transition name="fade" mode="out-in">
-      <router-view :scroll="scroll"></router-view>
+      <router-view/>
     </transition>
   </div>
 </template>
@@ -19,7 +19,6 @@ export default {
   methods: {
   },
   components: {
-    //
   }
 }
 </script>
