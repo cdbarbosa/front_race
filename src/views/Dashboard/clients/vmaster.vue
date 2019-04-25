@@ -30,7 +30,7 @@
             <span @click="searchQuery = ''">
               <i class="fas fa-backspace"></i>
             </span>
-            <div id="edit">
+            <div id="edit" @click="isFilterModal = true">
               <b-icon icon="cog"></b-icon>
             </div>
           </header>
@@ -73,6 +73,23 @@
     <b-modal :active.sync="isEditActive">
       <edit-client :client="selected" :selectedIndex="selectedIndex" @updated="userSelected = clients[selectedIndex]"></edit-client>
     </b-modal>
+    <b-modal :active.sync="isFilterModal">
+      <div class="content" style="padding: 1rem">
+        <section>
+          <h3>Fitros Básicos</h3>
+          <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
+            <b-checkbox v-model="filter.active" :native-value="filter.key">
+              {{ filter.label }}
+            </b-checkbox>
+            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+          </div>
+        </section>
+      </div>
+      <div class="bottonFilter" style="padding: 1rem">
+        <button @click="searchClient(searchQuery)" style="margin-right: 1rem">Ok</button>
+        <button @click="resetFilters">Resetar</button>
+      </div>
+    </b-modal>
   </main>
 </template>
 <script>
@@ -89,11 +106,26 @@ export default {
   name: 'clients',
   data () {
     return {
-      searchQuery: '',
+      searchQuery: null,
       clientCreated: undefined,
       isModalActive: false,
       isEditActive: false,
-      userSelected: undefined
+      isFilterModal: false,
+      userSelected: undefined,
+      basicFilter: [
+        {
+          key: 'observations',
+          label: 'Observações',
+          value: null,
+          active: false
+        },
+        {
+          key: 'activity',
+          label: 'Atividades',
+          value: null,
+          active: false
+        }
+      ]
     }
   },
   computed: {
@@ -173,14 +205,26 @@ export default {
       }
       return 'error'
     },
+    resetFilters () {
+      this.basicFilter.forEach(function (item, index) {
+        item.active = false
+        item.value = undefined
+        item.operator = null
+      })
+      this.getClients(this)
+      this.userSelected = this.clients[0]
+    },
     searchClient (name) {
-      this.$http.get(this.$api({ target: 'client' }), {
-        headers: header(),
-        params: {
-          search: name
-        }
+      let data = {
+        search: name,
+        basicFilter: this.basicFilter.filter(f => f.active)
+      }
+      this.$http.post(this.$api({ target: 'client' }), data, {
+        headers: header()
       }).then(response => {
+        console.log(response)
         this.clients = response.data
+        this.isFilterModal = false
       })
     }
   },

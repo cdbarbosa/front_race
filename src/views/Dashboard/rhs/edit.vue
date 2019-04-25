@@ -1,7 +1,7 @@
 <template>
   <div class="rhScreen" id="updateRh">
     <div class="content">
-      <edit-generic :person="rh" :title="'Rh'" @change="updateFunction($event)">
+      <edit-generic :person="rh" :title="'RH'" @change="updateFunction($event)">
         <article class="academics">
           <b-field label="Bacharelado">
             <b-input v-model="bacharel" placeholder="Matemática"></b-input>
