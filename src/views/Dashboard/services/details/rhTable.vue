@@ -1,13 +1,16 @@
 <template>
   <section class="__secundary" id="detailsTable">
     <div :class="[{create: create}, 'tableContainer']">
-      <header>
+      <header class="headerDetails">
         <h4>
           <slot name="title"></slot>
         </h4>
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
+        <span @click="searchRh = ''">
+          <i class="fas fa-backspace"></i>
+        </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
           <b-icon icon="cog"></b-icon>
         </div>

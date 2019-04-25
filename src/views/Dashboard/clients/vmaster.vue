@@ -11,7 +11,6 @@
       <section>
         <b-field label="Observações">
           <div class="textarea __disabled" v-html="selected.observations"></div>
-          <!-- <textarea v&#45;model="" name="" id="" cols="30" rows="11" style="width: 100%" disabled></textarea> -->
         </b-field>
         <b-field label="Atividade">
           <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
@@ -28,6 +27,12 @@
             <h4>Clientes</h4>
             <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
             <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
+            <span @click="searchQuery = ''">
+              <i class="fas fa-backspace"></i>
+            </span>
+            <div id="edit">
+              <b-icon icon="cog"></b-icon>
+            </div>
           </header>
           <b-table :data="clients ? clients : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
             <template slot-scope="props">

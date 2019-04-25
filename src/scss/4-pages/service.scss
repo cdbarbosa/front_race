@@ -18,24 +18,24 @@
     &#table{
       grid-template-columns: 1fr;
       header{
+        display: grid;
+        grid-template-columns: 2fr 2fr 2fr .2fr;
+        grid-gap: 1rem;
+        span {
+          margin-top: .5em;
+          justify-self: end;
+          cursor: pointer;
+        }
+        input{
+          margin-bottom: 0;
+        }
         h4 {
           font-weight: 200;
         }
-        position: relative;
-        .control {
-          position: absolute;
-          top: 0;
-          right: 0;
-          input {
-            width: 330px;
-            font-size: 16px;
-          }
-        }
         .buttons {
-          position: absolute;
-          top: 1px;
-          right: 340px;
-          padding: .5rem;
+          width: 200px;
+          justify-self: end;
+          text-align: center;
           font-size: 1rem;
           background: #2B4E72;
         }
