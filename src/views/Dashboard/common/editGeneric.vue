@@ -20,7 +20,7 @@
       </article>
       <article class="info-second">
         <b-field label="Email">
-          <b-input v-model="person.user.email" type="email" placeholder="example@example.com" ></b-input>
+          <b-input v-model="email" type="email" placeholder="example@example.com" ></b-input>
         </b-field>
         <div class="block">
           <b-radio v-model="person.user.type.id" native-value="1" >
@@ -95,6 +95,14 @@ export default {
       set: _.debounce(function (newVal, oldVal) {
         console.log(newVal, oldVal)
         this.$emit('change', ['phone', newVal, this.update])
+      }, 1000)
+    },
+    email: {
+      get () {
+        return this.person.user.email
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.$emit('change', ['email', newVal, 'user'])
       }, 1000)
     },
     address: {

@@ -66,7 +66,7 @@ export default {
       let data = {
         label: e[0],
         value: e[1],
-        id: e[2] === 'client' ? this.client.id : this.client.user.address.id
+        id: e[2] === 'client' ? this.client.id : ( e[2] === 'user' ? this.client.user.id : this.client.user.address.id )
       }
       this.$http.put(this.$api({ target: `${e[2]}` }), data, {
         headers: header()
