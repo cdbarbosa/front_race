@@ -12,11 +12,16 @@
     </div>
     <div class="content" id="table">
       <section class="__secundary">
-        <header>
-          <h4>Serviços</h4>
-          <button class="buttons is-primary" @click="log">Criar novo serviço</button>
-          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
-        </header>
+        <div class="tableContainer">
+          <header>
+            <h4>Serviços</h4>
+            <button class="buttons is-primary" @click="log">Criar novo serviço</button>
+            <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
+            <span @click="searchQuery = ''">
+              <i class="fas fa-backspace"></i>
+            </span>
+          </header>
+        </div>
         <b-table :data="services ? services : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>

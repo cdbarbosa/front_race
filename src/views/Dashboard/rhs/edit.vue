@@ -1,7 +1,7 @@
 <template>
   <div class="rhScreen" id="updateRh">
     <div class="content">
-      <edit-generic :person="rh" :title="'Rh'" @change="updateFunction($event)">
+      <edit-generic :person="rh" :title="'RH'" @change="updateFunction($event)">
         <article class="academics">
           <b-field label="Bacharelado">
             <b-input v-model="bacharel" placeholder="Matemática"></b-input>
@@ -104,7 +104,7 @@ export default {
       let data = {
         label: e[0],
         value: e[1],
-        id: e[2] === 'rh' ? this.rh.id : this.rh.user.address.id
+        id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
       }
       this.$http.put(this.$api({ target: `${e[2]}` }), data, {
         headers: header()

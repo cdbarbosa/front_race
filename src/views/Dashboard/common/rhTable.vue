@@ -9,6 +9,9 @@
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
+        <span @click="searchRh = ''">
+          <i class="fas fa-backspace"></i>
+        </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
           <b-icon icon="cog"></b-icon>
         </div>
@@ -265,6 +268,7 @@ export default {
         item.value = undefined
       })
       this.getRhs(this)
+      console.log(this.rhs)
       this.rhSelected = this.rhs[0]
     },
     search (title) {
@@ -276,8 +280,11 @@ export default {
       this.$http.post(this.$api({ target: 'rh' }), data, {
         headers: header()
       }).then(response => {
+        console.log(response)
+        this.rhs = response.data // can't be. Have to do something else
         this.changeRh(response.data)
         this.isFilterModalActive = false
+        console.log(this.rhs)
       })
     }
   },

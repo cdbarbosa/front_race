@@ -71,13 +71,13 @@
           // }
           &.create{
             header{
-              grid-template-columns: 8fr 2fr 5fr 1.5rem;
+              // grid-template-columns: 8fr 2fr 5fr 1.5rem;
             }
           }
           header{
             display: grid;
             grid-gap: 1rem;
-            grid-template-columns: 8fr 6fr 1.5rem;
+            // grid-template-columns: 8fr 6fr 1.5rem;
             align-items: center;
             margin-bottom: 1rem;
             button{
