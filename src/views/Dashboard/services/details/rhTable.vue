@@ -6,9 +6,9 @@
           <slot name="title"></slot>
         </h4>
         <b-field>
-          <b-input placeholder="Procurar" v-model="searchRh"></b-input>
+          <b-input placeholder="Procurar" v-model="searchDetail"></b-input>
         </b-field>
-        <span @click="searchRh = ''">
+        <span @click="searchDetail = ''">
           <i class="fas fa-backspace"></i>
         </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
@@ -151,7 +151,7 @@ export default {
       isCost: false,
       isCity: false,
       isExperience: false,
-      searchRh: undefined,
+      searchDetail: null,
       basicFilter: [
         {
           key: 'cost',
@@ -222,15 +222,15 @@ export default {
     }
   },
   watch: {
-    searchRh: _.debounce(function (newVal, oldVal) {
-      this.rhSelected = undefined
-      if (newVal === '' && newVal === oldVal) {
-        this.getRhs(this).then(rhs => {
-        })
-      } else {
-        this.filter(newVal)
-        this.search(newVal)
-      }
+    searchDetail: _.debounce(function (newVal, oldVal) {
+      console.log(newVal)
+      // this.rhSelected = undefined
+      // if (newVal === '') {
+      //   this.reset()
+      // } else {
+      //   this.filter(newVal)
+      //   // this.search(newVal)
+      // }
     }, 500)
   },
   methods: {
@@ -239,6 +239,7 @@ export default {
       'changeRh'
     ]),
     filter (title) {
+      // console.log(title)
       let data = {
         search: title,
         basicFilter: this.basicFilter.filter(f => f.active),

@@ -46,7 +46,7 @@
           <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
         <hr>
-        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)">
+        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
@@ -152,9 +152,10 @@ export default {
       'updateRh'
     ]),
     filterRhNotInService (data) {
-      this.$http.post(this.$api({ target: 'rh' }), data, {
+      this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
         headers: header()
       }).then(response => {
+        // console.log(response)
         this.setRhsNotInService(response.data)
       })
     },
@@ -193,17 +194,20 @@ export default {
       })
     },
     getRhNotInService () {
+      console.log('Get rh not in service')
       this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
+        console.log('get not attach', response)
         this.setRhsNotInService(response.data)
       })
     },
     attachRhService (values) {
+      console.log('Values para attach', values)
       let data = {
         service_id: this.service.id
       }
-      this.$http.post(this.$api({ target: 'rh-service' }), Object.assign(values, data), {
+      this.$http.post(this.$api({ target: 'rhs-service' }), Object.assign(values, data), {
         headers: header()
       }).then(response => {
         this.rhSelected = undefined
@@ -222,6 +226,7 @@ export default {
       this.isResponseble = e[1]
     },
     detachRh (id) {
+      // console.log("Detach Rh")
       this.rhSelected = undefined
       let data = {
         rh_id: id,
@@ -233,6 +238,10 @@ export default {
         this.getRhInService()
         this.getRhNotInService()
       })
+    },
+    reset () {
+      console.log('Reset on details')
+      this.getRhNotInService()
     }
   },
   components: {

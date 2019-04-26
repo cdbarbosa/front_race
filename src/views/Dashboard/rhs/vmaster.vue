@@ -30,7 +30,7 @@
       <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @update="table($event)">
+      <rh-table :create="true" :rhs="rhs" @update="table($event)" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>
@@ -170,6 +170,21 @@ export default {
     table (e) {
       console.log(e)
       this.rhSelected = e[0]
+    },
+    filter (e) {
+      this.$http.post(this.$api({ target: 'rh' }), e, {
+        headers: header()
+      }).then(response => {
+        this.changeRh(response.data)
+        this.isFilterModalActive = false
+        console.log(this.rhs)
+      })
+    },
+    reset (e) {
+      this.getRhs(this).then(rhs => {
+        this.setRhs(rhs)
+      })
+      this.rhSelected = this.rhs[0]
     }
   },
   components: {

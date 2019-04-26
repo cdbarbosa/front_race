@@ -9,7 +9,7 @@
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
-        <span @click="searchRh = ''">
+        <span @click="resetFilters">
           <i class="fas fa-backspace"></i>
         </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
@@ -73,7 +73,7 @@
           </div>
           <div class="bottonFilter">
             <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
-            <button @click="resetFilters; isFilterModalActive = false">Resetar</button>
+            <button @click="resetFilters">Resetar</button>
           </div>
         </section>
       </div>
@@ -119,7 +119,7 @@ import success from './create-messages/success'
 import error from './create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
-import { header } from '../../../config/index.js'
+// import { header } from '../../../config/index.js'
 export default {
   name: 'rhTable',
   props: {
@@ -233,8 +233,9 @@ export default {
     searchRh: _.debounce(function (newVal, oldVal) {
       this.rhSelected = undefined
       if (newVal === '' && newVal === oldVal) {
+        console.log('Watch RhTable')
         this.getRhs(this).then(rhs => {
-          this.setRhs(rhs)
+          this.resetFilters()
         })
       } else {
         this.filter(newVal)
@@ -259,18 +260,18 @@ export default {
       return 'error'
     },
     resetFilters () {
+      console.log('Reset Filters')
       this.basicFilter.forEach(function (item, index) {
         item.active = false
-        item.value = undefined
+        item.value = null
         item.operator = null
       })
       this.academicFilter.forEach(function (item, index) {
         item.active = false
-        item.value = undefined
+        item.value = null
       })
-      this.getRhs(this)
-      console.log(this.rhs)
-      this.rhSelected = this.rhs[0]
+      this.isFilterModalActive = false
+      this.$emit('reset')
     },
     filter (title) {
       let data = {
@@ -279,22 +280,6 @@ export default {
         academicFilter: this.academicFilter.filter(f => f.active)
       }
       this.$emit('filter', data)
-    },
-    search (title) {
-      let data = {
-        search: title,
-        basicFilter: this.basicFilter.filter(f => f.active),
-        academicFilter: this.academicFilter.filter(f => f.active)
-      }
-      this.$http.post(this.$api({ target: 'rh' }), data, {
-        headers: header()
-      }).then(response => {
-        console.log(response)
-        this.rhs = response.data // can't be. Have to do something else
-        this.changeRh(response.data)
-        this.isFilterModalActive = false
-        console.log(this.rhs)
-      })
     }
   },
   components: {
