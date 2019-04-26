@@ -259,6 +259,7 @@ export default {
       return 'error'
     },
     resetFilters () {
+      this.search = null
       this.basicFilter.forEach(function (item, index) {
         item.active = false
         item.value = undefined
