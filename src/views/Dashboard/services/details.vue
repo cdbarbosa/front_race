@@ -152,20 +152,26 @@ export default {
       'updateRh'
     ]),
     filterRhNotInService (data) {
-      this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
-        headers: header()
-      }).then(response => {
-        // console.log(response)
-        this.setRhsNotInService(response.data)
-      })
+      if (data.search.length) {
+        this.$http.post(this.$api({ target: 'rhs-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+          headers: header()
+        }).then(response => {
+          this.setRhsNotInService(response.data)
+        })
+      } else {
+        this.getRhNotInService()
+      }
     },
     filterRhInService (data) {
-      this.$http.post(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
-        headers: header()
-      }).then(response => {
-        this.setRhsInService(response.data)
-        this.rhsService = response.data
-      })
+      if (data.search.length) {
+        this.$http.post(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
+          headers: header()
+        }).then(response => {
+          this.setRhsInService(response.data)
+        })
+      } else {
+        this.getRhInService()
+      }
     },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
@@ -194,16 +200,13 @@ export default {
       })
     },
     getRhNotInService () {
-      console.log('Get rh not in service')
       this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log('get not attach', response)
         this.setRhsNotInService(response.data)
       })
     },
     attachRhService (values) {
-      console.log('Values para attach', values)
       let data = {
         service_id: this.service.id
       }
@@ -221,12 +224,10 @@ export default {
       this.isResponseble = !e[1]
     },
     showAttached (e) {
-      // console.log(e)
       this.rhSelected = e[0]
       this.isResponseble = e[1]
     },
     detachRh (id) {
-      // console.log("Detach Rh")
       this.rhSelected = undefined
       let data = {
         rh_id: id,
@@ -240,7 +241,6 @@ export default {
       })
     },
     reset () {
-      console.log('Reset on details')
       this.getRhNotInService()
     }
   },

@@ -64,7 +64,7 @@
             <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
           </div>
           <div class="bottonFilter">
-            <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
+            <button @click="filter(searchDetail); isFilterModalActive = false">Ok</button>
             <button @click="resetFilters; isFilterModalActive = false">Resetar</button>
           </div>
         </section>
