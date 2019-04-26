@@ -42,72 +42,15 @@
         </div>
       </section>
       <section>
-        <rh-table-details v-if="rhsService" :rhs="rhsService" @update="showAttached($event)">
+        <rh-table-details @filter="filterRhInService($event)" :rhs="rhsInService" @update="showAttached($event)">
           <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
-        <!-- <rh&#45;table v&#45;if="rhsService" :filters="false" :attach="false" :create="false" :rhs="rhsService" @update="showAttached($event)"> -->
-        <!-- </rh&#45;table> -->
         <hr>
-        <rh-table v-if="rhsNotInService" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)">
+        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
     </div>
-    <!-- <div class="details&#45;information"> -->
-    <!--   <div class="description&#45;service"> -->
-    <!--     <hr> -->
-    <!--     <div class="rhOfService" v&#45;if="selected !== undefined" > -->
-    <!--       <div class="infoRh"> -->
-    <!--         <b&#45;field label="RH"> -->
-    <!--           <b&#45;input v&#45;model="selected.name" placeholder="Lorem ipsum dolor sit amet" disabled></b&#45;input> -->
-    <!--         </b&#45;field> -->
-    <!--         <b&#45;field label="ID"> -->
-    <!--           <b&#45;input v&#45;model="selected.id" placeholder="2" disabled></b&#45;input> -->
-    <!--         </b&#45;field> -->
-    <!--       </div> -->
-    <!--       <b&#45;field label="Especificidade e Serviço"> -->
-    <!--         <textarea v&#45;model="selected.competencies" name="" id="" cols="55" rows="4" disabled></textarea> -->
-    <!--       </b&#45;field> -->
-    <!--       <div class="hours"> -->
-    <!--         <b&#45;field label="Custo"> -->
-    <!--           <b&#45;input v&#45;model="selected.cost" placeholder="ORCA &#45; Orçamento (em aberto)" disabled></b&#45;input> -->
-    <!--         </b&#45;field> -->
-    <!--         <b&#45;field label="Horas"> -->
-    <!--           <b&#45;input placeholder="ORCA &#45; Orçamento (em aberto)"></b&#45;input> -->
-    <!--         </b&#45;field> -->
-    <!--         <b&#45;field label="Prazo"> -->
-    <!--           <b&#45;input placeholder="ORCA &#45; Orçamento (em aberto)"></b&#45;input> -->
-    <!--         </b&#45;field> -->
-    <!--       </div> -->
-    <!--       <div class="cost"> -->
-    <!--         <div class="field"> -->
-    <!--           <b&#45;checkbox>Estado</b&#45;checkbox> -->
-    <!--         </div> -->
-    <!--         <button class="is&#45;primary" @click="isCreateModalActive = true">Cadastrar RH</button> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!-- <button class="is&#45;primary" @click="isCreateModalActive = true" v&#45;if="rhsService.length == 0">Cadastrar RH</button> -->
-    <!-- </div> -->
-    <!-- <div class="attach"> -->
-    <!--   <b&#45;modal :active.sync="isModalActive"> -->
-    <!--     <div class="attachRh"> -->
-    <!--       <b&#45;field label="Adicionar Rh ao serviço"> -->
-    <!--         <b&#45;select v&#45;model="rh_id" placeholder="Select a name"> -->
-    <!--           <option -->
-    <!--             v&#45;for="option in data" -->
-    <!--             :value="option.id" -->
-    <!--             :key="option.id"> -->
-    <!--             {{ option.name }} -->
-    <!--           </option> -->
-    <!--         </b&#45;select> -->
-    <!--       </b&#45;field> -->
-    <!--       <div class="buttonCreate"> -->
-    <!--         <button class="buttons is&#45;primary" @click="attachRhService()">Adicionar</button> -->
-    <!--       </div> -->
-    <!--     </div> -->
-    <!--   </b&#45;modal> -->
-    <!-- </div> -->
     <b-modal :active.sync="isSearchModalActive">
       <!-- <component></component> -->
     </b-modal>
@@ -135,7 +78,6 @@ export default {
       },
       service: undefined,
       rhsService: undefined,
-      rhsNotInService: undefined,
       isSearchModalActive: false,
       data: [],
       rh_id: '',
@@ -151,7 +93,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'rhs'
+      'rhs',
+      'rhsNotInService',
+      'rhsInService'
     ]),
     selected: {
       get () {
@@ -196,15 +140,32 @@ export default {
   // },
   beforeMount () {
     this.getService()
-    this.getRhService()
+    this.getRhInService()
     this.getRhNotInService()
   },
   methods: {
     ...mapActions([
       'getRhs',
       'updateService',
+      'setRhsNotInService',
+      'setRhsInService',
       'updateRh'
     ]),
+    filterRhNotInService (data) {
+      this.$http.post(this.$api({ target: 'rh' }), data, {
+        headers: header()
+      }).then(response => {
+        this.setRhsNotInService(response.data)
+      })
+    },
+    filterRhInService (data) {
+      this.$http.post(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
+        headers: header()
+      }).then(response => {
+        this.setRhsInService(response.data)
+        this.rhsService = response.data
+      })
+    },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     },
@@ -223,31 +184,30 @@ export default {
         this.service = response.data
       })
     },
-    getRhService () {
-      this.$http.get(this.$api({ target: `rhs-service/${this.$route.params.service_id}` }), {
+    getRhInService () {
+      this.$http.get(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log(response)
+        this.setRhsInService(response.data)
         this.rhsService = response.data
       })
     },
     getRhNotInService () {
-      this.$http.get(this.$api({ target: `rhsNotService/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        // console.log(response)
-        this.rhsNotInService = response.data
+        this.setRhsNotInService(response.data)
       })
     },
     attachRhService (values) {
       let data = {
         service_id: this.service.id
       }
-      this.$http.post(this.$api({ target: 'rhservice' }), Object.assign(values, data), {
+      this.$http.post(this.$api({ target: 'rh-service' }), Object.assign(values, data), {
         headers: header()
       }).then(response => {
         this.rhSelected = undefined
-        this.getRhService()
+        this.getRhInService()
         this.getRhNotInService()
         // this.isModalActive = false
       })
@@ -270,7 +230,7 @@ export default {
       this.$http.post(this.$api({ target: 'rh-service' }), data, {
         headers: header()
       }).then(() => {
-        this.getRhService()
+        this.getRhInService()
         this.getRhNotInService()
       })
     }

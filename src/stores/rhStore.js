@@ -2,17 +2,27 @@ import { header } from '../config/index.js'
 
 const state = {
   rhs: [],
+  rhsNotInService: [],
+  rhsInService: [],
   rhByService: []
 }
 
 const getters = {
   rhs: () => state.rhs,
+  rhsNotInService: () => state.rhsNotInService,
+  rhsInService: () => state.rhsInService,
   rhByService: () => state.rhByService
 }
 
 const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
+  },
+  SET_RHS_NOT_IN_SERVICE (state, rhs) {
+    state.rhsNotInService = rhs
+  },
+  SET_RHS_IN_SERVICE (state, rhs) {
+    state.rhsInService = rhs
   },
   SET_RH_SERVICE (state, rhByService) {
     state.rhByService = rhByService
@@ -49,6 +59,12 @@ const actions = {
   },
   setRhs ({ commit }, rhs) {
     commit('SET_RHS', rhs)
+  },
+  setRhsNotInService ({ commit }, rhs) {
+    commit('SET_RHS_NOT_IN_SERVICE', rhs)
+  },
+  setRhsInService ({ commit }, rhs) {
+    commit('SET_RHS_IN_SERVICE', rhs)
   },
   getRhByService ({ commit }, payload) {
     let that = payload[0]

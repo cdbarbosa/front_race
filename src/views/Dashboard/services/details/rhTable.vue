@@ -64,8 +64,8 @@
             <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
           </div>
           <div class="bottonFilter">
-            <button @click="search(searchRh)">Ok</button>
-            <button @click="resetFilters">Resetar</button>
+            <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
+            <button @click="resetFilters; isFilterModalActive = false">Resetar</button>
           </div>
         </section>
       </div>
@@ -226,9 +226,9 @@ export default {
       this.rhSelected = undefined
       if (newVal === '' && newVal === oldVal) {
         this.getRhs(this).then(rhs => {
-          // console.log(rhs)
         })
       } else {
+        this.filter(newVal)
         this.search(newVal)
       }
     }, 500)
@@ -238,6 +238,14 @@ export default {
       'getRhs',
       'changeRh'
     ]),
+    filter (title) {
+      let data = {
+        search: title,
+        basicFilter: this.basicFilter.filter(f => f.active),
+        academicFilter: this.academicFilter.filter(f => f.active)
+      }
+      this.$emit('filter', data)
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },

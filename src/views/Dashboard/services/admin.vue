@@ -4,14 +4,14 @@
       <b-tab-item label="Master">
         <vmaster></vmaster>
       </b-tab-item>
-      <b-tab-item label="Histórico">
-        <vhistory :active="active" v-if="$route.params.service_id"></vhistory>
-      </b-tab-item>
       <b-tab-item label="Detalhes">
         <vdetails v-if="$route.params.service_id"></vdetails>
       </b-tab-item>
       <b-tab-item label="Recebimentos">
         <vreceipt v-if="$route.params.service_id"></vreceipt>
+      </b-tab-item>
+      <b-tab-item label="Histórico">
+        <vhistory :active="active" v-if="$route.params.service_id"></vhistory>
       </b-tab-item>
     </b-tabs>
   </main>
