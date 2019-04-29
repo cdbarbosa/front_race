@@ -76,18 +76,19 @@ export default {
     },
     bacharel: {
       get () {
-        return this.rh.academics ? this.rh.academics.area : undefined
+        return this.rh.academics ? this.rh.academics[0].area : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateRhAcademics(['area', newVal, 'rh'])
+        console.log(newVal)
+        this.updateAcademics(['area', newVal, 'rh'])
       }, 1000)
     },
     titulation: {
       get () {
-        return this.academics ? this.rh.academics.degree : undefined
+        return this.rh.academics ? this.rh.academics[0].titulation : undefined
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateRhAcademics(['degree', newVal, 'rh'])
+        this.updateAcademics(['titulation', newVal, 'rh'])
       }, 1000)
     },
     observations: {
@@ -130,22 +131,21 @@ export default {
     updateAcademics (e) {
       let data = {
         label: e[0],
-        value: e[1],
-        id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
+        value: e[1]
       }
-      console.log(data)
-      // this.$http.put(this.$api({ target: `rh-acamedic` }), data, {
-      //   headers: header()
-      // }).then(response => {
-      //   let payload = [response.data, this.selectedIndex]
-      //   e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
-      //   this.$emit('updated')
-      //   this.$toasted.success('Perfil do rh atualizado com sucesso!', {
-      //     theme: 'bubble',
-      //     position: 'top-center',
-      //     duration: 2000
-      //   })
-      // })
+      console.log(e)
+      this.$http.put(this.$api({ target: 'rh-academic' }), Object.assign({ 'rh_id': this.rh.id, 'rh_academics_id': this.rh.academics[0].id }, data), {
+        headers: header()
+      }).then(response => {
+        let payload = [response.data, this.selectedIndex]
+        this.updateRh(payload)
+        this.$emit('updated')
+        this.$toasted.success('Perfil do rh atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 2000
+        })
+      })
     }
   },
   components: {

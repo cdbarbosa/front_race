@@ -275,7 +275,7 @@ export default {
         })
         this.isFilterModalActive = false
       }
-      this.$emit('reset')
+      this.$emit('reset', 'notService')
     },
     filter (title) {
       let data = {

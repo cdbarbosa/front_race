@@ -111,7 +111,6 @@ import success from '../../common/create-messages/success'
 import error from '../../common/create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
-// import { header } from '../../../../config/index.js'
 export default {
   name: 'rhTable',
   props: {
@@ -229,7 +228,6 @@ export default {
         this.resetFilters()
       } else {
         this.filter(newVal)
-        // this.search(newVal)
       }
     }, 500)
   },

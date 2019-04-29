@@ -152,27 +152,18 @@ export default {
       'updateRh'
     ]),
     filterRhNotInService (data) {
-      if (data.search.length) {
-        this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
-          headers: header()
-        }).then(response => {
-          this.setRhsNotInService(response.data)
-        })
-      } else {
-        this.getRhNotInService()
-      }
+      this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+        headers: header()
+      }).then(response => {
+        this.setRhsNotInService(response.data)
+      })
     },
     filterRhInService (data) {
       this.$http.post(this.$api({ target: 'rh-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.setRhsInService(response.data)
       })
-      // if (data.search.length) {
-      // } else {
-      //   this.getRhInService()
-      // }
     },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
@@ -204,6 +195,7 @@ export default {
       this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
+        console.log('getRhNotInService', response)
         this.setRhsNotInService(response.data)
       })
     },
@@ -217,7 +209,6 @@ export default {
         this.rhSelected = undefined
         this.getRhInService()
         this.getRhNotInService()
-        // this.isModalActive = false
       })
     },
     showDetached (e) {
