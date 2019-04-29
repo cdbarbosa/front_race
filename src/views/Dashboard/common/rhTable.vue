@@ -261,16 +261,20 @@ export default {
     },
     resetFilters () {
       console.log('Reset Filters')
-      this.basicFilter.forEach(function (item, index) {
-        item.active = false
-        item.value = null
-        item.operator = null
-      })
-      this.academicFilter.forEach(function (item, index) {
-        item.active = false
-        item.value = null
-      })
-      this.isFilterModalActive = false
+      if (this.isFilterModalActive === false) {
+        this.searchRh = ''
+      } else {
+        this.basicFilter.forEach(function (item, index) {
+          item.active = false
+          item.value = null
+          item.operator = null
+        })
+        this.academicFilter.forEach(function (item, index) {
+          item.active = false
+          item.value = null
+        })
+        this.isFilterModalActive = false
+      }
       this.$emit('reset')
     },
     filter (title) {

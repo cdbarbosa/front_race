@@ -8,7 +8,7 @@
         <b-field>
           <b-input placeholder="Procurar" v-model="searchDetail"></b-input>
         </b-field>
-        <span @click="searchDetail = ''">
+        <span @click="resetFilters">
           <i class="fas fa-backspace"></i>
         </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
@@ -65,7 +65,7 @@
           </div>
           <div class="bottonFilter">
             <button @click="filter(searchDetail); isFilterModalActive = false">Ok</button>
-            <button @click="resetFilters; isFilterModalActive = false">Resetar</button>
+            <button @click="resetFilters">Resetar</button>
           </div>
         </section>
       </div>
@@ -111,7 +111,7 @@ import success from '../../common/create-messages/success'
 import error from '../../common/create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
-import { header } from '../../../../config/index.js'
+// import { header } from '../../../../config/index.js'
 export default {
   name: 'rhTable',
   props: {
@@ -156,50 +156,50 @@ export default {
         {
           key: 'cost',
           label: 'Custo',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'competencies',
           label: 'Competências',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'activity',
           label: 'Atividades',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'experience',
           label: 'Experiências',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         },
         {
           key: 'active',
           label: 'Ativo',
-          value: undefined,
+          value: null,
           active: false,
-          operator: undefined
+          operator: null
         }
       ],
       academicFilter: [
         {
           key: 'area',
           label: 'Área',
-          value: undefined,
+          value: null,
           active: false
         },
         {
           key: 'titulation',
           label: 'Titulação',
-          value: undefined,
+          value: null,
           active: false
         }
       ],
@@ -223,14 +223,14 @@ export default {
   },
   watch: {
     searchDetail: _.debounce(function (newVal, oldVal) {
-      console.log(newVal)
-      // this.rhSelected = undefined
-      // if (newVal === '') {
-      //   this.reset()
-      // } else {
-      //   this.filter(newVal)
-      //   // this.search(newVal)
-      // }
+      this.rhSelected = undefined
+      if (newVal === '') {
+        console.log(newVal)
+        this.resetFilters()
+      } else {
+        this.filter(newVal)
+        // this.search(newVal)
+      }
     }, 500)
   },
   methods: {
@@ -239,7 +239,6 @@ export default {
       'changeRh'
     ]),
     filter (title) {
-      // console.log(title)
       let data = {
         search: title,
         basicFilter: this.basicFilter.filter(f => f.active),
@@ -259,29 +258,19 @@ export default {
       return 'error'
     },
     resetFilters () {
-      this.search = null
-      this.basicFilter.forEach(function (item, index) {
-        item.active = false
-        item.value = undefined
-      })
-      this.academicFilter.forEach(function (item, index) {
-        item.active = false
-        item.value = undefined
-      })
-      this.getRhs(this)
-    },
-    search (title) {
-      let data = {
-        search: title,
-        basicFilter: this.basicFilter.filter(f => f.active),
-        academicFilter: this.academicFilter.filter(f => f.active)
+      if (this.isFilterModalActive === false) {
+        this.searchDetail = ''
+      } else {
+        this.basicFilter.forEach(function (item, index) {
+          item.active = false
+          item.value = undefined
+        })
+        this.academicFilter.forEach(function (item, index) {
+          item.active = false
+          item.value = undefined
+        })
       }
-      this.$http.post(this.$api({ target: 'rh' }), data, {
-        headers: header()
-      }).then(response => {
-        this.changeRh(response.data)
-        this.isFilterModalActive = false
-      })
+      this.$emit('reset', 'service')
     }
   },
   components: {

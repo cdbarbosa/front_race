@@ -42,11 +42,11 @@
         </div>
       </section>
       <section>
-        <rh-table-details @filter="filterRhInService($event)" :rhs="rhsInService" @update="showAttached($event)">
+        <rh-table-details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" @update="showAttached($event)">
           <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
         <hr>
-        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset">
+        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset($event)">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
@@ -153,7 +153,7 @@ export default {
     ]),
     filterRhNotInService (data) {
       if (data.search.length) {
-        this.$http.post(this.$api({ target: 'rhs-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+        this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
           headers: header()
         }).then(response => {
           this.setRhsNotInService(response.data)
@@ -163,15 +163,16 @@ export default {
       }
     },
     filterRhInService (data) {
-      if (data.search.length) {
-        this.$http.post(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
-          headers: header()
-        }).then(response => {
-          this.setRhsInService(response.data)
-        })
-      } else {
-        this.getRhInService()
-      }
+      this.$http.post(this.$api({ target: 'rh-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.setRhsInService(response.data)
+      })
+      // if (data.search.length) {
+      // } else {
+      //   this.getRhInService()
+      // }
     },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
@@ -240,8 +241,12 @@ export default {
         this.getRhNotInService()
       })
     },
-    reset () {
-      this.getRhNotInService()
+    reset (e) {
+      if (e === 'service') {
+        this.getRhInService()
+      } else {
+        this.getRhNotInService()
+      }
     }
   },
   components: {

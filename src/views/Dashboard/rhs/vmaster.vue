@@ -157,16 +157,6 @@ export default {
       }
       return 'error'
     },
-    searchRh (name) {
-      this.$http.get(this.$api({ target: 'rh' }), {
-        headers: header(),
-        params: {
-          search: name
-        }
-      }).then(response => {
-        this.changeRh(response.data)
-      })
-    },
     table (e) {
       console.log(e)
       this.rhSelected = e[0]
@@ -175,9 +165,10 @@ export default {
       this.$http.post(this.$api({ target: 'rh' }), e, {
         headers: header()
       }).then(response => {
+        console.log(response.data)
         this.changeRh(response.data)
         this.isFilterModalActive = false
-        console.log(this.rhs)
+        // console.log(this.rhs)
       })
     },
     reset (e) {
