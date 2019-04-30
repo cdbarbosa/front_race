@@ -171,7 +171,7 @@ export default {
     table (e) {
     },
     filter (e) {
-      this.$http.post(this.$api({ target: 'rh' }), e, {
+      this.$http.post(this.$api({ target: 'rh-filter' }), e, {
         headers: header()
       }).then(response => {
         console.log(response.data)

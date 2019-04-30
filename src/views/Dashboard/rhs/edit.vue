@@ -122,7 +122,7 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      this.postRhSelected([this, this.rhSelected])
+      this.postRhSelected([this, this.rh])
       // let data = {
       //   label: e[0],
       //   value: e[1],

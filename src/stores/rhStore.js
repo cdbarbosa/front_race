@@ -99,18 +99,20 @@ const actions = {
   postRhSelected ({ commit }, payload) {
     const that = payload[0]
     const rawRh = payload[1]
-    const { rawUser, ...rhClean } = rawRh
-    const { address, ...userClean } = rawUser
-
+    const { user: rawUser, ...rhClean } = rawRh
+    const { address: addressClean, ...userClean } = rawUser
     that.$http.post(that.$api({ target: 'user' }), userClean, {
       headers: header()
-    }).then(() => {
-      that.$http.post(that.$api({ target: 'address' }), address, {
+    }).then((response) => {
+      console.log('user', response)
+      that.$http.post(that.$api({ target: 'address' }), addressClean, {
         headers: header()
-      }).then(() => {
+      }).then((response) => {
+        console.log('address', response)
         that.$http.post(that.$api({ target: 'rh' }), rhClean, {
           headers: header()
-        }).then(() => {
+        }).then((response) => {
+          console.log('rh', response)
         }).catch(err => {
           console.log(err)
         })
