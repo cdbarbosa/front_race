@@ -21,17 +21,31 @@ const mutations = {
     state.rhs = rhs
   },
   SET_RH_SELECTED (state, rh) {
-    state.rhSelected = rh
+    state.rhSelected = JSON.parse(JSON.stringify(rh))
   },
   UPDATE_RH_SELECTED (state, payload) {
     const label = payload[0]
     const target = payload[1]
     const value = payload[2]
-    if (target) {
-      state.rhSelected[target][label] = value
-    } else {
-      state.rhSelected[label] = value
+    switch (target) {
+      case 'user':
+        state.rhSelected.user[label] = value
+        break
+      case 'address':
+        state.rhSelected.user.address[label] = value
+        break
     }
+    // if (target) {
+    //   state.rhSelected[target][label] = value
+    // } else {
+    //   state.rhSelected[label] = value
+    // }
+  },
+  POST_RH_SELECTED (state, that) {
+    // const user = state.rhSelected.user
+    // const address = state.rhSelected.user.address
+    // let {user, ...rh} = state.setRhSelected
+    // let {address, ...user} = user.address
   },
   SET_RHS_NOT_IN_SERVICE (state, rhs) {
     state.rhsNotInService = rhs
@@ -82,7 +96,30 @@ const actions = {
   updateRhSelected ({ commit }, payload) {
     commit('UPDATE_RH_SELECTED', payload)
   },
-  postRhSelected ({ commit }, that) {
+  postRhSelected ({ commit }, payload) {
+    const that = payload[0]
+    const rawRh = payload[1]
+    const { rawUser, ...rhClean } = rawRh
+    const { address, ...userClean } = rawUser
+
+    that.$http.post(that.$api({ target: 'user' }), userClean, {
+      headers: header()
+    }).then(() => {
+      that.$http.post(that.$api({ target: 'address' }), address, {
+        headers: header()
+      }).then(() => {
+        that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+          headers: header()
+        }).then(() => {
+        }).catch(err => {
+          console.log(err)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   },
   setRhsNotInService ({ commit }, rhs) {
     commit('SET_RHS_NOT_IN_SERVICE', rhs)

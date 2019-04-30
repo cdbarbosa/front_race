@@ -17,7 +17,7 @@
       <div class="competencias">
         <h3>Competências</h3>
         <b-field label="Experiência">
-          <b-input v-model="rh.experience" placeholder="Analise de dados"></b-input>
+          <b-input v-model="experience" placeholder="Analise de dados"></b-input>
         </b-field>
         <b-field label="Competências">
           <vue-editor :editorToolbar="customToolbar" v-model="competencies" placeholder="Analise de dados"></vue-editor>
@@ -26,6 +26,7 @@
           <vue-editor :editorToolbar="customToolbar" v-model="observations"></vue-editor>
         </b-field>
       </div>
+    <button @click="updateFunction">Atualizar</button>
     </div>
   </div>
 </template>
@@ -58,12 +59,21 @@ export default {
   mounted () {
   },
   computed: {
+    experience: {
+      get () {
+        return this.rh.experience
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateRhSelected(['experience', '', newVal])
+      }, 1000)
+    },
     competencies: {
       get () {
         return this.rh.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['competencies', newVal, 'rh'])
+        console.log(newVal)
+        // this.updateRhSelected(['competencies', '', newVal])
       }, 1000)
     },
     cost: {
@@ -71,9 +81,17 @@ export default {
         return this.rh.cost
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['cost', newVal, 'rh'])
+        this.updateRhSelected(['cost', '', newVal])
       }, 1000)
     },
+    observations: {
+      get () {
+        return this.rh.observations
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateRhSelected(['observations', '', newVal])
+      }, 1000)
+    }
     // bacharel: {
     //   get () {
     //     return this.rh.academics ? this.rh.academics[0].area : undefined
@@ -90,28 +108,21 @@ export default {
     //   set: _.debounce(function (newVal, oldVal) {
     //     this.updateAcademics(['titulation', newVal, 'rh'])
     //   }, 1000)
-    // },
-    observations: {
-      get () {
-        return this.rh.observations
-      },
-      set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['observations', newVal, 'rh'])
-      }, 1000)
-    }
+    // }
   },
   methods: {
     ...mapActions([
       'updateRh',
       'updateRhAddress',
       'updateRhAcademics',
-      'updateRhSelected'
+      'updateRhSelected',
+      'postRhSelected'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      console.log(e)
+      this.postRhSelected([this, this.rhSelected])
       // let data = {
       //   label: e[0],
       //   value: e[1],

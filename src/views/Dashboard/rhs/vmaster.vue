@@ -41,7 +41,7 @@
         </template>
       </component>
     </b-modal>
-    <b-modal :active.sync="isEditActive">
+    <b-modal :onCancel="restoreRhSelected" :active.sync="isEditActive">
       <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
     </b-modal>
   </main>
@@ -154,6 +154,9 @@ export default {
       'updateRh',
       'setRhSelected'
     ]),
+    restoreRhSelected (source) {
+      this.setRhSelected(this.rhs[this.selectedIndex])
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
