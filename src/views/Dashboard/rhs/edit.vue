@@ -110,6 +110,7 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
+      console.log(e)
       let data = {
         label: e[0],
         value: e[1],
