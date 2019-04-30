@@ -2,6 +2,7 @@ import { header } from '../config/index.js'
 
 const state = {
   rhs: [],
+  rhSelected: undefined,
   rhsNotInService: [],
   rhsInService: [],
   rhByService: []
@@ -9,6 +10,7 @@ const state = {
 
 const getters = {
   rhs: () => state.rhs,
+  rhSelected: () => state.rhSelected,
   rhsNotInService: () => state.rhsNotInService,
   rhsInService: () => state.rhsInService,
   rhByService: () => state.rhByService
@@ -17,6 +19,15 @@ const getters = {
 const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
+  },
+  SET_RH_SELECTED (state, rh) {
+    state.rhSelected = rh
+  },
+  UPDATE_RH_SELECTED (state, payload) {
+    const label = payload[0]
+    const value = payload[1]
+
+    state.rhSelected[label] = value
   },
   SET_RHS_NOT_IN_SERVICE (state, rhs) {
     state.rhsNotInService = rhs
@@ -59,6 +70,15 @@ const actions = {
   },
   setRhs ({ commit }, rhs) {
     commit('SET_RHS', rhs)
+    commit('SET_RH_SELECTED', rhs[0])
+  },
+  setRhSelected ({ commit }, rh) {
+    commit('SET_RH_SELECTED', rh)
+  },
+  updateRhSelected ({ commit }, payload) {
+    commit('UPDATE_RH_SELECTED', payload)
+  },
+  postRhSelected ({ commit }, that) {
   },
   setRhsNotInService ({ commit }, rhs) {
     commit('SET_RHS_NOT_IN_SERVICE', rhs)

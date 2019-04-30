@@ -2,27 +2,27 @@
   <main id="master">
     <h3>
       RH's
-      <div id="edit" @click="isEditActive = true" v-if="selected">
+      <div id="edit" @click="isEditActive = true" v-if="rhSelected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content" v-if="selected">
-      <generic-user :person="selected"></generic-user>
+    <div class="content" v-if="rhSelected">
+      <generic-user :person="rhSelected"></generic-user>
       <section>
         <b-field label="Custo por Hora">
-          <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+          <money class="input" :value="rhSelected.cost" v-money="money" :masked="true" disabled></money>
           <!-- <div class="textarea __disabled" v&#45;html="selected.cost" disabled></div> -->
           <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
         </b-field>
         <b-field label="Competências">
-          <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
+          <div class="textarea __disabled" v-html="rhSelected.competencies" disabled></div>
           <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
         </b-field>
         <b-field label="Experiência">
-          <div class="textarea __disabled" v-html="selected.experience"></div>
+          <div class="textarea __disabled" v-html="rhSelected.experience"></div>
         </b-field>
         <b-field label="Observações">
-          <div class="textarea __disabled" v-html="selected.observations"></div>
+          <div class="textarea __disabled" v-html="rhSelected.observations"></div>
         </b-field>
       </section>
     </div>
@@ -30,7 +30,7 @@
       <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @update="table($event)" @filter="filter($event)" @reset="reset($event)">
+      <rh-table :create="true" :rhs="rhs" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>
@@ -42,7 +42,7 @@
       </component>
     </b-modal>
     <b-modal :active.sync="isEditActive">
-      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
+    <!--   <edit&#45;rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit&#45;rh> -->
     </b-modal>
   </main>
 </template>
@@ -71,11 +71,18 @@ export default {
       isEditActive: false,
       rhCreated: undefined,
       isModalActive: false,
-      rhSelected: undefined,
       searchQuery: undefined
     }
   },
   computed: {
+    rhSelected: {
+      get () {
+        return this.$store.getters.rhSelected
+      },
+      set (newVal) {
+        this.setRhSelected(newVal)
+      }
+    },
     rhs: {
       get () {
         return this.$store.getters.rhs
@@ -144,7 +151,8 @@ export default {
       'getRhs',
       'setRhs',
       'changeRh',
-      'updateRh'
+      'updateRh',
+      'setRhSelected'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -158,8 +166,6 @@ export default {
       return 'error'
     },
     table (e) {
-      console.log(e)
-      this.rhSelected = e[0]
     },
     filter (e) {
       this.$http.post(this.$api({ target: 'rh' }), e, {
