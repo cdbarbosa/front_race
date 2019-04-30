@@ -85,7 +85,7 @@ export default {
         return this.person.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['name', newVal, this.update])
+        this.$emit('change', ['name', '', newVal])
       }, 1000)
     },
     phone: {
@@ -94,7 +94,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         console.log(newVal, oldVal)
-        this.$emit('change', ['phone', newVal, this.update])
+        this.$emit('change', ['phone', '', newVal])
       }, 1000)
     },
     email: {
@@ -102,7 +102,7 @@ export default {
         return this.person.user.email
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['email', newVal, 'user'])
+        this.$emit('change', ['email', 'user', newVal])
       }, 1000)
     },
     address: {
@@ -110,7 +110,7 @@ export default {
         return this.person.user.address.address
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['address', newVal, 'address'])
+        this.$emit('change', ['address', 'address', newVal])
       }, 1000)
     },
     state: {
@@ -118,7 +118,7 @@ export default {
         return this.person.user.address.state
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['state', newVal, 'address'])
+        this.$emit('change', ['state', 'address', newVal])
       }, 1000)
     },
     postal_code: {
@@ -126,7 +126,7 @@ export default {
         return this.person.user.address.postal_code
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['postal_code', newVal, 'address'])
+        this.$emit('change', ['postal_code', 'address', newVal])
       }, 1000)
     },
     neighborhood: {
@@ -134,7 +134,7 @@ export default {
         return this.person.user.address.neighborhood
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['neighborhood', newVal, 'address'])
+        this.$emit('change', ['neighborhood', 'address', newVal])
       }, 1000)
     },
     city: {
@@ -142,7 +142,7 @@ export default {
         return this.person.user.address.city
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.$emit('change', ['city', newVal, 'address'])
+        this.$emit('change', ['city', 'address', newVal])
       }, 1000)
     }
   }

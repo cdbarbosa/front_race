@@ -42,7 +42,7 @@
       </component>
     </b-modal>
     <b-modal :active.sync="isEditActive">
-    <!--   <edit&#45;rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit&#45;rh> -->
+      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
     </b-modal>
   </main>
 </template>

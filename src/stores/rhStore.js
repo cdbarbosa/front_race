@@ -25,9 +25,13 @@ const mutations = {
   },
   UPDATE_RH_SELECTED (state, payload) {
     const label = payload[0]
-    const value = payload[1]
-
-    state.rhSelected[label] = value
+    const target = payload[1]
+    const value = payload[2]
+    if (target) {
+      state.rhSelected[target][label] = value
+    } else {
+      state.rhSelected[label] = value
+    }
   },
   SET_RHS_NOT_IN_SERVICE (state, rhs) {
     state.rhsNotInService = rhs

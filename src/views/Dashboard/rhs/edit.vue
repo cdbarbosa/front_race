@@ -1,7 +1,7 @@
 <template>
   <div class="rhScreen" id="updateRh">
     <div class="content">
-      <edit-generic :person="rh" :title="'RH'" @change="updateFunction($event)">
+      <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">
         <!-- <article class="academics"> -->
         <!--   <b&#45;field label="Bacharelado"> -->
         <!--     <b&#45;input v&#45;model="bacharel" placeholder="Matemática"></b&#45;input> -->
@@ -104,36 +104,37 @@ export default {
     ...mapActions([
       'updateRh',
       'updateRhAddress',
-      'updateRhAcademics'
+      'updateRhAcademics',
+      'updateRhSelected'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      let data = {
-        label: e[0],
-        value: e[1],
-        id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
-      }
-      this.$http.put(this.$api({ target: `${e[2]}` }), data, {
-        headers: header()
-      }).then(response => {
-        let payload = [response.data, this.selectedIndex]
-        e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
-        this.$emit('updated')
-        this.$toasted.success('Perfil do rh atualizado com sucesso!', {
-          theme: 'bubble',
-          position: 'top-center',
-          duration: 2000
-        })
-      })
+      console.log(e)
+      // let data = {
+      //   label: e[0],
+      //   value: e[1],
+      //   id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
+      // }
+      // this.$http.put(this.$api({ target: `${e[2]}` }), data, {
+      //   headers: header()
+      // }).then(response => {
+      //   let payload = [response.data, this.selectedIndex]
+      //   e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
+      //   this.$emit('updated')
+      //   this.$toasted.success('Perfil do rh atualizado com sucesso!', {
+      //     theme: 'bubble',
+      //     position: 'top-center',
+      //     duration: 2000
+      //   })
+      // })
     },
     updateAcademics (e) {
       let data = {
         label: e[0],
         value: e[1]
       }
-      console.log(e)
       this.$http.put(this.$api({ target: 'rh-academic' }), Object.assign({ 'rh_id': this.rh.id, 'rh_academics_id': this.rh.academics[0].id }, data), {
         headers: header()
       }).then(response => {
