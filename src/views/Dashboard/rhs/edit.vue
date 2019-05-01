@@ -122,7 +122,19 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      this.postRhSelected([this, this.rh])
+      this.postRhSelected([this, this.rh]).then(response => {
+        this.updateRh([response.data, this.selectedIndex])
+        setTimeout(() => {
+          this.$toasted.success('Perfil do RH atualizado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 2000,
+            onComplete: () => {
+              this.$emit('updated')
+            }
+          })
+        }, 300)
+      })
       // let data = {
       //   label: e[0],
       //   value: e[1],
@@ -133,12 +145,6 @@ export default {
       // }).then(response => {
       //   let payload = [response.data, this.selectedIndex]
       //   e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
-      //   this.$emit('updated')
-      //   this.$toasted.success('Perfil do rh atualizado com sucesso!', {
-      //     theme: 'bubble',
-      //     position: 'top-center',
-      //     duration: 2000
-      //   })
       // })
     },
     updateAcademics (e) {

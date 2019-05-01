@@ -42,7 +42,7 @@
       </component>
     </b-modal>
     <b-modal :onCancel="restoreRhSelected" :active.sync="isEditActive">
-      <edit-rh :rh="selected" :selectedIndex="selectedIndex" @updateRh="rhSelected = rhs[selectedIndex]"></edit-rh>
+      <edit-rh :rh="rhSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-rh>
     </b-modal>
   </main>
 </template>
@@ -167,8 +167,6 @@ export default {
         return 'success'
       }
       return 'error'
-    },
-    table (e) {
     },
     filter (e) {
       this.$http.post(this.$api({ target: 'rh-filter' }), e, {

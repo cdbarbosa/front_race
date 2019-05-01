@@ -34,6 +34,9 @@ const mutations = {
       case 'address':
         state.rhSelected.user.address[label] = value
         break
+      case '':
+        state.rhSelected[label] = value
+        break
     }
     // if (target) {
     //   state.rhSelected[target][label] = value
@@ -101,26 +104,29 @@ const actions = {
     const rawRh = payload[1]
     const { user: rawUser, ...rhClean } = rawRh
     const { address: addressClean, ...userClean } = rawUser
-    that.$http.post(that.$api({ target: 'user' }), userClean, {
-      headers: header()
-    }).then((response) => {
-      console.log('user', response)
-      that.$http.post(that.$api({ target: 'address' }), addressClean, {
+    return new Promise((resolve, reject) => {
+      that.$http.post(that.$api({ target: 'user' }), userClean, {
         headers: header()
       }).then((response) => {
-        console.log('address', response)
-        that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+        that.$http.post(that.$api({ target: 'address' }), addressClean, {
           headers: header()
         }).then((response) => {
-          console.log('rh', response)
+          that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+            headers: header()
+          }).then(response => {
+            resolve(response)
+          }).catch(err => {
+            reject(err)
+            console.log(err)
+          })
         }).catch(err => {
+          reject(err)
           console.log(err)
         })
       }).catch(err => {
+        reject(err)
         console.log(err)
       })
-    }).catch(err => {
-      console.log(err)
     })
   },
   setRhsNotInService ({ commit }, rhs) {
@@ -144,6 +150,7 @@ const actions = {
   },
   updateRh ({ commit }, payload) {
     commit('UPDATE_RH', payload)
+    commit('SET_RH_SELECTED', payload[0])
   },
   updateRhAddress ({ commit }, payload) {
     commit('UPDATE_RH_ADDRESS', payload)
