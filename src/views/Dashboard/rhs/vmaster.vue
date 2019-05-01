@@ -154,7 +154,7 @@ export default {
       'updateRh',
       'setRhSelected'
     ]),
-    restoreRhSelected (source) {
+    restoreRhSelected () {
       this.setRhSelected(this.rhs[this.selectedIndex])
     },
     parseDate (date) {

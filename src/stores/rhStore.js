@@ -38,17 +38,6 @@ const mutations = {
         state.rhSelected[label] = value
         break
     }
-    // if (target) {
-    //   state.rhSelected[target][label] = value
-    // } else {
-    //   state.rhSelected[label] = value
-    // }
-  },
-  POST_RH_SELECTED (state, that) {
-    // const user = state.rhSelected.user
-    // const address = state.rhSelected.user.address
-    // let {user, ...rh} = state.setRhSelected
-    // let {address, ...user} = user.address
   },
   SET_RHS_NOT_IN_SERVICE (state, rhs) {
     state.rhsNotInService = rhs

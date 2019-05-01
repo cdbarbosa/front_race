@@ -2,18 +2,18 @@
   <main id="master">
     <h3>
       Cliente
-      <div id="edit" @click="isEditActive = true" v-if="selected">
+      <div id="edit" @click="isEditActive = true" v-if="clientSelected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content" v-if="selected">
-      <generic-user :person="selected"></generic-user>
+    <div class="content" v-if="clientSelected">
+      <generic-user :person="clientSelected"></generic-user>
       <section>
         <b-field label="Observações">
-          <div class="textarea __disabled" v-html="selected.observations"></div>
+          <div class="textarea __disabled" v-html="clientSelected.observations"></div>
         </b-field>
         <b-field label="Atividade">
-          <b-input v-model="selected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
+          <b-input v-model="clientSelected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
         </b-field>
       </section>
     </div>
@@ -34,7 +34,7 @@
               <b-icon icon="cog"></b-icon>
             </div>
           </header>
-          <b-table :data="clients ? clients : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable>
+          <b-table :data="clients" :selected.sync="selected" @update:selected="setClientSelected($event)" :paginated="true" :per-page="5" focusable>
             <template slot-scope="props">
               <b-table-column field="name" label="NOME" sortable>
                 {{ props.row.name }}
@@ -70,8 +70,8 @@
         </template>
       </component>
     </b-modal>
-    <b-modal :active.sync="isEditActive">
-      <edit-client :client="selected" :selectedIndex="selectedIndex" @updated="userSelected = clients[selectedIndex]"></edit-client>
+    <b-modal :onCancel="restoreClientSelected" :active.sync="isEditActive">
+      <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
       <div class="content" style="padding: 1rem">
@@ -129,6 +129,14 @@ export default {
     }
   },
   computed: {
+    clientSelected: {
+      get () {
+        return this.$store.getters.clientSelected
+      },
+      set (newVal) {
+        this.setClientSelected(newVal)
+      }
+    },
     clients: {
       get () {
         return this.$store.getters.clients
@@ -189,8 +197,12 @@ export default {
       'changeClients',
       'updateClient',
       'updateUser',
-      'updateAddress'
+      'updateAddress',
+      'setClientSelected'
     ]),
+    restoreClientSelected () {
+      this.setClientSelected(this.clients[this.selectedIndex])
+    },
     log (e) {
       console.log(e)
     },
@@ -219,7 +231,7 @@ export default {
         search: name,
         basicFilter: this.basicFilter.filter(f => f.active)
       }
-      this.$http.post(this.$api({ target: 'client' }), data, {
+      this.$http.post(this.$api({ target: 'client-filter' }), data, {
         headers: header()
       }).then(response => {
         console.log(response)
