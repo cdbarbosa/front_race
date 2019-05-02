@@ -155,6 +155,7 @@ export default {
       this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.setRhsNotInService(response.data)
       })
     },

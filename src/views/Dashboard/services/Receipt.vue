@@ -15,11 +15,11 @@
         </article>
         <article>
           <b-field label="Valor">
-            <money class="input" :value="selected.value" v-money="money" :masked="true" disabled></money>
+            <money class="input" :value="selected != undefined ? selected.value : undefined" v-money="money" :masked="true" disabled></money>
             <!-- <b&#45;input v&#45;model="" placeholder="500"></b&#45;input> -->
           </b-field>
           <b-field label="Data">
-            <b-input :value="parseDate(selected.date)" v-mask="'##/##/####'" placeholder="DD/MM/YYYY" name="date" disabled></b-input>
+            <b-input :value="parseDate(selected != undefined ? selected.date : undefined)" v-mask="'##/##/####'" placeholder="DD/MM/YYYY" name="date" disabled></b-input>
           </b-field>
           <span>{{ errors.first('date') }}</span>
         </article>
@@ -123,6 +123,7 @@ export default {
       this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.service = response.data
         this.serviceReceipts = response.data.service_receipts
       })
