@@ -2,17 +2,17 @@
   <div class="rhScreen" id="updateRh">
     <div class="content">
       <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">
-        <!-- <article class="academics"> -->
+        <article class="academics">
         <!--   <b&#45;field label="Bacharelado"> -->
         <!--     <b&#45;input v&#45;model="bacharel" placeholder="Matemática"></b&#45;input> -->
         <!--   </b&#45;field> -->
         <!--   <b&#45;field label="Título"> -->
         <!--     <b&#45;input v&#45;model="titulation" placeholder="Doutorado"></b&#45;input> -->
         <!--   </b&#45;field> -->
-        <!--   <b&#45;field label="Custo (R$)"> -->
-        <!--     <b&#45;input v&#45;model="cost" placeholder="R$ 131,00"></b&#45;input> -->
-        <!--   </b&#45;field> -->
-        <!-- </article> -->
+          <b-field label="Custo (R$)">
+            <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+          </b-field>
+        </article>
       </edit-generic>
       <div class="competencias">
         <h3>Competências</h3>
@@ -72,8 +72,7 @@ export default {
         return this.rh.competencies
       },
       set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal)
-        // this.updateRhSelected(['competencies', '', newVal])
+        this.updateRhSelected(['competencies', '', newVal])
       }, 1000)
     },
     cost: {
@@ -98,7 +97,7 @@ export default {
     //   },
     //   set: _.debounce(function (newVal, oldVal) {
     //     console.log(newVal)
-    //     this.updateAcademics(['area', newVal, 'rh'])
+    //     this.updateRhSelected(['area', newVal, 'rh'])
     //   }, 1000)
     // },
     // titulation: {
@@ -106,7 +105,7 @@ export default {
     //     return this.rh.academics ? this.rh.academics[0].titulation : undefined
     //   },
     //   set: _.debounce(function (newVal, oldVal) {
-    //     this.updateAcademics(['titulation', newVal, 'rh'])
+    //     this.updateRhSelected(['titulation', newVal, 'rh'])
     //   }, 1000)
     // }
   },
@@ -135,17 +134,6 @@ export default {
           })
         }, 300)
       })
-      // let data = {
-      //   label: e[0],
-      //   value: e[1],
-      //   id: e[2] === 'rh' ? this.rh.id : (e[2] === 'user' ? this.rh.user.id : this.rh.user.address.id)
-      // }
-      // this.$http.put(this.$api({ target: `${e[2]}` }), data, {
-      //   headers: header()
-      // }).then(response => {
-      //   let payload = [response.data, this.selectedIndex]
-      //   e[2] === 'rh' ? this.updateRh(payload) : this.updateRhAddress(payload)
-      // })
     },
     updateAcademics (e) {
       let data = {

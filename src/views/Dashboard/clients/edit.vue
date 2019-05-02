@@ -4,7 +4,6 @@
       <edit-generic :person="client" :title="'Cliente'" @change="updateClientSelected($event)"></edit-generic>
       <div class="others">
         <b-field label="Observações">
-          <!-- <textarea v&#45;model="client.observations" name="" id="" cols="30" rows="11" style="width: 100%"></textarea> -->
           <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Atividade">
