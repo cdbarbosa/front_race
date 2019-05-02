@@ -2,11 +2,11 @@
   <main id="master">
     <h3>
       Serviços
-      <div id="edit" @click="isEditActive = true" v-if="selected">
+      <div id="edit" @click="isEditActive = true" v-if="serviceSelected">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <service :selected="selected"  v-if="selected"></service>
+    <service :selected="serviceSelected"  v-if="serviceSelected"></service>
     <div class="content" v-else>
        <h2>Nenhum cliente cadastrado ou encontrado</h2>
     </div>
@@ -22,7 +22,7 @@
             </span>
           </header>
         </div>
-        <b-table :data="services ? services : []" :selected.sync="selected" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <b-table :data="services ? services : []" :selected.sync="selected" @update:selected="setServiceSelected($event)" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>
               {{ props.row.name }}
@@ -60,13 +60,13 @@
         </template>
       </component>
     </b-modal>
-    <b-modal :active.sync="isEditActive">
-      <service-edit :service="selected" :selectedIndex="selectedIndex" @update="serviceSelected = services[selectedIndex]"></service-edit>
+    <b-modal :onCancel="restoreServiceSelected" :active.sync="isEditActive">
+      <service-edit :service="selected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
     </b-modal>
   </main>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import service from './service'
 import moment from 'moment'
 import serviceEdit from './edit.vue'
@@ -84,25 +84,28 @@ export default {
       radio: '',
       searchQuery: undefined,
       serviceCreated: undefined,
-      serviceSelected: undefined,
+      tableSelected: undefined,
       isServiceModalActive: false
     }
   },
   computed: {
+    ...mapGetters([
+      'serviceSelected'
+    ]),
+    selected: {
+      get () {
+        return this.tableSelected ? this.tableSelected : this.services[0]
+      },
+      set (newValue) {
+        this.tableSelected = newValue
+      }
+    },
     services: {
       get () {
         return this.$store.getters.services
       },
       set (newVal) {
         this.changeServices(newVal)
-      }
-    },
-    selected: {
-      get () {
-        return this.serviceSelected ? this.serviceSelected : this.services[0]
-      },
-      set (newValue) {
-        this.serviceSelected = newValue
       }
     },
     selectedIndex () {
@@ -147,8 +150,12 @@ export default {
     ...mapActions([
       'getServices',
       'changeServices',
-      'setServices'
+      'setServices',
+      'setServiceSelected'
     ]),
+    restoreServiceSelected () {
+      this.setServiceSelected(this.services[this.selectedIndex])
+    },
     parseModal () {
       if (this.serviceCreated === undefined) {
         return 'createService'

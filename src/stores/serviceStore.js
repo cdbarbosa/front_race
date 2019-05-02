@@ -19,19 +19,8 @@ const mutations = {
   },
   UPDATE_SERVICE_SELECTED (state, payload) {
     const label = payload[0]
-    const target = payload[1]
-    const value = payload[2]
-    switch (target) {
-      case 'user':
-        state.clientSelected.user[label] = value
-        break
-      case 'address':
-        state.clientSelected.user.address[label] = value
-        break
-      case '':
-        state.clientSelected[label] = value
-        break
-    }
+    const value = payload[1]
+    state.serviceSelected[label] = value
   },
   UPDATE_SERVICE (state, payload) {
     const service = payload[0]
@@ -54,6 +43,27 @@ const actions = {
   },
   setServices ({ commit }, services) {
     commit('SET_SERVICES', services)
+    commit('SET_SERVICE_SELECTED', services[0])
+  },
+  setServiceSelected ({ commit }, service) {
+    commit('SET_SERVICE_SELECTED', service)
+  },
+  updateServiceSelected ({ commit }, payload) {
+    commit('UPDATE_SERVICE_SELECTED', payload)
+  },
+  postServiceSelected ({ commit }, payload) {
+    const that = payload[0]
+    const service = payload[1]
+    return new Promise((resolve, reject) => {
+      that.$http.post(that.$api({ target: 'service' }), service, {
+        headers: header()
+      }).then(response => {
+        resolve(response)
+      }).catch(err => {
+        console.log(err)
+        reject(err)
+      })
+    })
   },
   changeServices ({ commit }, services) {
     commit('SET_SERVICES', services)

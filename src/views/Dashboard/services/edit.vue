@@ -24,13 +24,13 @@
         </article>
         <article class="info-three">
           <b-field label="Cliente">
-            <b-input v-model="service.client.name" placeholder="Cliente" ></b-input>
+            <b-input v-model="service.client.name" placeholder="Cliente" disabled></b-input>
           </b-field>
-          <b-field label="Sigilo">
+         <b-field label="Sigilo">
             <div class="block">
-              <b-radio v-model="service.confidentiality_id" :native-value="1">Nenhum</b-radio>
-              <b-radio v-model="service.confidentiality_id" :native-value="2">Parcial</b-radio>
-              <b-radio v-model="service.confidentiality_id" :native-value="3">Total</b-radio>
+              <b-radio v-model="confidentiality" :native-value="1">Nenhum</b-radio>
+              <b-radio v-model="confidentiality" :native-value="2">Parcial</b-radio>
+              <b-radio v-model="confidentiality" :native-value="3">Total</b-radio>
             </div>
           </b-field>
         </article>
@@ -54,6 +54,7 @@
           <vue-editor :editorToolbar="customToolbar" v-model="description"></vue-editor>
         </b-field>
       </section>
+      <button @click="updateFunction">Atualizar</button>
     </div>
   </main>
 </template>
@@ -90,7 +91,7 @@ export default {
         return this.service.name
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['name', newVal])
+        this.updateServiceSelected(['name', newVal])
       }, 1000)
     },
     profit: {
@@ -98,7 +99,7 @@ export default {
         return this.service.profit
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['profit', newVal])
+        this.updateServiceSelected(['profit', newVal])
       }, 1000)
     },
     description: {
@@ -106,7 +107,15 @@ export default {
         return this.service.description
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['description', newVal])
+        this.updateServiceSelected(['description', newVal])
+      }, 1000)
+    },
+    confidentiality: {
+      get () {
+        return this.service.confidentiality_id
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        this.updateServiceSelected(['confidentiality_id', newVal])
       }, 1000)
     },
     delivered: {
@@ -114,7 +123,7 @@ export default {
         return this.service.delivered ? this.parseDate(this.service.delivered) : null
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['delivered', newVal])
+        this.updateServiceSelected(['delivered', newVal])
       }, 1000)
     },
     forecast: {
@@ -122,7 +131,7 @@ export default {
         return this.parseDate(this.service.forecast)
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['forecast', newVal])
+        this.updateServiceSelected(['forecast', newVal])
       }, 1000)
     },
     received_value: {
@@ -130,7 +139,7 @@ export default {
         return this.service.received_value
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['received_value', newVal])
+        this.updateServiceSelected(['received_value', newVal])
       }, 1000)
     },
     status: {
@@ -138,13 +147,15 @@ export default {
         return this.service.status_id
       },
       set: _.debounce(function (newVal, oldVal) {
-        this.updateFunction(['status_id', newVal])
+        this.updateServiceSelected(['status_id', newVal])
       })
     }
   },
   methods: {
     ...mapActions([
-      'updateService'
+      'updateService',
+      'updateServiceSelected',
+      'postServiceSelected'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({ target: 'service-status' }), {
@@ -157,23 +168,18 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction (e) {
-      let data = {
-        label: e[0],
-        value: e[1],
-        id: this.service.id
-      }
-      this.$http.put(this.$api({ target: 'service' }), data, {
-        headers: header()
-      }).then(response => {
-        console.log(response.data)
-        let payload = [response.data, this.selectedIndex]
-        this.updateService(payload)
-        this.$emit('updated')
-        this.$toasted.success('Serviço atualizado com sucesso!', {
-          theme: 'bubble',
-          position: 'top-center',
-          duration: 2000
-        })
+      this.postServiceSelected([this, this.service]).then(response => {
+        this.updateService([response.data, this.selectedIndex])
+        setTimeout(() => {
+          this.$toasted.success('Serviço atualizado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 2000,
+            onComplete: () => {
+              this.$emit('updated')
+            }
+          })
+        }, 300)
       })
     }
   },
