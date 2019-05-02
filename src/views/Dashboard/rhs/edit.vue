@@ -3,7 +3,13 @@
     <div class="content">
       <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">
         <article class="academics">
-        <!--   <b&#45;field label="Bacharelado"> -->
+          <b-field label="Bacharelado">
+            <b-input v-model="area" placeholder="Matematica"></b-input>
+          </b-field>
+          <b-field label="Titulo">
+            <b-input v-model="titulation" placeholder="Doutorado"></b-input>
+          </b-field>
+          <!-- <b&#45;field label="Bacharelado"> -->
         <!--     <b&#45;input v&#45;model="bacharel" placeholder="Matemática"></b&#45;input> -->
         <!--   </b&#45;field> -->
         <!--   <b&#45;field label="Título"> -->
@@ -90,24 +96,25 @@ export default {
       set: _.debounce(function (newVal, oldVal) {
         this.updateRhSelected(['observations', '', newVal])
       }, 1000)
+    },
+    area: {
+      get () {
+        return this.rh.academics ? this.rh.academics[0].area : undefined
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        console.log(newVal)
+        this.updateRhSelected(['area', 'academics', newVal])
+      }, 1000)
+    },
+    titulation: {
+      get () {
+        return this.rh.academics ? this.rh.academics[0].titulation : undefined
+      },
+      set: _.debounce(function (newVal, oldVal) {
+        console.log(newVal)
+        this.updateRhSelected(['titulation', 'academics', newVal])
+      }, 1000)
     }
-    // bacharel: {
-    //   get () {
-    //     return this.rh.academics ? this.rh.academics[0].area : undefined
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     console.log(newVal)
-    //     this.updateRhSelected(['area', newVal, 'rh'])
-    //   }, 1000)
-    // },
-    // titulation: {
-    //   get () {
-    //     return this.rh.academics ? this.rh.academics[0].titulation : undefined
-    //   },
-    //   set: _.debounce(function (newVal, oldVal) {
-    //     this.updateRhSelected(['titulation', newVal, 'rh'])
-    //   }, 1000)
-    // }
   },
   methods: {
     ...mapActions([

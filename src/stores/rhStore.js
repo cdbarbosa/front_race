@@ -34,6 +34,9 @@ const mutations = {
       case 'address':
         state.rhSelected.user.address[label] = value
         break
+      case 'academics':
+        state.rhSelected.academics[0][label] = value
+        break
       case '':
         state.rhSelected[label] = value
         break
@@ -91,8 +94,13 @@ const actions = {
   postRhSelected ({ commit }, payload) {
     const that = payload[0]
     const rawRh = payload[1]
-    const { user: rawUser, ...rhClean } = rawRh
+    const { user: rawUser, ...rhUpdate } = rawRh
     const { address: addressClean, ...userClean } = rawUser
+    const { academics: academicsClean, ...rhClean } = rhUpdate
+    console.log(addressClean)
+    console.log(userClean)
+    console.log(academicsClean)
+    console.log(rhClean)
     return new Promise((resolve, reject) => {
       that.$http.post(that.$api({ target: 'user' }), userClean, {
         headers: header()
@@ -100,10 +108,16 @@ const actions = {
         that.$http.post(that.$api({ target: 'address' }), addressClean, {
           headers: header()
         }).then((response) => {
-          that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+          that.$http.post(that.$api({ target: 'rh-academic' }), academicsClean[0], {
             headers: header()
-          }).then(response => {
-            resolve(response)
+          }).then(() => {
+            that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+              headers: header()
+            }).then(response => {
+              resolve(response)
+            }).catch(err => {
+              reject(err)
+            })
           }).catch(err => {
             reject(err)
             console.log(err)
