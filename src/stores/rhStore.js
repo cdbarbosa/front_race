@@ -97,17 +97,13 @@ const actions = {
     const { user: rawUser, ...rhUpdate } = rawRh
     const { address: addressClean, ...userClean } = rawUser
     const { academics: academicsClean, ...rhClean } = rhUpdate
-    console.log(addressClean)
-    console.log(userClean)
-    console.log(academicsClean)
-    console.log(rhClean)
     return new Promise((resolve, reject) => {
       that.$http.post(that.$api({ target: 'user' }), userClean, {
         headers: header()
-      }).then((response) => {
+      }).then(() => {
         that.$http.post(that.$api({ target: 'address' }), addressClean, {
           headers: header()
-        }).then((response) => {
+        }).then(() => {
           that.$http.post(that.$api({ target: 'rh-academic' }), academicsClean[0], {
             headers: header()
           }).then(() => {

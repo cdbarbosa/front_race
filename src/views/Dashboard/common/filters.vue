@@ -1,49 +1,4 @@
 <template>
-  <section class="__secundary">
-    <div :class="[{create: create}, 'tableContainer']">
-      <header>
-        <h4>
-          <slot name="title"></slot>
-        </h4>
-        <button v-if="create" class="buttons is-primary" @click="isModalActive = true">Cadastrar novo Rh</button>
-        <b-field>
-          <b-input placeholder="Procurar" v-model="searchRh"></b-input>
-        </b-field>
-        <span @click="resetFilters">
-          <i class="fas fa-backspace"></i>
-        </span>
-        <div id="edit" v-if="filters" @click="isFilterModalActive = true">
-          <b-icon icon="cog"></b-icon>
-        </div>
-      </header>
-      <b-table :data="rhs ? rhs : []" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
-        <template slot-scope="props">
-          <b-table-column field="name" label="NOME" sortable>
-            {{ props.row.name }}
-          </b-table-column>
-          <b-table-column field="user.email" label="Email">
-            {{ props.row.user.email }}
-          </b-table-column>
-          <b-table-column field="cost" label="Custo" sortable>
-            {{'R$ ' + props.row.cost }}
-          </b-table-column>
-        </template>
-        <template slot="empty">
-          <section class="section">
-            <div class="empty has-text-grey has-text-centered">
-              <p>
-                <b-icon icon="frown" size="is-large"></b-icon>
-              </p>
-              <p>Nothing here.</p>
-            </div>
-          </section>
-        </template>
-      </b-table>
-      <button v-if="attach" @click="isAttachModalOpen = true">Associar esse RH</button>
-      <b-modal :active.sync="isModalActive">
-        <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
-      </b-modal>
-    </div>
     <b-modal :active.sync="isFilterModalActive">
       <div class="content" style="padding: 1rem">
         <section>
@@ -110,6 +65,7 @@
         <button @click="$emit('attachRh', Object.assign(rhServiceFields, {rh_id: selected.id})); isAttachModalOpen = false">Associar</button>
       </div>
     </b-modal>
-  </section>
 </template>
-<script src="./rhTable.js"></script>
+
+<script src="filters.js">
+</script>
