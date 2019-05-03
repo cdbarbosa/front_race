@@ -47,8 +47,8 @@ export default {
       get () {
         return this.$store.getters.rhs
       },
-      set () {
-        this.changeRh(this)
+      set (rhs) {
+        this.setRhs(rhs)
       }
     },
     selectedIndex () {
@@ -94,7 +94,7 @@ export default {
   },
   beforeMount () {
     this.getRhs(this).then(rhs => {
-      this.setRhs(rhs)
+      this.rhs = rhs
     })
     // console.log(this.rhs[0].academics)
   },
@@ -102,7 +102,6 @@ export default {
     ...mapActions([
       'getRhs',
       'setRhs',
-      'changeRh',
       'updateRh',
       'setRhSelected'
     ]),
@@ -124,15 +123,13 @@ export default {
       this.$http.post(this.$api({ target: 'rh-filter' }), e, {
         headers: header()
       }).then(response => {
-        console.log(response.data)
-        this.changeRh(response.data)
+        this.rhs = response.data
         this.isFilterModalActive = false
-        // console.log(this.rhs)
       })
     },
     reset (e) {
       this.getRhs(this).then(rhs => {
-        this.setRhs(rhs)
+        this.rhs = rhs
       })
       this.rhSelected = this.rhs[0]
     }

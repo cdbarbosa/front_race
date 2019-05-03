@@ -58,7 +58,7 @@ export default {
         return this.$store.getters.clients
       },
       set (newVal) {
-        this.changeClients(newVal)
+        this.setClients(newVal)
       }
     }
   },
@@ -103,7 +103,6 @@ export default {
     ...mapActions([
       'getClients',
       'setClients',
-      'changeClients',
       'updateClient',
       'updateUser',
       'updateAddress',

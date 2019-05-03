@@ -37,7 +37,7 @@ export default {
         return this.$store.getters.services
       },
       set (newVal) {
-        this.changeServices(newVal)
+        this.setServices(newVal)
       }
     },
     selectedIndex () {
@@ -79,7 +79,7 @@ export default {
   },
   beforeMount () {
     this.getServices(this).then(services => {
-      this.setServices(services)
+      this.services = services
     })
   },
   methods: {

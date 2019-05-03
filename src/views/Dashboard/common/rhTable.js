@@ -151,7 +151,6 @@ export default {
       return 'error'
     },
     resetFilters () {
-      console.log('Reset Filters')
       if (this.isFilterModalActive === false) {
         this.searchRh = ''
       } else {
