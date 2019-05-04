@@ -21,7 +21,7 @@ export default {
       },
       isEditActive: false,
       rhCreated: undefined,
-      isModalActive: false,
+      isRhModalActive: false,
       searchQuery: undefined,
       tableSelected: undefined
     }

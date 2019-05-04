@@ -167,13 +167,6 @@ export default {
           operator: null
         },
         {
-          key: 'activity',
-          label: 'Atividades',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
           key: 'experience',
           label: 'Experiências',
           value: null,
@@ -267,6 +260,7 @@ export default {
           item.active = false
           item.value = undefined
         })
+        this.isFilterModalActive = false
       }
       this.$emit('reset', 'service')
     }

@@ -64,13 +64,6 @@ export default {
           operator: null
         },
         {
-          key: 'activity',
-          label: 'Atividades',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
           key: 'experience',
           label: 'Experiências',
           value: null,
