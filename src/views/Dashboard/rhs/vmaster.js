@@ -66,10 +66,8 @@ export default {
     }
   },
   watch: {
-    isModalActive (newVal) {
-      if (!newVal) {
-        this.rhCreated = undefined
-      }
+    isModalActive () {
+      this.rhCreated = undefined
     },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       console.log(newQuery)

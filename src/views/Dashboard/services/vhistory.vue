@@ -21,7 +21,7 @@
             <p>
             <b-icon icon="frown" size="is-large"></b-icon>
             </p>
-            <p>Nothing here.</p>
+            <p>Nenhum registro feito.</p>
           </div>
         </section>
       </template>
