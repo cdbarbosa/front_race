@@ -46,7 +46,7 @@
                 <p>
                   <b-icon icon="frown" size="is-large"></b-icon>
                 </p>
-                <p>Nothing here.</p>
+                <p>Nenhum serviço cadastrado.</p>
               </div>
             </section>
           </template>

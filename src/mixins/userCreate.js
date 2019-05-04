@@ -3,18 +3,18 @@ export default {
   data () {
     return {
       user: {
-        email: undefined,
-        type_id: undefined,
-        document: undefined,
-        birthdate: undefined
+        email: null,
+        type_id: 1,
+        document: null,
+        birthdate: null
       },
       address: {
-        country: undefined,
-        state: undefined,
-        city: undefined,
-        neighborhood: undefined,
-        address: undefined,
-        postal_code: undefined
+        country: null,
+        state: null,
+        city: null,
+        neighborhood: null,
+        address: null,
+        postal_code: null
       },
       rules: {
         birthdate: {

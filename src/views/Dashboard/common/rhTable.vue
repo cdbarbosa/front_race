@@ -5,7 +5,7 @@
         <h4>
           <slot name="title"></slot>
         </h4>
-        <button v-if="create" class="buttons is-primary" @click="isModalActive = true">Cadastrar novo Rh</button>
+        <button v-if="create" class="buttons is-primary" @click="$emit('createRh')">Cadastrar novo RH</button>
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
@@ -34,7 +34,7 @@
               <p>
                 <b-icon icon="frown" size="is-large"></b-icon>
               </p>
-              <p>Nothing here.</p>
+              <p>Nenhum RH.</p>
             </div>
           </section>
         </template>

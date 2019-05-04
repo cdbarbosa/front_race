@@ -4,132 +4,14 @@
       <b-tab-item label="Master">
         <vmaster></vmaster>
       </b-tab-item>
-      <!-- <b&#45;tab&#45;item label="Detalhes"> -->
-      <!--   <vdetails v&#45;if="$route.params.service_id"></vdetails> -->
-      <!-- </b&#45;tab&#45;item> -->
-      <!-- <b&#45;tab&#45;item label="Recebimentos"> -->
-      <!--   <vreceipt v&#45;if="$route.params.service_id"></vreceipt> -->
-      <!-- </b&#45;tab&#45;item> -->
     </b-tabs>
   </main>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import moment from 'moment'
-import { header } from '../../../config/index.js'
-import _ from 'lodash'
 import vmaster from './vmaster.vue'
 export default {
   name: 'rhs',
-  data () {
-    return {
-      money: {
-        decimal: ',',
-        thousands: '.',
-        prefix: 'R$ ',
-        precision: 2,
-        masked: true
-      },
-      isEditActive: false,
-      rhCreated: undefined,
-      isModalActive: false,
-      rhSelected: undefined,
-      searchQuery: undefined
-    }
-  },
-  computed: {
-    rhs: {
-      get () {
-        return this.$store.getters.rhs
-      },
-      set (newVal) {
-        this.changeRh(this)
-      }
-    },
-    selected: {
-      get () {
-        return this.rhSelected ? this.rhSelected : this.rhs[0]
-      },
-      set (newVal, oldVal) {
-        this.rhSelected = newVal
-      }
-    },
-    selectedIndex () {
-      return this.rhs.findIndex(rh => rh.id === this.selected.id)
-    },
-    area: {
-      get () {
-        return this.selected.academics.length > 0 ? this.selected.academics[0].area : undefined
-      }
-    },
-    degree: {
-      get () {
-        return this.selected.academics.length > 0 ? this.selected.academics[0].degree : undefined
-      }
-    }
-  },
-  watch: {
-    searchQuery: _.debounce(function (newQuery, oldQuery) {
-      console.log(newQuery)
-      this.rhSelected = undefined
-      if (newQuery === '' && newQuery === oldQuery) {
-        this.getRhs(this)
-      } else {
-        this.searchRh(newQuery)
-      }
-    }, 500),
-    selected (newVal) {
-      if (this.rhs.length > 0) {
-        this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
-      }
-    }
-  },
-  activated () {
-    if (this.selected) {
-      if (this.rhSelected) this.$router.push({ name: 'rh', params: { rh_id: this.rhSelected.id } })
-      else this.$router.push({ name: 'rh', params: { rh_id: this.selected.id } })
-    }
-  },
-  beforeMount () {
-    this.getRhs(this).then(rhs => {
-      this.setRhs(rhs)
-    })
-    // console.log(this.rhs[0].academics)
-  },
-  methods: {
-    ...mapActions([
-      'getRhs',
-      'setRhs',
-      'changeRh',
-      'updateRh'
-    ]),
-    parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
-    },
-    parseModal () {
-      if (this.rhCreated === undefined) {
-        return 'createRh'
-      } else if (this.rhCreated === true) {
-        return 'success'
-      }
-      return 'error'
-    },
-    searchRh (name) {
-      this.$http.get(this.$api({ target: 'rh' }), {
-        headers: header(),
-        params: {
-          search: name
-        }
-      }).then(response => {
-        this.changeRh(response.data)
-      })
-    },
-    table (e) {
-      console.log(e)
-      this.rhSelected = e[0]
-    }
-  },
   components: {
     vmaster
   }
