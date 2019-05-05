@@ -5,7 +5,7 @@
         <h4>
           <slot name="title"></slot>
         </h4>
-        <button v-if="create" class="buttons is-primary" @click="$emit('createRh')">Cadastrar novo RH</button>
+        <slot name="action"></slot>
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
@@ -16,7 +16,7 @@
           <b-icon icon="cog"></b-icon>
         </div>
       </header>
-      <b-table :data="rhs ? rhs : []" :paginated="true" :selected.sync="selected" :per-page="5" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
+      <b-table :data="rhs ? rhs : []" :paginated="true" :selected.sync="selected" :per-page="5" style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -39,7 +39,6 @@
           </section>
         </template>
       </b-table>
-      <button v-if="attach" @click="isAttachModalOpen = true">Associar esse RH</button>
       <b-modal :active.sync="isModalActive">
         <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
       </b-modal>
@@ -76,38 +75,6 @@
             <button @click="resetFilters">Resetar</button>
           </div>
         </section>
-      </div>
-    </b-modal>
-    <b-modal :active.sync="isAttachModalOpen" v-if="selected">
-      <div class="" id="attachScreen">
-        <h3>Associar RH</h3>
-        <section>
-          <article>
-            <b-field label="RH">
-              <b-input v-model="selected.name" disabled></b-input>
-            </b-field>
-            <b-field label="RH">
-              <b-input v-model="selected.id" disabled></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Objetivo">
-              <b-input placeholder="Qual serviço o rh irá realizar?" v-model="rhServiceFields.goal"></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Custo por Hora Padrão">
-              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
-            </b-field>
-            <b-field label="Numero de Horas">
-              <b-input  v-model="rhServiceFields.hours"></b-input>
-            </b-field>
-            <b-field label="Custo por Hora para o Serviço (R$)">
-              <b-input v-model="rhServiceFields.cost"></b-input>
-            </b-field>
-          </article>
-        </section>
-        <button @click="$emit('attachRh', Object.assign(rhServiceFields, {rh_id: selected.id})); isAttachModalOpen = false">Associar</button>
       </div>
     </b-modal>
   </section>

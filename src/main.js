@@ -20,7 +20,13 @@ Vue.use(Buefy, {
 })
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
-Vue.use(money, { precision: 2 })
+Vue.use(money, {
+  decimal: ',',
+  thousands: '.',
+  prefix: 'R$ ',
+  precision: 2,
+  masked: false /* doesn't work with directive */
+})
 Vue.use(Toasted)
 
 new Vue({
