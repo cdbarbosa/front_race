@@ -23,8 +23,7 @@ export default {
     },
     service_id: Number,
     selectedIndex: {
-      type: Number,
-      default: 0
+      type: Number
     }
   },
   data () {
@@ -100,7 +99,12 @@ export default {
           active: false
         }
       ],
-      isFilterModalActive: false
+      isFilterModalActive: false,
+      rhServiceFields: {
+        cost: null,
+        hours: null,
+        goal: null
+      }
     }
   },
   computed: {
@@ -114,9 +118,6 @@ export default {
     }
   },
   watch: {
-    selected (newVal) {
-      this.$emit('update', [newVal, true])
-    },
     '$store.getters.rhs' () {
       this.tableSelected = this.rhs[this.selectedIndex]
     },

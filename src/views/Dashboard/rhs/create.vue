@@ -68,7 +68,7 @@
             <b-input v-model="rh.academic.titulation" placeholder="Doutorado"></b-input>
           </b-field>
           <b-field label="Custo">
-            <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
+            <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00"></b-input>
           </b-field>
         </article>
       </section>

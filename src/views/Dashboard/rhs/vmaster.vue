@@ -32,9 +32,6 @@
     <div class="content __display">
       <rh-table :create="true" :rhs="rhs" @createRh="isModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
-        <template slot="action">
-          <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo RH</button>
-        </template>
       </rh-table>
     </div>
     <b-modal :active.sync="isModalActive">
