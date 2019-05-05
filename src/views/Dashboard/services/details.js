@@ -130,7 +130,6 @@ export default {
       this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log('getRhNotInService', response)
         this.setRhsNotInService(response.data)
       })
     },
