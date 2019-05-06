@@ -34,10 +34,10 @@
         <span slot="title">RH's</span>
       </rh-table>
     </div>
-    <b-modal :active.sync="isModalActive">
+    <b-modal :active.sync="isRhModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">
-        <template slot="message">
-          <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
+        <template v-slot:message>
+          <h2>{{ rhCreated ? 'Sucesso ao cadastrar um rh' : 'Algo de errado aconteceu' }}</h2>
         </template>
       </component>
     </b-modal>

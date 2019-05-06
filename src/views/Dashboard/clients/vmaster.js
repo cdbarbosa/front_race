@@ -131,7 +131,9 @@ export default {
         item.value = undefined
         item.operator = null
       })
-      this.getClients(this)
+      this.getClients(this).then(clients => {
+        this.clients = clients
+      })
       this.tableSelected = this.clients[0]
     },
     searchClient (name) {
