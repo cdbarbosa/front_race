@@ -23,7 +23,7 @@
           </b-field>
           <span>{{ errors.first('date') }}</span>
         </article>
-        <button @click="createReceipt">Adicionar recebimento</button>
+        <!-- <button @click="createReceipt">Adicionar recebimento</button> -->
       </section>
       <section class="__secundary">
         <div class="tableContainer">
@@ -58,7 +58,7 @@
         </header>
         <form @submit.prevent="createReceipt">
           <b-field label="Data">
-            <b-input v-model="receipt.date" v-mask="'##/##/####'" placeholder="10/10/1994" name="date" required></b-input>
+            <b-datepicker v-model="receipt.date" v-mask="'##/##/####'" placeholder="10/10/1994" name="date" required></b-datepicker>
           </b-field>
           <b-field label="Valor (R$)">
             <b-input v-model="receipt.value" placeholder="300,00" name="date" required></b-input>

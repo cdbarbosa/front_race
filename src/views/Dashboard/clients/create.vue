@@ -18,7 +18,7 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
           </b-field>
           <b-field label="Data de Nascimento">
-            <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input>
+            <b-datepicker  v-model="user.birthdate"  :date-parser="parseDate(user.birthdate)" v-mask="'##/##/####'" v-validate="rules.birthdate" name="birthdate" required></b-datepicker>
           </b-field>
           <span>{{ errors.first('birthdate') }}</span>
         </article>
@@ -83,6 +83,7 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
+import moment from 'moment'
 export default {
   name: 'createClient',
   mixins: [userCreate],
@@ -123,6 +124,11 @@ export default {
       'getClients',
       'setClients'
     ]),
+    parseDate (date) {
+      let data = new Date(moment(date).format('DD/MM/YYYY'))
+      console.log(data)
+      return (moment(date).format('DD/MM/YYYY'))
+    },
     createClient () {
       this.createUser().then(userId => {
         let data = {

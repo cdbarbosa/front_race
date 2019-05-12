@@ -2,14 +2,29 @@
 	padding: 2rem;
 	section{
 		article{
-			&:nth-child(1){
-			}
+			// &:nth-child(1){
+			// }
 			&:nth-child(2){
 				grid-template-columns: 1fr !important;
 			}
 			&:nth-child(3){
 				grid-template-columns: repeat(3, 1fr) !important;
 			}
+		}
+	}
+} 
+
+#editRhServiceScreen {
+	article {
+		&:nth-child(1) {
+			display: grid;
+			grid-template-columns: 11fr 1fr;
+			grid-gap: 1rem;
+		}
+		&:nth-child(3) {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-gap: 1fr;
 		}
 	}
 }

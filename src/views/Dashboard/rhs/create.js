@@ -2,6 +2,7 @@ import { header } from '../../../config/index.js'
 import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { VueEditor } from 'vue2-editor'
+import moment from 'moment'
 export default {
   name: 'create-rh',
   props: ['open'],
@@ -42,7 +43,11 @@ export default {
       'getRhs',
       'setRhs'
     ]),
+    parseDate (date) {
+      return moment(date).format('DD/MM/YYYY')
+    },
     createRh () {
+      console.log('here')
       this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
       this.createUser().then(userId => {
         let data = {

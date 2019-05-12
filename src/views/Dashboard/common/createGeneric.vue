@@ -11,7 +11,8 @@
           <b-input v-model="person.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
-          <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input>
+          <b-datepicker  v-model="user.birthdate"  :date-parser="parseDate(user.birthdate)" v-mask="'##/##/####'" v-validate="rules.birthdate" name="birthdate" required></b-datepicker>
+          <!-- <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input> -->
         </b-field>
         <span>{{ errors.first('birthdate') }}</span>
       </article>

@@ -30,7 +30,7 @@
       <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @createRh="isModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
+      <rh-table :create="true" :rhs="rhs" @createRh="isRhModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>

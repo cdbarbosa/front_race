@@ -37,7 +37,7 @@
           </article>
           <div class="actions">
             <button class="is-primary" @click="detachRh(selected.id)" v-if="isResponseble">Desassociar esse RH</button>
-            <button class="buttons is-primary" @click="attachRhService" v-if="!isResponseble">Associar este Rh</button>
+            <button class="buttons is-primary" style="min-width: 0; padding: 0.5rem" @click="isEditModal = true">Editar esse RH</button>
           </div>
         </div>
       </section>
@@ -46,13 +46,42 @@
           <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
         <hr>
-        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset($event)">
+        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :selectedIndex="selectedIndex" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset($event)">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
     </div>
-    <b-modal :active.sync="isSearchModalActive">
-      <!-- <component></component> -->
+    <b-modal :active.sync="isEditModal">
+      <div class="" id="editRhServiceScreen" v-if="selected">
+        <h3>Editar RH Associado</h3>
+        <section>
+          <article>
+            <b-field label="RH">
+              <b-input v-model="selected.name" disabled></b-input>
+            </b-field>
+            <b-field label="RH">
+              <b-input v-model="selected.id" disabled></b-input>
+            </b-field>
+          </article>
+          <article>
+            <b-field label="Objetivo">
+              <b-input placeholder="Qual serviço o rh irá realizar?" v-model="goalRh"></b-input>
+            </b-field>
+          </article>
+          <article>
+            <b-field label="Custo por Hora Padrão">
+              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+            </b-field>
+            <b-field label="Numero de Horas">
+              <b-input placeholder="1" v-model="hours"></b-input>
+            </b-field>
+            <b-field label="Custo por Hora para o Serviço (R$)">
+              <b-input placeholder="10,00" v-model="cost"></b-input>
+            </b-field>
+          </article>
+        </section>
+        <button style="background: #00466d; margin-top: 1rem;" @click="editRhAssociated(selected)">Editar</button>
+      </div>
     </b-modal>
   </main>
 </template>
@@ -78,7 +107,9 @@ export default {
       },
       service: undefined,
       rhsService: undefined,
+      rhsNotService: undefined,
       isSearchModalActive: false,
+      isEditModal: false,
       data: [],
       rh_id: '',
       isModalActive: false,
@@ -87,26 +118,63 @@ export default {
       rhSelected: undefined,
       rhCreated: undefined,
       isResponseble: true,
-      hours: undefined,
-      goal: undefined
+      hoursRh: undefined,
+      goal: undefined,
+      costRh: undefined
+
     }
   },
   computed: {
     ...mapGetters([
-      'rhs',
       'rhsNotInService',
       'rhsInService'
     ]),
+    rhs: {
+      get () {
+        return this.$store.getters.rhs
+      },
+      set (rhs) {
+        this.setRhs(rhs)
+      }
+    },
     selected: {
       get () {
         return this.rhSelected ? this.rhSelected : (this.rhsService === undefined ? undefined : this.rhsService[0])
       },
       set (newValue) {
+        console.log(newValue)
         this.rhSelected = newValue
       }
     },
     selectedIndex () {
       return this.rhs.findIndex(rh => rh.id === this.selected.id)
+    },
+    cost: {
+      get () {
+        return this.selected ? this.selected.pivot.cost : undefined
+      },
+      set (newValue) {
+        console.log('Cost', newValue)
+        this.costRh = newValue
+      }
+    },
+    hours: {
+      get () {
+        return this.selected ? this.selected.pivot.hours : undefined
+      },
+      set (newValue) {
+        console.log('Hours', newValue)
+        this.hoursRh = newValue
+      }
+    },
+    goalRh: {
+      get () {
+        return this.selected ? this.selected.pivot.goal : undefined
+      },
+      set (newValue) {
+        console.log('Goal', newValue)
+        this.goal = newValue
+      }
     }
   },
   watch: {
@@ -151,6 +219,23 @@ export default {
       'setRhsInService',
       'updateRh'
     ]),
+    editRhAssociated (obj) {
+      console.log(this.goal)
+      let data = {
+        rh_id: obj.pivot.rh_id,
+        service_id: obj.pivot.service_id,
+        cost: this.costRh == undefined ? obj.pivot.cost : this.costRh,
+        hours: this.hoursRh == undefined ? obj.pivot.hours : this.hoursRh,
+        goal: this.goal == undefined ? obj.pivot.goal : this.goal
+      }
+      this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.isEditModal = false
+        this.getRhInService()
+      })
+    },
     filterRhNotInService (data) {
       this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
         headers: header()
@@ -198,6 +283,7 @@ export default {
       }).then(response => {
         // console.log('getRhNotInService', response)
         this.setRhsNotInService(response.data)
+        this.rhsNotService = response.data
       })
     },
     attachRhService (values) {

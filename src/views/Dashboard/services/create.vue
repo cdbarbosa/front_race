@@ -18,7 +18,8 @@
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
-            <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input>
+            <b-datepicker  v-model="service.forecast"  :date-parser="parseDate(service.forecast)" v-mask="'##/##/####'" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" name="date" required></b-datepicker>
+            <!-- <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input> -->
           </b-field>
           <b-field label="Sigilo">
             <div class="block">
@@ -63,6 +64,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 import userCreate from '../../../mixins/userCreate'
 import { VueEditor } from 'vue2-editor'
+import moment from 'moment'
 export default {
   name: 'createService',
   mixins: [userCreate],
@@ -116,6 +118,9 @@ export default {
       }).then(response => {
         this.serviceStatuses = response.data
       })
+    },
+    parseDate (date) {
+      return moment(date).format('DD/MM/YYYY')
     },
     create () {
       let data = {

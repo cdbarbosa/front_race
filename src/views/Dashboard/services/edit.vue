@@ -16,10 +16,12 @@
             <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
           </b-field>
           <b-field label="Previsão">
+            <!-- <b-datepicker v-model="forecast" :value="parseDate(service.forecast)" v-mask="'##/##/####'" placeholder="data" name="date"></b-datepicker> -->
             <b-input :value="parseDate(service.forecast)" v-model="forecast" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
           </b-field>
           <b-field label="Entrega">
-            <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input>
+            <b-datepicker :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'"></b-datepicker>
+            <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
           </b-field>
         </article>
         <article class="info-three">
