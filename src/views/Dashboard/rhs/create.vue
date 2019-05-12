@@ -1,9 +1,5 @@
 <template>
   <main id="createRh">
-    <header class="createHeader">
-      <h3>RH</h3>
-      <h3>Competências</h3>
-    </header>
     <form @submit.prevent="createRh" class="content __create">
       <section>
         <article>

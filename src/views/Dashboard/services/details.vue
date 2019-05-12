@@ -1,6 +1,6 @@
 <template>
   <main class="details" id="serviceDetails" v-if="service">
-    <h3>Detalhes do Serviço</h3>
+    <h3>Detalhes</h3>
     <div class="content">
       <section>
         <article>

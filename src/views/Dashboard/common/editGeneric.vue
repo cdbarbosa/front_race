@@ -1,6 +1,5 @@
 <template>
   <div :class="[title.toLowerCase()]">
-    <h3>{{ title }}</h3>
     <section>
       <article>
         <b-field label="Nome">

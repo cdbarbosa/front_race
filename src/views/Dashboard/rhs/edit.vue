@@ -21,7 +21,6 @@
         </article>
       </edit-generic>
       <div class="competencias">
-        <h3>Competências</h3>
         <b-field label="Experiência">
           <b-input v-model="experience" placeholder="Analise de dados"></b-input>
         </b-field>
