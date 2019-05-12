@@ -224,9 +224,9 @@ export default {
       let data = {
         rh_id: obj.pivot.rh_id,
         service_id: obj.pivot.service_id,
-        cost: this.costRh == undefined ? obj.pivot.cost : this.costRh,
-        hours: this.hoursRh == undefined ? obj.pivot.hours : this.hoursRh,
-        goal: this.goal == undefined ? obj.pivot.goal : this.goal
+        cost: this.costRh === undefined ? obj.pivot.cost : this.costRh,
+        hours: this.hoursRh === undefined ? obj.pivot.hours : this.hoursRh,
+        goal: this.goal === undefined ? obj.pivot.goal : this.goal
       }
       this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
         headers: header()
