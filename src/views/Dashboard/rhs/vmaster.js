@@ -61,7 +61,7 @@ export default {
     },
     degree: {
       get () {
-        return this.selected.academics.length > 0 ? this.selected.academics[0].degree : undefined
+        return this.selected.academics.length > 0 ? this.selected.academics[0].titulation : undefined
       }
     }
   },
@@ -94,7 +94,7 @@ export default {
     this.getRhs(this).then(rhs => {
       this.rhs = rhs
     })
-    // console.log(this.rhs[0].academics)
+    // console.log(this.rhs)
   },
   methods: {
     ...mapActions([

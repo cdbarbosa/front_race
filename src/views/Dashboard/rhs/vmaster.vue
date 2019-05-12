@@ -25,6 +25,14 @@
           <div class="textarea __disabled" v-html="rhSelected.observations"></div>
         </b-field>
       </section>
+      <section id="academics">
+        <b-field label="Bacharelado">
+          <b-input v-model="area" disabled></b-input>
+        </b-field>
+        <b-field label="Título">
+          <b-input v-model="degree" disabled></b-input>
+        </b-field>
+      </section>
     </div>
     <div class="content" v-else>
       <h2>RH não cadastrado ou não encontrado</h2>

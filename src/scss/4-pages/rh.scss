@@ -119,3 +119,13 @@
 .headerDetails {
   grid-template-columns: 2fr 2fr .2fr .2fr;
 }
+
+#master {
+  .content {
+    #academics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1rem;
+    }
+  }
+}
