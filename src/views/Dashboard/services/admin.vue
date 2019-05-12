@@ -18,9 +18,9 @@
 </template>
 <script>
 import vmaster from './vmaster.vue'
-import vdetails from './details'
-import vhistory from './vhistory'
-import vreceipt from './Receipt'
+import vdetails from './details.vue'
+import vhistory from './vhistory.vue'
+import vreceipt from './Receipt.vue'
 export default {
   name: 'services',
   data () {
