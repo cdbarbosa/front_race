@@ -18,7 +18,8 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
           </b-field>
           <b-field label="Data de Nascimento">
-            <b-datepicker  v-model="user.birthdate"  :date-parser="parseDate(user.birthdate)" v-mask="'##/##/####'" v-validate="rules.birthdate" name="birthdate" required></b-datepicker>
+            <datepicker v-model="user.birthdate" :format="parseDate" name="birthdate"></datepicker>
+            <!-- <b-datepicker v-model="birthdate" v-validate="rules.birthdate" name="birthdate" required></b-datepicker> -->
           </b-field>
           <span>{{ errors.first('birthdate') }}</span>
         </article>
@@ -83,6 +84,7 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
+import datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 export default {
   name: 'createClient',
@@ -98,6 +100,16 @@ export default {
         phone: null,
         activity: null,
         observations: null
+      }
+    }
+  },
+  computed: {
+    birthdate: {
+      get () {
+        return this.user.birthdate
+      },
+      set (newVal) {
+        console.log(newVal)
       }
     }
   },
@@ -125,9 +137,10 @@ export default {
       'setClients'
     ]),
     parseDate (date) {
-      let data = new Date(moment(date).format('DD/MM/YYYY'))
-      console.log(data)
-      return (moment(date).format('DD/MM/YYYY'))
+      if (date) {
+        return moment(date).format('DD/MM/YYYY')
+      }
+      return undefined
     },
     createClient () {
       this.createUser().then(userId => {
@@ -154,7 +167,8 @@ export default {
     }
   },
   components: {
-    VueEditor
+    VueEditor,
+    datepicker
   }
 }
 </script>

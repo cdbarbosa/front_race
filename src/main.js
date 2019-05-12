@@ -9,6 +9,7 @@ import VueTheMask from 'vue-the-mask'
 import VeeValidate from 'vee-validate'
 import money from 'v-money'
 import Toasted from 'vue-toasted'
+import Datepicker from 'vuejs-datepicker'
 
 import { api } from './config'
 
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 Vue.use(Buefy, {
   defaultIconPack: 'fas'
 })
+Vue.use(Datepicker)
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
 Vue.use(money, { precision: 2 })
