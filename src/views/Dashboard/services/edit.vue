@@ -15,13 +15,14 @@
           <article class="info-two">
             <b-field label="Data de registro">
               <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
+              <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
             </b-field>
             <b-field label="Previsão">
-              <!-- <b-datepicker v-model="forecast" :value="parseDate(service.forecast)" v-mask="'##/##/####'" placeholder="data" name="date"></b-datepicker> -->
-              <b-input :value="parseDate(service.forecast)" v-model="forecast" v-mask="'##/##/####'" placeholder="data" name="date"></b-input>
+              <b-datepicker v-model="forecast" placeholder="data" name="date"></b-datepicker>
+              <!-- <b&#45;input :value="parseDate(service.forecast)" v&#45;model="forecast" placeholder="Previsão" required></b&#45;input> -->
             </b-field>
             <b-field label="Entrega">
-              <b-datepicker :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'"></b-datepicker>
+              <b-datepicker v-model="delivered" placeholder="Entrega"></b-datepicker>
               <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
             </b-field>
           </article>

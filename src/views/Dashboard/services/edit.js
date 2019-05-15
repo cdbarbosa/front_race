@@ -59,7 +59,7 @@ export default {
     },
     delivered: {
       get () {
-        return this.service.delivered ? this.parseDate(this.service.delivered) : null
+        return this.service.delivered ? new Date(this.service.delivered) : new Date()
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['delivered', newVal])
@@ -67,7 +67,7 @@ export default {
     },
     forecast: {
       get () {
-        return this.parseDate(this.service.forecast)
+        return new Date(this.service.forecast)
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['forecast', newVal])
