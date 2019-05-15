@@ -1,18 +1,17 @@
-#attachScreen{
-	padding: 2rem;
-	section{
-		article{
-			// &:nth-child(1){
-			// }
-			&:nth-child(2){
-				grid-template-columns: 1fr !important;
-			}
-			&:nth-child(3){
-				grid-template-columns: repeat(3, 1fr) !important;
-			}
-		}
-	}
-} 
+#dashboard {
+  #attachForm{
+    .content{
+      grid-template-columns: 1fr !important;
+    }
+    section{
+      article{
+        &:nth-child(2){
+          grid-template-columns: 100% !important;
+        }
+      }
+    }
+  } 
+}
 
 #editRhServiceScreen {
 	article {

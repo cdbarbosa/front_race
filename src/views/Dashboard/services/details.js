@@ -11,7 +11,6 @@ export default {
         decimal: ',',
         thousands: '.',
         prefix: 'R$ ',
-        suffix: ' #',
         precision: 2,
         masked: false /* doesn't work with directive */
       },
@@ -20,6 +19,9 @@ export default {
         hours: null,
         goal: null
       },
+      isEditModal: false,
+      rhNotInServiceSelected: undefined,
+      rhInServiceSelected: undefined,
       isAttachModalOpen: false,
       service: undefined,
       rhsService: undefined,
@@ -51,8 +53,11 @@ export default {
         this.rhSelected = newValue
       }
     },
-    selectedIndex () {
-      return this.rhs.findIndex(rh => rh.id === this.selected.id)
+    rhInServiceSelectedIndex () {
+      return this.rhsInService.findIndex(rh => rh.id === this.rhInServiceSelected.id)
+    },
+    rhNotInServiceSelectedIndex () {
+      return this.rhsNotInService.findIndex(rh => rh.id === this.rhNotInServiceSelected.id)
     }
   },
   watch: {
@@ -61,10 +66,10 @@ export default {
     }
   },
   activated () {
-    // if (this.selected) {
-    //   if (this.serviceSelected) this.$router.push({ name: 'serviceDetails', params: { service_id: this.serviceSelected.id } })
-    //   else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
-    // }
+    if (this.selected) {
+      if (this.serviceSelected) this.$router.push({ name: 'serviceDetails', params: { service_id: this.serviceSelected.id } })
+      else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
+    }
   },
   beforeRouteEnter (to, from, next) {
     next($this => {
@@ -100,6 +105,20 @@ export default {
         this.setRhsInService(response.data)
       })
     },
+    restoreRhServiceFields () {
+      this.rhServiceFields = {
+        cost: this.rhNotInServiceSelected.cost,
+        hours: null,
+        goal: null
+      }
+    },
+    setRhNotInServiceSelected (rh) {
+      this.rhNotInServiceSelected = rh
+      this.rhServiceFields.cost = parseFloat(rh.cost)
+    },
+    setRhInServiceSelected (rh) {
+      this.rhInServiceSelected = rh
+    },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')
     },
@@ -123,7 +142,7 @@ export default {
         headers: header()
       }).then(response => {
         this.setRhsInService(response.data)
-        this.rhsService = response.data
+        this.setRhInServiceSelected(response.data[0])
       })
     },
     getRhNotInService () {
@@ -131,11 +150,12 @@ export default {
         headers: header()
       }).then(response => {
         this.setRhsNotInService(response.data)
+        this.setRhNotInServiceSelected(response.data[0])
       })
     },
     attachRhService () {
       let data = {
-        rh_id: this.rhNotInService.id,
+        rh_id: this.rhNotInServiceSelected.id,
         service_id: this.service.id
       }
       data = Object.assign(this.rhServiceFields, data)
@@ -145,6 +165,7 @@ export default {
         this.rhSelected = undefined
         this.getRhInService()
         this.getRhNotInService()
+        this.restoreRhServiceFields()
         this.isAttachModalOpen = false
       })
     },

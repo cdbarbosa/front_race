@@ -1,6 +1,11 @@
 <template>
   <main class="details" id="serviceDetails" v-if="service">
-    <h3>Detalhes</h3>
+    <h3>
+      Detalhes
+      <div id="edit" @click="isEditModal = true">
+        <b-icon icon="edit"></b-icon>
+      </div>
+    </h3>
     <div class="content">
       <section>
         <article>
@@ -12,80 +17,123 @@
           </b-field>
         </article>
         <hr>
-        <div v-if="selected" id="rh">
+        <div v-if="rhInServiceSelected" id="rh">
           <article class="__display">
             <b-field label="RH">
-              <b-input v-model="selected.name" disabled></b-input>
+              <b-input v-model="rhInServiceSelected.name" disabled></b-input>
             </b-field>
             <b-field label="Comepetências">
-              <div class="textarea __disabled" v-html="selected.competencies"></div>
+              <div class="textarea __disabled" v-html="rhInServiceSelected.competencies"></div>
             </b-field>
             <b-field label="Atividades">
-              <b-input v-model="selected.pivot.goal" placeholder="Atividade"></b-input>
+              <b-input v-model="rhInServiceSelected.pivot.goal" placeholder="Atividade" disabled></b-input>
             </b-field>
           </article>
           <article>
             <b-field label="Custo por Hora Padrão">
-              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
+              <money class="input" :value="rhInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
             <b-field label="Numero de Horas">
-              <b-input :value="selected.pivot.hours" disabled></b-input>
+              <b-input :value="rhInServiceSelected.pivot.hours" disabled></b-input>
             </b-field>
             <b-field label="Custo por Hora para o Serviço">
-              <money class="input" :value="selected.pivot.cost" v-money="money" :masked="true" disabled></money>
+              <money class="input" :value="rhInServiceSelected.pivot.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
           </article>
           <div class="actions">
-            <button class="is-primary" @click="detachRh(selected.id)" v-if="isResponseble">Desassociar esse RH</button>
-            <button class="buttons is-primary" style="min-width: 0; padding: 0.5rem" @click="isEditModal = true">Editar esse RH</button>
+            <button class="is-primary" @click="detachRh(rhInServiceSelected.id)" v-if="isResponseble">Desassociar esse RH</button>
           </div>
         </div>
       </section>
       <section>
-        <rh-table-details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" @update="showAttached($event)">
+        <rh-table-details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" :selectedIndex="rhInServiceSelectedIndex" @update="setRhInServiceSelected($event[0])">
           <span slot="title">RH's Responsáveis</span>
         </rh-table-details>
         <hr>
-        <rh-table @filter="filterRhNotInService($event)" :rhs="rhsNotInService" :selectedIndex="selectedIndex" :create="false" :attach="true" :service_id="service.id" @attachRh="attachRhService($event)" @reset="reset($event)">
+        <rh-table
+          @filter="filterRhNotInService($event)"
+          :rhs="rhsNotInService"
+          :selectedIndex="rhNotInServiceSelectedIndex"
+          :create="false"
+          :attach="true"
+          :service_id="service.id"
+          @update="setRhNotInServiceSelected($event[0])"
+          @attachRh="isAttachModalOpen = true"
+          @reset="reset($event)">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
     </div>
+    <b-modal :onCancel="restoreRhServiceFields" :active.sync="isAttachModalOpen" v-if="rhNotInServiceSelected">
+      <h3>Associar RH</h3>
+      <form id="attachForm" @submit.prevent="attachRhService">
+        <div class="content">
+          <section>
+            <article>
+              <b-field label="RH">
+                <b-input v-model="rhNotInServiceSelected.name" disabled></b-input>
+              </b-field>
+              <b-field label="RH">
+                <b-input v-model="rhNotInServiceSelected.id" disabled></b-input>
+              </b-field>
+            </article>
+            <article>
+              <b-field label="Objetivo">
+                <b-input placeholder="Qual serviço o rh irá realizar?" v-model="rhServiceFields.goal"></b-input>
+              </b-field>
+            </article>
+            <article>
+              <b-field label="Custo por Hora Padrão">
+                <money class="input" :value="rhNotInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
+              </b-field>
+              <b-field label="Numero de Horas">
+                <b-input  v-model="rhServiceFields.hours"></b-input>
+              </b-field>
+              <b-field label="Custo por Hora para o Serviço (R$)">
+                <b-input type="number" step="0.01" v-model="rhServiceFields.cost"></b-input>
+              </b-field>
+            </article>
+          </section>
+        </div>
+        <button type="submit">Associar</button>
+      </form>
+    </b-modal>
     <b-modal :active.sync="isEditModal">
-      <div class="" id="editRhServiceScreen" v-if="selected">
-        <h3>Editar RH Associado</h3>
-        <section>
-          <article>
-            <b-field label="RH">
-              <b-input v-model="selected.name" disabled></b-input>
-            </b-field>
-            <b-field label="RH">
-              <b-input v-model="selected.id" disabled></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Objetivo">
-              <b-input placeholder="Qual serviço o rh irá realizar?" v-model="goalRh"></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Custo por Hora Padrão">
-              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
-            </b-field>
-            <b-field label="Numero de Horas">
-              <b-input placeholder="1" v-model="hours"></b-input>
-            </b-field>
-            <b-field label="Custo por Hora para o Serviço (R$)">
-              <b-input placeholder="10,00" v-model="cost"></b-input>
-            </b-field>
-          </article>
-        </section>
-        <button style="background: #00466d; margin-top: 1rem;" @click="editRhAssociated(selected)">Editar</button>
-      </div>
+      <!-- <div class="" id="editRhServiceScreen" v&#45;if="selected"> -->
+      <!--   <h3>Editar RH Associado</h3> -->
+      <!--   <section> -->
+      <!--     <article> -->
+      <!--       <b&#45;field label="RH"> -->
+      <!--         <b&#45;input v&#45;model="selected.name" disabled></b&#45;input> -->
+      <!--       </b&#45;field> -->
+      <!--       <b&#45;field label="RH"> -->
+      <!--         <b&#45;input v&#45;model="selected.id" disabled></b&#45;input> -->
+      <!--       </b&#45;field> -->
+      <!--     </article> -->
+      <!--     <article> -->
+      <!--       <b&#45;field label="Objetivo"> -->
+      <!--         <b&#45;input placeholder="Qual serviço o rh irá realizar?" v&#45;model="goalRh"></b&#45;input> -->
+      <!--       </b&#45;field> -->
+      <!--     </article> -->
+      <!--     <article> -->
+      <!--       <b&#45;field label="Custo por Hora Padrão"> -->
+      <!--         <money class="input" :value="selected.cost" v&#45;money="money" :masked="true" disabled></money> -->
+      <!--       </b&#45;field> -->
+      <!--       <b&#45;field label="Numero de Horas"> -->
+      <!--         <b&#45;input placeholder="1" v&#45;model="hours"></b&#45;input> -->
+      <!--       </b&#45;field> -->
+      <!--       <b&#45;field label="Custo por Hora para o Serviço (R$)"> -->
+      <!--         <b&#45;input placeholder="10,00" v&#45;model="cost"></b&#45;input> -->
+      <!--       </b&#45;field> -->
+      <!--     </article> -->
+      <!--   </section> -->
+      <!--   <button style="background: #00466d; margin&#45;top: 1rem;" @click="editRhAssociated(selected)">Editar</button> -->
+      <!-- </div> -->
     </b-modal>
   </main>
 </template>
-<script>
+<script charset="utf-8" src="./details.js"></script>
+<!-- <script>
 // import success from '../common/create-messages/success'
 // import error from '../common/create-messages/error'
 // import createRh from '../rh/create.vue'
@@ -332,4 +380,4 @@ export default {
     rhTableDetails
   }
 }
-</script>
+</script> -->

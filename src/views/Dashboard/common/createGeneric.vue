@@ -8,10 +8,10 @@
         </b-field>
         <span>{{ errors.first('name') }}</span>
         <b-field label="Telefone">
-          <b-input v-model="person.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
+          <b-input v-model="person.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
-          <b-datepicker  v-model="user.birthdate"  :date-parser="parseDate(user.birthdate)" v-mask="'##/##/####'" v-validate="rules.birthdate" name="birthdate" required></b-datepicker>
+          <b-datepicker  v-model="user.birthdate" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
           <!-- <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input> -->
         </b-field>
         <span>{{ errors.first('birthdate') }}</span>
@@ -30,7 +30,7 @@
         </div>
       </article>
       <b-field label="CPF/CNPJ">
-        <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" required></b-input>
+        <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document"></b-input>
         <b-input v-else v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" disabled></b-input>
       </b-field>
       <address class="address">

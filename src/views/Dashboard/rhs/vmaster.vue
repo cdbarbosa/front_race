@@ -7,7 +7,7 @@
       </div>
     </h3>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @createRh="isModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
+      <rh-table :create="true" :rhs="rhs" @createRh="isRhModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>
@@ -50,11 +50,6 @@
     </div>
     <div class="content" v-else>
       <h2>RH não cadastrado ou não encontrado</h2>
-    </div>
-    <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @createRh="isRhModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
-        <span slot="title">RH's</span>
-      </rh-table>
     </div>
     <b-modal :active.sync="isRhModalActive">
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">

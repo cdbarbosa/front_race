@@ -95,7 +95,7 @@
               <b-input  v-model="rhServiceFields.hours"></b-input>
             </b-field>
             <b-field label="Custo por Hora para o Serviço (R$)">
-              <b-input v-model="rhServiceFields.cost"></b-input>
+              <b-input type="number" step="0.01" v-model="rhServiceFields.cost"></b-input>
             </b-field>
           </article>
         </section>

@@ -12,7 +12,7 @@
             <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data de aniversário">
-            <b-datepicker  v-model="user.birthdate"  :date-parser="parseDate(user.birthdate)" v-mask="'##/##/####'" v-validate="rules.birthdate" name="birthdate" required></b-datepicker>
+            <b-datepicker  v-model="user.birthdate" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
             <!-- <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate"></b-input> -->
           </b-field>
           <span>{{ errors.first('birthdate') }}</span>
@@ -65,7 +65,7 @@
             <b-input v-model="rh.academic.titulation" placeholder="Doutorado"></b-input>
           </b-field>
           <b-field label="Custo">
-            <b-input v-model="rh.cost" v-money="money" placeholder="R$ 131,00"></b-input>
+            <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
           </b-field>
         </article>
       </section>
