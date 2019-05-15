@@ -4,7 +4,7 @@ import success from './create-messages/success'
 import error from './create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
-// import { header } from '../../../config/index.js'
+import { header } from '../../../config/index.js'
 export default {
   name: 'rhTable',
   props: {
