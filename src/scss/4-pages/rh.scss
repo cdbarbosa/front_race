@@ -4,6 +4,13 @@
     padding: 1rem 1rem 0 1rem;
     margin: 0;
   }
+  #createRh {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    font-size: .7em;
+    background: #2B4F73;
+  }
   .content {
     .rh{
         input, textarea {

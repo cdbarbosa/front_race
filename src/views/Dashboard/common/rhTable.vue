@@ -5,7 +5,6 @@
         <h4>
           <slot name="title"></slot>
         </h4>
-        <button v-if="create" class="buttons is-primary" @click="$emit('createRh')">Cadastrar novo RH</button>
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>

@@ -17,6 +17,13 @@ main#clients {
       }
     }
   }
+  #createButton {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    font-size: 0.7em;
+    background: #00466d;
+  }
   .tableClients {
     background: #ccc;
     padding: 1rem;
