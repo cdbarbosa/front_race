@@ -17,7 +17,9 @@ export default {
       searchQuery: undefined,
       serviceCreated: undefined,
       tableSelected: undefined,
-      isServiceModalActive: false
+      isServiceModalActive: false,
+      currentPage: 0,
+      perPage: 5
     }
   },
   computed: {
@@ -71,16 +73,16 @@ export default {
       }
     }
   },
-  activated () {
-    if (this.selected) {
-      if (this.serviceSelected) this.$router.push({ name: 'service', params: { service_id: this.serviceSelected.id } })
-      else this.$router.push({ name: 'service', params: { service_id: this.selected.id } })
-    }
-  },
   beforeMount () {
-    this.getServices(this).then(services => {
-      this.services = services
-    })
+    if (!this.services.length) {
+      this.getServices(this).then(services => {
+        this.services = services
+      })
+    } else {
+      let index = this.services.findIndex(service => service.id === this.$route.params.service_id)
+      this.currentPage = Math.ceil(index / this.perPage)
+      this.selected = this.services[index]
+    }
   },
   methods: {
     ...mapActions([

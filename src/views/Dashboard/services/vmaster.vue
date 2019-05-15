@@ -18,7 +18,7 @@
             </span>
           </header>
         </div>
-        <b-table :data="services ? services : []" :selected.sync="selected" @update:selected="setServiceSelected($event)" :paginated="true" :per-page="5" focusable style="padding-top: 1rem">
+        <b-table :current-page.sync="currentPage" :data="services ? services : []" :selected.sync="selected" @update:selected="setServiceSelected($event)" :paginated="true" :per-page="perPage" focusable style="padding-top: 1rem">
           <template slot-scope="props">
             <b-table-column field="name" label="Titulo" sortable>
               {{ props.row.name }}
