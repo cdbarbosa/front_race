@@ -20,9 +20,9 @@ export default {
         goal: null
       },
       isEditModal: false,
-      rhNotInServiceSelected: undefined,
-      rhInServiceSelected: undefined,
       isAttachModalOpen: false,
+      rhNotInServiceSelected: null,
+      rhInServiceSelected: null,
       service: undefined,
       rhsService: undefined,
       isSearchModalActive: false,
@@ -54,10 +54,10 @@ export default {
       }
     },
     rhInServiceSelectedIndex () {
-      return this.rhsInService.findIndex(rh => rh.id === this.rhInServiceSelected.id)
+      return this.rhInServiceSelected ? this.rhsInService.findIndex(rh => rh.id === this.rhInServiceSelected.id) : 0
     },
     rhNotInServiceSelectedIndex () {
-      return this.rhsNotInService.findIndex(rh => rh.id === this.rhNotInServiceSelected.id)
+      return this.rhNotInServiceSelected ? this.rhsNotInService.findIndex(rh => rh.id === this.rhNotInServiceSelected.id) : 0
     }
   },
   watch: {
