@@ -20,9 +20,9 @@ export default {
         goal: null
       },
       isEditModal: false,
-      rhNotInServiceSelected: undefined,
-      rhInServiceSelected: undefined,
       isAttachModalOpen: false,
+      rhNotInServiceSelected: null,
+      rhInServiceSelected: null,
       service: undefined,
       rhsService: undefined,
       isSearchModalActive: false,
@@ -54,10 +54,10 @@ export default {
       }
     },
     rhInServiceSelectedIndex () {
-      return this.rhsInService.findIndex(rh => rh.id === this.rhInServiceSelected.id)
+      return this.rhInServiceSelected ? this.rhsInService.findIndex(rh => rh.id === this.rhInServiceSelected.id) : 0
     },
     rhNotInServiceSelectedIndex () {
-      return this.rhsNotInService.findIndex(rh => rh.id === this.rhNotInServiceSelected.id)
+      return this.rhNotInServiceSelected ? this.rhsNotInService.findIndex(rh => rh.id === this.rhNotInServiceSelected.id) : 0
     }
   },
   watch: {
@@ -112,12 +112,30 @@ export default {
         goal: null
       }
     },
+    restoreRhInServiceSelected () {
+      this.setRhInServiceSelected(this.rhsInService[this.rhNotInServiceSelectedIndex])
+    },
     setRhNotInServiceSelected (rh) {
-      this.rhNotInServiceSelected = rh
+      this.rhNotInServiceSelected = JSON.parse(JSON.stringify(rh))
       this.rhServiceFields.cost = parseFloat(rh.cost)
     },
     setRhInServiceSelected (rh) {
-      this.rhInServiceSelected = rh
+      this.rhInServiceSelected = JSON.parse(JSON.stringify(rh))
+    },
+    editRhAssociated () {
+      let data = {
+        rh_id: this.rhInServiceSelected.id,
+        service_id: this.service.id,
+        cost: this.rhInServiceSelected.pivot.cost,
+        hours: this.rhInServiceSelected.pivot.hours,
+        goal: this.rhInServiceSelected.pivot.goal
+      }
+      this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
+        headers: header()
+      }).then(response => {
+        this.isEditModal = false
+        this.getRhInService()
+      })
     },
     parseDate (date) {
       return moment().format('DD/MM/YYYY')

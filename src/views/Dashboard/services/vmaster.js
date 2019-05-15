@@ -18,7 +18,7 @@ export default {
       serviceCreated: undefined,
       tableSelected: undefined,
       isServiceModalActive: false,
-      currentPage: 0,
+      currentPage: 1,
       perPage: 5
     }
   },
@@ -28,7 +28,7 @@ export default {
     ]),
     selected: {
       get () {
-        return this.tableSelected ? this.tableSelected : this.services[0]
+        return this.tableSelected ? this.tableSelected : this.services[this.$route.params.service_id]
       },
       set (newValue) {
         this.tableSelected = newValue
