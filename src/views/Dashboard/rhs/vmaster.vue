@@ -6,8 +6,22 @@
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
+    <div class="content __display">
+      <rh-table :create="true" :rhs="rhs" @createRh="isModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
+        <span slot="title">RH's</span>
+      </rh-table>
+    </div>
     <div class="content" v-if="rhSelected">
-      <generic-user :person="rhSelected"></generic-user>
+      <generic-user :person="rhSelected">
+        <article slot="academic">
+          <b-field label="Titulação">
+            <b-input :value="degree" placeholder="Titulação" disabled></b-input>
+          </b-field>
+          <b-field label="Area">
+            <b-input :value="area" placeholder="Area" disabled></b-input>
+          </b-field>
+        </article>
+      </generic-user>
       <section>
         <b-field label="Custo por Hora">
           <money class="input" :value="rhSelected.cost" v-money="money" :masked="true" disabled></money>

@@ -152,7 +152,24 @@ body{
     &:not([rows]){
       // max-height: 10000px;
       min-height: 45px;
+      max-height: 100%;
 
+    }
+  }
+  .textarea.ql-editor{
+    background: cornsilk;
+    ul, ol{
+      margin-left: 1.5rem;
+      padding-left: 0;
+    }
+    ul li:not(.ql-direction-rtl){
+      padding-left: 0;
+    }
+    li.ql-indent-1:not(.ql-direction-rtl){
+      padding-left: 4.5rem;
+    }
+    li.ql-indent-2:not(.ql-direction-rtl){
+      padding-left: 7.5rem;
     }
   }
   .select select{

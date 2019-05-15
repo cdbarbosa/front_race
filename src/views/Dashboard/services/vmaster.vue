@@ -6,10 +6,6 @@
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <service :selected="serviceSelected"  v-if="serviceSelected"></service>
-    <div class="content" v-else>
-       <h2>Nenhum cliente cadastrado ou encontrado</h2>
-    </div>
     <div class="content" id="table">
       <section class="__secundary">
         <div class="tableContainer">
@@ -53,6 +49,10 @@
         </b-table>
       </section>
     </div>
+    <service :selected="serviceSelected"  v-if="serviceSelected"></service>
+    <div class="content" v-else>
+       <h2>Nenhum cliente cadastrado ou encontrado</h2>
+    </div>
     <b-modal :active.sync="isServiceModalActive">
       <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false">
         <template v-slot:message>
@@ -61,7 +61,7 @@
       </component>
     </b-modal>
     <b-modal :onCancel="restoreServiceSelected" :active.sync="isEditActive">
-      <service-edit :service="selected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
+      <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
     </b-modal>
   </main>
 </template>

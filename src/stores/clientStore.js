@@ -28,6 +28,9 @@ const mutations = {
       case 'address':
         state.clientSelected.user.address[label] = value
         break
+      case 'type':
+        state.clientSelected.user.type[label] = value
+        break
       case '':
         state.clientSelected[label] = value
         break

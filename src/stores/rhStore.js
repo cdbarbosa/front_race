@@ -34,6 +34,9 @@ const mutations = {
       case 'address':
         state.rhSelected.user.address[label] = value
         break
+      case 'type':
+        state.rhSelected.user.type[label] = value
+        break
       case 'academics':
         state.rhSelected.academics[0][label] = value
         break

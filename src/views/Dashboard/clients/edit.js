@@ -49,16 +49,14 @@ export default {
     updateFunction () {
       this.postClientSelected([this, this.client]).then(response => {
         this.updateClient([response.data, this.selectedIndex])
-        setTimeout(() => {
-          this.$toasted.success('Perfil do Cliente atualizado com sucesso!', {
-            theme: 'bubble',
-            position: 'top-center',
-            duration: 2000,
-            onComplete: () => {
-              this.$emit('updated')
-            }
-          })
-        }, 300)
+        this.$toasted.success('Perfil do Cliente atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 300,
+          onComplete: () => {
+            this.$emit('updated')
+          }
+        })
       })
       // let data = {
       //   label: e[0],

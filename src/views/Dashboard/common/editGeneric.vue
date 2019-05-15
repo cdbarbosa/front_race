@@ -22,16 +22,16 @@
           <b-input v-model="email" type="email" placeholder="example@example.com" ></b-input>
         </b-field>
         <div class="block">
-          <b-radio v-model="person.user.type.id" native-value="1" >
-            Juridico
+          <b-radio v-model="userType" native-value="1" >
+            Jurídica
           </b-radio>
-          <b-radio v-model="person.user.type.id" native-value="2" >
-            Fisico
+          <b-radio v-model="userType" native-value="2" >
+            Física
           </b-radio>
         </div>
       </article>
       <b-field label="CPF/CNPJ">
-        <b-input v-model="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" ></b-input>
+        <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="cpf" ></b-input>
       </b-field>
       <address class="address">
         <h3>Endereço</h3>

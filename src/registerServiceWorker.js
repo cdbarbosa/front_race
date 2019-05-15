@@ -2,8 +2,7 @@
 // import { register } from 'register-service-worker'
 
 const updated = () => {
-  console.log('Has new content!')
-  // use window.location.reload(true) to get new cache
+  window.location.reload(true)
 }
 
 const register = async (path) => {

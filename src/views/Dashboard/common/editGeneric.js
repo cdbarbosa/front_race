@@ -81,6 +81,23 @@ export default {
       set: _.debounce(function (newVal) {
         this.$emit('change', ['city', 'address', newVal])
       }, 400)
+    },
+    userType: {
+      get () {
+        return this.person.user.type_id
+      },
+      set: _.debounce(function (newVal) {
+        this.document = ''
+        this.$emit('change', ['type_id', 'user', newVal])
+      }, 400)
+    },
+    document: {
+      get () {
+        return this.person.user.document
+      },
+      set: _.debounce(function (newVal) {
+        this.$emit('change', ['document', 'user', newVal])
+      }, 400)
     }
   }
 }

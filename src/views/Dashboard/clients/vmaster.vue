@@ -6,20 +6,6 @@
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content" v-if="clientSelected">
-      <generic-user :person="clientSelected"></generic-user>
-      <section>
-        <b-field label="Observações">
-          <div class="textarea __disabled" v-html="clientSelected.observations"></div>
-        </b-field>
-        <b-field label="Atividade">
-          <b-input v-model="clientSelected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
-        </b-field>
-      </section>
-    </div>
-    <div class="content" v-else>
-      <h2>Nenhum cliente cadastrado ou encontrado</h2>
-    </div>
     <div class="content __display">
       <section class="__secundary">
         <div class="tableContainer">
@@ -62,6 +48,20 @@
           </b-table>
         </div>
       </section>
+    </div>
+    <div class="content" v-if="clientSelected">
+      <generic-user :person="clientSelected"></generic-user>
+      <section>
+        <b-field label="Observações">
+          <div class="ql-editor textarea __disabled" v-html="clientSelected.observations"></div>
+        </b-field>
+        <b-field label="Atividade">
+          <b-input v-model="clientSelected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
+        </b-field>
+      </section>
+    </div>
+    <div class="content" v-else>
+      <h2>Nenhum cliente cadastrado ou encontrado</h2>
     </div>
     <b-modal :active.sync="isModalActive">
       <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false">

@@ -91,16 +91,14 @@ export default {
     updateFunction () {
       this.postRhSelected([this, this.rh]).then(response => {
         this.updateRh([response.data, this.selectedIndex])
-        setTimeout(() => {
-          this.$toasted.success('Perfil do RH atualizado com sucesso!', {
-            theme: 'bubble',
-            position: 'top-center',
-            duration: 2000,
-            onComplete: () => {
-              this.$emit('updated', response.data)
-            }
-          })
-        }, 300)
+        this.$toasted.success('Perfil do RH atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 300,
+          onComplete: () => {
+            this.$emit('updated', response.data)
+          }
+        })
       })
     },
     updateAcademics (e) {
@@ -117,7 +115,7 @@ export default {
         this.$toasted.success('Perfil do rh atualizado com sucesso!', {
           theme: 'bubble',
           position: 'top-center',
-          duration: 2000
+          duration: 300
         })
       })
     }

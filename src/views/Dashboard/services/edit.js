@@ -109,16 +109,14 @@ export default {
     updateFunction () {
       this.postServiceSelected([this, this.service]).then(response => {
         this.updateService([response.data, this.selectedIndex])
-        setTimeout(() => {
-          this.$toasted.success('Serviço atualizado com sucesso!', {
-            theme: 'bubble',
-            position: 'top-center',
-            duration: 2000,
-            onComplete: () => {
-              this.$emit('updated')
-            }
-          })
-        }, 300)
+        this.$toasted.success('Serviço atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 300,
+          onComplete: () => {
+            this.$emit('updated')
+          }
+        })
       })
     }
   },

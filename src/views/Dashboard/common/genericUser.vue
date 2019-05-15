@@ -23,17 +23,18 @@
     </article>
     <article>
       <b-field>
-        <b-radio :value="person.user.type.id" native-value="1" disabled>
-          Juridico
+        <b-radio :value="person.user.type_id" native-value="1" disabled>
+          Jurídica
         </b-radio>
         <b-radio :value="person.user.type.id" native-value="2" disabled>
-          Fisico
+          Física
         </b-radio>
       </b-field>
       <b-field label="CPF/CNPJ">
         <b-input :value="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
       </b-field>
     </article>
+    <slot name="academic"></slot>
     <address class="address">
       <h3>Endereço</h3>
       <article>

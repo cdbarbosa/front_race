@@ -55,7 +55,7 @@
     <section>
       <div class="description">
         <b-field label="Observações">
-          <div class="textarea __disabled" v-html="selected.description"></div>
+          <div class="ql-editor textarea __disabled" v-html="selected.description"></div>
         </b-field>
       </div>
     </section>
