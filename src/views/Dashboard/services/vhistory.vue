@@ -5,7 +5,10 @@
     </h3>
     <b-table :data="records" :paginated="true" :per-page="25" style="padding-top: 1rem">
       <template slot-scope="props">
-      <b-table-column field="abbreviation" label="Abreviação">
+        <b-table-column field="email" label="Usuário">
+          {{ props.row.user.email }}
+        </b-table-column>
+        <b-table-column field="abbreviation" label="Abreviação">
           {{ props.row.service_status.abbreviation }}
         </b-table-column>
         <b-table-column field="abbreviation" label="Status">

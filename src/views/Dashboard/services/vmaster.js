@@ -80,7 +80,7 @@ export default {
       })
     } else {
       let index = this.services.findIndex(service => service.id === this.$route.params.service_id)
-      this.currentPage = Math.ceil(index / this.perPage)
+      this.currentPage = Math.ceil(index / this.perPage) || 1
       this.selected = this.services[index]
     }
   },
