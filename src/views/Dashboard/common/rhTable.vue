@@ -5,7 +5,6 @@
         <h4>
           <slot name="title"></slot>
         </h4>
-        <button v-if="create" class="buttons is-primary" @click="$emit('createRh')">Cadastrar novo RH</button>
         <b-field>
           <b-input placeholder="Procurar" v-model="searchRh"></b-input>
         </b-field>
@@ -52,7 +51,7 @@
             <b-checkbox v-model="filter.active" :native-value="filter.key">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value" v-mask="filter.key == 'document' ? ['###.###.###-##', '###.###.###/####-##'] : true"></b-input>
             <b-select v-if="filter.active && filter.key == 'cost'" v-model="filter.operator">
               <option
                 v-for="option in operator"

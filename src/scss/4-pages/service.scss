@@ -4,6 +4,13 @@
 @import '../3-components/service/_create';
 
 #dashboard #services{
+  #createButtonService {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    background: #2B4F73;
+    font-size: .7em;
+  }
   .content{
     section{
       article{
@@ -19,7 +26,7 @@
       grid-template-columns: 1fr;
       header{
         display: grid;
-        grid-template-columns: 2fr 2fr 2fr .2fr;
+        grid-template-columns: 2fr 2fr .1fr;
         grid-gap: 1rem;
         span {
           margin-top: .5em;

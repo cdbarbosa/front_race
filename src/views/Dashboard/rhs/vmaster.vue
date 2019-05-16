@@ -5,9 +5,10 @@
       <div id="edit" @click="isEditActive = true" v-if="rhSelected">
         <b-icon icon="edit"></b-icon>
       </div>
+      <button id="createButtonRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
     </h3>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" @createRh="isRhModalActive = true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
+      <rh-table :rhs="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>
@@ -25,12 +26,9 @@
       <section>
         <b-field label="Custo por Hora">
           <money class="input" :value="rhSelected.cost" v-money="money" :masked="true" disabled></money>
-          <!-- <div class="textarea __disabled" v&#45;html="selected.cost" disabled></div> -->
-          <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
         </b-field>
         <b-field label="Competências">
           <div class="textarea __disabled" v-html="rhSelected.competencies" disabled></div>
-          <!-- <textarea placeholder="Analise de dados" v&#45;html="selected.competencies" name="" id="" cols="40" rows="4"></textarea> -->
         </b-field>
         <b-field label="Experiência">
           <div class="textarea __disabled" v-html="rhSelected.experience"></div>

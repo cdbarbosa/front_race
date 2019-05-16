@@ -5,13 +5,13 @@
       <div id="edit" @click="isEditActive = true" v-if="clientSelected">
         <b-icon icon="edit"></b-icon>
       </div>
+      <button id="createButton" class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
     </h3>
     <div class="content __display">
       <section class="__secundary">
         <div class="tableContainer">
           <header>
             <h4>Clientes</h4>
-            <button class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
             <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
             <span @click="searchQuery = ''">
               <i class="fas fa-backspace"></i>

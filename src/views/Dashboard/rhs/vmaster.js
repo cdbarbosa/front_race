@@ -121,6 +121,7 @@ export default {
       this.$http.post(this.$api({ target: 'rh-filter' }), e, {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.rhs = response.data
         this.isFilterModalActive = false
       })
