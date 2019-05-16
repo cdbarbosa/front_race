@@ -71,6 +71,13 @@ export default {
           operator: null
         },
         {
+          key: 'document',
+          label: 'CPF/CNPJ',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
           key: 'active',
           label: 'Ativo',
           value: null,

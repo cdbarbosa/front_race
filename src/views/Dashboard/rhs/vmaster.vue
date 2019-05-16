@@ -5,10 +5,10 @@
       <div id="edit" @click="isEditActive = true" v-if="rhSelected">
         <b-icon icon="edit"></b-icon>
       </div>
-      <button id="createRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
+      <button id="createButtonRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
     </h3>
     <div class="content __display">
-      <rh-table :create="true" :rhs="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
+      <rh-table :rhs="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @reset="reset($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>

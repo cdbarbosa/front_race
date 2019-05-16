@@ -5,7 +5,7 @@
       <div id="edit" @click="isEditActive = true" v-if="serviceSelected">
         <b-icon icon="edit"></b-icon>
       </div>
-      <button id="createService" class="buttons is-primary" @click="log">Criar novo serviço</button>
+      <button id="createButtonService" class="buttons is-primary" @click="log">Criar novo serviço</button>
     </h3>
     <div class="content" id="table">
       <section class="__secundary">

@@ -4,7 +4,7 @@
     padding: 1rem 1rem 0 1rem;
     margin: 0;
   }
-  #createRh {
+  #createButtonRh {
     position: absolute;
     top: 0;
     right: 2rem;
@@ -111,7 +111,7 @@
 .__secundary{
   .tableContainer{
     header{
-      grid-template-columns: 2fr 2fr 4fr .2fr .2fr;
+      grid-template-columns: 2fr 4fr .2fr .1fr;
         span {
         justify-self: end;
         cursor: pointer;
