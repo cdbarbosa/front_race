@@ -18,7 +18,7 @@
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
-            <b-datepicker  v-model="service.forecast"  :date-parser="parseDate(service.forecast)" v-mask="'##/##/####'" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" name="date" required></b-datepicker>
+            <b-datepicker  v-model="service.forecast"  :month-names="months" :day-names="days" :date-parser="parseDate(service.forecast)" v-mask="'##/##/####'" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" name="date" required></b-datepicker>
             <!-- <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input> -->
           </b-field>
           <b-field label="Sigilo">
@@ -74,6 +74,8 @@ export default {
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       radio: '',
       beforeTarget: '',
       service: {
@@ -120,9 +122,11 @@ export default {
       })
     },
     parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
+      var data = new Date(date)
+      return data.toLocaleDateString('pt-BR')
     },
     create () {
+      this.service.forecast = moment(this.service.forecast).format('DD/MM/YYYY')
       let data = {
         client_id: this.client_id,
         service: this.service

@@ -12,10 +12,10 @@
             <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data de aniversário">
-            <b-datepicker  v-model="user.birthdate" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
+            <b-datepicker  v-model="user.birthdate" :month-names="months" :day-names="days"  :date-parser="parseDate(user.birthdate)" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
             <!-- <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate"></b-input> -->
           </b-field>
-          <span>{{ errors.first('birthdate') }}</span>
+          <!-- <span>{{ errors.first('birthdate') }}</span> -->
         </article>
         <article>
           <b-field label="Email">

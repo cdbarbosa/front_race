@@ -18,10 +18,10 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
           </b-field>
           <b-field label="Data de Nascimento">
-            <datepicker v-model="user.birthdate" :format="parseDate" name="birthdate"></datepicker>
-            <!-- <b-datepicker v-model="birthdate" v-validate="rules.birthdate" name="birthdate" required></b-datepicker> -->
+            <!-- <datepicker v-model="user.birthdate" :format="parseDate" name="birthdate"></datepicker> -->
+            <b-datepicker  v-model="user.birthdate" :month-names="months" :day-names="days"  :date-parser="parseDate(user.birthdate)" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
           </b-field>
-          <span>{{ errors.first('birthdate') }}</span>
+          <!-- <span>{{ errors.first('birthdate') }}</span> -->
         </article>
         <article class="info-second">
           <b-field label="Email">
@@ -95,6 +95,8 @@ export default {
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       client: {
         name: null,
         phone: null,

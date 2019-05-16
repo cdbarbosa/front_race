@@ -13,6 +13,8 @@ export default {
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       rh: {
         name: null,
         phone: null,
@@ -47,8 +49,8 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     createRh () {
-      console.log('here')
       this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
+      console.log(this.rh)
       this.createUser().then(userId => {
         let data = {
           user_id: userId,
