@@ -47,8 +47,6 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     createRh () {
-      console.log('here')
-      this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
       this.createUser().then(userId => {
         let data = {
           user_id: userId,

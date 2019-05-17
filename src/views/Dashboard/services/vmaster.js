@@ -28,7 +28,7 @@ export default {
     ]),
     selected: {
       get () {
-        return this.tableSelected ? this.tableSelected : this.services[this.$route.params.service_id]
+        return this.tableSelected ? this.tableSelected : this.services[0]
       },
       set (newValue) {
         this.tableSelected = newValue
@@ -77,6 +77,7 @@ export default {
     if (!this.services.length) {
       this.getServices(this).then(services => {
         this.services = services
+        this.selected = services[0]
       })
     } else {
       let index = this.services.findIndex(service => service.id === this.$route.params.service_id)
