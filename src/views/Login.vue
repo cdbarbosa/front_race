@@ -34,7 +34,6 @@ export default {
     }
   },
   beforeMount () {
-    // this.reLogin()
     const authTokens = JSON.parse(window.localStorage.getItem('authTokens'))
     if (authTokens) this.reLogin(authTokens)
   },

@@ -1,4 +1,4 @@
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import service from './service'
 import moment from 'moment'
 import serviceEdit from './edit.vue'
@@ -23,9 +23,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'serviceSelected'
-    ]),
+    serviceSelected: {
+      get () {
+        return this.$store.getters.serviceSelected
+      },
+      set (service) {
+        console.log(service)
+        // this.setServiceSelected(service)
+      }
+    },
     selected: {
       get () {
         return this.tableSelected ? this.tableSelected : this.services[0]
@@ -88,7 +94,6 @@ export default {
   methods: {
     ...mapActions([
       'getServices',
-      'changeServices',
       'setServices',
       'setServiceSelected'
     ]),
@@ -110,7 +115,7 @@ export default {
           search: title
         }
       }).then(response => {
-        this.changeServices(response.data)
+        this.setServices(response.data)
       })
     },
     parseDate (date) {

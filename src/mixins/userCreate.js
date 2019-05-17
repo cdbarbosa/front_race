@@ -39,6 +39,9 @@ export default {
     }
   },
   watch: {
+    'user.type_id' () {
+      this.user.document = null
+    },
     'user.birthdate' (newVal) {
       if (newVal.length === 10) {
         let year = (new Date()).getFullYear()

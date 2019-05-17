@@ -18,7 +18,7 @@
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
-            <b-datepicker  v-model="service.forecast"  :date-parser="parseDate(service.forecast)" v-mask="'##/##/####'" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" name="date" required></b-datepicker>
+            <b-datepicker  v-model="service.forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date" required></b-datepicker>
             <!-- <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input> -->
           </b-field>
           <b-field label="Sigilo">

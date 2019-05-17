@@ -1,9 +1,5 @@
 <template>
   <main id="createClient">
-    <header class="createHeader">
-      <h3>Cliente</h3>
-      <h3>Outros</h3>
-    </header>
     <form @submit.prevent="createClient" class="content __create">
       <!-- <basic-client :person="client" :name="'Cliente'"></basic-client> -->
       <section>
@@ -15,11 +11,10 @@
         </article>
         <article>
           <b-field label="Telefone">
-            <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone" required></b-input>
+            <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data de Nascimento">
-            <datepicker v-model="user.birthdate" :format="parseDate" name="birthdate"></datepicker>
-            <!-- <b-datepicker v-model="birthdate" v-validate="rules.birthdate" name="birthdate" required></b-datepicker> -->
+            <b-datepicker v-model="user.birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Data de nascimento"></b-datepicker>
           </b-field>
           <span>{{ errors.first('birthdate') }}</span>
         </article>
@@ -84,7 +79,6 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
-import datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 export default {
   name: 'createClient',
@@ -167,8 +161,7 @@ export default {
     }
   },
   components: {
-    VueEditor,
-    datepicker
+    VueEditor
   }
 }
 </script>
