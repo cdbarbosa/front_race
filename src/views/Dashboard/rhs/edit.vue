@@ -3,21 +3,26 @@
     <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction">
       <div class="content">
         <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">
-          <article class="academics">
+          <article class="course" v-if="rh.user.type_id == 2">
             <b-field label="Bacharelado">
               <b-input v-model="area" placeholder="Matematica"></b-input>
             </b-field>
             <b-field label="Titulo">
               <b-input v-model="titulation" placeholder="Doutorado"></b-input>
             </b-field>
-            <!-- <b&#45;field label="Bacharelado"> -->
-          <!--     <b&#45;input v&#45;model="bacharel" placeholder="Matemática"></b&#45;input> -->
-          <!--   </b&#45;field> -->
-          <!--   <b&#45;field label="Título"> -->
-          <!--     <b&#45;input v&#45;model="titulation" placeholder="Doutorado"></b&#45;input> -->
-          <!--   </b&#45;field> -->
             <b-field label="Custo (R$)">
-              <b-input v-model="cost" placeholder="R$ 131,00"></b-input>
+              <b-input v-model="cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
+            </b-field>
+          </article>
+          <article class="course" v-else>
+            <b-field label="Bacharelado">
+              <b-input v-model="area" placeholder="Matematica" disabled></b-input>
+            </b-field>
+            <b-field label="Titulo">
+              <b-input v-model="titulation" placeholder="Doutorado" disabled></b-input>
+            </b-field>
+            <b-field label="Custo (R$)">
+              <b-input v-model="cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
             </b-field>
           </article>
         </edit-generic>

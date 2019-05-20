@@ -26,6 +26,10 @@ export default {
   mounted () {
   },
   computed: {
+    'rh.user.type_id' () {
+      this.updateRhSelected(['area', 'academics', null])
+      this.updateRhSelected(['titulation', 'academics', null])
+    },
     experience: {
       get () {
         return this.rh.experience

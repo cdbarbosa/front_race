@@ -89,7 +89,7 @@ export default {
       set: _.debounce(function (newVal) {
         this.document = ''
         this.$emit('change', ['type_id', 'user', newVal])
-      }, 400)
+      }, 50)
     },
     document: {
       get () {

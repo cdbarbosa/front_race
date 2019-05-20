@@ -23,10 +23,10 @@
     </article>
     <article>
       <b-field>
-        <b-radio :value="person.user.type_id" native-value="1" disabled>
+        <b-radio v-model="person.user.type_id" native-value="1" disabled>
           Jurídica
         </b-radio>
-        <b-radio :value="person.user.type.id" native-value="2" disabled>
+        <b-radio v-model="person.user.type_id" native-value="2" disabled>
           Física
         </b-radio>
       </b-field>

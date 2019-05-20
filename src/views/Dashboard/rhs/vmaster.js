@@ -69,6 +69,9 @@ export default {
     isModalActive () {
       this.rhCreated = undefined
     },
+    isRhModalActive () {
+      this.rhCreated = undefined
+    },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       console.log(newQuery)
       this.rhSelected = undefined

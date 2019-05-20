@@ -35,6 +35,10 @@ export default {
     }
   },
   watch: {
+    'user.type_id' () {
+      this.rh.academic.area = null
+      this.rh.academic.titulation = null
+    }
   },
   computed: {
   },

@@ -57,12 +57,23 @@
             </b-field>
           </article>
         </address>
-        <article class="course">
+        <article class="course" v-if="user.type_id == 2">
           <b-field label="Bacharelado">
             <b-input v-model="rh.academic.area" placeholder="Matemática"></b-input>
           </b-field>
           <b-field label="Título">
             <b-input v-model="rh.academic.titulation" placeholder="Doutorado"></b-input>
+          </b-field>
+          <b-field label="Custo">
+            <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
+          </b-field>
+        </article>
+        <article v-else>
+          <b-field label="Bacharelado">
+            <b-input v-model="rh.academic.area" placeholder="Matemática" disabled></b-input>
+          </b-field>
+          <b-field label="Título">
+            <b-input v-model="rh.academic.titulation" placeholder="Doutorado" disabled></b-input>
           </b-field>
           <b-field label="Custo">
             <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
