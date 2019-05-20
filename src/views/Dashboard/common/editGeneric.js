@@ -96,6 +96,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.document = ''
+        this.birthdate = ''
         this.$emit('change', ['type_id', 'user', newVal])
       }, 50)
     },
@@ -105,6 +106,14 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.$emit('change', ['document', 'user', newVal])
+      }, 400)
+    },
+    birthdate: {
+      get () {
+        return new Date(this.person.user.birthdate)
+      },
+      set: _.debounce(function (newVal) {
+        this.$emit('change', ['birthdate', 'user', newVal])
       }, 400)
     }
   }

@@ -18,11 +18,11 @@
               <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
             </b-field>
             <b-field label="Previsão">
-              <b-datepicker v-model="forecast" placeholder="data" name="date"></b-datepicker>
+              <b-datepicker v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="data" name="date"></b-datepicker>
               <!-- <b&#45;input :value="parseDate(service.forecast)" v&#45;model="forecast" placeholder="Previsão" required></b&#45;input> -->
             </b-field>
             <b-field label="Entrega">
-              <b-datepicker v-model="delivered" placeholder="Entrega"></b-datepicker>
+              <b-datepicker v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega"></b-datepicker>
               <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
             </b-field>
           </article>

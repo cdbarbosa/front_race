@@ -33,9 +33,22 @@
           </b-radio>
         </div>
       </article>
-      <b-field label="CPF/CNPJ">
-        <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="cpf" ></b-input>
-      </b-field>
+      <article v-if="userType == 2">
+        <b-field label="CPF/CNPJ">
+          <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+        </b-field>
+        <b-field label="Data de Nascimento">
+          <b-datepicker v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date"></b-datepicker>
+        </b-field>
+      </article>
+      <article v-else>
+        <b-field label="CPF/CNPJ">
+          <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+        </b-field>
+        <b-field label="Data de Nascimento">
+          <b-datepicker  v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date" disabled></b-datepicker>
+        </b-field>
+      </article>
       <address class="address">
         <h3>Endereço</h3>
         <article>
