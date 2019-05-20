@@ -63,7 +63,6 @@ export default {
         return this.rh.academics.length ? this.rh.academics[0].area : null
       },
       set: _.debounce(function (newVal) {
-        console.log(newVal)
         this.updateRhSelected(['area', 'academics', newVal])
       }, 400)
     },

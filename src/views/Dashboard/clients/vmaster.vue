@@ -56,7 +56,8 @@
           <div class="ql-editor textarea __disabled" v-html="clientSelected.observations"></div>
         </b-field>
         <b-field label="Atividade">
-          <b-input v-model="clientSelected.activity" placeholder="Produçaõ de PANIC" disabled></b-input>
+          <div class="ql-editor textarea __disabled" v-html="clientSelected.activity"></div>
+          <!-- <b&#45;input v&#45;model="clientSelected.activity" placeholder="Produçaõ de PANIC" disabled></b&#45;input> -->
         </b-field>
       </section>
     </div>

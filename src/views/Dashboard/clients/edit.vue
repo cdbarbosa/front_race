@@ -8,7 +8,7 @@
             <vue-editor :editorToolbar="customToolbar" v-model="observations" placeholder="Analise de dados"></vue-editor>
           </b-field>
           <b-field label="Atividade">
-            <b-input v-model="activity" placeholder="Produçaõ de PANIC"></b-input>
+            <vue-editor :editorToolbar="customToolbar" v-model="activity" placeholder="Produção de PANIC"></vue-editor>
           </b-field>
         </div>
         <button type="submit">Atualizar</button>

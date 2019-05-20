@@ -38,7 +38,17 @@ const mutations = {
         state.rhSelected.user.type[label] = value
         break
       case 'academics':
-        state.rhSelected.academics[0][label] = value
+        if (state.rhSelected.academics[0]) {
+          state.rhSelected.academics[0][label] = value
+        } else {
+          let academic = {
+            area: null,
+            titulation: null
+          }
+          academic[label] = value
+          state.rhSelected.academics.push(academic)
+        }
+
         break
       case '':
         state.rhSelected[label] = value
@@ -107,7 +117,7 @@ const actions = {
         that.$http.post(that.$api({ target: 'address' }), addressClean, {
           headers: header()
         }).then(() => {
-          that.$http.post(that.$api({ target: 'rh-academic' }), academicsClean[0], {
+          that.$http.post(that.$api({ target: 'rh-academic' }), Object.assign({ rh_id: rhClean.id }, academicsClean[0]), {
             headers: header()
           }).then(() => {
             that.$http.post(that.$api({ target: 'rh' }), rhClean, {

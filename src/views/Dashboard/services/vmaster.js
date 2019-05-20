@@ -34,7 +34,7 @@ export default {
     },
     selected: {
       get () {
-        return this.tableSelected ? this.tableSelected : this.services[0]
+        return this.tableSelected ? this.tableSelected : this.services[this.$route.params.service_id]
       },
       set (newValue) {
         this.tableSelected = newValue

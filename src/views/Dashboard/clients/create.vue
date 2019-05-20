@@ -65,7 +65,8 @@
           <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Atividade">
-          <b-input v-model="client.activity" placeholder="Produçaõ de PANIC"></b-input>
+          <vue-editor :editorToolbar="customToolbar" v-model="client.activity" placeholder="Produção de PANIC"></vue-editor>
+          <!-- <b&#45;input v&#45;model="client.activity" placeholder=""></b&#45;input> -->
         </b-field>
         <div class="buttonClass">
           <button type="submit">Cadastrar</button>
