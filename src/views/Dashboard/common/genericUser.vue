@@ -4,6 +4,9 @@
       <b-field label="Nome">
         <b-input :value="person.name" placeholder="Nome" disabled></b-input>
       </b-field>
+      <b-field label="Ativo">
+        <b-checkbox :value="person.user.active === 1 || person.user.active" disabled></b-checkbox>
+      </b-field>
       <b-field label="ID">
         <b-input :value="person.id" placeholder="23" disabled></b-input>
       </b-field>

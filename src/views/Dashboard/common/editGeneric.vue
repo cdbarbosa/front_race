@@ -5,6 +5,9 @@
         <b-field label="Nome">
           <b-input v-model="name" placeholder="Nome"></b-input>
         </b-field>
+      <b-field label="Ativo">
+        <b-checkbox v-model="userActive"></b-checkbox>
+      </b-field>
         <b-field label="ID">
           <b-input v-model="person.id" placeholder="23" disabled></b-input>
         </b-field>

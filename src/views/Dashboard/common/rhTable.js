@@ -87,7 +87,7 @@ export default {
       academicFilter: [
         {
           key: 'area',
-          label: 'Área',
+          label: 'Bacharelado',
           value: null,
           active: false
         },

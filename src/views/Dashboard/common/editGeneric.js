@@ -82,6 +82,14 @@ export default {
         this.$emit('change', ['city', 'address', newVal])
       }, 400)
     },
+    userActive: {
+      get () {
+        return this.person.user.active === 1 || this.person.user.active
+      },
+      set: _.debounce(function (newVal) {
+        this.$emit('change', ['active', 'user', newVal])
+      }, 50)
+    },
     userType: {
       get () {
         return this.person.user.type_id
