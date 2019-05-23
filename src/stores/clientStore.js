@@ -2,15 +2,20 @@ import { header } from '../config/index.js'
 
 const state = {
   clients: [],
-  clientSelected: undefined
+  clientSelected: undefined,
+  lastClientSelected: undefined
 }
 
 const getters = {
   clients: () => state.clients,
-  clientSelected: () => state.clientSelected
+  clientSelected: () => state.clientSelected,
+  lastClientSelected: () => state.lastClientSelected
 }
 
 const mutations = {
+  SET_LAST_CLIENT_SELECTED (state, index) {
+    state.lastClientSelected = index
+  },
   SET_CLIENTS (state, clients) {
     state.clients = clients
   },
@@ -49,6 +54,9 @@ const mutations = {
 }
 
 const actions = {
+  setLastClientSelected ({ commit }, index) {
+    commit('SET_LAST_CLIENT_SELECTED', index)
+  },
   getClients ({ commit }, that) {
     return new Promise((resolve, reject) => {
       that.$http.get(that.$api({ target: 'clients' }), {
@@ -62,7 +70,6 @@ const actions = {
   },
   setClients ({ commit }, clients) {
     commit('SET_CLIENTS', clients)
-    commit('SET_CLIENT_SELECTED', clients[0])
   },
   setClientSelected ({ commit }, client) {
     commit('SET_CLIENT_SELECTED', client)

@@ -23,13 +23,15 @@ export default {
     }
   },
   computed: {
-    serviceSelected: {
+    selectedIndex () {
+      return this.services.findIndex(service => service.id === this.serviceSelected.id)
+    },
+    lastServiceSelected: {
       get () {
-        return this.$store.getters.serviceSelected
+        return this.$store.getters.lastServiceSelected
       },
-      set (service) {
-        console.log(service)
-        // this.setServiceSelected(service)
+      set (index) {
+        this.setLastServiceSelected(index)
       }
     },
     selected: {
@@ -40,6 +42,14 @@ export default {
         this.tableSelected = newValue
       }
     },
+    serviceSelected: {
+      get () {
+        return this.$store.getters.serviceSelected
+      },
+      set (service) {
+        this.setServiceSelected(service)
+      }
+    },
     services: {
       get () {
         return this.$store.getters.services
@@ -47,9 +57,6 @@ export default {
       set (newVal) {
         this.setServices(newVal)
       }
-    },
-    selectedIndex () {
-      return this.services.findIndex(service => service.id === this.serviceSelected.id)
     }
   },
   watch: {
@@ -68,7 +75,10 @@ export default {
       this.serviceSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
         this.tableSelected = this.services[this.selectedIndex]
-        this.getServices(this)
+        this.getServices(this).then(services => {
+          this.services = services
+          this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+        })
       } else {
         this.searchServices(newQuery)
       }
@@ -80,22 +90,21 @@ export default {
     }
   },
   beforeMount () {
-    if (!this.services.length) {
-      this.getServices(this).then(services => {
-        this.services = services
-        this.selected = services[0]
-      })
-    } else {
-      let index = this.services.findIndex(service => service.id === this.$route.params.service_id)
-      this.currentPage = Math.ceil(index / this.perPage) || 1
-      this.selected = this.services[index]
-    }
+    this.getServices(this).then(services => {
+      this.services = services
+      this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+      this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
+    })
+  },
+  beforeDestroy () {
+    this.lastServiceSelected = this.selectedIndex
   },
   methods: {
     ...mapActions([
       'getServices',
       'setServices',
-      'setServiceSelected'
+      'setServiceSelected',
+      'setLastServiceSelected'
     ]),
     restoreServiceSelected () {
       this.setServiceSelected(this.services[this.selectedIndex])

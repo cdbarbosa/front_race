@@ -17,6 +17,8 @@ export default {
       isEditActive: false,
       isFilterModal: false,
       tableSelected: undefined,
+      currentPage: 1,
+      perPage: 5,
       basicFilter: [
         {
           key: 'observations',
@@ -36,6 +38,14 @@ export default {
   computed: {
     selectedIndex () {
       return this.clients.findIndex(client => client.id === this.clientSelected.id)
+    },
+    lastClientSelected: {
+      get () {
+        return this.$store.getters.lastClientSelected
+      },
+      set (index) {
+        this.setLastClientSelected(index)
+      }
     },
     selected: {
       get () {
@@ -74,7 +84,8 @@ export default {
       if (newQuery === '' && newQuery === oldQuery) {
         this.tableSelected = this.services[this.selectedIndex]
         this.getClients(this).then(clients => {
-          console.log(clients)
+          this.clients = clients
+          this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
         })
       } else {
         this.searchClient(newQuery)
@@ -94,10 +105,13 @@ export default {
   },
   created () {
     this.getClients(this).then(clients => {
-      this.setClients(clients)
+      this.clients = clients
+      this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+      this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
     })
   },
-  mounted () {
+  beforeDestroy () {
+    this.lastClientSelected = this.selectedIndex
   },
   methods: {
     ...mapActions([
@@ -106,7 +120,8 @@ export default {
       'updateClient',
       'updateUser',
       'updateAddress',
-      'setClientSelected'
+      'setClientSelected',
+      'setLastClientSelected'
     ]),
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
@@ -145,6 +160,7 @@ export default {
         headers: header()
       }).then(response => {
         this.clients = response.data
+        this.clientSelected = response.data[0]
         this.isFilterModal = false
       })
     }

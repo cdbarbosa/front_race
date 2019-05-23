@@ -47,6 +47,8 @@ export default {
       isCity: false,
       isExperience: false,
       searchRh: null,
+      currentPage: 1,
+      perPage: 5,
       basicFilter: [
         {
           key: 'cost',
@@ -131,6 +133,9 @@ export default {
         this.filter(newVal)
       }
     }, 500)
+  },
+  beforeMount () {
+    this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
   },
   methods: {
     ...mapActions([

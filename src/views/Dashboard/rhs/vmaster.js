@@ -63,6 +63,14 @@ export default {
       get () {
         return this.selected.academics.length > 0 ? this.selected.academics[0].titulation : undefined
       }
+    },
+    lastRhSelected: {
+      get () {
+        return this.$store.getters.lastRhSelected
+      },
+      set (index) {
+        this.setLastRhSelected(index)
+      }
     }
   },
   watch: {
@@ -96,15 +104,20 @@ export default {
   beforeMount () {
     this.getRhs(this).then(rhs => {
       this.rhs = rhs
+      this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
     })
     // console.log(this.rhs)
+  },
+  beforeDestroy () {
+    this.lastRhSelected = this.selectedIndex
   },
   methods: {
     ...mapActions([
       'getRhs',
       'setRhs',
       'updateRh',
-      'setRhSelected'
+      'setRhSelected',
+      'setLastRhSelected'
     ]),
     restoreRhSelected () {
       this.setRhSelected(this.rhs[this.selectedIndex])
@@ -126,14 +139,15 @@ export default {
       }).then(response => {
         console.log(response)
         this.rhs = response.data
+        this.rhSelected = response.data[0]
         this.isFilterModalActive = false
       })
     },
     reset (e) {
       this.getRhs(this).then(rhs => {
         this.rhs = rhs
+        this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
       })
-      this.rhSelected = this.rhs[0]
     }
   },
   components: {

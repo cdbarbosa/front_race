@@ -14,7 +14,8 @@ const getters = {
   rhSelected: () => state.rhSelected,
   rhsNotInService: () => state.rhsNotInService,
   rhsInService: () => state.rhsInService,
-  rhByService: () => state.rhByService
+  rhByService: () => state.rhByService,
+  lastRhSelected: () => state.lastRhSelected
 }
 
 const mutations = {
@@ -103,7 +104,6 @@ const actions = {
   },
   setRhs ({ commit }, rhs) {
     commit('SET_RHS', rhs)
-    commit('SET_RH_SELECTED', rhs[0])
   },
   setRhSelected ({ commit }, rh) {
     commit('SET_RH_SELECTED', rh)

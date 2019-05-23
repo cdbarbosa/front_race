@@ -20,7 +20,7 @@
               <b-icon icon="cog"></b-icon>
             </div>
           </header>
-          <b-table :data="clients" :selected.sync="selected" @update:selected="setClientSelected($event)" :paginated="true" :per-page="5" focusable>
+          <b-table :data="clients" :selected.sync="selected" @update:selected="setClientSelected($event)" :paginated="true" :per-page="perPage" :current-page.sync="currentPage" focusable>
             <template slot-scope="props">
               <b-table-column field="name" label="NOME" sortable>
                 {{ props.row.name }}
