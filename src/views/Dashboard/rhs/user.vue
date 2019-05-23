@@ -31,6 +31,7 @@ import editRh from './edit.vue'
 import genericUser from '../common/genericUser.vue'
 import moment from 'moment'
 import { header } from '../../../config/index.js'
+moment.locale('pt-BR')
 export default {
   name: 'rhs',
   data () {

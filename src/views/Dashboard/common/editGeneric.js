@@ -1,5 +1,6 @@
 import moment from 'moment'
 import _ from 'lodash'
+moment.locale('pt-BR')
 export default {
   name: 'editGeneric',
   props: ['person', 'title'],

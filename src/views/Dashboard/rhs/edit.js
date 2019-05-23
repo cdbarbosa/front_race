@@ -4,6 +4,7 @@ import editGeneric from '../common/editGeneric.vue'
 import _ from 'lodash'
 import moment from 'moment'
 import { VueEditor } from 'vue2-editor'
+moment.locale('pt-BR')
 export default {
   name: 'updateRh',
   props: ['rh', 'selectedIndex'],

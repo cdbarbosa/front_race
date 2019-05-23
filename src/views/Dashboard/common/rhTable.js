@@ -4,6 +4,7 @@ import success from './create-messages/success'
 import error from './create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
+moment.locale('pt-BR')
 export default {
   name: 'rhTable',
   props: {

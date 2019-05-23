@@ -3,6 +3,7 @@ import { mapActions } from 'vuex'
 import userCreate from '../../../mixins/userCreate'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'create-rh',
   props: ['open'],

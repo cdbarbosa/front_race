@@ -3,7 +3,7 @@ import { header } from '../../../config/index.js'
 import _ from 'lodash'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
-// import { VueEditor } from 'vue2-editor'
+moment.locale('pt-BR')
 export default {
   name: 'serviceUpdate',
   props: ['service', 'selectedIndex'],

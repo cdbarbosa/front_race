@@ -74,6 +74,7 @@
 import moment from 'moment'
 import { mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
+moment.locale('pt-BR')
 export default {
   name: 'serviceReceipts',
   data () {

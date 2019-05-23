@@ -7,6 +7,7 @@ import error from '../common/create-messages/error'
 import createService from './create.vue'
 import _ from 'lodash'
 import { header } from '../../../config/index.js'
+moment.locale('pt-BR')
 export default {
   name: 'showServices',
   data () {

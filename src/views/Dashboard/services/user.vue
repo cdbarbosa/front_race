@@ -41,6 +41,7 @@ import service from './service'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../../config/index.js'
+moment.locale('pt-BR')
 export default {
   name: 'showServices',
   data () {

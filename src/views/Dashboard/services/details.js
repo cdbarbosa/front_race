@@ -3,6 +3,7 @@ import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 import rhTable from '../common/rhTable.vue'
 import rhTableDetails from './details/rhTable.vue'
+moment.locale('pt-BR')
 export default {
   name: 'serviceDetails',
   data () {

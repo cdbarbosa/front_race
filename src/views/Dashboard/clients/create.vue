@@ -81,6 +81,7 @@ import userCreate from '../../../mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'createClient',
   mixins: [userCreate],

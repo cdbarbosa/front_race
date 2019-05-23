@@ -34,6 +34,7 @@
 <script>
 import { header } from '../../../config/index.js'
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'history',
   props: ['active'],

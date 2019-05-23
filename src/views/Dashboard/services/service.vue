@@ -64,6 +64,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'service',
   props: ['selected'],

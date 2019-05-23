@@ -8,6 +8,7 @@ import error from '../common/create-messages/error'
 import moment from 'moment'
 import { header } from '../../../config/index.js'
 import _ from 'lodash'
+moment.locale('pt-BR')
 export default {
   name: 'masterRh',
   data () {

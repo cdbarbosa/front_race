@@ -3,6 +3,7 @@ import { VueEditor } from 'vue2-editor'
 import _ from 'lodash'
 import editGeneric from '../common/editGeneric.vue'
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'editClient',
   props: ['client', 'selectedIndex'],

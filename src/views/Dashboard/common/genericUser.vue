@@ -67,6 +67,7 @@
 </template>
 <script>
 import moment from 'moment'
+moment.locale('pt-BR')
 export default {
   name: 'componentGeneric',
   props: ['person'],
