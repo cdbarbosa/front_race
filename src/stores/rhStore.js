@@ -5,7 +5,8 @@ const state = {
   rhSelected: undefined,
   rhsNotInService: [],
   rhsInService: [],
-  rhByService: []
+  rhByService: [],
+  lastRhSelected: undefined
 }
 
 const getters = {
@@ -19,6 +20,9 @@ const getters = {
 const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
+  },
+  SET_LAST_RH_SELECTED (state, index) {
+    state.lastRhSelected = index
   },
   SET_RH_SELECTED (state, rh) {
     state.rhSelected = JSON.parse(JSON.stringify(rh))
@@ -82,6 +86,9 @@ const mutations = {
 }
 
 const actions = {
+  setLastRhSelected ({ commit }, index) {
+    commit('SET_LAST_RH_SELECTED', index)
+  },
   getRhs ({ commit }, that) {
     return new Promise((resolve, reject) => {
       that.$http.get(that.$api({ target: 'rhs' }), {

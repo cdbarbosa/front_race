@@ -14,12 +14,7 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data de Nascimento">
-<<<<<<< HEAD
             <b-datepicker v-model="user.birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Data de nascimento"></b-datepicker>
-=======
-            <!-- <datepicker v-model="user.birthdate" :format="parseDate" name="birthdate"></datepicker> -->
-            <b-datepicker  v-model="user.birthdate" :month-names="months" :day-names="days"  :date-parser="parseDate(user.birthdate)" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
->>>>>>> ea4fd86507bd8229a64da60364bcd5da31b6f575
           </b-field>
           <!-- <span>{{ errors.first('birthdate') }}</span> -->
         </article>
