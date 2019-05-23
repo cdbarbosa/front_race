@@ -43,24 +43,7 @@ export default new Router({
         {
           path: 'service/:service_id?/',
           name: 'service',
-          component: Services,
-          children: [
-            // {
-            //   path: '',
-            //   name: 'service',
-            //   component: ShowServices
-            // },
-            // {
-            //   path: 'receipt',
-            //   name: 'serviceReceipts',
-            //   component: receipt
-            // },
-            // {
-            //   path: 'details',
-            //   name: 'serviceDetails',
-            //   component: Details
-            // }
-          ]
+          component: Services
         }
       ]
     }

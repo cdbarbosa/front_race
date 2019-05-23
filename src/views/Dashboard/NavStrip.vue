@@ -5,10 +5,10 @@
     </div>
     <div class="links">
       <ul>
-        <router-link tag="li" :to="{ name: 'client', params: { service_id: $route.params.client_id } }" v-if="user.role_id == 1">
+        <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id } }" v-if="user.role_id == 1">
           Clientes
         </router-link>
-        <router-link tag="li" :to="{ name: 'rh', params: { service_id: $route.params.rh_id } }">RH's</router-link>
+        <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">RH's</router-link>
         <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
           Serviços
         </router-link>
