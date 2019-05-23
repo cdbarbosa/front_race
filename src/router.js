@@ -1,20 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from './views/Home.vue'
+
 import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
 import Overview from './views/Dashboard/Overview.vue'
-
 import Clients from './views/Dashboard/Clients.vue'
 import Rhs from './views/Dashboard/Rhs.vue'
 import Services from './views/Dashboard/Services.vue'
-
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior () {
     return { x: 0, y: 0 }
   },
   routes: [
