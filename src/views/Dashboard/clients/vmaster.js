@@ -103,7 +103,7 @@ export default {
       else this.$router.push({ name: 'client', params: { client_id: this.clients[0].id } })
     }
   },
-  created () {
+  beforeMount () {
     this.getClients(this).then(clients => {
       this.clients = clients
       this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
