@@ -75,21 +75,7 @@
       <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <div class="content" style="padding: 1rem">
-        <section>
-          <h3>Fitros Básicos</h3>
-          <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
-              {{ filter.label }}
-            </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
-          </div>
-        </section>
-      </div>
-      <div class="bottonFilter" style="padding: 1rem">
-        <button @click="searchClient(searchQuery)" style="margin-right: 1rem">Ok</button>
-        <button @click="resetFilters">Resetar</button>
-      </div>
+      <filters-client @filter="searchClient($event)" @reset="resetFilters()"></filters-client>
     </b-modal>
   </main>
 </template>

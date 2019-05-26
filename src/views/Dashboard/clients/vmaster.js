@@ -4,6 +4,7 @@ import editClient from './edit.vue'
 import success from '../common/create-messages/success'
 import error from '../common/create-messages/error'
 import genericUser from '../common/genericUser.vue'
+import filtersClient from './Filters.vue'
 import moment from 'moment'
 import _ from 'lodash'
 import { header } from '../../../config/index.js'
@@ -142,24 +143,21 @@ export default {
       return 'error'
     },
     resetFilters () {
-      this.basicFilter.forEach(function (item) {
-        item.active = false
-        item.value = undefined
-        item.operator = null
-      })
       this.getClients(this).then(clients => {
         this.clients = clients
       })
       this.tableSelected = this.clients[0]
     },
-    searchClient (name) {
+    searchClient (event) {
       let data = {
-        search: name,
-        basicFilter: this.basicFilter.filter(f => f.active)
+        search: this.searchQuery,
+        basicFilter: event.basicFilter.filter(f => f.active),
+        filters: event.filters.filter(f => f.active)
       }
       this.$http.post(this.$api({ target: 'client-filter' }), data, {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.clients = response.data
         this.clientSelected = response.data[0]
         this.isFilterModal = false
@@ -170,6 +168,7 @@ export default {
     createClient,
     genericUser,
     editClient,
+    filtersClient,
     success,
     error
   }

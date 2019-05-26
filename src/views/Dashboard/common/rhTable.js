@@ -51,9 +51,16 @@ export default {
       currentPage: 1,
       perPage: 5,
       basicFilter: [
+        // {
+        //   key: 'cost',
+        //   label: 'Custo',
+        //   value: null,
+        //   active: false,
+        //   operator: null
+        // },
         {
-          key: 'cost',
-          label: 'Custo',
+          key: 'active',
+          label: 'Ativo',
           value: null,
           active: false,
           operator: null
@@ -80,8 +87,15 @@ export default {
           operator: null
         },
         {
-          key: 'active',
-          label: 'Ativo',
+          key: 'state',
+          label: 'Estado',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
+          key: 'city',
+          label: 'Cidade',
           value: null,
           active: false,
           operator: null
