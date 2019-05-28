@@ -16,6 +16,9 @@
             <span @click="searchQuery = ''">
               <i class="fas fa-backspace"></i>
             </span>
+            <div id="edit" @click="isFilterModal = true">
+              <b-icon icon="cog"></b-icon>
+            </div>
           </header>
         </div>
         <b-table :current-page.sync="currentPage" :data="services ? services : []" :selected.sync="selected" @update:selected="setServiceSelected($event)" :paginated="true" :per-page="perPage" focusable style="padding-top: 1rem">
@@ -62,6 +65,9 @@
     </b-modal>
     <b-modal :onCancel="restoreServiceSelected" :active.sync="isEditActive">
       <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
+    </b-modal>
+    <b-modal :active.sync="isFilterModal">
+      <filter-service @filter="searchServices($event)" @reset="resetFilter()"></filter-service>
     </b-modal>
   </main>
 </template>

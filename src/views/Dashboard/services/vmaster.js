@@ -6,6 +6,7 @@ import success from '../common/create-messages/success'
 import error from '../common/create-messages/error'
 import createService from './create.vue'
 import _ from 'lodash'
+import filterService from './Filters.vue'
 import { header } from '../../../config/index.js'
 moment.locale('pt-BR')
 export default {
@@ -13,6 +14,7 @@ export default {
   data () {
     return {
       isEditActive: false,
+      isFilterModal: false,
       checkboxGroup: [],
       radio: '',
       searchQuery: undefined,
@@ -118,13 +120,22 @@ export default {
       }
       return 'error'
     },
-    searchServices (title) {
-      this.$http.get(this.$api({ target: 'service' }), {
-        headers: header(),
-        params: {
-          search: title
-        }
+    resetFilters () {
+      this.getServices(this).then(services => {
+        this.services = services
+      })
+      this.tableSelected = this.services[0]
+    },
+    searchServices (event) {
+      let data = {
+        search: this.searchQuery,
+        basicFilter: event.basicFilter.filter(f => f.active),
+        filters: event.filters.filter(f => f.active)
+      }
+      this.$http.get(this.$api({ target: 'service' }), data, {
+        headers: header()
       }).then(response => {
+        console.log(response.data)
         this.setServices(response.data)
       })
     },
@@ -141,6 +152,7 @@ export default {
     createService,
     serviceEdit,
     success,
-    error
+    error,
+    filterService
   }
 }

@@ -51,6 +51,13 @@ export default {
       currentPage: 1,
       perPage: 5,
       basicFilter: [
+        // {
+        //   key: 'cost',
+        //   label: 'Custo',
+        //   value: null,
+        //   active: false,
+        //   operator: null
+        // },
         {
           key: 'active',
           label: 'Ativo',
@@ -73,8 +80,22 @@ export default {
           operator: null
         },
         {
-          key: 'cost',
-          label: 'Custo',
+          key: 'document',
+          label: 'CPF/CNPJ',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
+          key: 'state',
+          label: 'Estado',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
+          key: 'city',
+          label: 'Cidade',
           value: null,
           active: false,
           operator: null
