@@ -48,6 +48,7 @@ export default {
       isCity: false,
       isExperience: false,
       searchRh: null,
+      searchDocument: null,
       currentPage: 1,
       perPage: 5,
       basicFilter: [

@@ -129,14 +129,15 @@ export default {
     searchServices (event) {
       let data = {
         search: this.searchQuery,
-        basicFilter: event.basicFilter.filter(f => f.active),
-        filters: event.filters.filter(f => f.active)
+        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
+        filters: event.filters ? event.filters.filter(f => f.active) : []
       }
-      this.$http.get(this.$api({ target: 'service' }), data, {
+      this.$http.post(this.$api({ target: 'service' }), data, {
         headers: header()
       }).then(response => {
         console.log(response.data)
         this.setServices(response.data)
+        this.isFilterModal = false
       })
     },
     parseDate (date) {

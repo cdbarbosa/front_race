@@ -67,7 +67,7 @@
       <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <filter-service @filter="searchServices($event)" @reset="resetFilter()"></filter-service>
+      <filter-service @filter="searchServices($event)" @reset="resetFilters()"></filter-service>
     </b-modal>
   </main>
 </template>

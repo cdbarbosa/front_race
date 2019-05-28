@@ -84,27 +84,13 @@ export default {
     },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.tableSelected = undefined
-      if (newQuery === '' && newQuery === oldQuery) {
-        this.tableSelected = this.services[this.selectedIndex]
-        this.getClients(this).then(clients => {
-          this.clients = clients
-          this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-        })
-      } else {
-        this.searchClient(newQuery)
-      }
+      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
+      else this.searchClient(newQuery)
     }, 500),
     searchDocument: _.debounce(function (newQuery, oldQuery) {
-      this.searchQuery = null
-      if (newQuery === '' && newQuery === oldQuery) {
-        this.tableSelected = this.services[this.selectedIndex]
-        this.getClients(this).then(clients => {
-          this.clients = clients
-          this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-        })
-      } else {
-        this.searchUserByDocument(newQuery)
-      }
+      this.searchQuery = ''
+      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
+      else this.searchUserByDocument(newQuery)
     }, 500),
     selected (newVal) {
       if (this.clients.length > 0) {
@@ -138,6 +124,13 @@ export default {
       'setClientSelected',
       'setLastClientSelected'
     ]),
+    restoreClients () {
+      this.tableSelected = this.clients[this.selectedIndex]
+      this.getClients(this).then(clients => {
+        this.clients = clients
+        this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+      })
+    },
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
     },
@@ -164,13 +157,12 @@ export default {
     searchClient (event) {
       let data = {
         search: this.searchQuery,
-        basicFilter: this.basicFilter.filter(f => f.active),
-        filters: this.filters.filter(f => f.active)
+        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
+        filters: event.filters ? event.filters.filter(f => f.active) : []
       }
       this.$http.post(this.$api({ target: 'client-filter' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.clients = response.data
         this.clientSelected = response.data[0]
         this.isFilterModal = false
