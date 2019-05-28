@@ -18,11 +18,13 @@
               <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
             </b-field>
             <b-field label="Previsão">
-              <b-datepicker v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="data" name="date"></b-datepicker>
+              <b-datepicker v-if="!lockDate(service.status)" v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" editable></b-datepicker>
+              <b-datepicker v-else v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" disabled></b-datepicker>
               <!-- <b&#45;input :value="parseDate(service.forecast)" v&#45;model="forecast" placeholder="Previsão" required></b&#45;input> -->
             </b-field>
             <b-field label="Entrega">
-              <b-datepicker v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega"></b-datepicker>
+              <b-datepicker v-if="!lockDate(service.status)" v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" editable></b-datepicker>
+              <b-datepicker v-else v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" disabled></b-datepicker>
               <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
             </b-field>
           </article>

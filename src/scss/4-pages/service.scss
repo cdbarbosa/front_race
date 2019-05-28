@@ -28,10 +28,11 @@
         &:nth-child(1){
           grid-template-columns: 11fr 1fr;
         }
-        &:nth-child(3), &:nth-child(4) {
-          grid-template-columns: repeat(2, 1fr);
+        &:nth-child(3) {
+          grid-template-columns: repeat(3, 1fr);
         }
         &:nth-child(4){
+          grid-template-columns: repeat(3, 1fr);
           input{
             text-align: right;
           }

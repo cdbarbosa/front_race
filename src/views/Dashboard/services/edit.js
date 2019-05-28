@@ -59,7 +59,7 @@ export default {
     },
     delivered: {
       get () {
-        return this.service.delivered ? new Date(this.service.delivered) : new Date()
+        return this.service.delivered ? new Date(this.service.delivered) : null
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['delivered', newVal])
@@ -67,9 +67,10 @@ export default {
     },
     forecast: {
       get () {
-        return new Date(this.service.forecast)
+        return this.service.forecast ? new Date(this.service.forecast) : null
       },
-      set: _.debounce(function (newVal) {
+      set: _.debounce(function (newVal, oldVal) {
+        console.log(newVal, oldVal)
         this.updateServiceSelected(['forecast', newVal])
       }, 1000)
     },
@@ -105,6 +106,12 @@ export default {
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    lockDate (status) {
+      const LOCKED = [10, 14, 15]
+      // 10, 14, 15
+      if (LOCKED.indexOf(status.id) !== -1) return true
+      return false
     },
     updateFunction () {
       this.postServiceSelected([this, this.service]).then(response => {

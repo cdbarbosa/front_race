@@ -27,10 +27,10 @@
           <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
         </b-field>
         <b-field label="Previsão">
-          <b-input :value="parseDate(selected.forecast)" v-mask="'##/##/####'" placeholder="data" name="date" disabled></b-input>
+          <b-input :value="parseDate(selected.forecast)" v-mask="'##/##/####'" placeholder="Previsão" name="date" disabled></b-input>
         </b-field>
         <b-field label="Entrega">
-          <b-input :value="selected.delivered ? parseDate(selected.delivered) : null" v-mask="'##/##/####'" placeholder="data" name="delivered" disabled></b-input>
+          <b-input :value="parseDate(selected.delivered)" v-mask="'##/##/####'" placeholder="Entrega" name="delivered" disabled></b-input>
         </b-field>
       </article>
       <article>
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
+      return date ? moment(date).format('DD/MM/YYYY') : null
     }
   }
 }

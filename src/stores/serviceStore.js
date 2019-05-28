@@ -77,6 +77,7 @@ const actions = {
   },
   updateService ({ commit }, payload) {
     commit('UPDATE_SERVICE', payload)
+    commit('SET_SERVICE_SELECTED', payload[0])
   }
 }
 
