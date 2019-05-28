@@ -7,7 +7,8 @@
           <b-checkbox v-model="filter.active" :native-value="filter.key">
             {{ filter.label }}
           </b-checkbox>
-          <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+          <b-input placeholder="Text here..." v-if="filter.active === true && (filter.key !== 'created_at' && filter.key !== 'forecast' && filter.key !== 'delivered')" v-model="filter.value"></b-input>
+          <b-datepicker  v-if="(filter.key === 'created_at' || filter.key === 'forecast' || filter.key === 'delivered') && filter.active === true" v-model="filter.value"  :month-names="months" :day-names="days" :date-parser="parseDate(filter.value)" v-mask="'##/##/####'"  name="date" required></b-datepicker>
         </div>
       </section>
       <section>
@@ -32,6 +33,8 @@ export default {
   data () {
     return {
       searchQuery: null,
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       basicFilter: [
         {
           key: 'client',
@@ -72,7 +75,7 @@ export default {
           active: false
         },
         {
-          key: 'observations',
+          key: 'description',
           label: 'Observações',
           value: null,
           active: false
@@ -81,6 +84,10 @@ export default {
     }
   },
   methods: {
+    parseDate (date) {
+      var data = new Date(date)
+      return data.toLocaleDateString('pt-BR')
+    },
     resetFilters () {
       this.basicFilter.forEach(function (item) {
         item.active = false

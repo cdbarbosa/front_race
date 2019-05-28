@@ -135,7 +135,12 @@ export default {
       return 'error'
     },
     filter (e) {
-      this.$http.post(this.$api({ target: 'rh-filter' }), e, {
+      let data = {
+        search: e.title,
+        basicFilter: e.basicFilter.filter(f => f.active),
+        academicFilter: e.academicFilter.filter(f => f.active)
+      }
+      this.$http.post(this.$api({ target: 'rh-filter' }), data, {
         headers: header()
       }).then(response => {
         console.log(response)

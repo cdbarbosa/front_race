@@ -151,8 +151,8 @@ export default {
     searchClient (event) {
       let data = {
         search: this.searchQuery,
-        basicFilter: event.basicFilter.filter(f => f.active),
-        filters: event.filters.filter(f => f.active)
+        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
+        filters: event.filters ? event.filters.filter(f => f.active) : []
       }
       this.$http.post(this.$api({ target: 'client-filter' }), data, {
         headers: header()
