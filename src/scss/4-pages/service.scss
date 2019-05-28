@@ -11,6 +11,17 @@
     background: #2B4F73;
     font-size: .7em;
   }
+  #updateService{
+    .content{
+      section{
+        article{
+          &:nth-child(3){
+            grid-template-columns: 1fr;
+          }
+        }
+      }
+    }
+  }
   .content{
     section{
       article{
@@ -18,7 +29,12 @@
           grid-template-columns: 11fr 1fr;
         }
         &:nth-child(3), &:nth-child(4) {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, 1fr);
+        }
+        &:nth-child(4){
+          input{
+            text-align: right;
+          }
         }
       }
     }

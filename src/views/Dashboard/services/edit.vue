@@ -30,6 +30,22 @@
             <b-field label="Cliente">
               <b-input v-model="service.client.name" placeholder="Cliente" disabled></b-input>
             </b-field>
+          </article>
+          <article class="info-four">
+            <b-field label="Margem">
+              <b-input type="number" step="0.1" v-model="profit" placeholder="50%"></b-input>
+            </b-field>
+            <b-field label="Recebido">
+              <b-input v-model="received_value" placeholder="825" disabled></b-input>
+            </b-field>
+          </article>
+          <article>
+            <b-field label="Situação">
+              <b-select placeholder="Selecione um status para o cliente" v-model="status">
+                <!-- <option value="">Selecione</option> -->
+                <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
+              </b-select>
+            </b-field>
             <b-field label="Sigilo">
               <div class="block">
                 <b-radio v-model="confidentiality" :native-value="1">Nenhum</b-radio>
@@ -38,20 +54,6 @@
               </div>
             </b-field>
           </article>
-          <article class="info-four">
-            <b-field label="Margem">
-              <b-input v-model="profit" placeholder="50%"></b-input>
-            </b-field>
-            <b-field label="Recebido">
-              <b-input v-model="received_value" placeholder="825" disabled></b-input>
-            </b-field>
-          </article>
-          <b-field label="Situação">
-            <b-select placeholder="Selecione um status para o cliente" v-model="status">
-              <!-- <option value="">Selecione</option> -->
-              <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
-            </b-select>
-          </b-field>
         </section>
         <section class="description">
           <b-field label="Observações">

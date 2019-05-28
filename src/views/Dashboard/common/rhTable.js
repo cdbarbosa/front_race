@@ -52,8 +52,8 @@ export default {
       perPage: 5,
       basicFilter: [
         {
-          key: 'cost',
-          label: 'Custo',
+          key: 'active',
+          label: 'Ativo',
           value: null,
           active: false,
           operator: null
@@ -73,15 +73,8 @@ export default {
           operator: null
         },
         {
-          key: 'document',
-          label: 'CPF/CNPJ',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'active',
-          label: 'Ativo',
+          key: 'cost',
+          label: 'Custo',
           value: null,
           active: false,
           operator: null
@@ -89,14 +82,14 @@ export default {
       ],
       academicFilter: [
         {
-          key: 'area',
-          label: 'Bacharelado',
+          key: 'titulation',
+          label: 'Titulação',
           value: null,
           active: false
         },
         {
-          key: 'titulation',
-          label: 'Titulação',
+          key: 'area',
+          label: 'Bacharelado',
           value: null,
           active: false
         }
