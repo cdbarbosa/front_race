@@ -35,7 +35,7 @@
       </article>
       <article v-if="userType == 2">
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
           <b-datepicker v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date"></b-datepicker>
@@ -43,7 +43,7 @@
       </article>
       <article v-else>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType === '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
         </b-field>
         <b-field label="Data de Nascimento">
           <b-datepicker  v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date" disabled></b-datepicker>

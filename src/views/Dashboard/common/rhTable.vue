@@ -46,16 +46,33 @@
       <div class="content" style="padding: 1rem">
         <section>
           <h3>Fitros Básicos</h3>
-          <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
+          <div class="box basic-filter" v-for="(filter) in userFilters" :key="filter.key">
             <b-checkbox v-model="filter.active" :native-value="filter.key">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value" v-mask="filter.key === 'document' ? ['###.###.###-##', '###.###.###/####-##'] : null"></b-input>
+            <span v-if="filter.active" >
+              <b-switch v-if="filter.key === 'active'" v-model="filter.value">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+              <b-input  v-else placeholder="Text here..." v-model="filter.value"></b-input>
+            </span>
+          </div>
+          <div class="box basic-filter" v-for="(filter) in rhFilters" :key="filter.key">
+            <b-checkbox v-model="filter.active" :native-value="filter.key">
+              {{ filter.label }}
+            </b-checkbox>
+            <span v-if="filter.active" >
+              <b-input placeholder="Text here..." v-model="filter.value"></b-input>
+            </span>
+          </div>
+          <div class="box basic-filter" v-for="(filter) in addressFilters" :key="filter.key">
+            <b-checkbox v-model="filter.active" :native-value="filter.key">
+              {{ filter.label }}
+            </b-checkbox>
+            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
           </div>
         </section>
         <section>
           <h3>Fitros Acadêmicos</h3>
-          <div class="box academic-filter" v-for="(filter, index) in academicFilter" :key="index">
+          <div class="box academic-filter" v-for="(filter, index) in academicFilters" :key="index">
             <b-checkbox v-model="filter.active" :native-value="filter.key">
               {{ filter.label }}
             </b-checkbox>

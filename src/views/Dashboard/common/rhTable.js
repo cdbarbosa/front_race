@@ -51,14 +51,62 @@ export default {
       searchDocument: null,
       currentPage: 1,
       perPage: 5,
+      userFilters: [
+        {
+          key: 'active',
+          label: 'Ativo',
+          value: null,
+          active: false,
+          operator: null
+        }
+      ],
+      rhFilters: [
+        {
+          key: 'competencies',
+          label: 'Competências',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
+          key: 'experience',
+          label: 'Experiências',
+          value: null,
+          active: false,
+          operator: null
+        }
+      ],
+      addressFilters: [
+        {
+          key: 'state',
+          label: 'Estado',
+          value: null,
+          active: false,
+          operator: null
+        },
+        {
+          key: 'city',
+          label: 'Cidade',
+          value: null,
+          active: false,
+          operator: null
+        }
+      ],
+      academicFilters: [
+        {
+          key: 'titulation',
+          label: 'Titulação',
+          value: null,
+          active: false
+        },
+        {
+          key: 'area',
+          label: 'Bacharelado',
+          value: null,
+          active: false
+        }
+      ],
       basicFilter: [
-        // {
-        //   key: 'cost',
-        //   label: 'Custo',
-        //   value: null,
-        //   active: false,
-        //   operator: null
-        // },
         {
           key: 'active',
           label: 'Ativo',
@@ -81,13 +129,6 @@ export default {
           operator: null
         },
         {
-          key: 'document',
-          label: 'CPF/CNPJ',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
           key: 'state',
           label: 'Estado',
           value: null,
@@ -100,20 +141,6 @@ export default {
           value: null,
           active: false,
           operator: null
-        }
-      ],
-      academicFilter: [
-        {
-          key: 'titulation',
-          label: 'Titulação',
-          value: null,
-          active: false
-        },
-        {
-          key: 'area',
-          label: 'Bacharelado',
-          value: null,
-          active: false
         }
       ],
       isFilterModalActive: false,
@@ -187,11 +214,13 @@ export default {
       }
       this.$emit('reset', 'notService')
     },
-    filter (title) {
+    filter (name) {
       let data = {
-        search: title,
-        basicFilter: this.basicFilter.filter(f => f.active),
-        academicFilter: this.academicFilter.filter(f => f.active)
+        name: name,
+        userFilters: this.userFilters.filter(f => f.active),
+        rhFilters: this.rhFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        academicFilters: this.academicFilters.filter(f => f.active)
       }
       this.$emit('filter', data)
     }

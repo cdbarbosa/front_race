@@ -134,16 +134,10 @@ export default {
       }
       return 'error'
     },
-    filter (e) {
-      let data = {
-        search: e.title,
-        basicFilter: e.basicFilter.filter(f => f.active),
-        academicFilter: e.academicFilter.filter(f => f.active)
-      }
-      this.$http.post(this.$api({ target: 'rh-filter' }), data, {
+    filter (filters) {
+      this.$http.post(this.$api({ target: 'filter-rh' }), filters, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.rhs = response.data
         this.rhSelected = response.data[0]
         this.isFilterModalActive = false
