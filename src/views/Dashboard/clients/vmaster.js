@@ -122,7 +122,8 @@ export default {
       'updateUser',
       'updateAddress',
       'setClientSelected',
-      'setLastClientSelected'
+      'setLastClientSelected',
+      'restoreClientFilters'
     ]),
     restoreClients () {
       this.tableSelected = this.clients[this.selectedIndex]
@@ -130,6 +131,7 @@ export default {
         this.clients = clients
         this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
       })
+      // this.restoreClientFilters()
     },
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
@@ -151,16 +153,12 @@ export default {
     resetFilters () {
       this.getClients(this).then(clients => {
         this.clients = clients
+        this.clientSelected = clients[0]
       })
       this.tableSelected = this.clients[0]
     },
     searchClient (event) {
-      let data = {
-        search: this.searchQuery,
-        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
-        filters: event.filters ? event.filters.filter(f => f.active) : []
-      }
-      this.$http.post(this.$api({ target: 'client-filter' }), data, {
+      this.$http.post(this.$api({ target: 'filter-client' }), Object.assign({ name: this.searchQuery }, event), {
         headers: header()
       }).then(response => {
         this.clients = response.data

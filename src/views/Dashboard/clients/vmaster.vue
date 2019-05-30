@@ -14,7 +14,7 @@
             <h4>Clientes</h4>
             <b-input placeholder="Procurar por nome" v-model="searchQuery"></b-input>
             <b-input placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###./####-##']" v-model="searchDocument"></b-input>
-            <span @click="searchQuery = ''">
+            <span @click="restoreClients()">
               <i class="fas fa-backspace"></i>
             </span>
             <div id="edit" @click="isFilterModal = true">
@@ -76,7 +76,7 @@
       <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <filters-client @filter="searchClient($event)" @reset="resetFilters()"></filters-client>
+      <filters-client @restore="restoreClients(); isFilterModal = false" @filter="searchClient($event)" @reset="resetFilters()"></filters-client>
     </b-modal>
   </main>
 </template>

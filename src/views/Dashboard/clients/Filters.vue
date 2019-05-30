@@ -3,93 +3,68 @@
     <h3>Fitros Básicos</h3>
     <section class="content">
       <section>
-        <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
-          <b-checkbox v-model="filter.active" :native-value="filter.key">
+        <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
+          <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
             {{ filter.label }}
           </b-checkbox>
-          <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+          <span v-if="filter.active" >
+            <b-switch v-if="filter.key === 'active'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+            <b-input  v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
+          </span>
         </div>
-      </section>
-      <section>
-        <div class="box basic-filter" v-for="(filter, index) in filters" :key="index">
-          <b-checkbox v-model="filter.active" :native-value="filter.key">
+        <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">
+          <b-checkbox @input="parseFilters([index, 'addressFilters', 'active',  $event])" :value="filter.active">
             {{ filter.label }}
           </b-checkbox>
-          <b-input placeholder="Text here..." v-if="filter.active === true" v-mask="filter.key == 'document' ? ['###.###.###-##', '##.###.###/####-##'] : undefined" v-model="filter.value"></b-input>
+          <span v-if="filter.active" >
+            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'addressFilters', 'value', $event])"></b-input>
+          </span>
+        </div>
+        <div class="box basic-filter" v-for="(filter, index) in clientFilters" :key="filter.key">
+          <b-checkbox @input="parseFilters([index, 'clientFilters', 'active',  $event])" :value="filter.active">
+            {{ filter.label }}
+          </b-checkbox>
+          <span v-if="filter.active" >
+            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
+          </span>
         </div>
       </section>
     </section>
     <div class="bottonFilter" style="padding: 1rem">
-      <button @click="searchClient(searchQuery)" style="margin-right: 1rem">Ok</button>
-      <button @click="resetFilters">Resetar</button>
+      <button @click="searchClient" style="margin-right: 1rem">Ok</button>
+      <button @click="$emit('restore')">Resetar</button>
     </div>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'filterClient',
-  data () {
-    return {
-      searchQuery: null,
-      basicFilter: [
-        {
-          key: 'active',
-          label: 'Ativo',
-          value: null,
-          active: false
-        },
-        {
-          key: 'state',
-          label: 'Estado',
-          value: null,
-          active: false
-        },
-        {
-          key: 'city',
-          label: 'Cidade',
-          value: null,
-          active: false
-        }
-      ],
-      filters: [
-        {
-          key: 'observations',
-          label: 'Observações',
-          value: null,
-          active: false
-        },
-        {
-          key: 'activity',
-          label: 'Atividades',
-          value: null,
-          active: false
-        },
-        {
-          key: 'document',
-          label: 'CPF/CNPJ',
-          value: null,
-          active: false
-        }
-      ]
+  computed: {
+    userFilters () {
+      return this.$store.getters.clientFilters.userFilters
+    },
+    addressFilters () {
+      return this.$store.getters.clientFilters.addressFilters
+    },
+    clientFilters () {
+      return this.$store.getters.clientFilters.clientFilters
     }
   },
   methods: {
-    resetFilters () {
-      this.basicFilter.forEach(function (item) {
-        item.active = false
-        item.value = undefined
-        item.operator = null
-      })
-      this.$emit('reset')
+    ...mapActions([
+      'setClientFilters'
+    ]),
+    parseFilters (payload) {
+      this.setClientFilters(payload)
     },
     searchClient (name) {
       let data = {
-        search: name,
-        filters: this.filters.filter(f => f.active),
-        basicFilter: this.basicFilter.filter(f => f.active)
+        userFilters: this.userFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        clientFilters: this.clientFilters.filter(f => f.active)
       }
       this.$emit('filter', data)
-      this.isFilterModal = false
     }
   }
 }

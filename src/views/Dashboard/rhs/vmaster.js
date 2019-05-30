@@ -118,7 +118,8 @@ export default {
       'setRhs',
       'updateRh',
       'setRhSelected',
-      'setLastRhSelected'
+      'setLastRhSelected',
+      'restoreRhFilters'
     ]),
     restoreRhSelected () {
       this.setRhSelected(this.rhs[this.selectedIndex])
@@ -143,11 +144,12 @@ export default {
         this.isFilterModalActive = false
       })
     },
-    reset (e) {
+    restoreRhs () {
       this.getRhs(this).then(rhs => {
         this.rhs = rhs
         this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
       })
+      this.restoreRhFilters()
     }
   },
   components: {

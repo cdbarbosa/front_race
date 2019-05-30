@@ -51,98 +51,6 @@ export default {
       searchDocument: null,
       currentPage: 1,
       perPage: 5,
-      userFilters: [
-        {
-          key: 'active',
-          label: 'Ativo',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      rhFilters: [
-        {
-          key: 'competencies',
-          label: 'Competências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'experience',
-          label: 'Experiências',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      addressFilters: [
-        {
-          key: 'state',
-          label: 'Estado',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'city',
-          label: 'Cidade',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      academicFilters: [
-        {
-          key: 'titulation',
-          label: 'Titulação',
-          value: null,
-          active: false
-        },
-        {
-          key: 'area',
-          label: 'Bacharelado',
-          value: null,
-          active: false
-        }
-      ],
-      basicFilter: [
-        {
-          key: 'active',
-          label: 'Ativo',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'competencies',
-          label: 'Competências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'experience',
-          label: 'Experiências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'state',
-          label: 'Estado',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'city',
-          label: 'Cidade',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
       isFilterModalActive: false,
       rhServiceFields: {
         cost: null,
@@ -159,24 +67,13 @@ export default {
       set (newVal) {
         this.tableSelected = newVal
       }
-    }
-  },
-  watch: {
-    '$store.getters.rhs' () {
-      this.tableSelected = this.rhs[this.selectedIndex]
     },
-    searchRh: _.debounce(function (newVal, oldVal) {
-      this.rhSelected = undefined
-      if (newVal === '' && newVal === oldVal) {
-        this.tableSelected = this.rhs[this.selectedIndex]
-        this.getRhs(this).then(() => {
-          this.resetFilters()
-        })
-      } else {
-        this.filter(newVal)
-      }
-    }, 500)
-  },
+    userFilters () {
+      return this.$store.getters.rhFilters.userFilters
+    },
+    rhFilters () {
+      return this.$store.getters.rhFilters.rhFilters
+    },
   beforeMount () {
     this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
   },
@@ -184,8 +81,12 @@ export default {
     ...mapActions([
       'setRhs',
       'getRhs',
-      'changeRh'
+      'changeRh',
+      'setRhFilters'
     ]),
+    parseFilters (payload) {
+      this.setRhFilters(payload)
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
