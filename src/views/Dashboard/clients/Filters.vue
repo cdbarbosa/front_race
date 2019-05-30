@@ -31,7 +31,7 @@
       </section>
     </section>
     <div class="bottonFilter" style="padding: 1rem">
-      <button @click="searchClient" style="margin-right: 1rem">Ok</button>
+      <button @click="$emit('filter')" style="margin-right: 1rem">Ok</button>
       <button @click="$emit('restore')">Resetar</button>
     </div>
   </div>
@@ -57,14 +57,6 @@ export default {
     ]),
     parseFilters (payload) {
       this.setClientFilters(payload)
-    },
-    searchClient (name) {
-      let data = {
-        userFilters: this.userFilters.filter(f => f.active),
-        addressFilters: this.addressFilters.filter(f => f.active),
-        clientFilters: this.clientFilters.filter(f => f.active)
-      }
-      this.$emit('filter', data)
     }
   }
 }

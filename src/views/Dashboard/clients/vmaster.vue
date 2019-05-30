@@ -76,7 +76,7 @@
       <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <filters-client @restore="restoreClients(); isFilterModal = false" @filter="searchClient($event)" @reset="resetFilters()"></filters-client>
+      <filters-client @restore="restoreClients(); isFilterModal = false" @filter="searchClient" @reset="resetFilters()"></filters-client>
     </b-modal>
   </main>
 </template>

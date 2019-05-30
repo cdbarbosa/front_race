@@ -68,12 +68,42 @@ export default {
         this.tableSelected = newVal
       }
     },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.rhFilters).forEach(fi => {
+        if (this.$store.getters.rhFilters[fi].filter(f => f.active).length) ret = true
+      })
+      return ret
+    },
     userFilters () {
       return this.$store.getters.rhFilters.userFilters
     },
     rhFilters () {
       return this.$store.getters.rhFilters.rhFilters
     },
+    academicFilters () {
+      return this.$store.getters.rhFilters.academicFilters
+    },
+    addressFilters () {
+      return this.$store.getters.rhFilters.academicFilters
+    }
+  },
+  watch: {
+    '$store.getters.rhs' () {
+      this.tableSelected = this.rhs[this.selectedIndex]
+    },
+    searchRh: _.debounce(function (newVal, oldVal) {
+      this.rhSelected = undefined
+      if (newVal === '' || newVal === oldVal) {
+        this.tableSelected = this.rhs[this.selectedIndex]
+        // this.$emit('restore')
+        if (this.filterActive) this.filter()
+        else this.$emit('restore')
+      } else {
+        this.filter(newVal)
+      }
+    }, 500)
+  },
   beforeMount () {
     this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
   },
@@ -97,23 +127,6 @@ export default {
         return 'success'
       }
       return 'error'
-    },
-    resetFilters () {
-      if (this.isFilterModalActive === false) {
-        this.searchRh = ''
-      } else {
-        this.basicFilter.forEach(function (item) {
-          item.active = false
-          item.value = null
-          item.operator = null
-        })
-        this.academicFilter.forEach(function (item) {
-          item.active = false
-          item.value = null
-        })
-        this.isFilterModalActive = false
-      }
-      this.$emit('reset', 'notService')
     },
     filter (name) {
       let data = {

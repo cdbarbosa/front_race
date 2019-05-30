@@ -42,6 +42,22 @@ export default {
     selectedIndex () {
       return this.clients.findIndex(client => client.id === this.clientSelected.id)
     },
+    userFilters () {
+      return this.$store.getters.clientFilters.userFilters
+    },
+    addressFilters () {
+      return this.$store.getters.clientFilters.addressFilters
+    },
+    clientFilters () {
+      return this.$store.getters.clientFilters.clientFilters
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.clientFilters).forEach(fi => {
+        if (this.$store.getters.clientFilters[fi].filter(f => f.active).length) ret = true
+      })
+      return ret
+    },
     lastClientSelected: {
       get () {
         return this.$store.getters.lastClientSelected
@@ -84,8 +100,12 @@ export default {
     },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.tableSelected = undefined
-      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
-      else this.searchClient(newQuery)
+      if (newQuery === '' || newQuery === oldQuery) {
+        if (this.filterActive) this.searchClient()
+        else this.restoreClients()
+      } else {
+        this.searchClient(newQuery)
+      }
     }, 500),
     searchDocument: _.debounce(function (newQuery, oldQuery) {
       this.searchQuery = ''
@@ -158,7 +178,13 @@ export default {
       this.tableSelected = this.clients[0]
     },
     searchClient (event) {
-      this.$http.post(this.$api({ target: 'filter-client' }), Object.assign({ name: this.searchQuery }, event), {
+      let data = {
+        name: this.searchQuery,
+        userFilters: this.userFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        clientFilters: this.clientFilters.filter(f => f.active)
+      }
+      this.$http.post(this.$api({ target: 'filter-client' }), data, {
         headers: header()
       }).then(response => {
         this.clients = response.data
