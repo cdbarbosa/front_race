@@ -92,6 +92,13 @@ export default {
     '$store.getters.rhs' () {
       this.tableSelected = this.rhs[this.selectedIndex]
     },
+    searchDocument: _.debounce(function (newQuery, oldQuery) {
+      this.searchQuery = ''
+      if (newQuery === '') this.$emit('restore')
+      else {
+        this.$emit('searchByDocument', newQuery)
+      }
+    }, 500),
     searchRh: _.debounce(function (newVal, oldVal) {
       this.rhSelected = undefined
       if (newVal === '' || newVal === oldVal) {

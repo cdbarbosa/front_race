@@ -109,8 +109,11 @@ export default {
     }, 500),
     searchDocument: _.debounce(function (newQuery, oldQuery) {
       this.searchQuery = ''
-      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
-      else this.searchUserByDocument(newQuery)
+      if (newQuery === '') this.restoreClients()
+      else {
+        this.restoreClientFilters()
+        this.searchUserByDocument(newQuery)
+      }
     }, 500),
     selected (newVal) {
       if (this.clients.length > 0) {
@@ -151,7 +154,6 @@ export default {
         this.clients = clients
         this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
       })
-      // this.restoreClientFilters()
     },
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
@@ -193,7 +195,13 @@ export default {
       })
     },
     searchUserByDocument (document) {
-      console.log(document)
+      this.$http.post(this.$api({ target: 'search-client-document' }), { document: document }, {
+        headers: header()
+      }).then(response => {
+        this.clients = response.data
+        this.clientSelected = response.data[0]
+        this.isFilterModal = false
+      })
     }
   },
   components: {

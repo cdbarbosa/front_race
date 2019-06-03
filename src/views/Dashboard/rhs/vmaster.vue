@@ -8,7 +8,7 @@
       <button id="createButtonRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
     </h3>
     <div class="content __display">
-      <rh-table :rhs="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @restore="restoreRhs($event)">
+      <rh-table :rhs="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @searchByDocument="searchUserByDocument" @restore="restoreRhs($event)">
         <span slot="title">RH's</span>
       </rh-table>
     </div>

@@ -6,7 +6,7 @@
           <slot name="title"></slot>
         </h4>
         <b-input placeholder="Procurar por um RH" v-model="searchRh"></b-input>
-        <b-input placeholder="Procurar por documento" v-model="searchDocument"></b-input>
+        <b-input placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
         <span @click="$emit('restore')">
           <i class="fas fa-backspace"></i>
         </span>

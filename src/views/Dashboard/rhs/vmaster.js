@@ -150,6 +150,14 @@ export default {
         this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
       })
       this.restoreRhFilters()
+    },
+    searchUserByDocument (document) {
+      this.$http.post(this.$api({ target: 'search-rh-document' }), { document: document }, {
+        headers: header()
+      }).then(response => {
+        this.rhs = response.data
+        this.rhSelected = response.data[0]
+      })
     }
   },
   components: {
