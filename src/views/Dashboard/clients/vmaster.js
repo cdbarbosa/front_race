@@ -154,18 +154,14 @@ export default {
       })
       this.tableSelected = this.clients[0]
     },
-    searchClient (event) {
-      let data = {
-        search: this.searchQuery,
-        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
-        filters: event.filters ? event.filters.filter(f => f.active) : []
-      }
-      this.$http.post(this.$api({ target: 'client-filter' }), data, {
+    searchClient (data) {
+      this.$http.post(this.$api({ target: 'filter-client' }), data, {
         headers: header()
       }).then(response => {
-        this.clients = response.data
-        this.clientSelected = response.data[0]
-        this.isFilterModal = false
+        console.log(response)
+        // this.clients = response.data
+        // this.clientSelected = response.data[0]
+        // this.isFilterModal = false
       })
     },
     searchUserByDocument (document) {

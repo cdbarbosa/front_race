@@ -3,7 +3,14 @@
     <h3>Fitros Básicos</h3>
     <section class="content">
       <section>
-        <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
+        <div class="box basic-filter" v-for="(filter, index) in clientFilters" :key="index">
+          <b-checkbox v-model="filter.active" :native-value="filter.key">
+            {{ filter.label }}
+          </b-checkbox>
+          <b-input placeholder="Text here..." v-if="filter.active === true && (filter.key !== 'created_at' && filter.key !== 'forecast' && filter.key !== 'delivered')" v-model="filter.value"></b-input>
+          <b-datepicker  v-if="(filter.key === 'created_at' || filter.key === 'forecast' || filter.key === 'delivered') && filter.active === true" v-model="filter.value"  :month-names="months" :day-names="days" :date-parser="parseDate(filter.value)" v-mask="'##/##/####'"  name="date" required></b-datepicker>
+        </div>
+        <div class="box basic-filter" v-for="(filter, index) in statusFilter" :key="index">
           <b-checkbox v-model="filter.active" :native-value="filter.key">
             {{ filter.label }}
           </b-checkbox>
@@ -12,7 +19,7 @@
         </div>
       </section>
       <section>
-        <div class="box basic-filter" v-for="(filter, index) in filters" :key="index">
+        <div class="box basic-filter" v-for="(filter, index) in serviceFilters" :key="index">
           <b-checkbox v-model="filter.active" :native-value="filter.key">
             {{ filter.label }}
           </b-checkbox>
@@ -34,13 +41,15 @@ export default {
       searchQuery: null,
       months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
       days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-      basicFilter: [
+      clientFilters: [
         {
           key: 'client',
           label: 'Cliente',
           value: null,
           active: false
-        },
+        }
+      ],
+      serviceFilters: [
         {
           key: 'created_at',
           label: 'Data registro',
@@ -58,18 +67,10 @@ export default {
           label: 'Entrega',
           value: null,
           active: false
-        }
-      ],
-      filters: [
+        },
         {
           key: 'profit',
           label: 'Margem',
-          value: null,
-          active: false
-        },
-        {
-          key: 'status',
-          label: 'Situação',
           value: null,
           active: false
         },
@@ -79,6 +80,14 @@ export default {
           value: null,
           active: false
         }
+      ],
+      statusFilter: [
+        {
+          key: 'status',
+          label: 'Situação',
+          value: null,
+          active: false
+        },
       ]
     }
   },
@@ -98,8 +107,9 @@ export default {
     searchClient (name) {
       let data = {
         search: name,
-        filters: this.filters.filter(f => f.active),
-        basicFilter: this.basicFilter.filter(f => f.active)
+        clientFilters: this.clientFilters.filter(f => f.active),
+        serviceFilters: this.serviceFilters.filter(f => f.active),
+        statusFilter: this.statusFilter.filter(f => f.active)
       }
       this.$emit('filter', data)
       this.isFilterModal = false

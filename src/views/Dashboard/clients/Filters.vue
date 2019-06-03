@@ -3,7 +3,16 @@
     <h3>Fitros Básicos</h3>
     <section class="content">
       <section>
-        <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
+        <div class="box basic-filter" v-for="(filter) in userFilters" :key="filter.key">
+            <b-checkbox v-model="filter.active" :native-value="filter.key">
+              {{ filter.label }}
+            </b-checkbox>
+            <span v-if="filter.active" >
+              <b-switch v-if="filter.key === 'active'" v-model="filter.value">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+              <b-input  v-else placeholder="Text here..." v-model="filter.value"></b-input>
+            </span>
+          </div>
+        <div class="box basic-filter" v-for="(filter, index) in clientFilters" :key="index">
           <b-checkbox v-model="filter.active" :native-value="filter.key">
             {{ filter.label }}
           </b-checkbox>
@@ -11,7 +20,7 @@
         </div>
       </section>
       <section>
-        <div class="box basic-filter" v-for="(filter, index) in filters" :key="index">
+        <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="index">
           <b-checkbox v-model="filter.active" :native-value="filter.key">
             {{ filter.label }}
           </b-checkbox>
@@ -31,13 +40,16 @@ export default {
   data () {
     return {
       searchQuery: null,
-      basicFilter: [
+      userFilters: [
         {
           key: 'active',
           label: 'Ativo',
           value: null,
-          active: false
-        },
+          active: false,
+          operator: null
+        }
+      ],
+      addressFilters: [
         {
           key: 'state',
           label: 'Estado',
@@ -51,7 +63,7 @@ export default {
           active: false
         }
       ],
-      filters: [
+      clientFilters: [
         {
           key: 'observations',
           label: 'Observações',
@@ -63,19 +75,23 @@ export default {
           label: 'Atividades',
           value: null,
           active: false
-        },
-        {
-          key: 'document',
-          label: 'CPF/CNPJ',
-          value: null,
-          active: false
         }
       ]
     }
   },
   methods: {
     resetFilters () {
-      this.basicFilter.forEach(function (item) {
+      this.userFilters.forEach(function (item) {
+        item.active = false
+        item.value = undefined
+        item.operator = null
+      })
+      this.clientFilters.forEach(function (item) {
+        item.active = false
+        item.value = undefined
+        item.operator = null
+      })
+      this.addressFilters.forEach(function (item) {
         item.active = false
         item.value = undefined
         item.operator = null
@@ -85,8 +101,9 @@ export default {
     searchClient (name) {
       let data = {
         search: name,
-        filters: this.filters.filter(f => f.active),
-        basicFilter: this.basicFilter.filter(f => f.active)
+        addressFilters: this.addressFilters.filter(f => f.active),
+        userFilters: this.userFilters.filter(f => f.active),
+        clientFilters: this.clientFilters.filter(f => f.active)
       }
       this.$emit('filter', data)
       this.isFilterModal = false

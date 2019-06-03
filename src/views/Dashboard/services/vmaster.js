@@ -129,10 +129,11 @@ export default {
     searchServices (event) {
       let data = {
         search: this.searchQuery,
-        basicFilter: event.basicFilter ? event.basicFilter.filter(f => f.active) : [],
-        filters: event.filters ? event.filters.filter(f => f.active) : []
+        clientFilters: event.clientFilters ? event.clientFilters.filter(f => f.active) : [],
+        serviceFilters: event.serviceFilters ? event.serviceFilters.filter(f => f.active) : [],
+        statusFilter: event.statusFilter ? event.statusFilter.filter(f => f.active) : []
       }
-      this.$http.post(this.$api({ target: 'service' }), data, {
+      this.$http.post(this.$api({ target: 'filter-service' }), data, {
         headers: header()
       }).then(response => {
         console.log(response.data)

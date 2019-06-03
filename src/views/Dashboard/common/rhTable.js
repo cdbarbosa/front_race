@@ -106,43 +106,6 @@ export default {
           active: false
         }
       ],
-      basicFilter: [
-        {
-          key: 'active',
-          label: 'Ativo',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'competencies',
-          label: 'Competências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'experience',
-          label: 'Experiências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'state',
-          label: 'Estado',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'city',
-          label: 'Cidade',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
       isFilterModalActive: false,
       rhServiceFields: {
         cost: null,
@@ -198,21 +161,21 @@ export default {
       return 'error'
     },
     resetFilters () {
-      if (this.isFilterModalActive === false) {
-        this.searchRh = ''
-      } else {
-        this.basicFilter.forEach(function (item) {
-          item.active = false
-          item.value = null
-          item.operator = null
-        })
-        this.academicFilter.forEach(function (item) {
-          item.active = false
-          item.value = null
-        })
-        this.isFilterModalActive = false
-      }
-      this.$emit('reset', 'notService')
+      // if (this.isFilterModalActive === false) {
+      //   this.searchRh = ''
+      // } else {
+      //   this.basicFilter.forEach(function (item) {
+      //     item.active = false
+      //     item.value = null
+      //     item.operator = null
+      //   })
+      //   this.academicFilter.forEach(function (item) {
+      //     item.active = false
+      //     item.value = null
+      //   })
+      //   this.isFilterModalActive = false
+      // }
+      // this.$emit('reset', 'notService')
     },
     filter (name) {
       let data = {

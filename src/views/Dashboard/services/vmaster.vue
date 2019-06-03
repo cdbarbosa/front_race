@@ -13,6 +13,7 @@
           <header>
             <h4>Serviços</h4>
             <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
+            <!-- <b-input placeholder="Procurar por documento" v-model="searchDocument"></b-input> -->
             <span @click="searchQuery = ''">
               <i class="fas fa-backspace"></i>
             </span>
