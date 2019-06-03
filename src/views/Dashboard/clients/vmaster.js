@@ -42,6 +42,22 @@ export default {
     selectedIndex () {
       return this.clients.findIndex(client => client.id === this.clientSelected.id)
     },
+    userFilters () {
+      return this.$store.getters.clientFilters.userFilters
+    },
+    addressFilters () {
+      return this.$store.getters.clientFilters.addressFilters
+    },
+    clientFilters () {
+      return this.$store.getters.clientFilters.clientFilters
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.clientFilters).forEach(fi => {
+        if (this.$store.getters.clientFilters[fi].filter(f => f.active).length) ret = true
+      })
+      return ret
+    },
     lastClientSelected: {
       get () {
         return this.$store.getters.lastClientSelected
@@ -84,13 +100,20 @@ export default {
     },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.tableSelected = undefined
-      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
-      else this.searchClient(newQuery)
+      if (newQuery === '' || newQuery === oldQuery) {
+        if (this.filterActive) this.searchClient()
+        else this.restoreClients()
+      } else {
+        this.searchClient(newQuery)
+      }
     }, 500),
     searchDocument: _.debounce(function (newQuery, oldQuery) {
       this.searchQuery = ''
-      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
-      else this.searchUserByDocument(newQuery)
+      if (newQuery === '') this.restoreClients()
+      else {
+        this.restoreClientFilters()
+        this.searchUserByDocument(newQuery)
+      }
     }, 500),
     selected (newVal) {
       if (this.clients.length > 0) {
@@ -122,7 +145,8 @@ export default {
       'updateUser',
       'updateAddress',
       'setClientSelected',
-      'setLastClientSelected'
+      'setLastClientSelected',
+      'restoreClientFilters'
     ]),
     restoreClients () {
       this.tableSelected = this.clients[this.selectedIndex]
@@ -151,10 +175,17 @@ export default {
     resetFilters () {
       this.getClients(this).then(clients => {
         this.clients = clients
+        this.clientSelected = clients[0]
       })
       this.tableSelected = this.clients[0]
     },
-    searchClient (data) {
+    searchClient (event) {
+      let data = {
+        name: this.searchQuery,
+        userFilters: this.userFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        clientFilters: this.clientFilters.filter(f => f.active)
+      }
       this.$http.post(this.$api({ target: 'filter-client' }), data, {
         headers: header()
       }).then(response => {
@@ -165,7 +196,13 @@ export default {
       })
     },
     searchUserByDocument (document) {
-      console.log(document)
+      this.$http.post(this.$api({ target: 'search-client-document' }), { document: document }, {
+        headers: header()
+      }).then(response => {
+        this.clients = response.data
+        this.clientSelected = response.data[0]
+        this.isFilterModal = false
+      })
     }
   },
   components: {

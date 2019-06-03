@@ -6,8 +6,8 @@
           <slot name="title"></slot>
         </h4>
         <b-input placeholder="Procurar por um RH" v-model="searchRh"></b-input>
-        <b-input placeholder="Procurar por documento" v-model="searchDocument"></b-input>
-        <span @click="resetFilters">
+        <b-input placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
+        <span @click="$emit('restore')">
           <i class="fas fa-backspace"></i>
         </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
@@ -46,41 +46,45 @@
       <div class="content" style="padding: 1rem">
         <section>
           <h3>Fitros Básicos</h3>
-          <div class="box basic-filter" v-for="(filter) in userFilters" :key="filter.key">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+          <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
             <span v-if="filter.active" >
-              <b-switch v-if="filter.key === 'active'" v-model="filter.value">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
-              <b-input  v-else placeholder="Text here..." v-model="filter.value"></b-input>
+              <b-switch v-if="filter.key === 'active'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+              <b-input  v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
             </span>
           </div>
-          <div class="box basic-filter" v-for="(filter) in rhFilters" :key="filter.key">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+          <div class="box basic-filter" v-for="(filter, index) in rhFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'rhFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
             <span v-if="filter.active" >
-              <b-input placeholder="Text here..." v-model="filter.value"></b-input>
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
             </span>
           </div>
-          <div class="box basic-filter" v-for="(filter) in addressFilters" :key="filter.key">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+          <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'addressFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+            <span v-if="filter.active" >
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'addressFilters', 'value', $event])"></b-input>
+            </span>
           </div>
         </section>
         <section>
           <h3>Fitros Acadêmicos</h3>
           <div class="box academic-filter" v-for="(filter, index) in academicFilters" :key="index">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+            <b-checkbox @input="parseFilters([index, 'academicFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+            <span v-if="filter.active">
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'academicFilters', 'value', $event])"></b-input>
+            </span>
           </div>
           <div class="bottonFilter">
             <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
-            <button @click="resetFilters">Resetar</button>
+            <button @click="$emit('restore'); isFilterModalActive = false">Resetar</button>
           </div>
         </section>
       </div>

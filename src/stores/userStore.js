@@ -3,11 +3,13 @@ import { client, header } from '../config/index.js'
 const state = {
   user: undefined,
   authTokens: {}
+
 }
 
 const getters = {
   user: () => state.user,
-  client: () => state.user ? state.user.client : undefined
+  client: () => state.user ? state.user.client : undefined,
+  userFilters: () => state.userFilters
 }
 
 const mutations = {

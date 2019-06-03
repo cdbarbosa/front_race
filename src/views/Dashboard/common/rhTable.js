@@ -51,61 +51,6 @@ export default {
       searchDocument: null,
       currentPage: 1,
       perPage: 5,
-      userFilters: [
-        {
-          key: 'active',
-          label: 'Ativo',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      rhFilters: [
-        {
-          key: 'competencies',
-          label: 'Competências',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'experience',
-          label: 'Experiências',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      addressFilters: [
-        {
-          key: 'state',
-          label: 'Estado',
-          value: null,
-          active: false,
-          operator: null
-        },
-        {
-          key: 'city',
-          label: 'Cidade',
-          value: null,
-          active: false,
-          operator: null
-        }
-      ],
-      academicFilters: [
-        {
-          key: 'titulation',
-          label: 'Titulação',
-          value: null,
-          active: false
-        },
-        {
-          key: 'area',
-          label: 'Bacharelado',
-          value: null,
-          active: false
-        }
-      ],
       isFilterModalActive: false,
       rhServiceFields: {
         cost: null,
@@ -122,19 +67,45 @@ export default {
       set (newVal) {
         this.tableSelected = newVal
       }
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.rhFilters).forEach(fi => {
+        if (this.$store.getters.rhFilters[fi].filter(f => f.active).length) ret = true
+      })
+      return ret
+    },
+    userFilters () {
+      return this.$store.getters.rhFilters.userFilters
+    },
+    rhFilters () {
+      return this.$store.getters.rhFilters.rhFilters
+    },
+    academicFilters () {
+      return this.$store.getters.rhFilters.academicFilters
+    },
+    addressFilters () {
+      return this.$store.getters.rhFilters.academicFilters
     }
   },
   watch: {
     '$store.getters.rhs' () {
       this.tableSelected = this.rhs[this.selectedIndex]
     },
+    searchDocument: _.debounce(function (newQuery, oldQuery) {
+      this.searchQuery = ''
+      if (newQuery === '') this.$emit('restore')
+      else {
+        this.$emit('searchByDocument', newQuery)
+      }
+    }, 500),
     searchRh: _.debounce(function (newVal, oldVal) {
       this.rhSelected = undefined
-      if (newVal === '' && newVal === oldVal) {
+      if (newVal === '' || newVal === oldVal) {
         this.tableSelected = this.rhs[this.selectedIndex]
-        this.getRhs(this).then(() => {
-          this.resetFilters()
-        })
+        // this.$emit('restore')
+        if (this.filterActive) this.filter()
+        else this.$emit('restore')
       } else {
         this.filter(newVal)
       }
@@ -147,8 +118,12 @@ export default {
     ...mapActions([
       'setRhs',
       'getRhs',
-      'changeRh'
+      'changeRh',
+      'setRhFilters'
     ]),
+    parseFilters (payload) {
+      this.setRhFilters(payload)
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
@@ -160,6 +135,7 @@ export default {
       }
       return 'error'
     },
+<<<<<<< HEAD
     resetFilters () {
       // if (this.isFilterModalActive === false) {
       //   this.searchRh = ''
@@ -177,6 +153,8 @@ export default {
       // }
       // this.$emit('reset', 'notService')
     },
+=======
+>>>>>>> 2b5ee90bc63e0395643f0eb0756dfa10141f1149
     filter (name) {
       let data = {
         name: name,

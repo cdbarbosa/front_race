@@ -1,12 +1,68 @@
 import { header } from '../config/index.js'
 
+const getFilters = () => {
+  return {
+    userFilters: [
+      {
+        key: 'active',
+        label: 'Ativo',
+        value: null,
+        active: false
+      }
+    ],
+    rhFilters: [
+      {
+        key: 'competencies',
+        label: 'Competências',
+        value: null,
+        active: false
+      },
+      {
+        key: 'experience',
+        label: 'Experiências',
+        value: null,
+        active: false
+      }
+    ],
+    addressFilters: [
+      {
+        key: 'state',
+        label: 'Estado',
+        value: null,
+        active: false
+      },
+      {
+        key: 'city',
+        label: 'Cidade',
+        value: null,
+        ative: false
+      }
+    ],
+    academicFilters: [
+      {
+        key: 'titulation',
+        label: 'Titulação',
+        value: null,
+        active: false
+      },
+      {
+        key: 'area',
+        label: 'Bacharelado',
+        value: null,
+        active: false
+      }
+    ]
+  }
+}
+
 const state = {
   rhs: [],
   rhSelected: undefined,
   rhsNotInService: [],
   rhsInService: [],
   rhByService: [],
-  lastRhSelected: undefined
+  lastRhSelected: undefined,
+  rhFilters: getFilters()
 }
 
 const getters = {
@@ -15,18 +71,29 @@ const getters = {
   rhsNotInService: () => state.rhsNotInService,
   rhsInService: () => state.rhsInService,
   rhByService: () => state.rhByService,
-  lastRhSelected: () => state.lastRhSelected
+  lastRhSelected: () => state.lastRhSelected,
+  rhFilters: () => state.rhFilters
 }
 
 const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
   },
+  RESTORE_RH_FILTERS (state) {
+    state.rhFilters = getFilters()
+  },
   SET_LAST_RH_SELECTED (state, index) {
     state.lastRhSelected = index
   },
   SET_RH_SELECTED (state, rh) {
     state.rhSelected = JSON.parse(JSON.stringify(rh))
+  },
+  SET_RH_FILTERS (state, payload) {
+    const index = payload[0]
+    const filter = payload[1]
+    const key = payload[2]
+    const value = payload[3]
+    state.rhFilters[filter][index][key] = value
   },
   UPDATE_RH_SELECTED (state, payload) {
     const label = payload[0]
@@ -87,6 +154,12 @@ const mutations = {
 }
 
 const actions = {
+  setRhFilters ({ commit }, payload) {
+    commit('SET_RH_FILTERS', payload)
+  },
+  restoreRhFilters ({ commit }) {
+    commit('RESTORE_RH_FILTERS')
+  },
   setLastRhSelected ({ commit }, index) {
     commit('SET_LAST_RH_SELECTED', index)
   },

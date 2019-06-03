@@ -1,18 +1,71 @@
 import { header } from '../config/index.js'
 
+const getFilters = () => {
+  return {
+    userFilters: [
+      {
+        key: 'active',
+        label: 'Ativo',
+        value: null,
+        active: false
+      }
+    ],
+    clientFilters: [
+      {
+        key: 'observations',
+        label: 'Observações',
+        value: null,
+        active: false
+      },
+      {
+        key: 'activity',
+        label: 'Atividades',
+        value: null,
+        active: false
+      }
+    ],
+    addressFilters: [
+      {
+        key: 'state',
+        label: 'Estado',
+        value: null,
+        active: false
+      },
+      {
+        key: 'city',
+        label: 'Cidade',
+        value: null,
+        ative: false
+      }
+    ]
+  }
+}
+
 const state = {
   clients: [],
   clientSelected: undefined,
-  lastClientSelected: undefined
+  lastClientSelected: undefined,
+  clientFilters: getFilters()
 }
 
 const getters = {
   clients: () => state.clients,
   clientSelected: () => state.clientSelected,
-  lastClientSelected: () => state.lastClientSelected
+  lastClientSelected: () => state.lastClientSelected,
+  clientFilters: () => state.clientFilters
 }
 
 const mutations = {
+  SET_CLIENT_FILTERS (state, payload) {
+    const index = payload[0]
+    const filter = payload[1]
+    const key = payload[2]
+    const value = payload[3]
+    state.clientFilters[filter][index][key] = value
+  },
+  RESTORE_CLIENT_FILTERS (state) {
+    state.clientFilters = getFilters()
+  },
   SET_LAST_CLIENT_SELECTED (state, index) {
     state.lastClientSelected = index
   },
@@ -54,6 +107,12 @@ const mutations = {
 }
 
 const actions = {
+  setClientFilters ({ commit }, payload) {
+    commit('SET_CLIENT_FILTERS', payload)
+  },
+  restoreClientFilters ({ commit }) {
+    commit('RESTORE_CLIENT_FILTERS')
+  },
   setLastClientSelected ({ commit }, index) {
     commit('SET_LAST_CLIENT_SELECTED', index)
   },
