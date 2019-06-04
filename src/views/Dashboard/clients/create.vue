@@ -146,7 +146,6 @@ export default {
           user_id: userId,
           client: this.client
         }
-        console.log(data)
         this.$http.post(this.$api({ target: 'clients' }), data, {
           headers: header()
         }).then(() => {

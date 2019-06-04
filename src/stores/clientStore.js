@@ -35,7 +35,7 @@ const getFilters = () => {
         key: 'city',
         label: 'Cidade',
         value: null,
-        ative: false
+        active: false
       }
     ]
   }

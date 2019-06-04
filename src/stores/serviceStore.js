@@ -1,18 +1,77 @@
 import { header } from '../config/index.js'
 
+const getFilters = () => {
+  return {
+    clientFilters: [
+      {
+        key: 'client',
+        label: 'Cliente',
+        value: null,
+        active: false
+      }
+    ],
+    serviceFilters: [
+      {
+        key: 'created_at',
+        label: 'Data registro',
+        value: null,
+        active: false
+      },
+      {
+        key: 'forecast',
+        label: 'Previsão',
+        value: null,
+        active: false
+      },
+      {
+        key: 'delivered',
+        label: 'Entrega',
+        value: null,
+        active: false
+      },
+      {
+        key: 'profit',
+        label: 'Margem',
+        value: null,
+        active: false
+      },
+      {
+        key: 'status',
+        label: 'Situação',
+        value: null,
+        active: false
+      },
+      {
+        key: 'description',
+        label: 'Observações',
+        value: null,
+        active: false
+      }
+    ]
+  }
+}
 const state = {
   services: [],
   serviceSelected: undefined,
-  lastServiceSelected: undefined
+  lastServiceSelected: undefined,
+  serviceFilters: getFilters()
 }
 
 const getters = {
   services: () => state.services,
   serviceSelected: () => state.serviceSelected,
-  lastServiceSelected: () => state.lastServiceSelected
+  lastServiceSelected: () => state.lastServiceSelected,
+  serviceFilters: () => state.serviceFilters
 }
 
 const mutations = {
+  SET_SERVICE_FILTERS (state, payload) {
+    const index = payload[0]
+    const filter = payload[1]
+    const key = payload[2]
+    const value = payload[3]
+    state.serviceFilters[filter][index][key] = value
+  },
   SET_LAST_SERVICE_SELECTED (state, index) {
     state.lastServiceSelected = index
   },
@@ -37,6 +96,9 @@ const mutations = {
 const actions = {
   setLastServiceSelected ({ commit }, index) {
     commit('SET_LAST_SERVICE_SELECTED', index)
+  },
+  setServiceFilters ({ commit }, payload) {
+    commit('SET_SERVICE_FILTERS', payload)
   },
   getServices ({ commit }, that) {
     return new Promise((resolve, reject) => {
