@@ -60,6 +60,7 @@ export default {
         headers: header()
       }).then(response => {
         this.clientServices = response.data
+        this.selected = response.data[0]
       })
     }
   },
