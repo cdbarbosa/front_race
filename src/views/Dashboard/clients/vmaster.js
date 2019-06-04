@@ -210,7 +210,6 @@ export default {
       this.$http.post(this.$api({ target: 'filter-client' }), data, {
         headers: header()
       }).then(response => {
-      // console.log(response)
         this.clients = response.data
         this.clientSelected = response.data[0]
         this.isFilterModal = false

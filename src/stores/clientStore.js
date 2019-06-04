@@ -46,6 +46,7 @@ const state = {
   clients: [],
   clientSelected: undefined,
   lastClientSelected: undefined,
+  lastClientServiceSelected: undefined,
   clientFilters: getFilters()
 }
 
@@ -53,6 +54,7 @@ const getters = {
   clients: () => state.clients,
   clientSelected: () => state.clientSelected,
   lastClientSelected: () => state.lastClientSelected,
+  lastClientServiceSelected: () => state.lastClientServiceSelected,
   clientFilters: () => state.clientFilters
 }
 
@@ -69,6 +71,9 @@ const mutations = {
   },
   RESTORE_CLIENT_FILTERS (state) {
     state.clientFilters = getFilters()
+  },
+  SET_LAST_CLIENT_SERVICE_SELECTED (state, index) {
+    state.lastClientServiceSelected = index
   },
   SET_LAST_CLIENT_SELECTED (state, index) {
     state.lastClientSelected = index
@@ -119,6 +124,9 @@ const actions = {
   },
   setClientQuery ({ commit }, query) {
     commit('SET_CLIENT_QUERY', query)
+  },
+  setLastClientServiceSelected ({ commit }, index) {
+    commit('SET_LAST_CLIENT_SERVICE_SELECTED', index)
   },
   setLastClientSelected ({ commit }, index) {
     commit('SET_LAST_CLIENT_SELECTED', index)

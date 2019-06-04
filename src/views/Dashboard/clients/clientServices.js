@@ -7,7 +7,6 @@ export default {
   data () {
     return {
       clientServices: null,
-      selectedIndex: 0,
       selected: null
     }
   },
@@ -15,8 +14,19 @@ export default {
     ...mapGetters([
       'clientSelected'
     ]),
+    selectedIndex () {
+      return this.selected ? this.clientServices.findIndex(service => service.id === this.selected.id) : 0
+    },
     serviceQuery () {
       return this.$store.getters.serviceFilters.name
+    },
+    lastClientServiceSelected: {
+      get () {
+        return this.$store.getters.lastClientServiceSelected
+      },
+      set (index) {
+        this.setLastClientServiceSelected(index)
+      }
     },
     services: {
       get () {
@@ -43,24 +53,28 @@ export default {
   },
   beforeMount () {
     this.getClientServices()
-    this.getServices(this).then(services => {
-      this.services = services
-      this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
-      // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
-    })
+    // this.getServices(this).then(services => {
+    //   this.services = services
+    //   this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+    //   // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
+    // })
+  },
+  beforeDestroy () {
+    this.lastClientServiceSelected = this.selectedIndex
   },
   methods: {
     ...mapActions([
       'getServices',
       'setServices',
-      'setServiceSelected'
+      'setServiceSelected',
+      'setLastClientServiceSelected'
     ]),
     getClientServices () {
       this.$http.get(this.$api({ target: `client-services/${this.clientSelected.id}` }), {
         headers: header()
       }).then(response => {
         this.clientServices = response.data
-        this.selected = response.data[0]
+        this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
       })
     }
   },
