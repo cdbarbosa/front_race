@@ -169,6 +169,7 @@ export default {
       this.$http.post(this.$api({ target: 'filter-service' }), data, {
         headers: header()
       }).then(response => {
+        // console.log(response.data)
         this.services = response.data
         this.serviceSelected = response.data[0]
         this.isFilterModal = false

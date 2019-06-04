@@ -5,7 +5,7 @@ const getFilters = () => {
     name: null,
     clientFilters: [
       {
-        key: 'client',
+        key: 'name',
         label: 'Cliente',
         value: null,
         active: false
@@ -16,24 +16,28 @@ const getFilters = () => {
         key: 'created_at',
         label: 'Data registro',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'forecast',
         label: 'Previsão',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'delivered',
         label: 'Entrega',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'profit',
         label: 'Margem',
         value: null,
+        operator: null,
         active: false
       },
       {
@@ -45,7 +49,7 @@ const getFilters = () => {
     ],
     statusFilters: [
       {
-        key: 'status',
+        key: 'abbreviation',
         label: 'Situação',
         value: null,
         active: false
