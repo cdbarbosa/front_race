@@ -4,14 +4,12 @@ import success from './create-messages/success'
 import error from './create-messages/error'
 import _ from 'lodash'
 import { mapActions } from 'vuex'
+import dataTable from '../../../mixins/dataTable.js'
 moment.locale('pt-BR')
 export default {
   name: 'rhTable',
+  mixins: [dataTable],
   props: {
-    rhs: {
-      required: true,
-      type: Array
-    },
     create: {
       default: true
     },
@@ -21,10 +19,7 @@ export default {
     attach: {
       default: false
     },
-    service_id: Number,
-    selectedIndex: {
-      type: Number
-    }
+    service_id: Number
   },
   data () {
     return {
@@ -40,17 +35,14 @@ export default {
         '<',
         '='
       ],
+      searchRh: null,
+      searchDocument: null,
       isAttachModalOpen: false,
       isModalActive: false,
-      tableSelected: undefined,
       rhCreated: undefined,
       isCost: false,
       isCity: false,
       isExperience: false,
-      searchRh: null,
-      searchDocument: null,
-      currentPage: 1,
-      perPage: 5,
       isFilterModalActive: false,
       rhServiceFields: {
         cost: null,
@@ -60,14 +52,6 @@ export default {
     }
   },
   computed: {
-    selected: {
-      get () {
-        return this.tableSelected ? this.tableSelected : this.rhs[this.selectedIndex]
-      },
-      set (newVal) {
-        this.tableSelected = newVal
-      }
-    },
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.rhFilters).forEach(fi => {
@@ -90,7 +74,7 @@ export default {
   },
   watch: {
     '$store.getters.rhs' () {
-      this.tableSelected = this.rhs[this.selectedIndex]
+      this.tableSelected = this.resources[this.selectedIndex]
     },
     searchDocument: _.debounce(function (newQuery, oldQuery) {
       this.searchQuery = ''
@@ -102,7 +86,7 @@ export default {
     searchRh: _.debounce(function (newVal, oldVal) {
       this.rhSelected = undefined
       if (newVal === '' || newVal === oldVal) {
-        this.tableSelected = this.rhs[this.selectedIndex]
+        this.tableSelected = this.resources[this.selectedIndex]
         // this.$emit('restore')
         if (this.filterActive) this.filter()
         else this.$emit('restore')

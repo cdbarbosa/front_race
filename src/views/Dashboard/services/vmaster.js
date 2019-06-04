@@ -8,9 +8,11 @@ import createService from './create.vue'
 import _ from 'lodash'
 import filterService from './Filters.vue'
 import { header } from '../../../config/index.js'
+import serviceTable from '../common/service/serviceTable.vue'
 moment.locale('pt-BR')
 export default {
   name: 'showServices',
+  props: ['clientServices'],
   data () {
     return {
       isEditActive: false,
@@ -37,6 +39,20 @@ export default {
     },
     clientFilters () {
       return this.$store.getters.serviceFilters.clientFilters
+    },
+    serviceQuery () {
+      return this.$store.getters.serviceFilters.name
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.serviceFilters).forEach(fi => {
+        if (fi === 'name') {
+          if (this.$store.getters.serviceFilters[fi]) ret = true
+        } else {
+          if (this.$store.getters.serviceFilters[fi].filter(f => f.active).length) ret = true
+        }
+      })
+      return ret
     },
     lastServiceSelected: {
       get () {
@@ -83,14 +99,14 @@ export default {
     isModalActive (newVal) {
       if (!newVal) this.serviceCreated = undefined
     },
+    serviceQuery (newQuery, oldQuery) {
+      if (newQuery === '' || newQuery === oldQuery) this.restoreServices()
+      else this.searchServices()
+    },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       // this.serviceSelected = undefined
       if (newQuery === '' || newQuery === oldQuery) {
         this.tableSelected = this.services[this.selectedIndex]
-        this.getServices(this).then(services => {
-          this.services = services
-          this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
-        })
       } else {
         this.searchServices(newQuery)
       }
@@ -102,11 +118,15 @@ export default {
     }
   },
   beforeMount () {
-    this.getServices(this).then(services => {
-      this.services = services
-      this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
-      this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
-    })
+    if (this.filterActive) {
+      this.searchServices()
+    } else {
+      this.getServices(this).then(services => {
+        this.services = services
+        this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+        this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
+      })
+    }
   },
   beforeDestroy () {
     this.lastServiceSelected = this.selectedIndex
@@ -118,6 +138,12 @@ export default {
       'setServiceSelected',
       'setLastServiceSelected'
     ]),
+    restoreServices () {
+      this.getServices(this).then(services => {
+        this.services = services
+        this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+      })
+    },
     restoreServiceSelected () {
       this.setServiceSelected(this.services[this.selectedIndex])
     },
@@ -137,7 +163,7 @@ export default {
     },
     searchServices () {
       let data = {
-        name: this.searchQuery,
+        name: this.serviceQuery,
         clientFilters: this.clientFilters.filter(f => f.active),
         serviceFilters: this.serviceFilters.filter(f => f.active),
         statusFilter: this.statusFilters.filter(f => f.active)
@@ -164,6 +190,7 @@ export default {
     serviceEdit,
     success,
     error,
-    filterService
+    filterService,
+    serviceTable
   }
 }

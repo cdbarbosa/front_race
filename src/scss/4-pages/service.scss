@@ -95,3 +95,9 @@
     margin: 0;
   }
 }
+
+#dashboard main {
+  #serviceTable{
+    grid-template-columns: 1fr;
+  }
+}

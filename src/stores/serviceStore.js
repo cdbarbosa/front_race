@@ -2,6 +2,7 @@ import { header } from '../config/index.js'
 
 const getFilters = () => {
   return {
+    name: null,
     clientFilters: [
       {
         key: 'client',
@@ -74,6 +75,9 @@ const mutations = {
     const value = payload[3]
     state.serviceFilters[filter][index][key] = value
   },
+  SET_SERVICE_QUERY (state, query) {
+    state.serviceFilters.name = query
+  },
   SET_LAST_SERVICE_SELECTED (state, index) {
     state.lastServiceSelected = index
   },
@@ -101,6 +105,9 @@ const actions = {
   },
   setServiceFilters ({ commit }, payload) {
     commit('SET_SERVICE_FILTERS', payload)
+  },
+  setServiceQuery ({ commit }, query) {
+    commit('SET_SERVICE_QUERY', query)
   },
   getServices ({ commit }, that) {
     return new Promise((resolve, reject) => {

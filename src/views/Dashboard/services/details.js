@@ -66,12 +66,12 @@ export default {
       this.rhServiceFields.cost = parseFloat(newVal.cost)
     }
   },
-  activated () {
-    if (this.selected) {
-      if (this.serviceSelected) this.$router.push({ name: 'serviceDetails', params: { service_id: this.serviceSelected.id } })
-      else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
-    }
-  },
+  // activated () {
+  //   if (this.selected) {
+  //     if (this.serviceSelected) this.$router.push({ name: 'serviceDetails', params: { service_id: this.serviceSelected.id } })
+  //     else this.$router.push({ name: 'serviceDetails', params: { service_id: this.selected.id } })
+  //   }
+  // },
   beforeRouteEnter (to, from, next) {
     next($this => {
       if ($this.$route.params.service_id) next()
