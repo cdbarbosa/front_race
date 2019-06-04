@@ -36,14 +36,16 @@ const getFilters = () => {
         active: false
       },
       {
-        key: 'status',
-        label: 'Situação',
-        value: null,
-        active: false
-      },
-      {
         key: 'description',
         label: 'Observações',
+        value: null,
+        active: false
+      }
+    ],
+    statusFilters: [
+      {
+        key: 'status',
+        label: 'Situação',
         value: null,
         active: false
       }

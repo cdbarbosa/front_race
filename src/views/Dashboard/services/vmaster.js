@@ -29,6 +29,15 @@ export default {
     selectedIndex () {
       return this.services.findIndex(service => service.id === this.serviceSelected.id)
     },
+    serviceFilters () {
+      return this.$store.getters.serviceFilters.serviceFilters
+    },
+    statusFilters () {
+      return this.$store.getters.serviceFilters.statusFilters
+    },
+    clientFilters () {
+      return this.$store.getters.serviceFilters.clientFilters
+    },
     lastServiceSelected: {
       get () {
         return this.$store.getters.lastServiceSelected
@@ -75,9 +84,8 @@ export default {
       if (!newVal) this.serviceCreated = undefined
     },
     searchQuery: _.debounce(function (newQuery, oldQuery) {
-      this.serviceSelected = undefined
-      if (newQuery === '' && newQuery === oldQuery) {
-        console.log(newQuery)
+      // this.serviceSelected = undefined
+      if (newQuery === '' || newQuery === oldQuery) {
         this.tableSelected = this.services[this.selectedIndex]
         this.getServices(this).then(services => {
           this.services = services
@@ -127,19 +135,18 @@ export default {
       })
       this.tableSelected = this.services[0]
     },
-    searchServices (event) {
-      console.log(event)
+    searchServices () {
       let data = {
-        search: this.searchQuery,
-        clientFilters: event.clientFilters ? event.clientFilters.filter(f => f.active) : [],
-        serviceFilters: event.serviceFilters ? event.serviceFilters.filter(f => f.active) : [],
-        statusFilter: event.statusFilter ? event.statusFilter.filter(f => f.active) : []
+        name: this.searchQuery,
+        clientFilters: this.clientFilters.filter(f => f.active),
+        serviceFilters: this.serviceFilters.filter(f => f.active),
+        statusFilter: this.statusFilters.filter(f => f.active)
       }
       this.$http.post(this.$api({ target: 'filter-service' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response.data)
-        this.setServices(response.data)
+        this.services = response.data
+        this.serviceSelected = response.data[0]
         this.isFilterModal = false
       })
     },
