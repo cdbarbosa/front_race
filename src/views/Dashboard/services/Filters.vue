@@ -17,6 +17,22 @@
             <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'serviceFilters', 'value', $event])"></b-input>
           </span>
         </div>
+        <div class="box basic-filter" v-for="(filter, index) in clientFilters" :key="filter.key">
+          <b-checkbox @input="parseFilters([index, 'clientFilters', 'active', $event])" :value="filter.active">
+            {{ filter.label }}
+          </b-checkbox>
+          <span v-if="filter.active">
+            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
+          </span>
+        </div>
+        <div class="box basic-filter" v-for="(filter, index) in statusFilters" :key="filter.key">
+          <b-checkbox @input="parseFilters([index, 'statusFilters', 'active', $event])" :value="filter.active">
+            {{ filter.label }}
+          </b-checkbox>
+          <span v-if="filter.active">
+            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'statusFilters', 'value', $event])"></b-input>
+          </span>
+        </div>
       </section>
       <!-- <section> -->
         <!-- <div class="box basic&#45;filter" v&#45;for="(filter) in clientFilters" :key="filter.key"> -->

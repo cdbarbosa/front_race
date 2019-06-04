@@ -5,7 +5,7 @@ const getFilters = () => {
     name: null,
     clientFilters: [
       {
-        key: 'client',
+        key: 'name',
         label: 'Cliente',
         value: null,
         active: false
@@ -49,7 +49,7 @@ const getFilters = () => {
     ],
     statusFilters: [
       {
-        key: 'status',
+        key: 'abbreviation',
         label: 'Situação',
         value: null,
         active: false
