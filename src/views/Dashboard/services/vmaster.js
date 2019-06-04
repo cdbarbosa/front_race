@@ -19,7 +19,6 @@ export default {
       isFilterModal: false,
       checkboxGroup: [],
       radio: '',
-      searchQuery: undefined,
       serviceCreated: undefined,
       tableSelected: undefined,
       isServiceModalActive: false,
@@ -40,9 +39,6 @@ export default {
     clientFilters () {
       return this.$store.getters.serviceFilters.clientFilters
     },
-    serviceQuery () {
-      return this.$store.getters.serviceFilters.name
-    },
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.serviceFilters).forEach(fi => {
@@ -53,6 +49,15 @@ export default {
         }
       })
       return ret
+    },
+    searchQuery: {
+      get () {
+        return this.$store.getters.serviceFilters.name
+      },
+      set: _.debounce(function (newQuery) {
+        console.log(newQuery)
+        this.setServiceQuery(newQuery)
+      }, 500)
     },
     lastServiceSelected: {
       get () {
@@ -99,18 +104,10 @@ export default {
     isModalActive (newVal) {
       if (!newVal) this.serviceCreated = undefined
     },
-    serviceQuery (newQuery, oldQuery) {
+    searchQuery (newQuery, oldQuery) {
       if (newQuery === '' || newQuery === oldQuery) this.restoreServices()
       else this.searchServices()
     },
-    searchQuery: _.debounce(function (newQuery, oldQuery) {
-      // this.serviceSelected = undefined
-      if (newQuery === '' || newQuery === oldQuery) {
-        this.tableSelected = this.services[this.selectedIndex]
-      } else {
-        this.searchServices(newQuery)
-      }
-    }, 500),
     selected (newVal) {
       if (this.services.length > 0) {
         this.$router.push({ name: 'service', params: { service_id: newVal.id } })
@@ -136,7 +133,8 @@ export default {
       'getServices',
       'setServices',
       'setServiceSelected',
-      'setLastServiceSelected'
+      'setLastServiceSelected',
+      'setServiceQuery'
     ]),
     restoreServices () {
       this.getServices(this).then(services => {
@@ -163,7 +161,7 @@ export default {
     },
     searchServices () {
       let data = {
-        name: this.serviceQuery,
+        name: this.searchQuery,
         clientFilters: this.clientFilters.filter(f => f.active),
         serviceFilters: this.serviceFilters.filter(f => f.active),
         statusFilter: this.statusFilters.filter(f => f.active)

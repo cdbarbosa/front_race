@@ -4,8 +4,7 @@
       <div class="tableContainer">
         <header>
           <h4>Serviços</h4>
-          <b-input placeholder="Procurar..." v-model="searchQuery"></b-input>
-          <!-- <b-input placeholder="Procurar por documento" v-model="searchDocument"></b-input> -->
+          <slot name="search"></slot>
           <span @click="searchQuery = ''">
             <i class="fas fa-backspace"></i>
           </span>
@@ -50,7 +49,6 @@
 <script>
 import { mapActions } from 'vuex'
 import dataTable from '../../../../mixins/dataTable.js'
-import _ from 'lodash'
 export default {
   name: 'serviceTable',
   mixins: [dataTable],
@@ -62,22 +60,13 @@ export default {
       set (service) {
         this.setServiceSelected(service)
       }
-    },
-    searchQuery: {
-      get () {
-        return this.$store.getters.serviceFilters.name
-      },
-      set: _.debounce(function (newQuery, oldQuery) {
-        this.setServiceQuery(newQuery)
-      }, 500)
     }
   },
   watch: {
   },
   methods: {
     ...mapActions([
-      'setServiceSelected',
-      'setServiceQuery'
+      'setServiceSelected'
     ])
   }
 }

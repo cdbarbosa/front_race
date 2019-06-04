@@ -2,6 +2,7 @@ import { header } from '../config/index.js'
 
 const getFilters = () => {
   return {
+    name: null,
     userFilters: [
       {
         key: 'active',
@@ -63,6 +64,9 @@ const mutations = {
     const value = payload[3]
     state.clientFilters[filter][index][key] = value
   },
+  SET_CLIENT_QUERY (state, query) {
+    state.clientFilters.name = query
+  },
   RESTORE_CLIENT_FILTERS (state) {
     state.clientFilters = getFilters()
   },
@@ -112,6 +116,9 @@ const actions = {
   },
   restoreClientFilters ({ commit }) {
     commit('RESTORE_CLIENT_FILTERS')
+  },
+  setClientQuery ({ commit }, query) {
+    commit('SET_CLIENT_QUERY', query)
   },
   setLastClientSelected ({ commit }, index) {
     commit('SET_LAST_CLIENT_SELECTED', index)

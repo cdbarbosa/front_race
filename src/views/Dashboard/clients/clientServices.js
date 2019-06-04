@@ -1,12 +1,14 @@
 import { mapGetters, mapActions } from 'vuex'
 import { header } from '../../../config/index'
 import serviceTable from '../common/service/serviceTable.vue'
+import service from '../services/service.vue'
 export default {
   name: 'clientServices',
   data () {
     return {
       clientServices: null,
-      selectedIndex: 0
+      selectedIndex: 0,
+      selected: null
     }
   },
   computed: {
@@ -58,10 +60,12 @@ export default {
         headers: header()
       }).then(response => {
         this.clientServices = response.data
+        this.selected = response.data[0]
       })
     }
   },
   components: {
-    serviceTable
+    serviceTable,
+    service
   }
 }
