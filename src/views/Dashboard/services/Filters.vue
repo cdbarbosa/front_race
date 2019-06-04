@@ -8,7 +8,12 @@
             {{ filter.label }}
           </b-checkbox>
           <span v-if="filter.active">
-            <b-datepicker v-if="['created_at', 'forecast', 'delivered'].indexOf(filter.key) !== -1" :value="filter.value"  @input="parseFilters([index, 'serviceFilters', 'value', $event])" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" editable></b-datepicker>
+            <span v-if="['created_at', 'forecast', 'delivered'].indexOf(filter.key) !== -1" class="data-style">
+              <b-datepicker :value="filter.value"  @input="parseFilters([index, 'serviceFilters', 'value', $event])" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" editable></b-datepicker>
+              <b-select @input="parseFilters([index, 'serviceFilters', 'operator', $event])">
+                <option v-for="(operator, index) in operators" :key="index"> {{ operator }}</option>
+              </b-select>
+            </span>
             <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'serviceFilters', 'value', $event])"></b-input>
           </span>
         </div>
@@ -52,7 +57,8 @@ export default {
     return {
       searchQuery: null,
       months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+      operators: ['<', '>', '=']
     }
   },
   computed: {

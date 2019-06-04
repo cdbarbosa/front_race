@@ -16,24 +16,28 @@ const getFilters = () => {
         key: 'created_at',
         label: 'Data registro',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'forecast',
         label: 'Previsão',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'delivered',
         label: 'Entrega',
         value: null,
+        operator: null,
         active: false
       },
       {
         key: 'profit',
         label: 'Margem',
         value: null,
+        operator: null,
         active: false
       },
       {
