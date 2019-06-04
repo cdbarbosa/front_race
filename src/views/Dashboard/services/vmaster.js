@@ -77,6 +77,7 @@ export default {
     searchQuery: _.debounce(function (newQuery, oldQuery) {
       this.serviceSelected = undefined
       if (newQuery === '' && newQuery === oldQuery) {
+        console.log(newQuery)
         this.tableSelected = this.services[this.selectedIndex]
         this.getServices(this).then(services => {
           this.services = services
@@ -127,6 +128,7 @@ export default {
       this.tableSelected = this.services[0]
     },
     searchServices (event) {
+      console.log(event)
       let data = {
         search: this.searchQuery,
         clientFilters: event.clientFilters ? event.clientFilters.filter(f => f.active) : [],

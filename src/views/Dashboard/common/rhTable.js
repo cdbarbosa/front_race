@@ -85,7 +85,7 @@ export default {
       return this.$store.getters.rhFilters.academicFilters
     },
     addressFilters () {
-      return this.$store.getters.rhFilters.academicFilters
+      return this.$store.getters.rhFilters.addressFilters
     }
   },
   watch: {
@@ -135,26 +135,6 @@ export default {
       }
       return 'error'
     },
-<<<<<<< HEAD
-    resetFilters () {
-      // if (this.isFilterModalActive === false) {
-      //   this.searchRh = ''
-      // } else {
-      //   this.basicFilter.forEach(function (item) {
-      //     item.active = false
-      //     item.value = null
-      //     item.operator = null
-      //   })
-      //   this.academicFilter.forEach(function (item) {
-      //     item.active = false
-      //     item.value = null
-      //   })
-      //   this.isFilterModalActive = false
-      // }
-      // this.$emit('reset', 'notService')
-    },
-=======
->>>>>>> 2b5ee90bc63e0395643f0eb0756dfa10141f1149
     filter (name) {
       let data = {
         name: name,
