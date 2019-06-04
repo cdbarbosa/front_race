@@ -11,7 +11,7 @@
         </b-field>
       </article>
       <article>
-        <b-field label="Cliente">
+        <b-field label="Cliente" v-if="selected.client">
           <b-input v-model="selected.client.name" placeholder="Cliente" disabled></b-input>
         </b-field>
         <b-field label="Sigilo">

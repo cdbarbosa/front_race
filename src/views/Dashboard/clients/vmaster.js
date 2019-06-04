@@ -13,7 +13,7 @@ export default {
   name: 'clients',
   data () {
     return {
-      searchQuery: null,
+      // searchQuery: null,
       searchDocument: null,
       clientCreated: undefined,
       isModalActive: false,
@@ -54,9 +54,21 @@ export default {
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.clientFilters).forEach(fi => {
-        if (this.$store.getters.clientFilters[fi].filter(f => f.active).length) ret = true
+        if (fi === 'name') {
+          if (this.$store.getters.clientFilters[fi]) ret = true
+        } else {
+          if (this.$store.getters.clientFilters[fi].filter(f => f.active).length) ret = true
+        }
       })
       return ret
+    },
+    searchQuery: {
+      get () {
+        return this.$store.getters.clientFilters.name
+      },
+      set: _.debounce(function (newQuery) {
+        this.setClientQuery(newQuery)
+      }, 500)
     },
     lastClientSelected: {
       get () {
@@ -98,15 +110,19 @@ export default {
     isModalActive (newVal) {
       if (!newVal) this.clientCreated = undefined
     },
-    searchQuery: _.debounce(function (newQuery, oldQuery) {
-      this.tableSelected = undefined
-      if (newQuery === '' || newQuery === oldQuery) {
-        if (this.filterActive) this.searchClient()
-        else this.restoreClients()
-      } else {
-        this.searchClient(newQuery)
-      }
-    }, 500),
+    // searchQuery: _.debounce(function (newQuery, oldQuery) {
+    //   this.tableSelected = undefined
+    //   if (newQuery === '' || newQuery === oldQuery) {
+    //     if (this.filterActive) this.searchClient()
+    //     else this.restoreClients()
+    //   } else {
+    //     this.searchClient(newQuery)
+    //   }
+    // }, 500),
+    searchQuery (newQuery, oldQuery) {
+      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
+      else this.searchClient()
+    },
     searchDocument: _.debounce(function (newQuery, oldQuery) {
       this.searchQuery = ''
       if (newQuery === '') this.restoreClients()
@@ -128,11 +144,15 @@ export default {
     }
   },
   beforeMount () {
-    this.getClients(this).then(clients => {
-      this.clients = clients
-      this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-      this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
-    })
+    if (this.filterActive) {
+      this.searchClient()
+    } else {
+      this.getClients(this).then(clients => {
+        this.clients = clients
+        this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+        this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
+      })
+    }
   },
   beforeDestroy () {
     this.lastClientSelected = this.selectedIndex
@@ -146,7 +166,8 @@ export default {
       'updateAddress',
       'setClientSelected',
       'setLastClientSelected',
-      'restoreClientFilters'
+      'restoreClientFilters',
+      'setClientQuery'
     ]),
     restoreClients () {
       this.tableSelected = this.clients[this.selectedIndex]
