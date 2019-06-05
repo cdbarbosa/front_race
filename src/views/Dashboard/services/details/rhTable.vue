@@ -40,32 +40,45 @@
       <div class="content" style="padding: 1rem">
         <section>
           <h3>Fitros Básicos</h3>
-          <div class="box basic-filter" v-for="(filter, index) in basicFilter" :key="index">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+          <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
-            <b-select v-if="filter.active && filter.key == 'cost'" v-model="filter.operator">
-              <option
-                v-for="option in operator"
-                :value="option"
-                :key="option">
-              {{ option }}
-              </option>
-            </b-select>
+            <span v-if="filter.active" >
+              <b-switch v-if="filter.key === 'active'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+              <b-input  v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
+            </span>
+          </div>
+          <div class="box basic-filter" v-for="(filter, index) in rhFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'rhFilters', 'active',  $event])" :value="filter.active">
+              {{ filter.label }}
+            </b-checkbox>
+            <span v-if="filter.active" >
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
+            </span>
+          </div>
+          <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">
+            <b-checkbox @input="parseFilters([index, 'addressFilters', 'active',  $event])" :value="filter.active">
+              {{ filter.label }}
+            </b-checkbox>
+            <span v-if="filter.active" >
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'addressFilters', 'value', $event])"></b-input>
+            </span>
           </div>
         </section>
         <section>
           <h3>Fitros Acadêmicos</h3>
-          <div class="box academic-filter" v-for="(filter, index) in academicFilter" :key="index">
-            <b-checkbox v-model="filter.active" :native-value="filter.key">
+          <div class="box academic-filter" v-for="(filter, index) in academicFilters" :key="index">
+            <b-checkbox @input="parseFilters([index, 'academicFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
-            <b-input placeholder="Text here..." v-if="filter.active === true" v-model="filter.value"></b-input>
+            <span v-if="filter.active">
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'academicFilters', 'value', $event])"></b-input>
+            </span>
           </div>
           <div class="bottonFilter">
-            <button @click="filter(searchDetail); isFilterModalActive = false">Ok</button>
-            <button @click="resetFilters">Resetar</button>
+            <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
+            <button @click="$emit('restore'); isFilterModalActive = false">Resetar</button>
           </div>
         </section>
       </div>
@@ -212,6 +225,18 @@ export default {
       set (newVal) {
         this.rhSelected = newVal
       }
+    },
+    userFilters () {
+      return this.$store.getters.rhFilters.userFilters
+    },
+    rhFilters () {
+      return this.$store.getters.rhFilters.rhFilters
+    },
+    addressFilters () {
+      return this.$store.getters.rhFilters.addressFilters
+    },
+    academicFilters () {
+      return this.$store.getters.rhFilters.academicFilters
     }
   },
   watch: {
@@ -230,16 +255,21 @@ export default {
       'getRhs',
       'changeRh'
     ]),
-    filter (title) {
+    filter (name) {
       let data = {
-        search: title,
-        basicFilter: this.basicFilter.filter(f => f.active),
-        academicFilter: this.academicFilter.filter(f => f.active)
+        name: name,
+        userFilters: this.userFilters.filter(f => f.active),
+        rhFilters: this.rhFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        academicFilters: this.academicFilters.filter(f => f.active)
       }
       this.$emit('filter', data)
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    parseFilters (payload) {
+      this.setRhFilters(payload)
     },
     parseModal () {
       if (this.rhCreated === undefined) {
