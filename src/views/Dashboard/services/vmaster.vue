@@ -7,7 +7,7 @@
       </div>
       <button id="createButtonService" class="buttons is-primary" @click="log">Criar novo serviço</button>
     </h3>
-    <service-table v-if="services" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
+    <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
       <template v-slot:search>
         <b-input placeholder="Procurar por documento" v-model="searchQuery"></b-input>
       </template>

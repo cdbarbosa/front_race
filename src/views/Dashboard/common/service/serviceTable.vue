@@ -5,10 +5,10 @@
         <header>
           <h4>Serviços</h4>
           <slot name="search"></slot>
-          <span @click="searchQuery = ''">
+          <span @click="searchQuery = ''" v-if="options.search">
             <i class="fas fa-backspace"></i>
           </span>
-          <div id="edit" @click="$emit('filter')">
+          <div id="edit" @click="$emit('filter')" v-if="options.filter">
             <b-icon icon="cog"></b-icon>
           </div>
         </header>
@@ -30,6 +30,11 @@
           <b-table-column field="name" label="Situação" sortable>
             {{ props.row.status.abbreviation }}
           </b-table-column>
+          <b-table-column field="link" label="Link" v-if="options.link">
+            <router-link :to="{ name: 'service', params: { service_id: findIndex(props.row.id) } }">
+              link
+            </router-link>
+          </b-table-column>
         </template>
         <template slot="empty">
           <section class="section">
@@ -47,12 +52,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import dataTable from '../../../../mixins/dataTable.js'
 export default {
   name: 'serviceTable',
   mixins: [dataTable],
+  props: ['options'],
   computed: {
+    ...mapGetters([
+      'services'
+    ]),
     serviceSelected: {
       get () {
         return this.$store.getters.serviceSelected
@@ -67,7 +76,10 @@ export default {
   methods: {
     ...mapActions([
       'setServiceSelected'
-    ])
+    ]),
+    findIndex (id) {
+      return this.services.findIndex(service => service.id === id)
+    }
   }
 }
 </script>

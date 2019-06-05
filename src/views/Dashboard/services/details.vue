@@ -52,7 +52,7 @@
         <hr>
         <rh-table
           @filter="filterRhNotInService($event)"
-          :rhs="rhsNotInService"
+          :resources="rhsNotInService"
           :selectedIndex="rhNotInServiceSelectedIndex"
           :create="false"
           :attach="true"

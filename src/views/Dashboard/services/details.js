@@ -20,6 +20,11 @@ export default {
         hours: null,
         goal: null
       },
+      serviceTableOptions: {
+        filter: false,
+        search: false,
+        link: true
+      },
       isEditModal: false,
       isAttachModalOpen: false,
       rhNotInServiceSelected: null,

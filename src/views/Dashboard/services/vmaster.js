@@ -22,13 +22,16 @@ export default {
       serviceCreated: undefined,
       tableSelected: undefined,
       isServiceModalActive: false,
-      currentPage: 1,
-      perPage: 5
+      serviceTableOptions: {
+        filter: true,
+        search: true,
+        link: false
+      }
     }
   },
   computed: {
     selectedIndex () {
-      return this.services.findIndex(service => service.id === this.serviceSelected.id)
+      return this.serviceSelected ? this.services.findIndex(service => service.id === this.serviceSelected.id) : 0
     },
     serviceFilters () {
       return this.$store.getters.serviceFilters.serviceFilters
@@ -96,6 +99,9 @@ export default {
     services () {
       this.tableSelected = this.services[this.selectedIndex]
     },
+    selectedIndex (index) {
+      this.$router.push({ name: 'service', params: { service_id: index } })
+    },
     isServiceModalActive (newVal) {
       if (!newVal) {
         this.serviceCreated = undefined
@@ -120,7 +126,11 @@ export default {
     } else {
       this.getServices(this).then(services => {
         this.services = services
-        this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+        if (this.$route.params.service_id) {
+          this.serviceSelected = services[this.$route.params.service_id]
+        } else {
+          this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+        }
         this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
       })
     }

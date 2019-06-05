@@ -3,10 +3,10 @@ import { header } from '../../../config/index'
 import serviceTable from '../common/service/serviceTable.vue'
 import service from '../services/service.vue'
 export default {
-  name: 'clientServices',
+  name: 'rhServices',
   data () {
     return {
-      clientServices: null,
+      rhServices: null,
       selected: null,
       serviceTableOptions: {
         filter: false,
@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'clientSelected'
+      'rhSelected'
     ]),
     selectedIndex () {
-      return this.selected ? this.clientServices.findIndex(service => service.id === this.selected.id) : 0
+      return this.selected ? this.rhServices.findIndex(service => service.id === this.selected.id) : 0
     },
     linkIndex () {
       return this.services.findIndex(service => service.id === this.selected.id)
@@ -75,12 +75,13 @@ export default {
       'setServiceSelected',
       'setLastClientServiceSelected'
     ]),
-    getClientServices () {
-      this.$http.get(this.$api({ target: `client-services/${this.clientSelected.id}` }), {
+    getRhServices () {
+      this.$http.get(this.$api({ target: `rh-services/${this.rhSelected.id}` }), {
         headers: header()
       }).then(response => {
-        this.clientServices = response.data
-        this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
+        console.log(response)
+        // this.rhServices = response.data
+        // this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
       })
     }
   },
