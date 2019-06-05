@@ -59,7 +59,7 @@
           :service_id="service.id"
           @update="setRhNotInServiceSelected($event[0])"
           @attachRh="isAttachModalOpen = true"
-          @reset="reset($event)">
+          @restore="reset($event)">
           <span slot="title">RH's</span>
         </rh-table>
       </section>
