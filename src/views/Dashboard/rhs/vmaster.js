@@ -23,11 +23,41 @@ export default {
       isEditActive: false,
       rhCreated: undefined,
       isRhModalActive: false,
-      searchQuery: undefined,
       tableSelected: undefined
     }
   },
   computed: {
+    userFilters () {
+      return this.$store.getters.rhFilters.userFilters
+    },
+    addressFilters () {
+      return this.$store.getters.rhFilters.addressFilters
+    },
+    rhFilters () {
+      return this.$store.getters.rhFilters.rhFilters
+    },
+    academicFilters () {
+      return this.$store.getters.rhFilters.academicFilters
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.rhFilters).forEach(fi => {
+        if (fi === 'name') {
+          if (this.$store.getters.rhFilters[fi]) ret = true
+        } else {
+          if (this.$store.getters.rhFilters[fi].filter(f => f.active).length) ret = true
+        }
+      })
+      return ret
+    },
+    searchQuery: {
+      get () {
+        return this.$store.getters.rhFilters.name
+      },
+      set: _.debounce(function (newQuery) {
+        this.setRhQuery(newQuery)
+      }, 500)
+    },
     selected: {
       get () {
         return this.rhSelected ? this.rhSelected : this.rhs[0]
@@ -81,33 +111,40 @@ export default {
     isRhModalActive () {
       this.rhCreated = undefined
     },
-    searchQuery: _.debounce(function (newQuery, oldQuery) {
-      console.log(newQuery)
-      this.rhSelected = undefined
-      if (newQuery === '' && newQuery === oldQuery) {
-        this.getRhs(this)
-      } else {
-        this.searchRh(newQuery)
-      }
-    }, 500),
+    searchQuery (newQuery, oldQuery) {
+      if (newQuery === '' || newQuery === oldQuery) this.restoreRhs()
+      else this.filter()
+    },
+    // searchQuery: _.debounce(function (newQuery, oldQuery) {
+    //   this.rhSelected = undefined
+    //   if (newQuery === '' && newQuery === oldQuery) {
+    //     this.getRhs(this)
+    //   } else {
+    //     this.searchRh(newQuery)
+    //   }
+    // }, 500),
     selected (newVal) {
       if (this.rhs.length > 0) {
         this.$router.push({ name: 'rh', params: { rh_id: newVal.id } })
       }
     }
   },
-  activated () {
-    if (this.selected) {
-      if (this.rhSelected) this.$router.push({ name: 'rh', params: { rh_id: this.rhSelected.id } })
-      else this.$router.push({ name: 'rh', params: { rh_id: this.selected.id } })
-    }
-  },
+  // activated () {
+  //   if (this.selected) {
+  //     if (this.rhSelected) this.$router.push({ name: 'rh', params: { rh_id: this.rhSelected.id } })
+  //     else this.$router.push({ name: 'rh', params: { rh_id: this.selected.id } })
+  //   }
+  // },
   beforeMount () {
-    this.getRhs(this).then(rhs => {
-      this.rhs = rhs
-      this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
-    })
-    // console.log(this.rhs)
+    if (this.filterActive) {
+      this.filter()
+    } else {
+      this.getRhs(this).then(rhs => {
+        this.rhs = rhs
+        this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
+      })
+    }
+    this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
   },
   beforeDestroy () {
     this.lastRhSelected = this.selectedIndex
@@ -119,7 +156,8 @@ export default {
       'updateRh',
       'setRhSelected',
       'setLastRhSelected',
-      'restoreRhFilters'
+      'restoreRhFilters',
+      'setRhQuery'
     ]),
     restoreRhSelected () {
       this.setRhSelected(this.rhs[this.selectedIndex])
@@ -135,12 +173,19 @@ export default {
       }
       return 'error'
     },
-    filter (filters) {
-      this.$http.post(this.$api({ target: 'filter-rh' }), filters, {
+    filter () {
+      let data = {
+        name: this.searchQuery,
+        userFilters: this.userFilters.filter(f => f.active),
+        rhFilters: this.rhFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        academicFilters: this.academicFilters.filter(f => f.active)
+      }
+      this.$http.post(this.$api({ target: 'filter-rh' }), data, {
         headers: header()
       }).then(response => {
         this.rhs = response.data
-        this.rhSelected = response.data[0]
+        this.rhSelected = response.data[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
         this.isFilterModalActive = false
       })
     },

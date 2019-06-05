@@ -99,8 +99,8 @@ export default {
     services () {
       this.tableSelected = this.services[this.selectedIndex]
     },
-    selectedIndex (index) {
-      this.$router.push({ name: 'service', params: { service_id: index } })
+    selectedIndex () {
+      this.$router.push({ name: 'service', params: { service_id: this.serviceSelected.id } })
     },
     isServiceModalActive (newVal) {
       if (!newVal) {
@@ -127,7 +127,7 @@ export default {
       this.getServices(this).then(services => {
         this.services = services
         if (this.$route.params.service_id) {
-          this.serviceSelected = services[this.$route.params.service_id]
+          this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
         } else {
           this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
         }
@@ -184,6 +184,9 @@ export default {
         this.serviceSelected = response.data[0]
         this.isFilterModal = false
       })
+    },
+    findIndex (id) {
+      return this.services.findIndex(service => service.id === id)
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

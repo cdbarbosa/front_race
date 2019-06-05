@@ -2,6 +2,7 @@ import { header } from '../config/index.js'
 
 const getFilters = () => {
   return {
+    name: null,
     userFilters: [
       {
         key: 'active',
@@ -62,6 +63,7 @@ const state = {
   rhsInService: [],
   rhByService: [],
   lastRhSelected: undefined,
+  lastRhServiceSelected: undefined,
   rhFilters: getFilters()
 }
 
@@ -79,8 +81,14 @@ const mutations = {
   SET_RHS (state, rhs) {
     state.rhs = rhs
   },
+  SET_RH_QUERY (state, query) {
+    state.rhFilters.name = query
+  },
   RESTORE_RH_FILTERS (state) {
     state.rhFilters = getFilters()
+  },
+  SET_LAST_RH_SERVICE_SELECTED (state, index) {
+    state.lastRhServiceSelected = index
   },
   SET_LAST_RH_SELECTED (state, index) {
     state.lastRhSelected = index
@@ -157,8 +165,14 @@ const actions = {
   setRhFilters ({ commit }, payload) {
     commit('SET_RH_FILTERS', payload)
   },
+  setRhQuery ({ commit }, query) {
+    commit('SET_RH_QUERY', query)
+  },
   restoreRhFilters ({ commit }) {
     commit('RESTORE_RH_FILTERS')
+  },
+  setLastRhServiceSelected ({ commit }, index) {
+    commit('SET_LAST_RH_SERVICE_SELECTED', index)
   },
   setLastRhSelected ({ commit }, index) {
     commit('SET_LAST_RH_SELECTED', index)

@@ -28,12 +28,12 @@ export default {
     serviceQuery () {
       return this.$store.getters.serviceFilters.name
     },
-    lastClientServiceSelected: {
+    lastRhServiceSelected: {
       get () {
-        return this.$store.getters.lastClientServiceSelected
+        return this.$store.getters.lastRhServiceSelected
       },
       set (index) {
-        this.setLastClientServiceSelected(index)
+        this.setLastRhServiceSelected(index)
       }
     },
     services: {
@@ -60,28 +60,27 @@ export default {
     }
   },
   beforeMount () {
-    this.getClientServices()
+    this.getRhServices()
     this.getServices(this).then(services => {
       this.services = services
     })
   },
   beforeDestroy () {
-    this.lastClientServiceSelected = this.selectedIndex
+    this.lastRhServiceSelected = this.selectedIndex
   },
   methods: {
     ...mapActions([
       'getServices',
       'setServices',
       'setServiceSelected',
-      'setLastClientServiceSelected'
+      'setLastRhServiceSelected'
     ]),
     getRhServices () {
       this.$http.get(this.$api({ target: `rh-services/${this.rhSelected.id}` }), {
         headers: header()
       }).then(response => {
-        console.log(response)
-        // this.rhServices = response.data
-        // this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
+        this.rhServices = response.data
+        this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
       })
     }
   },

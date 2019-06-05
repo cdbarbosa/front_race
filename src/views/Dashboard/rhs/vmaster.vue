@@ -10,6 +10,9 @@
     <div class="content __display">
       <rh-table v-if="rhs" :resources="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @searchByDocument="searchUserByDocument" @restore="restoreRhs($event)">
         <span slot="title">RH's</span>
+        <template v-slot:search>
+          <b-input placeholder="Procurar por um RH" v-model="searchQuery"></b-input>
+        </template>
       </rh-table>
     </div>
     <div class="content" v-if="rhSelected">

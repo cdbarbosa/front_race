@@ -31,7 +31,7 @@
             {{ props.row.status.abbreviation }}
           </b-table-column>
           <b-table-column field="link" label="Link" v-if="options.link">
-            <router-link :to="{ name: 'service', params: { service_id: findIndex(props.row.id) } }">
+            <router-link :to="{ name: 'service', params: { service_id: props.row.id } }">
               link
             </router-link>
           </b-table-column>

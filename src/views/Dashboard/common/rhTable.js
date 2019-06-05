@@ -120,14 +120,7 @@ export default {
       return 'error'
     },
     filter (name) {
-      let data = {
-        name: name,
-        userFilters: this.userFilters.filter(f => f.active),
-        rhFilters: this.rhFilters.filter(f => f.active),
-        addressFilters: this.addressFilters.filter(f => f.active),
-        academicFilters: this.academicFilters.filter(f => f.active)
-      }
-      this.$emit('filter', data)
+     this.$emit('filter')
     }
   },
   components: {
