@@ -6,7 +6,7 @@
           <slot name="title"></slot>
         </h4>
         <slot name="search"></slot>
-        <b-input placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
+        <b-input v-if="document" placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
         <span @click="$emit('restore')">
           <i class="fas fa-backspace"></i>
         </span>
@@ -22,8 +22,8 @@
           <b-table-column field="user.email" label="Email">
             {{ props.row.user.email }}
           </b-table-column>
-          <b-table-column field="cost" label="Custo" sortable>
-            {{'R$ ' + props.row.cost }}
+          <b-table-column field="cost" label="Custo">
+            R$ {{ parseFloat(props.row.cost) }}
           </b-table-column>
         </template>
         <template slot="empty">

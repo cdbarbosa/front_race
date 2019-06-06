@@ -4,6 +4,9 @@
 @import '../3-components/service/_create';
 
 #dashboard #services{
+  .__secundary .tableContainer header {
+    grid-template-columns: auto 1fr auto auto;
+  }
   #createButtonService {
     position: absolute;
     top: 0;
@@ -68,9 +71,15 @@
   }
 }
 #dashboard #serviceDetails{
+  .__secundary .tableContainer header {
+    grid-template-columns: auto 1fr auto auto;
+  }
   .content{
     grid-template-columns: 3fr 2fr;
     section{
+      .tableContainer header{
+        
+      }
       article{
         grid-template-columns: 11fr 1fr;
         &:nth-child(4){

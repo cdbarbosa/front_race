@@ -56,11 +56,17 @@
           :selectedIndex="rhNotInServiceSelectedIndex"
           :create="false"
           :attach="true"
+          :document="false"
           :service_id="service.id"
+          :setFunction="setRhNotInServiceFilters"
+          :getStore="'rhNotInServiceFilters'"
           @update="setRhNotInServiceSelected($event[0])"
           @attachRh="isAttachModalOpen = true"
           @restore="reset($event)">
           <span slot="title">RH's</span>
+          <template v-slot:search>
+            <b-input placeholder="Procurar por um RH" v-model="searchQueryNotInService"></b-input>
+          </template>
         </rh-table>
       </section>
     </div>

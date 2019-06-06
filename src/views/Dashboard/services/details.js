@@ -1,5 +1,6 @@
 import { header } from '../../../config/index.js'
 import { mapActions, mapGetters } from 'vuex'
+import _ from 'lodash'
 import moment from 'moment'
 import rhTable from '../common/rhTable.vue'
 import rhTableDetails from './details/rhTable.vue'
@@ -51,6 +52,37 @@ export default {
       'rhsNotInService',
       'rhsInService'
     ]),
+    userFilters () {
+      return this.$store.getters.rhNotInServiceFilters.userFilters
+    },
+    addressFilters () {
+      return this.$store.getters.rhNotInServiceFilters.addressFilters
+    },
+    rhFilters () {
+      return this.$store.getters.rhNotInServiceFilters.rhFilters
+    },
+    academicFilters () {
+      return this.$store.getters.rhNotInServiceFilters.academicFilters
+    },
+    filterActive () {
+      let ret = false
+      Object.keys(this.$store.getters.rhNotInServiceFilters).forEach(fi => {
+        if (fi === 'name') {
+          if (this.$store.getters.rhNotInServiceFilters[fi]) ret = true
+        } else {
+          if (this.$store.getters.rhNotInServiceFilters[fi].filter(f => f.active).length) ret = true
+        }
+      })
+      return ret
+    },
+    searchQueryNotInService: {
+      get () {
+        return this.$store.getters.rhNotInServiceFilters.name
+      },
+      set: _.debounce(function (newQuery) {
+        this.setRhNotInServiceQuery(newQuery)
+      }, 500)
+    },
     selected: {
       get () {
         return this.rhSelected ? this.rhSelected : (this.rhsService === undefined ? undefined : this.rhsService[0])
@@ -69,6 +101,12 @@ export default {
   watch: {
     rhNotInService (newVal) {
       this.rhServiceFields.cost = parseFloat(newVal.cost)
+    },
+    searchQueryNotInService (newQuery) {
+      if (newQuery === '') {
+        if (this.filterActive) this.filterRhNotInService()
+        else this.restoreRhNotInService()
+      } else this.filterRhNotInService()
     }
   },
   // activated () {
@@ -94,13 +132,27 @@ export default {
       'updateService',
       'setRhsNotInService',
       'setRhsInService',
-      'updateRh'
+      'updateRh',
+      'setRhNotInServiceFilters',
+      'restoreRhNotInServiceFilters',
+      'setRhNotInServiceQuery'
     ]),
-    filterRhNotInService (data) {
-      this.$http.post(this.$api({ target: 'rh-not-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+    restoreRhNotInService () {
+      this.getRhNotInService()
+      this.restoreRhNotInServiceFilters()
+    },
+    filterRhNotInService () {
+      let data = {
+        service_id: this.$store.getters.serviceSelected.id,
+        name: this.searchQueryNotInService,
+        userFilters: this.userFilters.filter(f => f.active),
+        rhFilters: this.rhFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        academicFilters: this.academicFilters.filter(f => f.active)
+      }
+      this.$http.post(this.$api({ target: 'filter-rh-not-in-service' }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.setRhsNotInService(response.data)
       })
     },

@@ -10,6 +10,15 @@ export default {
   name: 'rhTable',
   mixins: [dataTable],
   props: {
+    setFunction: {
+      type: Function
+    },
+    getStore: {
+      default: 'rhFilters'
+    },
+    document: {
+      default: true
+    },
     create: {
       default: true
     },
@@ -54,22 +63,26 @@ export default {
   computed: {
     filterActive () {
       let ret = false
-      Object.keys(this.$store.getters.rhFilters).forEach(fi => {
-        if (this.$store.getters.rhFilters[fi].filter(f => f.active).length) ret = true
+      Object.keys(this.$store.getters[this.getStore]).forEach(fi => {
+        if (fi === 'name') {
+          if (this.$store.getters[this.getStore][fi]) ret = true
+        } else {
+          if (this.$store.getters[this.getStore][fi].filter(f => f.active).length) ret = true
+        }
       })
       return ret
     },
     userFilters () {
-      return this.$store.getters.rhFilters.userFilters
+      return this.$store.getters[this.getStore].userFilters
     },
     rhFilters () {
-      return this.$store.getters.rhFilters.rhFilters
+      return this.$store.getters[this.getStore].rhFilters
     },
     academicFilters () {
-      return this.$store.getters.rhFilters.academicFilters
+      return this.$store.getters[this.getStore].academicFilters
     },
     addressFilters () {
-      return this.$store.getters.rhFilters.addressFilters
+      return this.$store.getters[this.getStore].addressFilters
     }
   },
   watch: {
@@ -87,7 +100,6 @@ export default {
       this.rhSelected = undefined
       if (newVal === '' || newVal === oldVal) {
         this.tableSelected = this.resources[this.selectedIndex]
-        // this.$emit('restore')
         if (this.filterActive) this.filter()
         else this.$emit('restore')
       } else {
@@ -106,7 +118,7 @@ export default {
       'setRhFilters'
     ]),
     parseFilters (payload) {
-      this.setRhFilters(payload)
+      this.setFunction(payload)
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -119,8 +131,8 @@ export default {
       }
       return 'error'
     },
-    filter (name) {
-     this.$emit('filter')
+    filter () {
+      this.$emit('filter')
     }
   },
   components: {

@@ -8,7 +8,7 @@
       <button id="createButtonRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
     </h3>
     <div class="content __display">
-      <rh-table v-if="rhs" :resources="rhs" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @searchByDocument="searchUserByDocument" @restore="restoreRhs($event)">
+      <rh-table v-if="rhs" :resources="rhs" :setFunction="setRhFilters" :document="true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="filter($event)" @searchByDocument="searchUserByDocument" @restore="restoreRhs($event)">
         <span slot="title">RH's</span>
         <template v-slot:search>
           <b-input placeholder="Procurar por um RH" v-model="searchQuery"></b-input>

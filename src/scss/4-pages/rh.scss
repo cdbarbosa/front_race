@@ -127,8 +127,11 @@
   grid-template-columns: 2fr 2fr .2fr .2fr;
 }
 
-#master {
+#rhs #master {
   .content {
+    .__secundary .tableContainer header{
+      grid-template-columns: auto 1fr .5fr auto auto;
+    }
     #academics {
       display: grid;
       grid-template-columns: repeat(2, 1fr);

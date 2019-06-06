@@ -64,7 +64,8 @@ const state = {
   rhByService: [],
   lastRhSelected: undefined,
   lastRhServiceSelected: undefined,
-  rhFilters: getFilters()
+  rhFilters: getFilters(),
+  rhNotInServiceFilters: getFilters()
 }
 
 const getters = {
@@ -74,7 +75,8 @@ const getters = {
   rhsInService: () => state.rhsInService,
   rhByService: () => state.rhByService,
   lastRhSelected: () => state.lastRhSelected,
-  rhFilters: () => state.rhFilters
+  rhFilters: () => state.rhFilters,
+  rhNotInServiceFilters: () => state.rhNotInServiceFilters
 }
 
 const mutations = {
@@ -84,8 +86,14 @@ const mutations = {
   SET_RH_QUERY (state, query) {
     state.rhFilters.name = query
   },
+  SET_RH_NOT_IN_SERVICE_QUERY (state, query) {
+    state.rhNotInServiceFilters.name = query
+  },
   RESTORE_RH_FILTERS (state) {
     state.rhFilters = getFilters()
+  },
+  RESTORE_RH_NOT_IN_SERVICE_FILTERS (state) {
+    state.rhNotInServiceFilters = getFilters()
   },
   SET_LAST_RH_SERVICE_SELECTED (state, index) {
     state.lastRhServiceSelected = index
@@ -102,6 +110,13 @@ const mutations = {
     const key = payload[2]
     const value = payload[3]
     state.rhFilters[filter][index][key] = value
+  },
+  SET_RH_NOT_IN_SERVICE_FILTERS (state, payload) {
+    const index = payload[0]
+    const filter = payload[1]
+    const key = payload[2]
+    const value = payload[3]
+    state.rhNotInServiceFilters[filter][index][key] = value
   },
   UPDATE_RH_SELECTED (state, payload) {
     const label = payload[0]
@@ -165,11 +180,20 @@ const actions = {
   setRhFilters ({ commit }, payload) {
     commit('SET_RH_FILTERS', payload)
   },
+  setRhNotInServiceFilters ({ commit }, payload) {
+    commit('SET_RH_NOT_IN_SERVICE_FILTERS', payload)
+  },
   setRhQuery ({ commit }, query) {
     commit('SET_RH_QUERY', query)
   },
+  setRhNotInServiceQuery ({ commit }, query) {
+    commit('SET_RH_NOT_IN_SERVICE_QUERY', query)
+  },
   restoreRhFilters ({ commit }) {
     commit('RESTORE_RH_FILTERS')
+  },
+  restoreRhNotInServiceFilters ({ commit }) {
+    commit('RESTORE_RH_NOT_IN_SERVICE_FILTERS')
   },
   setLastRhServiceSelected ({ commit }, index) {
     commit('SET_LAST_RH_SERVICE_SELECTED', index)

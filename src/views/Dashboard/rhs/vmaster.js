@@ -157,7 +157,8 @@ export default {
       'setRhSelected',
       'setLastRhSelected',
       'restoreRhFilters',
-      'setRhQuery'
+      'setRhQuery',
+      'setRhFilters'
     ]),
     restoreRhSelected () {
       this.setRhSelected(this.rhs[this.selectedIndex])
