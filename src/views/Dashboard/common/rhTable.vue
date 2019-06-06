@@ -19,8 +19,11 @@
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
           </b-table-column>
+          <b-table-column v-if="mode === 'neutral'" field="user.document" label="CPF/CNPJ">
+            {{ props.row.user.document }}
+          </b-table-column>
           <b-table-column v-if="mode !== 'in'" field="user.email" label="Email">
-            {{ props.row.user.email }}
+            <a :href="`mailto:${props.row.user.email}`" target="_blank">{{ props.row.user.email }}</a>
           </b-table-column>
           <b-table-column v-if="mode !== 'in'" field="cost" label="Custo">
             R$ {{ parseFloat(props.row.cost) }}

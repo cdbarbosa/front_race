@@ -26,11 +26,11 @@
               <b-table-column field="name" label="NOME" sortable>
                 {{ props.row.name }}
               </b-table-column>
-              <b-table-column field="created_at" label="CADASTRO">
-                {{ parseDate(props.row.created_at) }}
+              <b-table-column field="user.document" label="CPF/CNPJ">
+                {{ props.row.user.document }}
               </b-table-column>
               <b-table-column field="user.email" label="EMAIL">
-                {{ props.row.user.email }}
+                <a :href="`mailto:${props.row.user.email}`" target="_blank">{{ props.row.user.email }}</a>
               </b-table-column>
               <b-table-column field="phone" label="TELEFONE">
                 {{ props.row.phone }}

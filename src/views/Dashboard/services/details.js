@@ -104,9 +104,15 @@ export default {
     },
     searchQueryNotInService (newQuery) {
       if (newQuery === '') {
-        if (this.filterActive) this.filterRhNotInService()
-        else this.restoreRhNotInService()
-      } else this.filterRhNotInService()
+        if (this.filterActive) {
+          console.log('filter')
+          this.filterRhNotInService()
+        } else {
+          this.restoreRhNotInService()
+        }
+      } else {
+        this.filterRhNotInService()
+      }
     }
   },
   // activated () {
@@ -139,7 +145,7 @@ export default {
     ]),
     restoreRhNotInService () {
       this.getRhNotInService()
-      this.restoreRhNotInServiceFilters()
+      // this.restoreRhNotInServiceFilters()
     },
     filterRhNotInService () {
       let data = {
@@ -190,7 +196,7 @@ export default {
       }
       this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
         headers: header()
-      }).then(response => {
+      }).then(() => {
         this.isEditModal = false
         this.getRhInService()
       })
@@ -265,13 +271,6 @@ export default {
         this.getRhInService()
         this.getRhNotInService()
       })
-    },
-    reset (e) {
-      if (e === 'service') {
-        this.getRhInService()
-      } else {
-        this.getRhNotInService()
-      }
     }
   },
   components: {
