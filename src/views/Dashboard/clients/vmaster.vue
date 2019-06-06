@@ -23,16 +23,16 @@
           </header>
           <b-table :data="clients" :selected.sync="selected" @update:selected="setClientSelected($event)" :paginated="true" :per-page="perPage" :current-page.sync="currentPage" focusable>
             <template slot-scope="props">
-              <b-table-column field="name" label="NOME" sortable>
+              <b-table-column field="name" label="Nome" sortable>
                 {{ props.row.name }}
               </b-table-column>
               <b-table-column field="user.document" label="CPF/CNPJ">
                 {{ props.row.user.document }}
               </b-table-column>
-              <b-table-column field="user.email" label="EMAIL">
+              <b-table-column field="user.email" label="Email">
                 <a :href="`mailto:${props.row.user.email}`" target="_blank">{{ props.row.user.email }}</a>
               </b-table-column>
-              <b-table-column field="phone" label="TELEFONE">
+              <b-table-column field="phone" label="Telefone">
                 {{ props.row.phone }}
               </b-table-column>
             </template>

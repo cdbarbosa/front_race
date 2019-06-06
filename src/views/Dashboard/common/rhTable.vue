@@ -25,6 +25,9 @@
           <b-table-column v-if="mode !== 'in'" field="user.email" label="Email">
             <a :href="`mailto:${props.row.user.email}`" target="_blank">{{ props.row.user.email }}</a>
           </b-table-column>
+          <b-table-column field="phone" label="Telefone">
+            {{ props.row.phone }}
+          </b-table-column>
           <b-table-column v-if="mode !== 'in'" field="cost" label="Custo">
             R$ {{ parseFloat(props.row.cost) }}
           </b-table-column>
