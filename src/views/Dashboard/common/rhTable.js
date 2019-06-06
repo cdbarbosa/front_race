@@ -10,6 +10,9 @@ export default {
   name: 'rhTable',
   mixins: [dataTable],
   props: {
+    mode: {
+      default: 'neutral'
+    },
     setFunction: {
       type: Function
     },

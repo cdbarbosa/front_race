@@ -13,7 +13,6 @@ export default {
   name: 'clients',
   data () {
     return {
-      // searchQuery: null,
       searchDocument: null,
       clientCreated: undefined,
       isModalActive: false,
@@ -110,26 +109,14 @@ export default {
     isModalActive (newVal) {
       if (!newVal) this.clientCreated = undefined
     },
-    // searchQuery: _.debounce(function (newQuery, oldQuery) {
-    //   this.tableSelected = undefined
-    //   if (newQuery === '' || newQuery === oldQuery) {
-    //     if (this.filterActive) this.searchClient()
-    //     else this.restoreClients()
-    //   } else {
-    //     this.searchClient(newQuery)
-    //   }
-    // }, 500),
-    searchQuery (newQuery, oldQuery) {
-      if (newQuery === '' || newQuery === oldQuery) this.restoreClients()
-      else this.searchClient()
+    searchQuery (newQuery) {
+      if (newQuery === '' || newQuery === null) {
+        if (!this.searchDocument) this.restoreClients()
+      } else this.searchClient()
     },
-    searchDocument: _.debounce(function (newQuery, oldQuery) {
-      this.searchQuery = ''
+    searchDocument: _.debounce(function (newQuery) {
       if (newQuery === '') this.restoreClients()
-      else {
-        this.restoreClientFilters()
-        this.searchUserByDocument(newQuery)
-      }
+      else this.searchUserByDocument(newQuery)
     }, 500),
     selected (newVal) {
       if (this.clients.length > 0) {
@@ -170,11 +157,13 @@ export default {
       'setClientQuery'
     ]),
     restoreClients () {
-      this.tableSelected = this.clients[this.selectedIndex]
-      this.getClients(this).then(clients => {
-        this.clients = clients
-        this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-      })
+      if (!this.document) {
+        this.tableSelected = this.clients[this.selectedIndex]
+        this.getClients(this).then(clients => {
+          this.clients = clients
+          this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+        })
+      }
     },
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
@@ -222,6 +211,7 @@ export default {
         this.clients = response.data
         this.clientSelected = response.data[0]
         this.isFilterModal = false
+        this.searchQuery = ''
       })
     }
   },

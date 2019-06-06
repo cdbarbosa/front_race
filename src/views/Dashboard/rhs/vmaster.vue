@@ -18,7 +18,7 @@
     <div class="content" v-if="rhSelected">
       <generic-user :person="rhSelected"></generic-user>
       <section>
-        <b-field label="Custo por Hora">
+        <b-field label="Custo (hora)">
           <money v-if="rhSelected.cost" class="input" :value="rhSelected.cost" v-money="money" :masked="true" disabled></money>
           <div v-else class="textarea __disabled" disabled></div>
         </b-field>

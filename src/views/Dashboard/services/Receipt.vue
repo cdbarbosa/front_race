@@ -58,10 +58,10 @@
         </header>
         <form @submit.prevent="createReceipt">
           <b-field label="Data">
-            <b-datepicker v-model="receipt.date" v-mask="'##/##/####'" placeholder="10/10/1994" name="date" required></b-datepicker>
+            <b-datepicker v-model="receipt.date" v-mask="'##/##/####'" placeholder="Data do recebimento" name="date" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" required></b-datepicker>
           </b-field>
           <b-field label="Valor (R$)">
-            <b-input v-model="receipt.value" placeholder="300,00" name="date" required></b-input>
+            <b-input type="number" step="0.01" v-model="receipt.value" placeholder="300,00" name="date" required></b-input>
           </b-field>
           <button type="submit">Criar</button>
         </form>
@@ -136,7 +136,7 @@ export default {
         service_id: this.$route.params.service_id,
         receipt: {
           date: this.receipt.date,
-          value: this.receipt.value.split('.').join('').split(',').join('.')
+          value: this.receipt.value
         }
       }
       this.$http.post(this.$api({ target: 'receipts' }), data, {

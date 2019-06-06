@@ -7,7 +7,7 @@
         </h4>
         <slot name="search"></slot>
         <b-input v-if="document" placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
-        <span @click="$emit('restore')">
+        <span v-if="filters" @click="$emit('restore')">
           <i class="fas fa-backspace"></i>
         </span>
         <div id="edit" v-if="filters" @click="isFilterModalActive = true">
@@ -19,11 +19,14 @@
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
           </b-table-column>
-          <b-table-column field="user.email" label="Email">
+          <b-table-column v-if="mode !== 'in'" field="user.email" label="Email">
             {{ props.row.user.email }}
           </b-table-column>
-          <b-table-column field="cost" label="Custo">
+          <b-table-column v-if="mode !== 'in'" field="cost" label="Custo">
             R$ {{ parseFloat(props.row.cost) }}
+          </b-table-column>
+          <b-table-column v-else field="pivot.cost" label="Custo">
+            R$ {{ parseFloat(props.row.pivot.cost) }}
           </b-table-column>
         </template>
         <template slot="empty">

@@ -46,9 +46,27 @@
         </div>
       </section>
       <section>
-        <rh-table-details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" :selectedIndex="rhInServiceSelectedIndex" @update="setRhInServiceSelected($event[0])">
-          <span slot="title">RH's Responsáveis</span>
-        </rh-table-details>
+        <rh-table
+          @filter="filterRhNotInService($event)"
+          :resources="rhsInService"
+          :selectedIndex="rhNotInServiceSelectedIndex"
+          :create="false"
+          :filters="false"
+          :attach="false"
+          :search="false"
+          :document="false"
+          :service_id="service.id"
+          :setFunction="setRhNotInServiceFilters"
+          :getStore="'rhNotInServiceFilters'"
+          :mode="'in'"
+          @update="setRhInServiceSelected($event[0])"
+          @attachRh="isAttachModalOpen = true"
+          @restore="reset($event)">
+          <span slot="title">RH's (associados)</span>
+        </rh-table>
+        <!-- <rh&#45;table&#45;details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" :selectedIndex="rhInServiceSelectedIndex" > -->
+        <!--   <span slot="title">RH's Responsáveis</span> -->
+        <!-- </rh&#45;table&#45;details> -->
         <hr>
         <rh-table
           @filter="filterRhNotInService($event)"
@@ -89,13 +107,13 @@
               </b-field>
             </article>
             <article>
-              <b-field label="Custo por Hora Padrão">
+              <b-field label="Custo (padrão)">
                 <money class="input" :value="rhNotInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
               </b-field>
-              <b-field label="Numero de Horas">
+              <b-field label="Demanda">
                 <b-input  v-model="rhServiceFields.hours" required></b-input>
               </b-field>
-              <b-field label="Custo por Hora para o Serviço (R$)">
+              <b-field label="Custo (no serviço)">
                 <b-input type="number" step="0.01" v-model="rhServiceFields.cost" required></b-input>
               </b-field>
             </article>

@@ -23,7 +23,7 @@
       <b-field label="Email">
         <b-input :value="person.user.email" type="email" placeholder="example@example.com" disabled></b-input>
       </b-field>
-      <b-field label="Data de Nascimento">
+      <b-field label="Data (nascimento)">
         <b-input :value="parseDate(person.user.birthdate)" v-mask="'##/##/####'" disabled></b-input>
       </b-field>
     </article>
