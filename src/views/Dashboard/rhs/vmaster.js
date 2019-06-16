@@ -201,6 +201,7 @@ export default {
       this.$http.post(this.$api({ target: 'search-rh-document' }), { document: document }, {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.rhs = response.data
         this.rhSelected = response.data[0]
       })

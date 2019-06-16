@@ -3,6 +3,14 @@
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
+    <div id="refresh" v-if="updateExists">
+      <p>
+      Novo conteúdo encontrado!
+      </p>
+      <button @click="refreshApp">
+        Atualizar
+      </button>
+    </div>
   </div>
 </template>
 
@@ -11,12 +19,34 @@ export default {
   name: 'app',
   data () {
     return {
-      scroll: 0
+      scroll: 0,
+      refreshing: false,
+      updateExists: false,
+      registration: null
     }
+  },
+  created () {
+    document.addEventListener('swUpdated', this.showRefreshUI, { once: true })
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (this.refreshing) return
+      this.refreshing = true
+      // Here the actual reload of the page occurs
+      window.location.reload()
+    })
   },
   mounted () {
   },
   methods: {
+    showRefreshUI (e) {
+      this.registration = e.detail
+      this.updateExists = true
+    },
+    refreshApp () {
+      this.updateExists = false
+      if (!this.registration || !this.registration.waiting) return
+      // send message to SW to skip the waiting and activate the new SW
+      this.registration.waiting.postMessage('skipWaiting')
+    }
   },
   components: {
   }

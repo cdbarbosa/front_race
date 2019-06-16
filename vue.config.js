@@ -6,10 +6,10 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 module.exports = {
   pwa: {
     name: 'Race',
-    themeColor: '#602175', // project main color
-    msTileColor: '#602175', // project main color
+    themeColor: '#00466d', // project main color
+    msTileColor: '#00466d', // project main color
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+    appleMobileWebAppStatusBarStyle: 'white',
     iconPaths: {
       favicon32: 'img/icons/favicon-32x32.png',
       favicon16: 'img/icons/favicon-16x16.png',
@@ -17,8 +17,10 @@ module.exports = {
       maskIcon: 'img/icons/safari-pinned-tab.svg',
       msTileImage: 'img/icons/msapplication-icon-144x144.png'
     },
+    workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      skipWaiting: true
+      swSrc: 'src/service-worker.js',
+      exclude: [/\.map$/, /manifest\.json$/]
     }
   },
   chainWebpack: (config) => {
