@@ -24,7 +24,7 @@
           <b-table :data="clients" :selected.sync="selected" @update:selected="setClientSelected($event)" :paginated="true" :per-page="perPage" :current-page.sync="currentPage" focusable>
             <template slot-scope="props">
               <b-table-column field="name" label="Nome" sortable>
-                {{ props.row.name }}
+                {{ props.row.name.length > 130 ? props.row.name.slice(0, 130) + ' ...' : props.row.name }}
               </b-table-column>
               <b-table-column field="user.document" label="CPF/CNPJ">
                 {{ props.row.user.document }}

@@ -16,7 +16,7 @@
       <b-table :current-page.sync="currentPage" :data="resources" :selected.sync="selected" :paginated="true" @update:selected="$emit('update', $event)"  :per-page="perPage" focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="Titulo" sortable>
-            {{ props.row.name }}
+            {{ props.row.name.length > 130 ? props.row.name.slice(0, 130) + ' ...' : props.row.name }}
           </b-table-column>
           <b-table-column v-if="props.row.client" field="name" label="Cliente">
             {{ props.row == undefined ? undefined : props.row.client.name }}

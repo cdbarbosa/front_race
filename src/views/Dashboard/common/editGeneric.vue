@@ -24,14 +24,24 @@
         <b-field label="Email">
           <b-input v-model="email" type="email" placeholder="example@example.com" ></b-input>
         </b-field>
-        <div class="block">
-          <b-radio v-model="userType" native-value="1" >
-            Jurídica
-          </b-radio>
-          <b-radio v-model="userType" native-value="2" >
-            Física
-          </b-radio>
-        </div>
+        <b-field label="Tipo">
+          <div class="control block">
+            <b-radio v-model="userType" native-value="1" >
+              Jurídica
+            </b-radio>
+            <b-radio v-model="userType" native-value="2" >
+              Física
+            </b-radio>
+          </div>
+        </b-field>
+        <!-- <div class="block"> -->
+        <!--   <b&#45;radio v&#45;model="userType" native&#45;value="1" > -->
+        <!--     Jurídica -->
+        <!--   </b&#45;radio> -->
+        <!--   <b&#45;radio v&#45;model="userType" native&#45;value="2" > -->
+        <!--     Física -->
+        <!--   </b&#45;radio> -->
+        <!-- </div> -->
       </article>
       <article v-if="userType == 2">
         <b-field label="CPF/CNPJ">

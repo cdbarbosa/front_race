@@ -120,8 +120,11 @@
 						&:nth-child(4){
 							grid-template-columns: 1fr 1fr;
               .field{
+                margin-top: 1.4rem;
+                .b-radio{
+                  margin-top: 0.5rem;
+                }
                 &:nth-child(1){
-                  margin-top: 1.4rem;
                 }
               }
 						}

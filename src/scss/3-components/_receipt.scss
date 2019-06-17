@@ -1,4 +1,12 @@
 #dashboard main#receipt{
+  .modal{
+    #createReceipt{
+      min-height: 500px;
+    }
+  }
+  .content{
+    grid-template-columns: 1fr 1fr;
+  }
   .content section {
     .tableContainer {
       header {

@@ -5,7 +5,7 @@
     </transition>
     <div id="refresh" v-if="updateExists">
       <p>
-      Novo conteúdo encontrado!
+      Nova atualização encontrada!
       </p>
       <button @click="refreshApp">
         Atualizar
@@ -30,7 +30,6 @@ export default {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (this.refreshing) return
       this.refreshing = true
-      // Here the actual reload of the page occurs
       window.location.reload()
     })
   },

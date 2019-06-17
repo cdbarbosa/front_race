@@ -28,16 +28,18 @@
       </b-field>
     </article>
     <article>
-      <b-field>
-        <b-radio v-model="person.user.type_id" native-value="1" disabled>
-          Jurídica
-        </b-radio>
-        <b-radio v-model="person.user.type_id" native-value="2" disabled>
-          Física
-        </b-radio>
-      </b-field>
       <b-field label="CPF/CNPJ">
         <b-input :value="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
+      </b-field>
+      <b-field label="Tipo">
+        <div class="control">
+          <b-radio v-model="person.user.type_id" native-value="1" disabled>
+            Jurídica
+          </b-radio>
+          <b-radio v-model="person.user.type_id" native-value="2" disabled>
+            Física
+          </b-radio>
+        </div>
       </b-field>
     </article>
     <slot name="academic"></slot>

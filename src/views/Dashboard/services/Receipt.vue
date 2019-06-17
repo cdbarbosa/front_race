@@ -2,6 +2,9 @@
   <main v-if="service" id="receipt">
     <h3>
       Recebimentos
+      <div id="edit" @click="isEditModal = true">
+        <b-icon icon="edit"></b-icon>
+      </div>
     </h3>
     <div class="content">
       <section>
@@ -35,14 +38,14 @@
           </header>
           <b-table :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected">
             <template slot-scope="props">
-              <!-- <b&#45;table&#45;column field="name" label="ID" sortable> -->
-              <!--   {{ props.row.id }} -->
-              <!-- </b&#45;table&#45;column> -->
               <b-table-column field="created_at" label="Valor">
                 {{ 'R$ ' + parseFloat(props.row.value) }}
               </b-table-column>
               <b-table-column field="user.email" label="Data">
                 {{ parseDate(props.row.date) }}
+              </b-table-column>
+              <b-table-column field="history.user.email" label="Responsável">
+                {{ props.row.history.user.email }}
               </b-table-column>
             </template>
           </b-table>
@@ -50,7 +53,7 @@
       </section>
     </div>
     <b-modal :active.sync="isModalActive">
-      <main>
+      <main id="createReceipt">
         <header>
           <h3>
             Recebimento
@@ -87,6 +90,7 @@ export default {
         masked: true
       },
       isModalActive: false,
+      isEditModal: false,
       service: undefined,
       serviceReceipts: [],
       serviceSelected: undefined,

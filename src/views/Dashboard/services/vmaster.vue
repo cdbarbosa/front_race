@@ -9,7 +9,7 @@
     </h3>
     <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
       <template v-slot:search>
-        <b-input placeholder="Procurar por documento" v-model="searchQuery"></b-input>
+        <b-input placeholder="Procurar" v-model="searchQuery"></b-input>
       </template>
     </service-table>
     <service :selected="serviceSelected"  v-if="serviceSelected"></service>
