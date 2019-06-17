@@ -36,23 +36,35 @@
             </h4>
             <button class="buttons is-primary" @click="isModalActive = true">Adicionar</button>
           </header>
-          <b-table :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected">
+          <b-table :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected" detailed custom-detail-row detail-key="value">
             <template slot-scope="props">
-              <b-table-column field="created_at" label="Valor">
+              <b-table-column field="value" label="Valor">
                 {{ 'R$ ' + parseFloat(props.row.value) }}
               </b-table-column>
-              <b-table-column field="user.email" label="Data">
+              <b-table-column field="created_at" label="Data">
                 {{ parseDate(props.row.date) }}
               </b-table-column>
-              <b-table-column field="history.user.email" label="Responsável">
-                {{ props.row.history.user.email }}
-              </b-table-column>
+            </template>
+            <template slot="detail" slot-scope="props">
+              <h5>Histórico</h5>
+              <tr>
+                <th>Usuário</th>
+                <th>Valor anterior</th>
+                <th>Data</th>
+              </tr>
+              <tr v-for="(item, index) in props.row.history" :key="index">
+
+                <!-- <td v&#45;if="showDetailIcon"></td> -->
+                <td class="has-text-centered">{{ item.user.email }}</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.old_value }}</td>
+                 <td>{{ item.created_at }}</td>
+              </tr>
             </template>
           </b-table>
         </div>
       </section>
     </div>
-    <b-modal :active.sync="isModalActive">
+    <b-modal :onCancel="restoreCreate" :active.sync="isModalActive">
       <main id="createReceipt">
         <header>
           <h3>
@@ -67,6 +79,24 @@
             <b-input type="number" step="0.01" v-model="receipt.value" placeholder="300,00" name="date" required></b-input>
           </b-field>
           <button type="submit">Criar</button>
+        </form>
+      </main>
+    </b-modal>
+    <b-modal :active.sync="isEditModal" v-if="selected">
+      <main id="editReceipt">
+        <header>
+          <h3>
+            Recebimento
+          </h3>
+        </header>
+        <form @submit.prevent="editReceipt">
+          <b-field label="Data">
+            <b-datepicker v-model="selected.created_at" v-mask="'##/##/####'" placeholder="Data do recebimento" name="date" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" required></b-datepicker>
+          </b-field>
+          <b-field label="Valor (R$)">
+            <b-input type="number" step="0.01" v-model="selected.value" placeholder="300,00" name="date" required></b-input>
+          </b-field>
+          <button type="submit">Atualizar</button>
         </form>
       </main>
     </b-modal>
@@ -97,7 +127,7 @@ export default {
       client: undefined,
       receipt: {
         value: null,
-        date: null
+        date: new Date()
       },
       dataRegex: {
         regex: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)(((1)(9)[0-9][0-9])|((2)[0][0-9][0-9]))$/
@@ -124,20 +154,29 @@ export default {
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },
+    restoreCreate () {
+      this.receipt.date = new Date()
+      this.receipt.value = null
+    },
     getService () {
       this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.service = response.data
-        this.serviceReceipts = response.data.service_receipts
+        return response.data.service_receipts.map(s => {
+          console.log(s)
+          s.created_at = new Date(s.created_at)
+          return s
+        })
+      }).then(sr => {
+        this.serviceReceipts = sr
       })
     },
     parseValue () {
     },
     createReceipt () {
       let data = {
-        service_id: this.$route.params.service_id,
+        service_id: this.service.id,
         receipt: {
           date: this.receipt.date,
           value: this.receipt.value
@@ -160,6 +199,22 @@ export default {
       //     this.isModalActive = false
       //   })
       // })
+    },
+    editReceipt () {
+      let data = {
+        id: this.selected.id,
+        service_id: this.service.id,
+        receipt: {
+          date: this.selected.date,
+          value: this.selected.value
+        }
+      }
+      this.$http.put(this.$api({ target: 'receipt' }), data, {
+        headers: header()
+      }).then(response => {
+        this.getService()
+        this.isEditModal = false
+      })
     }
   }
 }
