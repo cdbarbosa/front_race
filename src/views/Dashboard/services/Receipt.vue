@@ -1,5 +1,5 @@
 <template>
-  <main v-if="service" id="receipt">
+  <main id="receipt">
     <h3>
       Recebimentos
       <div id="edit" @click="isEditModal = true">
@@ -10,10 +10,10 @@
       <section>
         <article>
           <b-field label="Serviço">
-            <b-input v-model="service.name" placeholder="Jessica Miles" disabled></b-input>
+            <b-input v-model="serviceSelected.name" placeholder="Jessica Miles" disabled></b-input>
           </b-field>
           <b-field label="ID">
-            <b-input v-model="service.id" disabled></b-input>
+            <b-input v-model="serviceSelected.id" disabled></b-input>
           </b-field>
         </article>
         <article>
@@ -46,19 +46,19 @@
               </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <h5>Histórico</h5>
-              <tr>
-                <th>Usuário</th>
-                <th>Valor anterior</th>
-                <th>Data</th>
-              </tr>
-              <tr v-for="(item, index) in props.row.history" :key="index">
-
-                <!-- <td v&#45;if="showDetailIcon"></td> -->
-                <td class="has-text-centered">{{ item.user.email }}</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.old_value }}</td>
-                 <td>{{ item.created_at }}</td>
-              </tr>
+              <div v-if="props.row.history.length">
+                <h5>Histórico</h5>
+                <tr>
+                  <th>Usuário</th>
+                  <th>Valor anterior</th>
+                  <th>Data</th>
+                </tr>
+                <tr v-for="(item, index) in props.row.history" :key="index">
+                  <td>{{ item.user.email }}</td>
+                  <td>R$ {{ item.old_value }}</td>
+                  <td>{{ parseDateTime(item.created_at) }}</td>
+                </tr>
+              </div>
             </template>
           </b-table>
         </div>
@@ -105,7 +105,7 @@
 
 <script>
 import moment from 'moment'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 moment.locale('pt-BR')
 export default {
@@ -123,7 +123,7 @@ export default {
       isEditModal: false,
       service: undefined,
       serviceReceipts: [],
-      serviceSelected: undefined,
+      receiptSelected: undefined,
       client: undefined,
       receipt: {
         value: null,
@@ -135,17 +135,20 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'serviceSelected'
+    ]),
     selected: {
       get () {
-        return this.serviceSelected ? this.serviceSelected : this.serviceReceipts[0]
+        return this.receiptSelected ? this.receiptSelected : this.serviceReceipts[0]
       },
       set (newVal) {
-        this.serviceSelected = newVal
+        this.receiptSelected = newVal
       }
     }
   },
   beforeMount () {
-    this.getService()
+    this.getServiceReceipts()
   },
   methods: {
     ...mapActions([
@@ -158,19 +161,31 @@ export default {
       this.receipt.date = new Date()
       this.receipt.value = null
     },
+    getServiceReceipts () {
+      this.$http.get(this.$api({ target: `service-receipts/${this.serviceSelected.id}` }), {
+        headers: header()
+      }).then(response => {
+        this.serviceReceipts = response.data.map(s => {
+          s.created_at = new Date(s.created_at)
+          return s
+        })
+      })
+    },
     getService () {
       this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
         this.service = response.data
         return response.data.service_receipts.map(s => {
-          console.log(s)
           s.created_at = new Date(s.created_at)
           return s
         })
       }).then(sr => {
         this.serviceReceipts = sr
       })
+    },
+    parseDateTime (date) {
+      return moment(date).format('HH:mm - D/MM/Y')
     },
     parseValue () {
     },

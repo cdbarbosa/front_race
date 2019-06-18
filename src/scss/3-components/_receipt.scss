@@ -14,12 +14,14 @@
         h4{
         }
       }
-    }
-  }
-  table{
-    tr.disabled{
-      cursor: not-allowed;
-      color: #aaa;
+      .detail{
+        h5{
+          margin-top: 0;
+        }
+        td{
+          padding: 0 1rem;
+        }
+      }
     }
   }
 } 
