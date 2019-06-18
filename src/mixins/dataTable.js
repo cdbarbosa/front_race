@@ -15,6 +15,9 @@ export default {
       perPage: 5
     }
   },
+  beforeMount () {
+    this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
+  },
   computed: {
     selected: {
       get () {

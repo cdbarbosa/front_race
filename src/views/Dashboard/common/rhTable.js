@@ -110,9 +110,6 @@ export default {
       }
     }, 500)
   },
-  beforeMount () {
-    this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
-  },
   methods: {
     ...mapActions([
       'setRhs',

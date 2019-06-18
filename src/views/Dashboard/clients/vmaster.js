@@ -137,7 +137,7 @@ export default {
       this.getClients(this).then(clients => {
         this.clients = clients
         this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-        this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
+        this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
       })
     }
   },

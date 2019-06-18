@@ -57,7 +57,7 @@ import dataTable from '../../../../mixins/dataTable.js'
 export default {
   name: 'serviceTable',
   mixins: [dataTable],
-  props: ['options'],
+  props: ['options', 'selectedIndex'],
   computed: {
     ...mapGetters([
       'services'

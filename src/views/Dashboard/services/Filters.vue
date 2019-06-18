@@ -22,17 +22,17 @@
             {{ filter.label }}
           </b-checkbox>
           <span v-if="filter.active">
-            <b-input :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
+            <b-input :value="filter.value" @input="setServiceFilters([index, 'clientFilters', 'value', $event])"></b-input>
           </span>
         </div>
-        <div class="box basic-filter" v-for="(filter, index) in statusFilters" :key="filter.key">
-          <b-checkbox @input="parseFilters([index, 'statusFilters', 'active', $event])" :value="filter.active">
-            {{ filter.label }}
-          </b-checkbox>
-          <span v-if="filter.active">
-            <b-input :value="filter.value" @input="parseFilters([index, 'statusFilters', 'value', $event])"></b-input>
-          </span>
-        </div>
+        <!-- <div class="box basic&#45;filter" v&#45;for="(filter, index) in statusFilters" :key="filter.key"> -->
+        <!--   <b&#45;checkbox @input="parseFilters([index, 'statusFilters', 'active', $event])" :value="filter.active"> -->
+        <!--     {{ filter.label }} -->
+        <!--   </b&#45;checkbox> -->
+        <!--   <span v&#45;if="filter.active"> -->
+        <!--     <b&#45;input :value="filter.value" @input="parseFilters([index, 'statusFilters', 'value', $event])"></b&#45;input> -->
+        <!--   </span> -->
+        <!-- </div> -->
       </section>
       <!-- <section> -->
         <!-- <div class="box basic&#45;filter" v&#45;for="(filter) in clientFilters" :key="filter.key"> -->

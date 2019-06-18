@@ -5,7 +5,7 @@
 
 #dashboard #services{
   .__secundary .tableContainer header {
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr 0.5fr auto auto;
   }
   #createButtonService {
     position: absolute;

@@ -18,6 +18,7 @@ export default {
       isEditActive: false,
       isFilterModal: false,
       checkboxGroup: [],
+      serviceStatuses: [],
       radio: '',
       serviceCreated: undefined,
       tableSelected: undefined,
@@ -121,6 +122,7 @@ export default {
     }
   },
   beforeMount () {
+    this.getServiceStatuses()
     if (this.filterActive) {
       this.searchServices()
     } else {
@@ -144,8 +146,16 @@ export default {
       'setServices',
       'setServiceSelected',
       'setLastServiceSelected',
-      'setServiceQuery'
+      'setServiceQuery',
+      'setServiceFilters'
     ]),
+    getServiceStatuses () {
+      this.$http.get(this.$api({ target: 'service-status' }), {
+        headers: header()
+      }).then(response => {
+        this.serviceStatuses = response.data
+      })
+    },
     restoreServices () {
       this.getServices(this).then(services => {
         this.services = services
@@ -179,7 +189,6 @@ export default {
       this.$http.post(this.$api({ target: 'filter-service' }), data, {
         headers: header()
       }).then(response => {
-        // console.log(response.data)
         this.services = response.data
         this.serviceSelected = response.data[0]
         this.isFilterModal = false
@@ -190,6 +199,15 @@ export default {
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    watchStatusFilters (e) {
+      if (e) {
+        this.setServiceFilters([0, 'statusFilters', 'active', true])
+        this.searchServices()
+      } else {
+        this.setServiceFilters([0, 'statusFilters', 'active', false])
+        this.restoreServices()
+      }
     },
     log () {
       this.isServiceModalActive = true
