@@ -3,7 +3,6 @@ import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 import moment from 'moment'
 import rhTable from '../common/rhTable.vue'
-import rhTableDetails from './details/rhTable.vue'
 moment.locale('pt-BR')
 export default {
   name: 'serviceDetails',
@@ -274,7 +273,6 @@ export default {
     }
   },
   components: {
-    rhTable,
-    rhTableDetails
+    rhTable
   }
 }

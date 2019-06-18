@@ -45,8 +45,10 @@
             </div>
           </section>
         </template>
+        <template slot="bottom-left">
+          <slot name="action"></slot>
+        </template>
       </b-table>
-      <button v-if="attach" @click="$emit('attachRh')">Associar esse RH</button>
       <b-modal :active.sync="isModalActive">
         <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false"></component>
       </b-modal>

@@ -41,7 +41,6 @@
             </b-field>
           </article>
           <div class="actions">
-            <button class="is-primary" @click="detachRh(rhInServiceSelected.id)" v-if="isResponseble">Desassociar esse RH</button>
           </div>
         </div>
       </section>
@@ -63,6 +62,9 @@
           @attachRh="isAttachModalOpen = true"
           @restore="reset($event)">
           <span slot="title">RH's (associados)</span>
+          <template v-slot:action>
+            <button class="__small" @click="detachRh(rhInServiceSelected.id)" v-if="isResponseble">Desassociar esse RH</button>
+          </template>
         </rh-table>
         <!-- <rh&#45;table&#45;details @filter="filterRhInService($event)" @reset="reset($event)" :rhs="rhsInService" :selectedIndex="rhInServiceSelectedIndex" > -->
         <!--   <span slot="title">RH's Responsáveis</span> -->
@@ -73,7 +75,6 @@
           :resources="rhsNotInService"
           :selectedIndex="rhNotInServiceSelectedIndex"
           :create="false"
-          :attach="true"
           :document="false"
           :service_id="service.id"
           :setFunction="setRhNotInServiceFilters"
@@ -81,11 +82,13 @@
           :mode="'out'"
 
           @update="setRhNotInServiceSelected($event[0])"
-          @attachRh="isAttachModalOpen = true"
           @restore="restoreRhNotInService">
           <span slot="title">RH's</span>
           <template v-slot:search>
             <b-input placeholder="Procurar por um RH" v-model="searchQueryNotInService"></b-input>
+          </template>
+          <template v-slot:action>
+            <button class="__small __primary" @click="isAttachModalOpen = true">Associar esse RH</button>
           </template>
         </rh-table>
       </section>
