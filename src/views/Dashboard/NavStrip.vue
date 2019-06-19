@@ -12,9 +12,6 @@
         <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
           Serviços
         </router-link>
-        <router-link tag="li" :to="{ name: 'export' }">
-          Exportar
-        </router-link>
         <li @click="logout">Sair</li>
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>

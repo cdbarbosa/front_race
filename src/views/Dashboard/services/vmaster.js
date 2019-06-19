@@ -9,6 +9,7 @@ import _ from 'lodash'
 import filterService from './Filters.vue'
 import { header } from '../../../config/index.js'
 import serviceTable from '../common/service/serviceTable.vue'
+import { saveAs } from 'file-saver'
 moment.locale('pt-BR')
 export default {
   name: 'showServices',
@@ -212,6 +213,44 @@ export default {
     log () {
       this.isServiceModalActive = true
       console.log('here')
+    },
+    saveFile () {
+      const header = `
+##===============================================================================
+## Serviço: ${this.serviceSelected.name} 
+
+## Descrição: ${this.stripHtml(this.serviceSelected.description)}
+
+## Custo: R$ ${parseFloat(this.serviceSelected.total_cost).toFixed(2)}
+##===============================================================================
+      `
+      // const serviceInfo = ''
+      // const clientInfo = ''
+      const rhsInfo = this.serviceSelected.rhs.map(r => this.getRhInfo(r))
+      // const footer = ''
+      // const div = ''
+      const body = `${header}\n${rhsInfo}`
+      let blob = new Blob([body], { type: 'text/plain;charset=utf-8' })
+      saveAs(blob, `${new Date().valueOf()}.txt`)
+    },
+    getRhInfo (rh) {
+      console.log(rh)
+      return `
+##===============================================================================
+## Nome: ${rh.name} 
+## Telefone: ${rh.phone}
+## Email: ${rh.user.email}
+
+## Atividades: ${rh.pivot.goal}
+## Numero de Horas: ${rh.pivot.hours}
+## Custo por hora: R$ ${rh.pivot.cost}
+##===============================================================================
+      `
+    },
+    stripHtml (html) {
+      let tmp = document.createElement('div')
+      tmp.innerHTML = html
+      return tmp.textContent || tmp.innerText || ''
     }
   },
   components: {

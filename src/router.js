@@ -7,7 +7,6 @@ import Overview from './views/Dashboard/Overview.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Rhs from './views/Dashboard/Rhs.vue'
 import Services from './views/Dashboard/Services.vue'
-import Export from './views/Dashboard/Export.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -45,11 +44,6 @@ export default new Router({
           path: 'service/:service_id?/',
           name: 'service',
           component: Services
-        },
-        {
-          path: 'export',
-          name: 'export',
-          component: Export
         }
       ]
     }

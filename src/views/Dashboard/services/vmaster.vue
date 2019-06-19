@@ -2,10 +2,11 @@
   <main id="master">
     <h3>
       Serviços
+      <button id="downloadServiceData" @click="saveFile">Baixar dados do Serviço</button>
+      <button id="createButtonService" @click="log">Criar novo serviço</button>
       <div id="edit" @click="isEditActive = true" v-if="serviceSelected">
         <b-icon icon="edit"></b-icon>
       </div>
-      <button id="createButtonService" class="buttons is-primary" @click="log">Criar novo serviço</button>
     </h3>
     <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
       <template v-slot:search>
