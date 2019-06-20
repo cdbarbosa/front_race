@@ -60,8 +60,8 @@
       <!-- </section> -->
     </section>
     <div class="bottonFilter" style="padding: 1rem">
-      <button @click="filter" style="margin-right: 1rem">Ok</button>
-      <!-- <button @click="resetFilters">Resetar</button> -->
+      <button @click="$emit('filter')" style="margin-right: 1rem">Ok</button>
+      <button @click="$emit('reset')">Resetar</button>
     </div>
   </div>
 </template>
@@ -98,9 +98,6 @@ export default {
     },
     parseFilters (payload) {
       this.setServiceFilters(payload)
-    },
-    filter (name) {
-      this.$emit('filter')
     }
   }
 }

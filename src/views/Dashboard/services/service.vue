@@ -45,9 +45,14 @@
           <money class="input" :value="selected.received_value" v-money="money" :masked="true" disabled></money>
         </b-field>
       </article>
-      <b-field label="Situação">
-        <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>
-      </b-field>
+      <article v-if="selected.tj">
+        <b-field label="Custo TJ">
+          <b-input :value="`${selected.tj.type_id === 1 ? selected.tj.cost + ' %' : 'R$ ' + selected.tj.cost}`" disabled></b-input>
+        </b-field>
+        <b-field label="Situação">
+          <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>
+        </b-field>
+      </article>
       <!-- <div class="actions" v&#45;if="$store.getters.user.role_id === 1"> -->
       <!--   <router&#45;link tag="button" :to="{ name: 'serviceReceipts', params: { service_id: this.$route.params.service_id } }">Recebimentos</router&#45;link> -->
       <!--   <router&#45;link tag="button" :to="{ name: 'serviceDetails', params: { service_id: this.$route.params.service_id } }">Detalhes</router&#45;link> -->

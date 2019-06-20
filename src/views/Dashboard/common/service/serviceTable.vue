@@ -5,7 +5,7 @@
         <header>
           <h4>Serviços</h4>
           <slot name="search"></slot>
-          <span @click="searchQuery = ''" v-if="options.search">
+          <span @click="$emit('restore')" v-if="options.search">
             <i class="fas fa-backspace"></i>
           </span>
           <div id="edit" @click="$emit('filter')" v-if="options.filter">

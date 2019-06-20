@@ -96,6 +96,11 @@ const mutations = {
     const value = payload[1]
     state.serviceSelected[label] = value
   },
+  UPDATE_SERVICE_SELECTED_TJ (state, payload) {
+    const label = payload[0]
+    const value = payload[1]
+    state.serviceSelected.tj[label] = value
+  },
   UPDATE_SERVICE (state, payload) {
     const service = payload[0]
     const index = payload[1]
@@ -132,6 +137,9 @@ const actions = {
   },
   updateServiceSelected ({ commit }, payload) {
     commit('UPDATE_SERVICE_SELECTED', payload)
+  },
+  updateServiceSelectedTj ({ commit }, payload) {
+    commit('UPDATE_SERVICE_SELECTED_TJ', payload)
   },
   postServiceSelected ({ commit }, payload) {
     const that = payload[0]

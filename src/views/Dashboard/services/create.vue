@@ -34,11 +34,19 @@
         <article class="info-three">
         </article>
         <article class="info-four">
-          <b-field label="Margem">
-            <b-input v-model="service.profit" placeholder="50%" v-validate="rules.number" name="margem" required></b-input>
+          <b-field label="Margem (%)">
+            <b-input v-model="service.profit" type="number" step="0.01" required></b-input>
+          </b-field>
+          <b-field label="Tipo de custo TJ">
+            <div class="block">
+              <b-radio v-model="service.tj_cost_type_id" :native-value="1">Porcentagem</b-radio>
+              <b-radio v-model="service.tj_cost_type_id" :native-value="2">Valor</b-radio>
+            </div>
+          </b-field>
+          <b-field :label="`Custo TJ (${service.tj_cost_type_id === 1 ? '%' : 'R$'})`">
+            <b-input v-model="service.tj_cost" type="number" step="0.01"></b-input>
           </b-field>
         </article>
-        <span>{{ errors.first('margem') }}</span>
         <b-field label="Situação">
           <b-select placeholder="Selecione um status para o cliente">
             <!-- <option value="">Selecione</option> -->
@@ -86,7 +94,9 @@ export default {
         forecast: null,
         profit: null,
         service_status_id: 1,
-        confidentiality_id: 1
+        confidentiality_id: 1,
+        tj_cost_type_id: 1,
+        tj_cost: null
       },
       client_id: null,
       serviceStatuses: [],
@@ -127,7 +137,6 @@ export default {
       return data.toLocaleDateString('pt-BR')
     },
     create () {
-      this.service.forecast = moment(this.service.forecast).format('DD/MM/YYYY')
       let data = {
         client_id: this.client_id,
         service: this.service

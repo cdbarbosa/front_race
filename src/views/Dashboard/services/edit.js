@@ -89,13 +89,30 @@ export default {
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['status_id', newVal])
       })
+    },
+    tjType: {
+      get () {
+        return this.service.tj.type_id
+      },
+      set (newVal) {
+        this.updateServiceSelectedTj(['type_id', newVal])
+      }
+    },
+    tjCost: {
+      get () {
+        return parseFloat(this.service.tj.cost)
+      },
+      set (newVal) {
+        this.updateServiceSelectedTj(['cost', newVal])
+      }
     }
   },
   methods: {
     ...mapActions([
       'updateService',
       'updateServiceSelected',
-      'postServiceSelected'
+      'postServiceSelected',
+      'updateServiceSelectedTj'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({ target: 'service-status' }), {

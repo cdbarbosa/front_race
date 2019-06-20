@@ -42,6 +42,17 @@
             </b-field>
           </article>
           <article>
+            <b-field label="Tipo de custo TJ">
+              <div class="block">
+                <b-radio v-model="tjType" :native-value="1">Porcentagem</b-radio>
+                <b-radio v-model="tjType" :native-value="2">Valor</b-radio>
+              </div>
+            </b-field>
+            <b-field :label="`Custo TJ (${service.tj.type_id === 1 ? '%' : 'R$'})`">
+              <b-input v-model="tjCost" type="number" step="0.01"></b-input>
+            </b-field>
+          </article>
+          <article>
             <b-field label="Situação">
               <b-select placeholder="Selecione um status para o cliente" v-model="status">
                 <!-- <option value="">Selecione</option> -->
