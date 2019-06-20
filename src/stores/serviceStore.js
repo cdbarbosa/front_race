@@ -90,6 +90,12 @@ const mutations = {
   },
   SET_SERVICE_SELECTED (state, service) {
     state.serviceSelected = JSON.parse(JSON.stringify(service))
+    if (!state.serviceSelected.tj) {
+      state.serviceSelected.tj = {
+        type_id: 1,
+        cost: null
+      }
+    }
   },
   UPDATE_SERVICE_SELECTED (state, payload) {
     const label = payload[0]

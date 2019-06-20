@@ -19,6 +19,12 @@ export default {
   },
   watch: {
   },
+  created () {
+    if (!this.service.tj) {
+      this.updateServiceSelectedTj(['type_id', 1])
+      this.updateServiceSelectedTj(['cost', null])
+    }
+  },
   beforeMount () {
     this.getServiceStatuses()
   },
