@@ -191,7 +191,7 @@ export default {
     },
     createReceipt () {
       let data = {
-        service_id: this.service.id,
+        service_id: this.$route.params.service_id,
         receipt: {
           date: this.receipt.date,
           value: this.receipt.value
@@ -217,8 +217,8 @@ export default {
     },
     editReceipt () {
       let data = {
-        id: this.selected.id,
-        service_id: this.service.id,
+        id: this.$route.params.service_id,
+        service_id: this.$route.params.service_id,
         receipt: {
           date: this.selected.date,
           value: this.selected.value

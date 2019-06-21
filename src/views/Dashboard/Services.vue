@@ -19,7 +19,7 @@ export default {
     waitForData: true
   },
   render (h) {
-    return h(SERVICE[this.$store.getters.user.role.name])
+    return this.$store.getters.user ? h(SERVICE[this.$store.getters.user.role.name]) : h(SERVICE.admin)
   }
 }
 </script>
