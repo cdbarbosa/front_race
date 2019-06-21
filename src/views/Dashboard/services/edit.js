@@ -73,7 +73,7 @@ export default {
     },
     forecast: {
       get () {
-        return this.service.forecast ? new Date(this.service.forecast) : null
+        return isNaN(new Date(this.service.forecast)) ? null : new Date(this.service.forecast)
       },
       set: _.debounce(function (newVal, oldVal) {
         console.log(newVal, oldVal)
