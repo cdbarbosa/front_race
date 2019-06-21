@@ -5,17 +5,21 @@ const user = () => ({
 const admin = () => ({
   component: import('./services/admin.vue')
 })
+const tj = () => ({
+  component: import('./services/tj.vue')
+})
 
 const SERVICE = {
   user: user,
-  admin: admin
+  admin: admin,
+  tj: tj
 }
 export default {
+  route: {
+    waitForData: true
+  },
   render (h) {
-    if (this.$store.getters.user !== undefined) {
-      return h(this.$store.getters.user.role_id === 1 ? SERVICE.admin : SERVICE.user)
-    }
-    return SERVICE.admin
+    return h(SERVICE[this.$store.getters.user.role.name])
   }
 }
 </script>

@@ -22,6 +22,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+const routes = {
+  admin: 'client',
+  tj: 'service'
+}
 export default {
   name: 'login',
   data () {
@@ -58,9 +62,10 @@ export default {
             this.message = 'Validando o token'
             let authUser = response.data
             this.setAuthUser(authUser).then(status => {
+              return authUser
+            }).then(user => {
               this.message = 'Token Validado'
-              this.$router.push({ name: authUser.role_id === 1 ? 'client' : 'rh' })
-              // this.$router.push({ name: 'rh' })
+              this.$router.push({ name: routes[authUser.role.name] })
             })
           }).catch(err => {
             console.log(err)
@@ -82,7 +87,10 @@ export default {
           this.message = 'Token Validado'
           let authUser = response.data
           this.setAuthUser(authUser).then(status => {
-            this.$router.push({ name: authUser.role_id === 1 ? 'client' : 'rh' })
+            return authUser
+          }).then(user => {
+            this.message = 'Token Validado'
+            this.$router.push({ name: routes[authUser.role.name] })
           })
         }).catch(err => {
           console.log(err)

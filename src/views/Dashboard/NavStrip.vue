@@ -4,8 +4,8 @@
       <img src="/img/logo.png" alt=""/>
     </div>
     <div class="links">
-      <ul>
-        <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id } }" v-if="user.role_id == 1">
+      <ul v-if="user.role_id !== 4">
+        <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id } }">
           Clientes
         </router-link>
         <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">RH's</router-link>
@@ -14,6 +14,12 @@
         </router-link>
         <li @click="logout">Sair</li>
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
+      </ul>
+      <ul v-else>
+        <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
+          Serviços
+        </router-link>
+        <li @click="logout">Sair</li>
       </ul>
     </div>
   </div>
