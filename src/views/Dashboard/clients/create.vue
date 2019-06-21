@@ -13,7 +13,7 @@
           <b-field label="Telefone">
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
-          <b-field label="Data de Nascimento">
+          <b-field label="Data (nascimento)">
             <b-datepicker v-model="user.birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Data de nascimento"></b-datepicker>
           </b-field>
           <!-- <span>{{ errors.first('birthdate') }}</span> -->

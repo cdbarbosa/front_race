@@ -11,7 +11,7 @@
           <b-field label="Telefone">
             <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
-          <b-field label="Data de aniversário">
+          <b-field label="Data (nascimento)">
             <b-datepicker  v-model="user.birthdate" :month-names="months" :day-names="days" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="birthdate"></b-datepicker>
           </b-field>
         </article>

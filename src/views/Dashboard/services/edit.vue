@@ -13,7 +13,7 @@
             </b-field>
           </article>
           <article class="info-two">
-            <b-field label="Data de registro">
+            <b-field label="Cadastro">
               <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
               <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
             </b-field>

@@ -30,13 +30,13 @@
             </b-field>
           </article>
           <article>
-            <b-field label="Custo por Hora Padrão">
+            <b-field label="Custo (padrão)">
               <money class="input" :value="rhInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
-            <b-field label="Numero de Horas">
+            <b-field label="Demanda (hora)">
               <b-input :value="rhInServiceSelected.pivot.hours" disabled></b-input>
             </b-field>
-            <b-field label="Custo por Hora para o Serviço">
+            <b-field label="Custo (no serviço)">
               <money class="input" :value="rhInServiceSelected.pivot.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
           </article>
@@ -115,7 +115,7 @@
               <b-field label="Custo (padrão)">
                 <money class="input" :value="rhNotInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
               </b-field>
-              <b-field label="Demanda">
+              <b-field label="Demanda (hora)">
                 <b-input  v-model="rhServiceFields.hours" required></b-input>
               </b-field>
               <b-field label="Custo (no serviço)">
@@ -146,13 +146,13 @@
               </b-field>
             </article>
             <article>
-              <b-field label="Custo por Hora Padrão">
+              <b-field label="Custo (padrão)">
                 <money class="input" :value="rhInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
               </b-field>
-              <b-field label="Numero de Horas">
+              <b-field label="Demanda (hora)">
                 <b-input placeholder="1" v-model="rhInServiceSelected.pivot.hours" required></b-input>
               </b-field>
-              <b-field label="Custo por Hora para o Serviço (R$)">
+              <b-field label="Custo (no serviço)">
                 <b-input placeholder="10,00" v-model="rhInServiceSelected.pivot.cost" type="number" step="0.01" min="0" required></b-input>
               </b-field>
             </article>

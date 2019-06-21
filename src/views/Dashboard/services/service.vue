@@ -23,7 +23,7 @@
         </b-field>
       </article>
       <article>
-        <b-field label="Data de Registro">
+        <b-field label="Cadastro">
           <b-input :value="parseDate(selected.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
         </b-field>
         <b-field label="Previsão">

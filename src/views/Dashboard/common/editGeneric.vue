@@ -47,7 +47,7 @@
         <b-field label="CPF/CNPJ">
           <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
         </b-field>
-        <b-field label="Data de Nascimento">
+        <b-field label="Data (nascimento)">
           <b-datepicker v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date"></b-datepicker>
         </b-field>
       </article>
@@ -55,7 +55,7 @@
         <b-field label="CPF/CNPJ">
           <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
         </b-field>
-        <b-field label="Data de Nascimento">
+        <b-field label="Data (nascimento)">
           <b-datepicker  v-model="birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date" disabled></b-datepicker>
         </b-field>
       </article>
