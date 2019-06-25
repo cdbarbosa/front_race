@@ -1,5 +1,5 @@
 import { mapActions } from 'vuex'
-import { header } from '../../../config/index.js'
+import { header } from '../../../../config/index.js'
 import _ from 'lodash'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'

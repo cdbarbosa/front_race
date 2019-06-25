@@ -11,7 +11,7 @@
           <b-input v-model="person.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
-          <b-datepicker  v-model="user.birthdate" v-validate="rules.birthdate" name="birthdate"></b-datepicker>
+          <b-datepicker  v-model="user.birthdate" v-validate="rules.birthdate" name="birthdate" editable></b-datepicker>
           <!-- <b-input v-model="user.birthdate" v-validate="rules.birthdate" v-mask="'##/##/####'" placeholder="10/10/1994" name="birthdate" required></b-input> -->
         </b-field>
         <span>{{ errors.first('birthdate') }}</span>

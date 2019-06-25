@@ -129,6 +129,7 @@ const actions = {
       that.$http.get(that.$api({ target: 'services' }), {
         headers: header()
       }).then(response => {
+        console.log(response)
         resolve(response.data)
       }).catch(err => {
         reject(err)
@@ -151,7 +152,7 @@ const actions = {
     const that = payload[0]
     const service = payload[1]
     return new Promise((resolve, reject) => {
-      that.$http.post(that.$api({ target: 'service' }), service, {
+      that.$http.post(that.$api({ target: 'services', clerance: that.$store.getters.user.role.name }), service, {
         headers: header()
       }).then(response => {
         resolve(response)

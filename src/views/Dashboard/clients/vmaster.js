@@ -159,6 +159,7 @@ export default {
     restoreClients () {
       if (!this.document) {
         this.tableSelected = this.clients[this.selectedIndex]
+        this.restoreClientFilters()
         this.getClients(this).then(clients => {
           this.clients = clients
           this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]

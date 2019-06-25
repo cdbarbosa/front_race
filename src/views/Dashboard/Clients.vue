@@ -1,7 +1,7 @@
 <template>
   <main id="clients">
     <b-tabs type="is-boxed">
-      <b-tab-item label="Master">
+      <b-tab-item label="Principal">
         <vmaster></vmaster>
       </b-tab-item>
       <b-tab-item label="Serviços">

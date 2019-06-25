@@ -129,14 +129,14 @@
     </b-modal>
     <b-modal :active.sync="isEditModal" :onCancel="restoreRhInServiceSelected">
       <div class="" id="editRhServiceScreen" v-if="rhInServiceSelected">
-        <h3>Editar RH Associado</h3>
+        <!-- <h3>Editar RH Associado</h3> -->
         <form @submit.prevent="editRhAssociated">
           <section>
             <article>
               <b-field label="RH">
                 <b-input v-model="service.name" disabled></b-input>
               </b-field>
-              <b-field label="RH">
+              <b-field label="ID">
                 <b-input v-model="service.id" disabled></b-input>
               </b-field>
             </article>

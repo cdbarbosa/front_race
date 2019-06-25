@@ -23,9 +23,10 @@ const header = () => {
 
 export const api = options => {
   let secure = options.secure === undefined ? true : options.secure
+  let clerance = options.clerance === undefined ? '' : (options.clerance === 'admin' ? '' : options.clerance + '/')
   if (secure) {
     if (env === 'production') return `${prod}/api/v1/${options.service ? options.service + '/' : ''}${options.target}`
-    return `${dev}/api/v1/${options.service ? options.service + '/' : ''}${options.target}`
+    return `${dev}/api/v1/${clerance}${options.service ? options.service + '/' : ''}${options.target}`
   } else {
     if (env === 'production') return `${prod}/${options.service ? options.service + '/' : ''}${options.target}`
     return `${dev}/${options.service ? options.service + '/' : ''}${options.target}`

@@ -151,7 +151,7 @@ export default {
       'setServiceFilters'
     ]),
     getServiceStatuses () {
-      this.$http.get(this.$api({ target: 'service-status' }), {
+      this.$http.get(this.$api({ target: 'service-status', clerance: this.$store.getters.user.role.name }), {
         headers: header()
       }).then(response => {
         this.serviceStatuses = response.data

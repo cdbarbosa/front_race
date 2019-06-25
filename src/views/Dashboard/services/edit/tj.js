@@ -1,13 +1,9 @@
 import { mapActions } from 'vuex'
-import { header } from '../../../config/index.js'
+import { header } from '../../../../config/index.js'
 import _ from 'lodash'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
 moment.locale('pt-BR')
-const gets = {
-  admin: 'service-status',
-  tj: 'service-status-tj'
-}
 export default {
   name: 'serviceUpdate',
   props: ['service', 'selectedIndex'],
@@ -125,7 +121,7 @@ export default {
       'updateServiceSelectedTj'
     ]),
     getServiceStatuses () {
-      this.$http.get(this.$api({ target: gets[this.$store.getters.user.role.name] }), {
+      this.$http.get(this.$api({ target: 'service-status', clerance: this.$store.getters.user.role.name }), {
         headers: header()
       }).then(response => {
         this.serviceStatuses = response.data

@@ -4,7 +4,7 @@
       <img src="/img/logo.png" alt=""/>
     </div>
     <div class="links">
-      <ul v-if="user.role_id !== 4">
+      <ul v-if="user.role.name === 'admin'">
         <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id } }">
           Clientes
         </router-link>
@@ -15,7 +15,15 @@
         <li @click="logout">Sair</li>
         <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
       </ul>
-      <ul v-else>
+      <ul v-else-if="user.role.name === 'rh'">
+        <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">Perfil</router-link>
+        <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
+          Serviços
+        </router-link>
+        <li @click="logout">Sair</li>
+        <!-- <router&#45;link tag="li" :to={}>Administração</router&#45;link> -->
+      </ul>
+      <ul v-else-if="user.role.name === 'tj'">
         <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
           Serviços
         </router-link>

@@ -11,6 +11,12 @@
     display: grid;
     grid-template-columns: auto 300px 200px 2rem;
     grid-gap: 1rem;
+    &.__no-create{
+      grid-template-columns: auto 300px 2rem;
+      &.__no-edit{
+        grid-template-columns: auto 300px;
+      }
+    }
     #edit{
       position: relative;
     }

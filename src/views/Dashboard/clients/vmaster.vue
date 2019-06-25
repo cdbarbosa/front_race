@@ -14,7 +14,7 @@
             <h4>Clientes</h4>
             <b-input placeholder="Procurar por nome" v-model="searchQuery"></b-input>
             <b-input placeholder="Procurar por documento" v-mask="['###.###.###-##','##.###.###/####-##']" v-model="searchDocument"></b-input>
-            <span @click="restoreClients()">
+            <span @click="restoreClients">
               <i class="fas fa-backspace"></i>
             </span>
             <div id="edit" @click="isFilterModal = true">

@@ -10,7 +10,7 @@ const tj = () => ({
 })
 
 const SERVICE = {
-  user: user,
+  rh: user,
   admin: admin,
   tj: tj
 }

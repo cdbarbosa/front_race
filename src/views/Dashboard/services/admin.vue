@@ -1,7 +1,7 @@
 <template>
   <main id="services">
     <b-tabs v-model="active" type="is-boxed">
-      <b-tab-item label="Master">
+      <b-tab-item label="Principal">
         <vmaster></vmaster>
       </b-tab-item>
       <b-tab-item label="Detalhes">

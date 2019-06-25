@@ -1,10 +1,10 @@
 <template>
   <main id="master">
-    <h3>
+    <h3 :class="{'__no-create': [3, 4].indexOf($store.getters.user.role_id) !== -1, '__no-edit': [3].indexOf($store.getters.user.role_id) !== -1}">
       Serviços
-      <button id="downloadServiceData" @click="saveFile">Baixar dados do Serviço</button>
-      <button id="createButtonService" @click="log">Criar novo serviço</button>
-      <div id="edit" @click="isEditActive = true" v-if="serviceSelected">
+      <button v-if="[1, 4].indexOf($store.getters.user.role_id) !== -1" id="downloadServiceData" @click="saveFile">Baixar dados do Serviço</button>
+      <button v-if="$store.getters.user.role_id === 1" id="createButtonService" @click="log">Criar novo serviço</button>
+      <div id="edit" @click="isEditActive = true" v-if="serviceSelected && [1, 4].indexOf($store.getters.user.role_id) !== -1">
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
@@ -19,7 +19,7 @@
     </service-table>
     <service :selected="serviceSelected"  v-if="serviceSelected"></service>
     <div class="content" v-else>
-       <h2>Nenhum cliente cadastrado ou encontrado</h2>
+       <h2>Nenhum serviço cadastrado ou encontrado</h2>
     </div>
     <b-modal :active.sync="isServiceModalActive">
       <component :is="parseModal()" @serviceCreated="serviceCreated = true" @creationFailed="serviceCreated = false">

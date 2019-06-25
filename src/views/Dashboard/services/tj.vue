@@ -1,14 +1,8 @@
 <template>
   <main id="services">
     <b-tabs v-model="active" type="is-boxed">
-      <b-tab-item label="Master">
+      <b-tab-item label="Principal">
         <vmaster></vmaster>
-      </b-tab-item>
-      <b-tab-item label="Detalhes">
-        <vdetails v-if="$route.params.service_id"></vdetails>
-      </b-tab-item>
-      <b-tab-item label="Recebimentos">
-        <vreceipt v-if="$route.params.service_id"></vreceipt>
       </b-tab-item>
       <b-tab-item label="Histórico">
         <vhistory :active="active" v-if="$route.params.service_id"></vhistory>
@@ -18,9 +12,7 @@
 </template>
 <script>
 import vmaster from './vmaster.vue'
-import vdetails from './details.vue'
 import vhistory from './vhistory.vue'
-import vreceipt from './Receipt.vue'
 export default {
   name: 'services',
   data () {
@@ -30,9 +22,7 @@ export default {
   },
   components: {
     vmaster,
-    vhistory,
-    vdetails,
-    vreceipt
+    vhistory
   }
 }
 </script>

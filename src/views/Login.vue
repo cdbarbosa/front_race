@@ -24,6 +24,8 @@
 import { mapActions } from 'vuex'
 const routes = {
   admin: 'client',
+  rh: 'rh',
+  user: 'service',
   tj: 'service'
 }
 export default {
