@@ -33,14 +33,19 @@
         <b-field label="CPF/CNPJ">
           <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document"></b-input>
         </b-field>
-         <address class="address">
+        <address class="address">
           <h3>Endereço</h3>
+          <article>
+            <b-field label="País">
+              <b-input pattern="[A-Za-z]" v-model="address.country" placeholder="País"></b-input>
+            </b-field>
+            <b-field label="Estado">
+              <b-input maxlength="2" pattern="[A-Z]" v-model="address.state" placeholder="ES"></b-input>
+            </b-field>
+          </article>
           <article class="info-three">
             <b-field label="Rua">
               <b-input v-model="address.address" placeholder="Rua"></b-input>
-            </b-field>
-            <b-field label="Estado">
-              <b-input v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-fourth">

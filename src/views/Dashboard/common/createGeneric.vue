@@ -39,8 +39,8 @@
           <b-field label="Rua">
             <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
           </b-field>
-          <b-field label="Estado">
-            <b-input v-model="address.state"  v-validate="'alpha'" laceholder="ES" name="state" required></b-input>
+          <b-field label="Estado2">
+            <b-input maxlength="2" v-model="address.state"  v-validate="'alpha'" placeholder="ES" name="state" required></b-input>
           </b-field>
         </article>
         <article class="info-fourth">

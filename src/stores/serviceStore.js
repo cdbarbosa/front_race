@@ -129,7 +129,6 @@ const actions = {
       that.$http.get(that.$api({ target: 'services' }), {
         headers: header()
       }).then(response => {
-        console.log(response)
         resolve(response.data)
       }).catch(err => {
         reject(err)

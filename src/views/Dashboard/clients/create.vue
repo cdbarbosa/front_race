@@ -1,7 +1,6 @@
 <template>
   <main id="createClient">
     <form @submit.prevent="createClient" class="content __create">
-      <!-- <basic-client :person="client" :name="'Cliente'"></basic-client> -->
       <section>
         <article>
           <b-field label="Nome">
@@ -39,23 +38,28 @@
         </b-field>
         <address class="address">
           <h3>Endereço</h3>
-          <article class="info-three">
-            <b-field label="Rua">
-              <b-input v-model="address.address" placeholder="Rua" name="address" required></b-input>
+          <article>
+            <b-field label="País">
+              <b-input pattern="[A-Za-z]" v-model="address.country" placeholder="País" required></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input v-model="address.state"  v-validate="'alpha'" laceholder="ES" name="state" required></b-input>
+              <b-input maxlength="2" pattern="[A-Z]" v-model="address.state" placeholder="ES" required></b-input>
+            </b-field>
+          </article>
+          <article class="info-three">
+            <b-field label="Rua">
+              <b-input v-model="address.address" placeholder="Rua" required></b-input>
             </b-field>
           </article>
           <article class="info-fourth">
             <b-field label="CEP">
-              <b-input v-model="address.postal_code" v-mask="'##.###-###'" v-validate="rules.postal_code" name="postal_code" placeholder="CEP" required></b-input>
+              <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP" required></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input v-model="address.neighborhood" v-validate="'alpha'" placeholder="Bairro"  name="neighborhood" required></b-input>
+              <b-input v-model="address.neighborhood" placeholder="Bairro" required></b-input>
             </b-field>
             <b-field label="Cidade">
-              <b-input v-model="address.city" v-validate="'alpha'" placeholder="Cidade" required name="city"></b-input>
+              <b-input v-model="address.city" placeholder="Cidade" required></b-input>
             </b-field>
           </article>
         </address>
@@ -66,7 +70,6 @@
         </b-field>
         <b-field label="Atividade">
           <vue-editor :editorToolbar="customToolbar" v-model="client.activity" placeholder="Produção de PANIC"></vue-editor>
-          <!-- <b&#45;input v&#45;model="client.activity" placeholder=""></b&#45;input> -->
         </b-field>
         <div class="buttonClass">
           <button type="submit">Cadastrar</button>

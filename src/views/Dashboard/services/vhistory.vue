@@ -48,7 +48,6 @@ export default {
   watch: {
   },
   beforeMount () {
-    console.log(moment)
     this.getRecords()
   },
   methods: {
@@ -59,7 +58,6 @@ export default {
       this.$http.get(this.$api({ target: `service-history/${this.$route.params.service_id}` }), {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.records = response.data
       })
     }
