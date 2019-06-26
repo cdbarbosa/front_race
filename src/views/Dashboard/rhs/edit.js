@@ -76,7 +76,6 @@ export default {
         return this.rh.academics.length ? this.rh.academics[0].titulation : null
       },
       set: _.debounce(function (newVal) {
-        console.log(newVal)
         this.updateRhSelected(['titulation', 'academics', newVal])
       }, 400)
     }

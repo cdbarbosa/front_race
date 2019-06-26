@@ -8,14 +8,6 @@
           </b-field>
         </article>
         <article>
-          <b-field label="Telefone">
-            <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
-          </b-field>
-          <b-field label="Data (nascimento)">
-            <b-datepicker  v-model="user.birthdate" :month-names="months" :day-names="days" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="birthdate"></b-datepicker>
-          </b-field>
-        </article>
-        <article>
           <b-field label="Email">
             <b-input v-model="user.email" v-validate="rules.email" type="email" placeholder="example@example.com" name="email" required></b-input>
           </b-field>
@@ -31,16 +23,24 @@
           </b-field>
         </article>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document"></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '##.###.###/####-##' : '###.###.###-##'" placeholder="Documentos" name="document"></b-input>
         </b-field>
+        <article>
+          <b-field label="Telefone">
+            <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+          </b-field>
+          <b-field label="Data (nascimento)">
+            <b-datepicker  v-model="user.birthdate" name="birthdate" placeholder="Data de nascimento" :disabled="user.type_id == '1'" editable></b-datepicker>
+          </b-field>
+        </article>
         <address class="address">
           <h3>Endereço</h3>
           <article>
             <b-field label="País">
-              <b-input pattern="[A-Za-z]" v-model="address.country" placeholder="País"></b-input>
+              <b-input pattern="[A-Za-z ]+" v-model="address.country" placeholder="País"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]" v-model="address.state" placeholder="ES"></b-input>
+              <b-input maxlength="2" pattern="[A-Z]{2}" v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-three">
@@ -60,23 +60,12 @@
             </b-field>
           </article>
         </address>
-        <article class="course" v-if="user.type_id == 2">
+        <article class="course">
           <b-field label="Bacharelado">
-            <b-input v-model="rh.academic.area" placeholder="Matemática"></b-input>
+            <b-input v-model="rh.academic.area" placeholder="Matemática" :disabled="user.type_id == '1'"></b-input>
           </b-field>
           <b-field label="Título">
-            <b-input v-model="rh.academic.titulation" placeholder="Doutorado"></b-input>
-          </b-field>
-          <b-field label="Custo">
-            <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
-          </b-field>
-        </article>
-        <article v-else>
-          <b-field label="Bacharelado">
-            <b-input v-model="rh.academic.area" placeholder="Matemática" disabled></b-input>
-          </b-field>
-          <b-field label="Título">
-            <b-input v-model="rh.academic.titulation" placeholder="Doutorado" disabled></b-input>
+            <b-input v-model="rh.academic.titulation" placeholder="Doutorado" :disabled="user.type_id == '1'"></b-input>
           </b-field>
           <b-field label="Custo">
             <b-input v-model="rh.cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>

@@ -37,8 +37,8 @@
             <vue-editor :editorToolbar="customToolbar" v-model="observations"></vue-editor>
           </b-field>
         </div>
-        <button type="submit">Atualizar</button>
       </div>
+      <button type="submit">Atualizar</button>
     </form>
   </div>
 </template>

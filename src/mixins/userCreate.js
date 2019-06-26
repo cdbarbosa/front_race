@@ -1,4 +1,5 @@
 import { header } from '../config/index.js'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -61,7 +62,7 @@ export default {
   },
   methods: {
     createUser () {
-      console.log(this.user)
+      this.user.birthdate = moment(this.user.birthdate).format()
       let data = {
         user: this.user
       }

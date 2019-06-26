@@ -31,7 +31,6 @@ export default {
         return this.person.phone
       },
       set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal, oldVal)
         this.$emit('change', ['phone', '', newVal])
       }, 400)
     },
@@ -57,6 +56,14 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.$emit('change', ['state', 'address', newVal])
+      }, 400)
+    },
+    country: {
+      get () {
+        return this.person.user.address.country
+      },
+      set: _.debounce(function (newVal) {
+        this.$emit('change', ['state', 'country', newVal])
       }, 400)
     },
     postal_code: {
@@ -111,10 +118,10 @@ export default {
     },
     birthdate: {
       get () {
-        return new Date(this.person.user.birthdate)
+        return this.person.user.birthdate ? new Date(this.person.user.birthdate) : null
       },
       set: _.debounce(function (newVal) {
-        this.$emit('change', ['birthdate', 'user', newVal])
+        this.$emit('change', ['birthdate', 'user', moment(newVal).format()])
       }, 400)
     }
   }

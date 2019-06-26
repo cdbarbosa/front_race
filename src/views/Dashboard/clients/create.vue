@@ -8,15 +8,6 @@
           </b-field>
           <span>{{ errors.first('name') }}</span>
         </article>
-        <article>
-          <b-field label="Telefone">
-            <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
-          </b-field>
-          <b-field label="Data (nascimento)">
-            <b-datepicker v-model="user.birthdate" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Data de nascimento"></b-datepicker>
-          </b-field>
-          <!-- <span>{{ errors.first('birthdate') }}</span> -->
-        </article>
         <article class="info-second">
           <b-field label="Email">
             <b-input v-model="user.email" type="email"  v-validate="rules.email" placeholder="exemplo@exemplo.com" name="Email" required></b-input>
@@ -33,17 +24,25 @@
           </b-field>
         </article>
         <b-field label="CPF/CNPJ">
-          <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" required></b-input>
-          <b-input v-else v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" disabled></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '##.###.###/####-##':'###.###.###-##' " placeholder="Documentos" name="document" required></b-input>
         </b-field>
+        <article>
+          <b-field label="Telefone">
+            <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
+          </b-field>
+          <b-field label="Data (nascimento)">
+            <b-datepicker v-model="user.birthdate" placeholder="Data de nascimento" :disabled="user.type_id == '1'" editable ></b-datepicker>
+          </b-field>
+          <!-- <span>{{ errors.first('birthdate') }}</span> -->
+        </article>
         <address class="address">
           <h3>Endereço</h3>
           <article>
             <b-field label="País">
-              <b-input pattern="[A-Za-z]" v-model="address.country" placeholder="País" required></b-input>
+              <b-input pattern="[A-Za-z ]+" v-model="address.country" placeholder="País" required></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]" v-model="address.state" placeholder="ES" required></b-input>
+              <b-input maxlength="2" pattern="[A-Z]{2}" v-model="address.state" placeholder="ES" required></b-input>
             </b-field>
           </article>
           <article class="info-three">
@@ -94,8 +93,6 @@ export default {
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
       ],
-      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       client: {
         name: null,
         phone: null,
@@ -131,6 +128,8 @@ export default {
         }
       }
     }
+  },
+  beforeMount () {
   },
   methods: {
     ...mapActions([

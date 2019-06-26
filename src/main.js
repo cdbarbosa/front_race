@@ -10,6 +10,7 @@ import VeeValidate from 'vee-validate'
 import money from 'v-money'
 import Toasted from 'vue-toasted'
 import Datepicker from 'vuejs-datepicker'
+import moment from 'moment'
 
 import { api } from './config'
 
@@ -17,7 +18,16 @@ Vue.prototype.$api = api
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(Buefy, {
-  defaultIconPack: 'fas'
+  defaultIconPack: 'fas',
+  defaultDateFormatter: date => date.toLocaleDateString('pt-BR'),
+  // defaultDateCreator: moment(),
+  defaultDateParser: date => {
+    const m = moment(date, 'DD/MM/YYYY')
+    return m.isValid() ? m.toDate() : null
+  },
+  defaultDayNames: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+  defaultMonthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+  defaultDatepickerYearsRange: [-100, 100]
 })
 Vue.use(Datepicker)
 Vue.use(VueTheMask)
