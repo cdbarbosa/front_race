@@ -162,6 +162,7 @@ export default {
         this.services = services
         this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
       })
+      this.searchQuery = ''
     },
     restoreServiceSelected () {
       this.setServiceSelected(this.services[this.selectedIndex])

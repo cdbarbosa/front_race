@@ -8,7 +8,7 @@
     </h3>
     <div class="content">
       <generic-user :person="selected"></generic-user>
-      <section>
+      <!-- <section>
         <b-field label="Competências">
           <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
         </b-field>
@@ -18,7 +18,7 @@
         <b-field label="Observações">
           <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
         </b-field>
-      </section>
+      </section> -->
     </div>
     <b-modal :active.sync="isEditActive">
       <edit-rh :rh="selected" :selectedIndex="0" @updated="getPerfil"></edit-rh>

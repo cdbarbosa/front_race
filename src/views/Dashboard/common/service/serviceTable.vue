@@ -8,7 +8,7 @@
           <span @click="$emit('restore')" v-if="options.search">
             <i class="fas fa-backspace"></i>
           </span>
-          <div id="edit" @click="$emit('filter')" v-if="options.filter">
+          <div id="edit" @click="$emit('filter')" v-if="options.filter && $store.getters.user.role_id === 1">
             <b-icon icon="cog"></b-icon>
           </div>
         </header>
