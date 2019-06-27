@@ -31,7 +31,7 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data (nascimento)">
-            <b-datepicker v-model="user.birthdate" placeholder="Data de nascimento" :disabled="user.type_id == '1'" editable ></b-datepicker>
+            <b-datepicker v-model="user.birthdate" placeholder="Data de nascimento" :disabled="user.type_id == 1" editable ></b-datepicker>
           </b-field>
           <!-- <span>{{ errors.first('birthdate') }}</span> -->
         </article>

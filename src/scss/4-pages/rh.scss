@@ -11,6 +11,9 @@
     font-size: .7em;
     background: #2B4F73;
   }
+  .perfil_user {
+    display: block !important;
+  }
   .content {
     .rh{
         input, textarea {
@@ -87,6 +90,9 @@
         background: #2B4E72;
       }
     }
+    .tableContainer {
+      
+    }
   }
   .basic-filter, .academic-filter {
     display: grid;
@@ -110,6 +116,9 @@
 
 .__secundary{
   .tableContainer{
+    .__userService {
+      grid-template-columns: auto 1fr auto auto !important;
+    }
     header{
       grid-template-columns: 2fr 2fr 1fr .2fr .1fr;
         span {

@@ -6,7 +6,7 @@
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <div class="content">
+    <div class="content perfil_user">
       <generic-user :person="selected"></generic-user>
       <!-- <section>
         <b-field label="Competências">
@@ -21,7 +21,7 @@
       </section> -->
     </div>
     <b-modal :active.sync="isEditActive">
-      <edit-rh :rh="selected" :selectedIndex="0" @updated="getPerfil"></edit-rh>
+      <edit-rh :rh="rhSelected" :selectedIndex="0" @updated="getPerfil"></edit-rh>
     </b-modal>
   </main>
 </template>
@@ -39,18 +39,19 @@ export default {
       isEditActive: false,
       rhCreated: undefined,
       isModalActive: false,
-      rhSelected: undefined,
+      // rhSelected: undefined,
       searchQuery: undefined,
       selected: undefined
     }
   },
   computed: {
     ...mapGetters([
-      'user'
+      'user',
+      'rhSelected'
     ]),
     rhs: {
       get () {
-        return this.$store.getters.rhs
+        return this.$store.getters.rh
       },
       set (newVal) {
         this.changeRh(this)
@@ -75,7 +76,8 @@ export default {
   methods: {
     ...mapActions([
       'getRhs',
-      'updateRh'
+      'updateRh',
+      'setRhSelected'
     ]),
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -85,6 +87,7 @@ export default {
         headers: header()
       }).then(response => {
         this.selected = response.data
+        this.setRhSelected(response.data)
       })
     }
   },

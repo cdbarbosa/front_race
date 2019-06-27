@@ -2,7 +2,7 @@
   <div class="content" id="serviceTable">
     <section class="__secundary">
       <div class="tableContainer">
-        <header>
+        <header :class="{__userService: target !== 1 }">
           <h4>Serviços</h4>
           <slot name="search"></slot>
           <span @click="$emit('restore')" v-if="options.search">
@@ -58,6 +58,11 @@ export default {
   name: 'serviceTable',
   mixins: [dataTable],
   props: ['options', 'selectedIndex'],
+  data () {
+    return {
+      target: 0
+    }
+  },
   computed: {
     ...mapGetters([
       'services'
@@ -69,6 +74,13 @@ export default {
       set (service) {
         this.setServiceSelected(service)
       }
+    }
+  },
+  beforeMount () {
+    if (this.$store.getters.user.role_id !== 1) {
+      this.target = 0
+    } else {
+      this.target = this.$store.getters.user.role_id
     }
   },
   watch: {
