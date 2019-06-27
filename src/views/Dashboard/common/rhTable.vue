@@ -14,7 +14,7 @@
           <b-icon icon="cog"></b-icon>
         </div>
       </header>
-      <b-table :current-page.sync="currentPage" :per-page="perPage" :data="resources" :paginated="true" :selected.sync="selected" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
+      <b-table :row-class="(row, index) => row.completed == true && '__completed'" :current-page.sync="currentPage" :per-page="perPage" :data="resources" :paginated="true" :selected.sync="selected" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -29,10 +29,13 @@
             {{ props.row.phone }}
           </b-table-column>
           <b-table-column v-if="mode !== 'in'" field="cost" label="Custo">
-            R$ {{ parseFloat(props.row.cost) }}
+            {{ props.row.cost ? 'R$' + parseFloat(props.row.cost) : 'Não informado' }}
           </b-table-column>
           <b-table-column v-else field="pivot.cost" label="Custo">
             R$ {{ parseFloat(props.row.pivot.cost) }}
+          </b-table-column>
+          <b-table-column field="completed" :title="props.row.completed ? 'Completo' : 'Incompleto'" width="" centered>
+            <span :class="[{ __completed: props.row.completed }, 'signal']"></span>
           </b-table-column>
         </template>
         <template slot="empty">
@@ -71,7 +74,8 @@
               {{ filter.label }}
             </b-checkbox>
             <span v-if="filter.active" >
-              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
+              <b-checkbox v-if="filter.key === 'completed'" @input="parseFilters([index, 'rhFilters', 'value', $event])" :value="filter.value">{{ filter.value ? 'Completo' : 'Incompleto' }}</b-checkbox>
+              <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
             </span>
           </div>
           <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">

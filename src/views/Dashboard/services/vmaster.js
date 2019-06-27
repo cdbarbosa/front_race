@@ -60,7 +60,6 @@ export default {
         return this.$store.getters.serviceFilters.name
       },
       set: _.debounce(function (newQuery) {
-        console.log(newQuery)
         this.setServiceQuery(newQuery)
       }, 500)
     },
