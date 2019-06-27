@@ -23,6 +23,12 @@ const getFilters = () => {
         label: 'Experiências',
         value: null,
         active: false
+      },
+      {
+        key: 'completed',
+        label: 'Perfil Completo',
+        value: null,
+        active: false
       }
     ],
     addressFilters: [
