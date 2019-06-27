@@ -188,9 +188,11 @@ export default {
         serviceFilters: this.serviceFilters.filter(f => f.active),
         statusFilter: this.statusFilters.filter(f => f.active)
       }
-      this.$http.post(this.$api({ target: 'filter-service' }), data, {
+      let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
+      this.$http.post(this.$api({ target: url }), data, {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.services = response.data
         this.serviceSelected = response.data[0]
         this.isFilterModal = false
