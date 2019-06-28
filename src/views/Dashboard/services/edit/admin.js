@@ -148,7 +148,7 @@ export default {
           position: 'top-center',
           duration: 300,
           onComplete: () => {
-            this.$emit('updated')
+            this.$parent.$emit('updated')
           }
         })
       })
