@@ -35,6 +35,9 @@
               <b-table-column field="phone" label="Telefone">
                 {{ props.row.phone }}
               </b-table-column>
+              <b-table-column field="completed" :title="props.row.completed ? 'Completo' : 'Incompleto'" width="" centered>
+                <span :class="[{ __completed: props.row.completed }, 'signal']"></span>
+              </b-table-column>
             </template>
             <template slot="empty">
               <section class="section">

@@ -26,8 +26,8 @@ const getFilters = () => {
       },
       {
         key: 'completed',
-        label: 'Perfil Completo',
-        value: null,
+        label: 'Situação dos dados',
+        value: 1,
         active: false
       }
     ],

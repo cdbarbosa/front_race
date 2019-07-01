@@ -25,7 +25,15 @@
             {{ filter.label }}
           </b-checkbox>
           <span v-if="filter.active" >
-            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
+              <b-field v-if="filter.key === 'completed'">
+                <b-radio @input="parseFilters([index, 'clientFilters', 'value', $event])" :value="filter.value" :native-value="1">
+                  Ativo
+                </b-radio>
+                <b-radio @input="parseFilters([index, 'clientFilters', 'value', $event])" :value="filter.value" :native-value="0">
+                  Inativo
+                </b-radio>
+              </b-field>
+            <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
           </span>
         </div>
       </section>

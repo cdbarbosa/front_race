@@ -23,6 +23,12 @@ const getFilters = () => {
         label: 'Atividades',
         value: null,
         active: false
+      },
+      {
+        key: 'completed',
+        label: 'Situação dos dados',
+        value: 1,
+        active: false
       }
     ],
     addressFilters: [
