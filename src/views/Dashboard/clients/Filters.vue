@@ -1,6 +1,6 @@
 <template>
   <div id="filterClient" style="padding: 1rem">
-    <h3>Fitros Básicos</h3>
+    <h3>Básicos</h3>
     <section class="content">
       <section>
         <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">

@@ -59,7 +59,7 @@
     <b-modal :active.sync="isFilterModalActive">
       <div class="content" style="padding: 1rem">
         <section>
-          <h3>Fitros Básicos</h3>
+          <h3>Básicos</h3>
           <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
             <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
@@ -88,7 +88,7 @@
           </div>
         </section>
         <section>
-          <h3>Fitros Acadêmicos</h3>
+          <h3>Acadêmicos</h3>
           <div class="box academic-filter" v-for="(filter, index) in academicFilters" :key="index">
             <b-checkbox @input="parseFilters([index, 'academicFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
