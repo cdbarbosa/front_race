@@ -78,6 +78,14 @@ export default {
       set: _.debounce(function (newVal) {
         this.updateRhSelected(['titulation', 'academics', newVal])
       }, 400)
+    },
+    lattes_perfil: {
+      get () {
+        return this.rh.lattes_perfil
+      },
+      set: _.debounce(function (newVal) {
+        this.updateRhSelected(['lattes_perfil', '', newVal])
+      }, 400)
     }
   },
   methods: {

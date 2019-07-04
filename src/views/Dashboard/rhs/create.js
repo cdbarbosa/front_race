@@ -23,6 +23,7 @@ export default {
         competencies: null,
         observations: null,
         experience: null,
+        lattes_perfil: null,
         academic: {
           area: null,
           titulation: null

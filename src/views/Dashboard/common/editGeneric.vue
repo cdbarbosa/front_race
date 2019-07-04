@@ -52,7 +52,7 @@
         </b-field>
       </article>
       <address class="address">
-        <h3>Endereço</h3>
+        <hr>
         <article>
           <b-field label="País">
             <b-input v-model="country" placeholder="País" required></b-input>

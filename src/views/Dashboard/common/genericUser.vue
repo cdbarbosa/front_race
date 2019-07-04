@@ -23,11 +23,11 @@
       <b-field label="Email">
         <b-input :value="person.user.email" type="email" placeholder="example@example.com" disabled></b-input>
       </b-field>
+    </article>
+    <article>
       <b-field label="Data (nascimento)">
         <b-input :value="parseDate(person.user.birthdate)" v-mask="'##/##/####'" disabled></b-input>
       </b-field>
-    </article>
-    <article>
       <b-field label="CPF/CNPJ">
         <b-input :value="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
       </b-field>

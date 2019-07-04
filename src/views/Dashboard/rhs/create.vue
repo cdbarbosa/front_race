@@ -33,8 +33,11 @@
             <b-datepicker  v-model="user.birthdate" name="birthdate" placeholder="Data de nascimento" :disabled="user.type_id == '1'" editable></b-datepicker>
           </b-field>
         </article>
+        <b-field label="Perfil do Lattes">
+          <b-input v-model="rh.lattes_perfil" name="lattes_perfil" placeholder="http://lattes.cnpq.br/4259409970128066" :disabled="user.type_id == '1'" editable></b-input>
+        </b-field>
         <address class="address">
-          <h3>Endereço</h3>
+          <hr>
           <article>
             <b-field label="País">
               <b-input pattern="[A-Za-z ]+" v-model="address.country" placeholder="País"></b-input>
@@ -60,6 +63,7 @@
             </b-field>
           </article>
         </address>
+        <hr>
         <article class="course">
           <b-field label="Bacharelado">
             <b-input v-model="rh.academic.area" placeholder="Matemática" :disabled="user.type_id == '1'"></b-input>

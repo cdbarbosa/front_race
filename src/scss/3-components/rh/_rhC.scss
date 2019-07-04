@@ -2,7 +2,7 @@
 	.content{
 		section{
 			article{
-				&:nth-child(6){
+				&:nth-child(8){
 					grid-template-columns: repeat(3, 1fr);
 				}
 			}

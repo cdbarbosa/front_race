@@ -33,6 +33,9 @@
         </b-field>
       </section>
       <section id="academics">
+        <b-field label="Perfil Lattes" >
+          <b-input v-model="rhSelected.lattes_perfil" disabled></b-input>
+        </b-field>
         <b-field label="Bacharelado">
           <b-input v-model="area" disabled></b-input>
         </b-field>
