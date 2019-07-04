@@ -60,6 +60,21 @@
       <div class="content" style="padding: 1rem">
         <section>
           <h3>Básicos</h3>
+          <div class="box basic-filter">
+            <b-checkbox @input="parseFilters([2, 'rhFilters', 'active',  $event])" :value="statusFilter.active">
+              {{ statusFilter.label }}
+            </b-checkbox>
+            <span v-if="statusFilter.active">
+              <b-field v-if="statusFilter.key === 'completed'">
+                <b-radio @input="parseFilters([2, 'rhFilters', 'value', $event])" :value="statusFilter.value" :native-value="1">
+                  Ativo
+                </b-radio>
+                <b-radio @input="parseFilters([2, 'rhFilters', 'value', $event])" :value="statusFilter.value" :native-value="0">
+                  Inativo
+                </b-radio>
+              </b-field>
+            </span>
+          </div>
           <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
             <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
@@ -73,17 +88,9 @@
             <b-checkbox @input="parseFilters([index, 'rhFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
-            <span v-if="filter.active" >
-              <b-field v-if="filter.key === 'completed'">
-                <b-radio @input="parseFilters([index, 'rhFilters', 'value', $event])" :value="filter.value" :native-value="1">
-                  Ativo
-                </b-radio>
-                <b-radio @input="parseFilters([index, 'rhFilters', 'value', $event])" :value="filter.value" :native-value="0">
-                  Inativo
-                </b-radio>
-              </b-field>
+            <span v-if="filter.active">
               <!-- <b&#45;checkbox @input="" :value="filter.value">{{ filter.value ? 'Completo' : 'Incompleto' }}</b&#45;checkbox> -->
-              <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
+              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
             </span>
           </div>
           <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">
