@@ -46,7 +46,7 @@
     section{
       article{
         &:nth-child(1){
-          grid-template-columns: 11fr 1fr;
+          grid-template-columns: 8fr 1.5fr;
         }
         &:nth-child(3) {
           grid-template-columns: repeat(3, 1fr);

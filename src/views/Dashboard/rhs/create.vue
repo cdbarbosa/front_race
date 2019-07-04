@@ -47,9 +47,12 @@
             </b-field>
           </article>
           <article class="info-three">
-            <b-field label="Rua">
-              <b-input v-model="address.address" placeholder="Rua"></b-input>
+            <b-field label="Logradouro">
+              <b-input v-model="address.address" placeholder="Logradouro"></b-input>
             </b-field>
+            <!-- <b-field label="Complemento">
+              <b-input v-model="address.address" placeholder="Complemento"></b-input>
+            </b-field> -->
           </article>
           <article class="info-fourth">
             <b-field label="CEP">

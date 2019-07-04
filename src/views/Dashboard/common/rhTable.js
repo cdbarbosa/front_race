@@ -75,11 +75,15 @@ export default {
       })
       return ret
     },
+    statusFilter () {
+      return this.$store.getters[this.getStore].rhFilters[2]
+    },
     userFilters () {
       return this.$store.getters[this.getStore].userFilters
     },
     rhFilters () {
-      return this.$store.getters[this.getStore].rhFilters
+      let b = this.$store.getters[this.getStore].rhFilters
+      return b.slice(0, 2)
     },
     academicFilters () {
       return this.$store.getters[this.getStore].academicFilters

@@ -46,9 +46,12 @@
             </b-field>
           </article>
           <article class="info-three">
-            <b-field label="Rua">
-              <b-input v-model="address.address" placeholder="Rua" required></b-input>
+            <b-field label="Logradouro">
+              <b-input v-model="address.address" placeholder="Logradouro" required></b-input>
             </b-field>
+            <!-- <b-field label="Complemento">
+              <b-input v-model="address.address" placeholder="Logradouro" required></b-input>
+            </b-field> -->
           </article>
           <article class="info-fourth">
             <b-field label="CEP">
@@ -68,7 +71,7 @@
           <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Analise de dados"></vue-editor>
         </b-field>
         <b-field label="Atividade">
-          <vue-editor :editorToolbar="customToolbar" v-model="client.activity" placeholder="Produção de PANIC"></vue-editor>
+          <vue-editor :editorToolbar="customToolbar" v-model="client.activity" placeholder="Pessoa Física: Pesquisadora da USP / Pessoa Jurídica: Empresa de Celulose"></vue-editor>
         </b-field>
         <div class="buttonClass">
           <button type="submit">Cadastrar</button>

@@ -3,6 +3,21 @@
     <h3>Básicos</h3>
     <section class="content">
       <section>
+        <div class="box basic-filter">
+          <b-checkbox @input="parseFilters([2, 'clientFilters', 'active',  $event])" :value="statusFilter.active">
+            {{ statusFilter.label }}
+          </b-checkbox>
+          <span v-if="statusFilter.active">
+              <b-field>
+                <b-radio @input="parseFilters([2, 'clientFilters', 'value', $event])" :value="statusFilter.value" :native-value="1">
+                  Ativo
+                </b-radio>
+                <b-radio @input="parseFilters([2, 'clientFilters', 'value', $event])" :value="statusFilter.value" :native-value="0">
+                  Inativo
+                </b-radio>
+              </b-field>
+          </span>
+        </div>
         <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
           <b-checkbox @input="parseFilters([index, 'userFilters', 'active',  $event])" :value="filter.active">
             {{ filter.label }}
@@ -21,19 +36,11 @@
           </span>
         </div>
         <div class="box basic-filter" v-for="(filter, index) in clientFilters" :key="filter.key">
-          <b-checkbox @input="parseFilters([index, 'clientFilters', 'active',  $event])" :value="filter.active">
+          <b-checkbox @input="parseFilters([index, 'clientFilters', 'active',  $event])" :value="filter.active" >
             {{ filter.label }}
           </b-checkbox>
           <span v-if="filter.active" >
-              <b-field v-if="filter.key === 'completed'">
-                <b-radio @input="parseFilters([index, 'clientFilters', 'value', $event])" :value="filter.value" :native-value="1">
-                  Ativo
-                </b-radio>
-                <b-radio @input="parseFilters([index, 'clientFilters', 'value', $event])" :value="filter.value" :native-value="0">
-                  Inativo
-                </b-radio>
-              </b-field>
-            <b-input v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
+            <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'clientFilters', 'value', $event])"></b-input>
           </span>
         </div>
       </section>
@@ -49,6 +56,9 @@ import { mapActions } from 'vuex'
 export default {
   name: 'filterClient',
   computed: {
+    statusFilter () {
+      return this.$store.getters.clientFilters.clientFilters[2]
+    },
     userFilters () {
       return this.$store.getters.clientFilters.userFilters
     },
@@ -56,7 +66,9 @@ export default {
       return this.$store.getters.clientFilters.addressFilters
     },
     clientFilters () {
-      return this.$store.getters.clientFilters.clientFilters
+      let b = this.$store.getters.clientFilters.clientFilters
+      console.log(b.slice(0, 2))
+      return b.slice(0, 2)
     }
   },
   methods: {
