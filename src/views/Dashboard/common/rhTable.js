@@ -76,7 +76,7 @@ export default {
       return ret
     },
     statusFilter () {
-      return this.$store.getters[this.getStore].rhFilter[2]
+      return this.$store.getters[this.getStore].rhFilters[2]
     },
     userFilters () {
       return this.$store.getters[this.getStore].userFilters
