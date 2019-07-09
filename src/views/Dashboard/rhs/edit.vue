@@ -36,7 +36,7 @@
           <b-field label="Competências">
             <vue-editor :editorToolbar="customToolbar" v-model="competencies" placeholder="Analise de dados"></vue-editor>
           </b-field>
-          <b-field label="Observações">
+          <b-field label="Observações" v-if="$store.getters.user.id !== rh.user.id">
             <vue-editor :editorToolbar="customToolbar" v-model="observations"></vue-editor>
           </b-field>
         </div>

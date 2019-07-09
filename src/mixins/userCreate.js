@@ -15,7 +15,8 @@ export default {
         city: null,
         neighborhood: null,
         address: null,
-        postal_code: null
+        postal_code: null,
+        complement: null
       },
       rules: {
         birthdate: {

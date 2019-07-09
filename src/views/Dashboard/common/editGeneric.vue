@@ -5,7 +5,7 @@
         <b-field label="Nome">
           <b-input v-model="name" placeholder="Nome"></b-input>
         </b-field>
-      <b-field label="Ativo">
+      <b-field label="Ativo" v-if="$store.getters.user.role_id === 1">
         <b-checkbox v-model="userActive"></b-checkbox>
       </b-field>
         <b-field label="ID">
@@ -64,6 +64,9 @@
         <article class="info-three">
           <b-field label="Rua">
             <b-input v-model="address" placeholder="Rua" required></b-input>
+          </b-field>
+          <b-field label="Complemento">
+            <b-input v-model="complement" placeholder="Complemento"></b-input>
           </b-field>
         </article>
         <article class="info-fourth">

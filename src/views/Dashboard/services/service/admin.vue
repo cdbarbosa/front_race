@@ -36,7 +36,7 @@
       </article>
       <article>
         <b-field label="Margem">
-          <b-input :value="`${selected.profit} %`" placeholder="50%" disabled></b-input>
+          <b-input :value="selected.profit ? `${selected.profit} %` : 'Não informado'" placeholder="50%" disabled></b-input>
         </b-field>
         <b-field label="Valor">
           <money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>
@@ -47,7 +47,7 @@
       </article>
       <article v-if="selected.tj">
         <b-field label="Custo TJ">
-          <b-input :value="`${selected.tj.type_id === 1 ? selected.tj.cost + ' %' : 'R$ ' + selected.tj.cost}`" disabled></b-input>
+          <b-input :value="selected.tj.cost ? `${selected.tj.type_id === 1 ? selected.tj.cost + ' %' : 'R$ ' + selected.tj.cost}` : 'Não informado'" disabled></b-input>
         </b-field>
         <b-field label="Situação">
           <b-input :value="`${selected.status.abbreviation} - ${selected.status.description}`" disabled></b-input>

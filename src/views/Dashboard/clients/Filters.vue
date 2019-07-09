@@ -10,10 +10,10 @@
           <span v-if="statusFilter.active">
               <b-field>
                 <b-radio @input="parseFilters([2, 'clientFilters', 'value', $event])" :value="statusFilter.value" :native-value="1">
-                  Ativo
+                  Completo
                 </b-radio>
                 <b-radio @input="parseFilters([2, 'clientFilters', 'value', $event])" :value="statusFilter.value" :native-value="0">
-                  Inativo
+                  Incompleto
                 </b-radio>
               </b-field>
           </span>

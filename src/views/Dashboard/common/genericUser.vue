@@ -46,8 +46,11 @@
     <address class="address">
       <h3>Endereço</h3>
       <article>
-        <b-field label="Rua">
-          <b-input :value="person.user.address.address" placeholder="Rua" disabled></b-input>
+        <b-field label="Logradouro">
+          <b-input :value="person.user.address.address" placeholder="Logradouro" disabled></b-input>
+        </b-field>
+        <b-field label="Complemento">
+          <b-input :value="person.user.address.complement" placeholder="Complemento" disabled></b-input>
         </b-field>
         <b-field label="Estado">
           <b-input :value="person.user.address.state" placeholder="ES" disabled></b-input>

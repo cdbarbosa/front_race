@@ -62,3 +62,7 @@ main#clients {
   width: 1196px;
   border-radius: 4px;
 }
+
+#dashboard .modal #filterClient .content{
+  grid-template-columns: 1fr;
+}

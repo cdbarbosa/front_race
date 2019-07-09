@@ -90,6 +90,14 @@ export default {
         this.$emit('change', ['city', 'address', newVal])
       }, 400)
     },
+    complement: {
+      get () {
+        return this.person.user.address.complement
+      },
+      set: _.debounce(function (newVal) {
+        this.$emit('change', ['complement', 'address', newVal])
+      }, 400)
+    },
     userActive: {
       get () {
         return this.person.user.active === 1 || this.person.user.active

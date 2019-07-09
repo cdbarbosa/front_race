@@ -11,7 +11,7 @@
     <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
       <template v-slot:search>
         <b-input placeholder="Procurar" v-model="searchQuery"></b-input>
-        <b-select v-if="$store.getters.user.role_id === 1" :value="statusFilters[0].abbreviation" selected="0" @input="setServiceFilters([0, 'statusFilters', 'value', $event]); watchStatusFilters($event)">
+        <b-select v-if="[1, 4].indexOf($store.getters.user.role_id) !== -1" :value="statusFilters[0].abbreviation" selected="0" @input="setServiceFilters([0, 'statusFilters', 'value', $event]); watchStatusFilters($event)">
           <option :value="0">Todos Status</option>
           <option v-for="(ss, index) in serviceStatuses" :key="index" :value="ss.abbreviation">{{ ss.abbreviation }} - {{ ss.description }}</option>
         </b-select>
