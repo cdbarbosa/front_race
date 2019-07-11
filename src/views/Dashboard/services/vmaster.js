@@ -191,7 +191,6 @@ export default {
       this.$http.post(this.$api({ target: url }), data, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.services = response.data
         this.serviceSelected = response.data[0]
         this.isFilterModal = false
@@ -214,7 +213,6 @@ export default {
     },
     log () {
       this.isServiceModalActive = true
-      console.log('here')
     },
     saveFile () {
       const header = `
@@ -236,7 +234,6 @@ export default {
       saveAs(blob, `${new Date().valueOf()}.txt`)
     },
     getRhInfo (rh) {
-      console.log(rh)
       return `
 ##===============================================================================
 ## Nome: ${rh.name} 

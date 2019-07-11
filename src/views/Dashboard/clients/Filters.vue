@@ -23,7 +23,15 @@
             {{ filter.label }}
           </b-checkbox>
           <span v-if="filter.active" >
-            <b-switch v-if="filter.key === 'active'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b-switch>
+            <b-field v-if="filter.key === 'active'" >
+              <b-radio @input="parseFilters([index, 'userFilters', 'value', $event])" :value="filter.value" :native-value="1">
+                Ativo
+              </b-radio>
+              <b-radio @input="parseFilters([index, 'userFilters', 'value', $event])" :value="filter.value" :native-value="0">
+                Inativo
+              </b-radio>
+            </b-field>
+            <!-- <b&#45;switch :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event ? 1 : 0])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b&#45;switch> -->
             <b-input  v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
           </span>
         </div>

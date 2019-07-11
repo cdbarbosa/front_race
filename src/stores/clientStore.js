@@ -7,7 +7,7 @@ const getFilters = () => {
       {
         key: 'active',
         label: 'Ativo',
-        value: null,
+        value: 1,
         active: false
       }
     ],

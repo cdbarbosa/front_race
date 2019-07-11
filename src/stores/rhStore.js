@@ -7,7 +7,7 @@ const getFilters = () => {
       {
         key: 'active',
         label: 'Ativo',
-        value: null,
+        value: 1,
         active: false
       }
     ],
@@ -42,7 +42,7 @@ const getFilters = () => {
         key: 'city',
         label: 'Cidade',
         value: null,
-        ative: false
+        active: false
       }
     ],
     academicFilters: [

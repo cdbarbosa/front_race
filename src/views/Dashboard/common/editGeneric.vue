@@ -55,15 +55,15 @@
         <hr>
         <article>
           <b-field label="País">
-            <b-input v-model="country" placeholder="País" required></b-input>
+            <b-input v-model="country" placeholder="País"></b-input>
           </b-field>
           <b-field label="Estado">
-            <b-input maxlength="2" pattern="[A-Z]{2}" v-model="state" placeholder="ES" required></b-input>
+            <b-input maxlength="2" pattern="[A-Z]{2}" v-model="state" placeholder="ES"></b-input>
           </b-field>
         </article>
         <article class="info-three">
-          <b-field label="Rua">
-            <b-input v-model="address" placeholder="Rua" required></b-input>
+          <b-field label="Logradouro">
+            <b-input v-model="address" placeholder="Logradouro"></b-input>
           </b-field>
           <b-field label="Complemento">
             <b-input v-model="complement" placeholder="Complemento"></b-input>
@@ -71,13 +71,13 @@
         </article>
         <article class="info-fourth">
           <b-field label="CEP">
-            <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP" required></b-input>
+            <b-input v-model="postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
           </b-field>
           <b-field label="Bairro">
-            <b-input v-model="neighborhood" placeholder="Bairro" required></b-input>
+            <b-input v-model="neighborhood" placeholder="Bairro"></b-input>
           </b-field>
           <b-field label="Cidade">
-            <b-input v-model="city" placeholder="Cidade" required></b-input>
+            <b-input v-model="city" placeholder="Cidade"></b-input>
           </b-field>
         </article>
         <slot></slot>
