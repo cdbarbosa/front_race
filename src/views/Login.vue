@@ -1,21 +1,32 @@
 <template>
   <main class="page" id="login">
+    <vue-particles clickMode="repulse" color="#dedede"></vue-particles>
     <div class="wrapper">
-      <form @submit.prevent="send">
-        <img src="/img/logo@2x.png" alt=""/>
-        <b-field label="Email">
-          <b-input v-model="login" placeholder="Email"></b-input>
-        </b-field>
-        <b-field label="Senha">
-          <b-input type="password" v-model="password" placeholder="Password"></b-input>
-        </b-field>
-        <section>
-          <button type="submit">Entrar</button>
-          <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in">
+        <form @submit.prevent="send" v-if="!recover">
+          <img src="/img/logo@2x.png" alt=""/>
+          <b-field label="Email">
+            <b-input v-model="login" name="email" placeholder="Email" required></b-input>
+          </b-field>
+          <b-field label="Senha">
+            <b-input type="password" name="password" v-model="password" placeholder="Password" required></b-input>
+          </b-field>
+          <section>
+            <button type="submit">Entrar</button>
+            <a @click="recover = true">Esqueceu sua senha?</a>
+            <transition name="fade" mode="out-in">
             <p>{{ message }}</p>
-          </transition>
-        </section>
-      </form>
+            </transition>
+          </section>
+        </form>
+        <form v-else @submit.prevent="resetPassword">
+          <img src="/img/logo@2x.png" alt=""/>
+          <b-field label="Email">
+            <b-input v-model="login" name="recover_email" placeholder="Email" required></b-input>
+          </b-field>
+          <button type="submit">Enviar</button>
+        </form>
+      </transition>
     </div>
   </main>
 </template>
@@ -36,7 +47,8 @@ export default {
       password: '',
       // login: '',
       // password: '',
-      message: ''
+      message: '',
+      recover: false
     }
   },
   beforeMount () {
@@ -98,6 +110,13 @@ export default {
           console.log(err)
           this.message = 'Token Expirado, faça o login novamente'
         })
+      })
+    },
+    resetPassword () {
+      this.$http.post(this.$api({ target: 'password/create' }), { email: this.login }).then(response => {
+        console.log(response)
+      }).then(err => {
+        console.log(err)
       })
     }
   }

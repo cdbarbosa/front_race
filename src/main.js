@@ -11,6 +11,7 @@ import money from 'v-money'
 import Toasted from 'vue-toasted'
 import Datepicker from 'vuejs-datepicker'
 import VueProgressBar from 'vue-progressbar'
+import VueParticles from 'vue-particles'
 import moment from 'moment'
 
 import { api } from './config'
@@ -35,6 +36,7 @@ Vue.use(VueTheMask)
 Vue.use(VeeValidate)
 Vue.use(money, { precision: 2 })
 Vue.use(Toasted)
+Vue.use(VueParticles)
 Vue.use(VueProgressBar, {
   color: '#009688',
   failedColor: '#f44366',
