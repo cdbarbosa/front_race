@@ -141,7 +141,9 @@ export default {
       return false
     },
     updateFunction () {
+      this.$Progress.start()
       this.postServiceSelected([this, this.service]).then(response => {
+        this.$Progress.finish()
         this.updateService([response.data, this.selectedIndex])
         this.$toasted.success('Serviço atualizado com sucesso!', {
           theme: 'bubble',

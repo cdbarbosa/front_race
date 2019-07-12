@@ -197,9 +197,11 @@ export default {
           value: this.receipt.value
         }
       }
+      this.$Progress.start()
       this.$http.post(this.$api({ target: 'receipts' }), data, {
         headers: header()
       }).then(response => {
+        this.$Progress.finish()
         this.getService()
         this.isModalActive = false
       })
@@ -224,9 +226,11 @@ export default {
           value: this.selected.value
         }
       }
+      this.$Progress.start()
       this.$http.put(this.$api({ target: 'receipt' }), data, {
         headers: header()
       }).then(response => {
+        this.$Progress.finish()
         this.getService()
         this.isEditModal = false
       })

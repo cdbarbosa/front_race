@@ -193,9 +193,11 @@ export default {
         hours: this.rhInServiceSelected.pivot.hours,
         goal: this.rhInServiceSelected.pivot.goal
       }
+      this.$Progress.start()
       this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
         headers: header()
       }).then(() => {
+        this.$Progress.finish()
         this.isEditModal = false
         this.getRhInService()
       })
@@ -240,9 +242,11 @@ export default {
         service_id: this.service.id
       }
       data = Object.assign(this.rhServiceFields, data)
+      this.$Progress.start()
       this.$http.post(this.$api({ target: 'rhs-service' }), data, {
         headers: header()
       }).then(() => {
+        this.$Progress.finish()
         this.rhSelected = undefined
         this.getRhInService()
         this.getRhNotInService()
@@ -264,9 +268,11 @@ export default {
         rh_id: id,
         service_id: this.service.id
       }
+      this.$Progress.start()
       this.$http.post(this.$api({ target: 'rh-service' }), data, {
         headers: header()
       }).then(() => {
+        this.$Progress.finish()
         this.getRhInService()
         this.getRhNotInService()
       })
