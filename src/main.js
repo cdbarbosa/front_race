@@ -10,6 +10,7 @@ import VeeValidate from 'vee-validate'
 import money from 'v-money'
 import Toasted from 'vue-toasted'
 import Datepicker from 'vuejs-datepicker'
+import VueProgressBar from 'vue-progressbar'
 import moment from 'moment'
 
 import { api } from './config'
@@ -34,6 +35,19 @@ Vue.use(VueTheMask)
 Vue.use(VeeValidate)
 Vue.use(money, { precision: 2 })
 Vue.use(Toasted)
+Vue.use(VueProgressBar, {
+  color: '#009688',
+  failedColor: '#f44366',
+  thickness: '4px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+})
 
 new Vue({
   router,

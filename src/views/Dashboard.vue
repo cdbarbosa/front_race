@@ -29,6 +29,10 @@ export default {
       else next({ name: 'login' })
     })
   },
+  beforeMount () {
+  },
+  mounted () {
+  },
   components: {
     navstrip
   }

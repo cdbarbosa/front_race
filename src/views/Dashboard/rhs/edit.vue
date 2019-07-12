@@ -42,6 +42,9 @@
         </div>
       </div>
       <button type="submit">Atualizar</button>
+      <b-checkbox v-model="approved">
+        {{ approved ? 'Perfil Aprovado': 'Aprovação pendente' }}
+      </b-checkbox>
     </form>
   </div>
 </template>

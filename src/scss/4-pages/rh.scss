@@ -145,3 +145,45 @@
     }
   }
 }
+
+#updateRh {
+  button{
+    margin-right: 1rem;
+  }
+}
+
+#approvedCheck{
+  padding-top: 2rem;
+  section{
+    img{
+      width: 100%;
+    }
+    &.content{
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 4rem);
+      justify-content: space-between;
+    }
+  }
+  nav{
+    ul{
+      margin: 0;
+      padding-left: 0;
+      li{
+        display: inline-block;
+        padding: 0 1rem;
+        font-weight: bold;
+        color: $highlight;
+        &:first-child{
+          padding: 0;
+        }
+      }
+    }
+  }
+  .grid{
+    grid-template-columns: 2fr 3fr;
+    grid-gap: 118px;
+  }
+  font-size: 18px;
+}
+

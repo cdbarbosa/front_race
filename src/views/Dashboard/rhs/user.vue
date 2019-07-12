@@ -33,7 +33,7 @@ import moment from 'moment'
 import { header } from '../../../config/index.js'
 moment.locale('pt-BR')
 export default {
-  name: 'rhs',
+  name: 'perfil',
   data () {
     return {
       isEditActive: false,
@@ -73,6 +73,8 @@ export default {
   beforeMount () {
     this.getPerfil()
   },
+  mounted () {
+  },
   methods: {
     ...mapActions([
       'getRhs',
@@ -88,6 +90,7 @@ export default {
       }).then(response => {
         this.selected = response.data
         this.setRhSelected(response.data)
+        if (!response.data.approved) this.$router.push({ name: 'approvedCheck' })
       })
     }
   },

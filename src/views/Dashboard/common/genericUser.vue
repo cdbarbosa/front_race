@@ -26,10 +26,10 @@
     </article>
     <article>
       <b-field label="Data (nascimento)">
-        <b-input :value="parseDate(person.user.birthdate)" v-mask="'##/##/####'" disabled></b-input>
+        <b-input :value="person.user.birthdate ? parseDate(person.user.birthdate) : 'Não informado'" v-mask="'##/##/####'" disabled></b-input>
       </b-field>
       <b-field label="CPF/CNPJ">
-        <b-input :value="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="cpf" disabled></b-input>
+        <b-input :value="person.user.document" v-mask="['###.###.###-##', '##.###.###/####-##']" placeholder="CPF/CNPJ" disabled></b-input>
       </b-field>
       <b-field label="Tipo">
         <div class="control">

@@ -48,7 +48,10 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction () {
+      this.$Progress.start() // no início das requisições
       this.postClientSelected([this, this.client]).then(response => {
+        this.$Progress.finish() // no fim das requisições, logo após o then da ultima requisição
+        // this.$Progress.fail() // no catch
         this.updateClient([response.data, this.selectedIndex])
         this.$toasted.success('Perfil do Cliente atualizado com sucesso!', {
           theme: 'bubble',

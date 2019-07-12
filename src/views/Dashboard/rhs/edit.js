@@ -86,6 +86,14 @@ export default {
       set: _.debounce(function (newVal) {
         this.updateRhSelected(['lattes_perfil', '', newVal])
       }, 400)
+    },
+    approved: {
+      get () {
+        return this.rh.approved
+      },
+      set: _.debounce(function (newVal) {
+        this.updateRhSelected(['approved', '', newVal])
+      }, 400)
     }
   },
   methods: {

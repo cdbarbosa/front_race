@@ -7,6 +7,7 @@ import Overview from './views/Dashboard/Overview.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Rhs from './views/Dashboard/Rhs.vue'
 import Services from './views/Dashboard/Services.vue'
+import ApprovedCheck from './views/ApprovedCheck.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +47,11 @@ export default new Router({
           component: Services
         }
       ]
+    },
+    {
+      path: 'approved-check',
+      name: 'approvedCheck',
+      component: ApprovedCheck
     }
   ]
 })

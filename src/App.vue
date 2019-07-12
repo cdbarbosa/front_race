@@ -1,5 +1,6 @@
 <template>
   <div id="app" style="height: 100%">
+    <vue-progress-bar></vue-progress-bar>
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
