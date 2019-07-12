@@ -68,6 +68,7 @@ export default {
         user: this.user
       }
       return new Promise((resolve, reject) => {
+        this.$Progress.start()
         this.$http.post(this.$api({ target: 'users' }), data, {
           headers: header()
         }).then(response => {
@@ -78,9 +79,11 @@ export default {
           this.$http.post(this.$api({ target: 'addresses' }), datas, {
             headers: header()
           }).then(() => {
+            this.$Progress.finish()
             resolve(datas.user_id)
           })
         }).catch(err => {
+          this.$Progress.fail()
           reject(err)
         })
       })

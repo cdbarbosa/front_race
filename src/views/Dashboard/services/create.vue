@@ -141,14 +141,17 @@ export default {
         client_id: this.client_id,
         service: this.service
       }
+      this.$Progress.start()
       this.$http.post(this.$api({ target: 'services' }), data, {
         headers: header()
       }).then(response => {
+        this.$Progress.finish()
         this.getServices(this).then(services => {
           this.setServices(services)
           this.$emit('serviceCreated')
         })
       }).catch(err => {
+        this.$Progress.fail()
         this.$emit('creationFailed')
         console.log(err)
       })

@@ -56,6 +56,7 @@ export default {
     },
     createRh () {
       if (this.rh.cost) this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
+      this.$Progress.start()
       this.createUser().then(userId => {
         let data = {
           user_id: userId,
@@ -64,15 +65,18 @@ export default {
         this.$http.post(this.$api({ target: 'rhs' }), data, {
           headers: header()
         }).then(response => {
+          this.$Progress.finish()
           this.getRhs(this).then(rhs => {
             this.setRhs(rhs)
             this.$emit('rhCreated')
           })
         }).catch(err => {
+          this.$Progress.fail()
           this.$emit('creationFailed')
           console.log(err)
         })
       }).catch(err => {
+        this.$Progess.fail()
         this.$emit('creationFailed')
         console.log(err)
       })

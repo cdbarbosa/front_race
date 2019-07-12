@@ -146,6 +146,7 @@ export default {
       return undefined
     },
     createClient () {
+      this.$Progress.start()
       this.createUser().then(userId => {
         let data = {
           user_id: userId,
@@ -154,15 +155,18 @@ export default {
         this.$http.post(this.$api({ target: 'clients' }), data, {
           headers: header()
         }).then(() => {
+          this.$Progess.finish()
           this.getClients(this).then(clients => {
             this.setClients(clients)
             this.$emit('clientCreated')
           })
         }).catch(err => {
+          this.$Progress.fail()
           this.$emit('creationFailed')
           console.log(err)
         })
       }).catch(err => {
+        this.$Progress.fail()
         this.$emit('creationFailed')
         console.log(err)
       })

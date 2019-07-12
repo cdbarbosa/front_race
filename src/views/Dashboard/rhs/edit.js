@@ -108,7 +108,9 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     updateFunction () {
+      this.$Progress.start()
       this.postRhSelected([this, this.rh]).then(response => {
+        this.$Progress.finish()
         this.updateRh([response.data, this.selectedIndex])
         this.$toasted.success('Perfil do RH atualizado com sucesso!', {
           theme: 'bubble',
@@ -125,9 +127,11 @@ export default {
         label: e[0],
         value: e[1]
       }
+      this.$Progress.start()
       this.$http.put(this.$api({ target: 'rh-academic' }), Object.assign({ 'rh_id': this.rh.id, 'rh_academics_id': this.rh.academics[0].id }, data), {
         headers: header()
       }).then(response => {
+        this.$Progress.finish()
         let payload = [response.data, this.selectedIndex]
         this.updateRh(payload)
         this.$emit('updated')
