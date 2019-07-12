@@ -34,6 +34,7 @@ export default {
   computed: {
     selectedIndex () {
       return this.serviceSelected ? this.services.findIndex(service => service.id === this.serviceSelected.id) : 0
+      // return this.serviceSelected ? this.services.findIndex(service => service.id === this.serviceSelected.id) : (this.$route.params.service_id ? this.services.findIndex(this.$route.params.service_id) : 0)
     },
     serviceFilters () {
       return this.$store.getters.serviceFilters.serviceFilters
@@ -121,8 +122,12 @@ export default {
       }
     }
   },
+  beforeRouteEnter (to, from, next) {
+    console.log(to, from)
+  },
   beforeMount () {
     this.getServiceStatuses()
+    // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
     if (this.filterActive) {
       this.searchServices()
     } else {
@@ -133,7 +138,6 @@ export default {
         } else {
           this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
         }
-        this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
       })
     }
   },

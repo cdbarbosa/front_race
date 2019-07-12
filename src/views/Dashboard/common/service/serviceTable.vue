@@ -3,7 +3,7 @@
     <section class="__secundary">
       <div class="tableContainer">
         <header :class="{__userService: target !== 1 }">
-          <h4>Serviços</h4>
+          <h4>Serviços </h4>
           <slot name="search"></slot>
           <span @click="$emit('restore')" v-if="options.search">
             <i class="fas fa-backspace"></i>

@@ -15,9 +15,9 @@
             <button type="submit">Entrar</button>
             <a @click="recover = true">Esqueceu sua senha?</a>
             <transition name="fade" mode="out-in">
-            <p>{{ message }}</p>
             </transition>
           </section>
+          <p>{{ message }}</p>
         </form>
         <form v-else @submit.prevent="resetPassword">
           <img src="/img/logo@2x.png" alt=""/>
