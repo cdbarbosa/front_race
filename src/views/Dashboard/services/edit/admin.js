@@ -110,7 +110,7 @@ export default {
     },
     tjCost: {
       get () {
-        return parseFloat(this.service.tj.cost)
+        return this.service.tj.cost ? parseFloat(this.service.tj.cost) : 0
       },
       set (newVal) {
         this.updateServiceSelectedTj(['cost', newVal])
