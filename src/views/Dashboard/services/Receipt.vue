@@ -10,7 +10,8 @@
       <section>
         <article>
           <b-field label="Serviço">
-            <b-input v-model="serviceSelected.name" placeholder="Jessica Miles" disabled></b-input>
+            <textarea v-model="serviceSelected.name" disabled></textarea>
+            <!-- <b&#45;input v&#45;model="serviceSelected.name" placeholder="Jessica Miles" disabled></b&#45;input> -->
           </b-field>
           <b-field label="ID">
             <b-input v-model="serviceSelected.id" disabled></b-input>

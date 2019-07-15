@@ -10,7 +10,8 @@
       <section>
         <article>
           <b-field label="Serviço">
-            <b-input v-model="service.name" disabled :title="service.name"></b-input>
+            <textarea v-model="service.name" disabled></textarea>
+            <!-- <b&#45;input v&#45;model="service.name" disabled :title="service.name"></b&#45;input> -->
           </b-field>
           <b-field label="ID">
             <b-input v-model="service.id" disabled></b-input>

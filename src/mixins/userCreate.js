@@ -37,7 +37,8 @@ export default {
         number: {
           regex: /^([0-9]+)(%)$/
         }
-      }
+      },
+      minDate: null
     }
   },
   watch: {
@@ -60,6 +61,9 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.minDate = new Date(moment(new Date()).subtract(18, 'year'))
   },
   methods: {
     createUser () {

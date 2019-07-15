@@ -21,6 +21,7 @@ export default {
     }
   },
   beforeMount () {
+    this.currentPage = Math.ceil((this.selectedIndex) / this.perPage) || 1
   },
   computed: {
     selected: {

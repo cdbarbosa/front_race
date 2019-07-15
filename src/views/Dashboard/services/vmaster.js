@@ -126,6 +126,7 @@ export default {
     console.log(to, from)
   },
   beforeMount () {
+    console.log(this.selectedIndex)
     this.getServiceStatuses()
     // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
     if (this.filterActive) {
