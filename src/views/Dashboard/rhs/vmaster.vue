@@ -19,7 +19,7 @@
       <generic-user :person="rhSelected"></generic-user>
       <section>
         <b-field label="Custo (hora)">
-          <money v-if="rhSelected.cost" class="input" :value="rhSelected.cost" v-money="money" :masked="true" disabled></money>
+          <money v-if="rhSelected.cost" class="input" :value="parseFloat(rhSelected.cost)" v-money="money" :masked="true" disabled></money>
           <div v-else class="textarea __disabled" disabled></div>
         </b-field>
         <b-field label="Competências">

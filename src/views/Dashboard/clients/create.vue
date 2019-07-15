@@ -31,23 +31,23 @@
             <b-input v-model="client.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data (nascimento)">
-            <b-datepicker v-model="user.birthdate" placeholder="Data de nascimento" :disabled="user.type_id == 1" :min-date="minDate" editable></b-datepicker>
+            <b-datepicker v-model="user.birthdate" placeholder="Data de nascimento" :disabled="user.type_id == 1" :max-date="maxDate" editable></b-datepicker>
           </b-field>
           <!-- <span>{{ errors.first('birthdate') }}</span> -->
         </article>
         <address class="address">
-          <h3>Endereço</h3>
+          <hr>
           <article>
             <b-field label="País">
-              <b-input pattern="[A-Za-z ]+" v-model="address.country" placeholder="País" required></b-input>
+              <b-input pattern="[A-Za-z ]+" name="country" v-model="address.country" placeholder="País"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]{2}" v-model="address.state" placeholder="ES" required></b-input>
+              <b-input maxlength="2" pattern="[A-Z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-three">
             <b-field label="Logradouro">
-              <b-input v-model="address.address" placeholder="Logradouro" required></b-input>
+              <b-input v-model="address.address" name="street-address" autocomplete="shipping street-address" placeholder="Logradouro"></b-input>
             </b-field>
             <b-field label="Complemento">
               <b-input v-model="address.complement" placeholder="Complemento"></b-input>
@@ -55,20 +55,20 @@
           </article>
           <article class="info-fourth">
             <b-field label="CEP">
-              <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP" required></b-input>
+              <b-input v-model="address.postal_code" name="postal-code" autocomplete="shipping postal-code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input v-model="address.neighborhood" placeholder="Bairro" required></b-input>
+              <b-input v-model="address.neighborhood" name="sublocality_level_1" autocomplete="sublocality_level_1" placeholder="Bairro"></b-input>
             </b-field>
             <b-field label="Cidade">
-              <b-input v-model="address.city" placeholder="Cidade" required></b-input>
+              <b-input v-model="address.city" name="locality" autocomplete="shipping locality" placeholder="Cidade"></b-input>
             </b-field>
           </article>
         </address>
       </section>
       <aside class="others">
         <b-field label="Observações">
-          <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Analise de dados"></vue-editor>
+          <vue-editor :editorToolbar="customToolbar" v-model="client.observations" placeholder="Anotações internas"></vue-editor>
         </b-field>
         <b-field label="Atividade">
           <vue-editor :editorToolbar="customToolbar" v-model="client.activity" placeholder="Pessoa Física: Pesquisadora da USP / Pessoa Jurídica: Empresa de Celulose"></vue-editor>
@@ -155,7 +155,7 @@ export default {
         this.$http.post(this.$api({ target: 'clients' }), data, {
           headers: header()
         }).then(() => {
-          this.$Progess.finish()
+          this.$Progress.finish()
           this.getClients(this).then(clients => {
             this.setClients(clients)
             this.$emit('clientCreated')

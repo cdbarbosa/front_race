@@ -40,15 +40,15 @@
           <hr>
           <article>
             <b-field label="País">
-              <b-input pattern="[A-Za-z ]+" v-model="address.country" placeholder="País"></b-input>
+              <b-input pattern="[A-Za-z ]+" name="country" v-model="address.country" placeholder="País"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]{2}" v-model="address.state" placeholder="ES"></b-input>
+              <b-input maxlength="2" pattern="[A-Z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-three">
             <b-field label="Logradouro">
-              <b-input v-model="address.address" placeholder="Logradouro"></b-input>
+              <b-input v-model="address.address" name="street-address" autocomplete="shipping street-address" placeholder="Logradouro"></b-input>
             </b-field>
             <b-field label="Complemento">
               <b-input v-model="address.complement" placeholder="Complemento"></b-input>
@@ -56,13 +56,13 @@
           </article>
           <article class="info-fourth">
             <b-field label="CEP">
-              <b-input v-model="address.postal_code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
+              <b-input v-model="address.postal_code" name="postal-code" autocomplete="shipping postal-code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input v-model="address.neighborhood" placeholder="Bairro"></b-input>
+              <b-input v-model="address.neighborhood" name="neighborhood" placeholder="Bairro"></b-input>
             </b-field>
             <b-field label="Cidade">
-              <b-input v-model="address.city" placeholder="Cidade"></b-input>
+              <b-input v-model="address.city" name="locality" autocomplete="shipping locality" placeholder="Cidade"></b-input>
             </b-field>
           </article>
         </address>

@@ -63,7 +63,7 @@ export default {
         return this.person.user.address.country
       },
       set: _.debounce(function (newVal) {
-        this.$emit('change', ['state', 'country', newVal])
+        this.$emit('change', ['country', 'address', newVal])
       }, 400)
     },
     postal_code: {

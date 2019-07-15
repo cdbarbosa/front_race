@@ -38,7 +38,7 @@ export default {
           regex: /^([0-9]+)(%)$/
         }
       },
-      minDate: null
+      maxDate: null
     }
   },
   watch: {
@@ -63,11 +63,12 @@ export default {
     }
   },
   mounted () {
-    this.minDate = new Date(moment(new Date()).subtract(18, 'year'))
+    this.maxDate = new Date(moment(new Date()).subtract(18, 'year'))
+    this.user.birthdate = new Date(moment(new Date()).subtract(18, 'year'))
   },
   methods: {
     createUser () {
-      this.user.birthdate = moment(this.user.birthdate).format()
+      // this.user.birthdate = moment(this.user.birthdate).format()
       let data = {
         user: this.user
       }

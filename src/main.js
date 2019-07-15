@@ -34,7 +34,10 @@ Vue.use(Buefy, {
 Vue.use(Datepicker)
 Vue.use(VueTheMask)
 Vue.use(VeeValidate)
-Vue.use(money, { precision: 2 })
+Vue.use(money, {
+  precision: 2,
+  prefix: 'R$ '
+})
 Vue.use(Toasted)
 Vue.use(VueParticles)
 Vue.use(VueProgressBar, {

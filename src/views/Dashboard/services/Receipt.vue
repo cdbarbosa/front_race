@@ -77,7 +77,7 @@
             <b-datepicker v-model="receipt.date" v-mask="'##/##/####'" placeholder="Data do recebimento" name="date" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" required></b-datepicker>
           </b-field>
           <b-field label="Valor (R$)">
-            <b-input type="number" step="0.01" v-model="receipt.value" placeholder="300,00" name="date" required></b-input>
+            <b-input type="number" step="0.01" v-model="receipt.value" placeholder="300,00" name="value" required></b-input>
           </b-field>
           <button type="submit">Criar</button>
         </form>
