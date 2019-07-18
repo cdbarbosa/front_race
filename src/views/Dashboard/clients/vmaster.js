@@ -135,8 +135,10 @@ export default {
       this.searchClient()
     } else {
       this.getClients(this).then(clients => {
-        this.clients = clients
-        this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+        if (clients.length) {
+          this.clients = clients
+          this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+        }
         this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
       })
     }

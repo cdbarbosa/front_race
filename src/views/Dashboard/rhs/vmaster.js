@@ -140,8 +140,10 @@ export default {
       this.filter()
     } else {
       this.getRhs(this).then(rhs => {
-        this.rhs = rhs
-        this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
+        if (rhs.length) {
+          this.rhs = rhs
+          this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
+        }
       })
     }
     this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1

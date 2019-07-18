@@ -133,11 +133,13 @@ export default {
       this.searchServices()
     } else {
       this.getServices(this).then(services => {
-        this.services = services
-        if (this.$route.params.service_id) {
-          this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
-        } else {
-          this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+        if (services.length) {
+          this.services = services
+          if (this.$route.params.service_id) {
+            this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
+          } else {
+            this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+          }
         }
       })
     }
