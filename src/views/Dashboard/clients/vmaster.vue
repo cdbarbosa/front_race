@@ -2,7 +2,7 @@
   <main id="master">
     <h3>
       Cliente
-      <div id="edit" @click="isEditActive = true" v-if="clientSelected">
+      <div id="edit" @click="clientSelected ? isEditActive = true : null">
         <b-icon icon="edit"></b-icon>
       </div>
       <button id="createButton" class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
@@ -17,7 +17,7 @@
             <span @click="restoreClients">
               <i class="fas fa-backspace"></i>
             </span>
-            <div id="edit" @click="isFilterModal = true">
+            <div id="filter" :class="{ __filterActive: filterActive }" @click="isFilterModal = true">
               <b-icon icon="cog"></b-icon>
             </div>
           </header>
@@ -79,7 +79,7 @@
       <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <filters-client @restore="restoreClients(); isFilterModal = false" @filter="searchClient(); isFilterModal = false" @reset="resetFilters()"></filters-client>
+      <filters-client @restore="restoreClients(); isFilterModal = false" @filter="get(); isFilterModal = false"></filters-client>
     </b-modal>
   </main>
 </template>

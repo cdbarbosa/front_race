@@ -75,7 +75,6 @@ export default {
     },
     clientFilters () {
       let b = this.$store.getters.clientFilters.clientFilters
-      console.log(b.slice(0, 2))
       return b.slice(0, 2)
     }
   },

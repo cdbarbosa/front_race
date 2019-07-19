@@ -28,7 +28,7 @@ const getFilters = () => {
         key: 'completed',
         label: 'Situação dos dados',
         value: 1,
-        active: false
+        active: true
       }
     ],
     addressFilters: [
@@ -162,12 +162,10 @@ const actions = {
     const rawClient = payload[1]
     const { user: rawUser, ...cleanClient } = rawClient
     const { address: cleanAddress, ...cleanUser } = rawUser
-    console.log(cleanAddress)
     return new Promise((resolve, reject) => {
       that.$http.post(that.$api({ target: 'user' }), cleanUser, {
         headers: header()
       }).then((response) => {
-        console.log(cleanAddress)
         that.$http.post(that.$api({ target: 'address' }), cleanAddress, {
           headers: header()
         }).then((response) => {

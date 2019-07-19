@@ -10,7 +10,7 @@
         <span v-if="filters" @click="$emit('restore')">
           <i class="fas fa-backspace"></i>
         </span>
-        <div id="edit" v-if="filters" @click="isFilterModalActive = true">
+        <div :class="{ __filterActive: filterActive }" id="filter" v-if="filters" @click="isFilterModalActive = true">
           <b-icon icon="cog"></b-icon>
         </div>
       </header>

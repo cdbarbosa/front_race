@@ -28,7 +28,7 @@ const getFilters = () => {
         key: 'completed',
         label: 'Situação dos dados',
         value: 1,
-        active: false
+        active: true
       }
     ],
     addressFilters: [

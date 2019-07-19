@@ -112,7 +112,7 @@ export default {
     searchQuery (newQuery) {
       if (newQuery === '' || newQuery === null) {
         if (!this.searchDocument) this.restoreClients()
-      } else this.searchClient()
+      } else this.filterClients()
     },
     searchDocument: _.debounce(function (newQuery) {
       if (newQuery === '') this.restoreClients()
@@ -131,15 +131,16 @@ export default {
     }
   },
   beforeMount () {
+    this.get()
+    this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
     if (this.filterActive) {
-      this.searchClient()
+      this.filterClients()
     } else {
       this.getClients(this).then(clients => {
         if (clients.length) {
           this.clients = clients
           this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
         }
-        this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
       })
     }
   },
@@ -158,21 +159,50 @@ export default {
       'restoreClientFilters',
       'setClientQuery'
     ]),
-    restoreClients () {
-      if (!this.document) {
-        this.tableSelected = this.clients[this.selectedIndex]
-        this.restoreClientFilters()
-        this.getClients(this).then(clients => {
+    get () {
+      if (this.filterActive) this.filterClients()
+      else this.getAllClients()
+    },
+    getAllClients () {
+      this.getClients(this).then(clients => {
+        if (clients.length) {
           this.clients = clients
           this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
-        })
+        }
+      })
+    },
+    filterClients (event) {
+      let data = {
+        name: this.searchQuery,
+        userFilters: this.userFilters.filter(f => f.active),
+        addressFilters: this.addressFilters.filter(f => f.active),
+        clientFilters: this.clientFilters.filter(f => f.active)
       }
+      this.$http.post(this.$api({ target: 'filter-client' }), data, {
+        headers: header()
+      }).then(response => {
+        if (response.data.length) {
+          this.clients = response.data
+          this.clientSelected = response.data[0]
+        }
+        this.isFilterModal = false
+      })
+    },
+    restoreClients () {
+      this.restoreClientFilters()
+      this.get()
+      this.currentPage = Math.ceil((this.selectedIndex + 1) / this.perPage) || 1
+      // if (!this.document) {
+      //   this.tableSelected = this.clients[this.selectedIndex]
+      //   this.restoreClientFilters()
+      //   this.getClients(this).then(clients => {
+      //     this.clients = clients
+      //     this.clientSelected = clients[this.lastClientSelected !== undefined ? this.lastClientSelected : 0]
+      //   })
+      // }
     },
     restoreClientSelected () {
       this.setClientSelected(this.clients[this.selectedIndex])
-    },
-    log (e) {
-      console.log(e)
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
@@ -184,28 +214,6 @@ export default {
         return 'success'
       }
       return 'error'
-    },
-    resetFilters () {
-      this.getClients(this).then(clients => {
-        this.clients = clients
-        this.clientSelected = clients[0]
-      })
-      this.tableSelected = this.clients[0]
-    },
-    searchClient (event) {
-      let data = {
-        name: this.searchQuery,
-        userFilters: this.userFilters.filter(f => f.active),
-        addressFilters: this.addressFilters.filter(f => f.active),
-        clientFilters: this.clientFilters.filter(f => f.active)
-      }
-      this.$http.post(this.$api({ target: 'filter-client' }), data, {
-        headers: header()
-      }).then(response => {
-        this.clients = response.data
-        this.clientSelected = response.data[0]
-        this.isFilterModal = false
-      })
     },
     searchUserByDocument (document) {
       this.$http.post(this.$api({ target: 'search-client-document' }), { document: document }, {

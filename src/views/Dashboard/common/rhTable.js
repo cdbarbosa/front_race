@@ -31,7 +31,8 @@ export default {
     attach: {
       default: false
     },
-    service_id: Number
+    service_id: Number,
+    filterActive: Boolean
   },
   data () {
     return {

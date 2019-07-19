@@ -87,12 +87,18 @@
                 margin-bottom: 0;
               }
             }
-
             #edit{
               span.icon{
                 margin-right: 0;
                 display: block;
                 margin-left: auto;
+              }
+            }
+            #filter{
+              &.__filterActive{
+                span.icon{
+                  color: $highlight;
+                }
               }
             }
           }
