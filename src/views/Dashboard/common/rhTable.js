@@ -65,17 +65,6 @@ export default {
     }
   },
   computed: {
-    filterActive () {
-      let ret = false
-      Object.keys(this.$store.getters[this.getStore]).forEach(fi => {
-        if (fi === 'name') {
-          if (this.$store.getters[this.getStore][fi]) ret = true
-        } else {
-          if (this.$store.getters[this.getStore][fi].filter(f => f.active).length) ret = true
-        }
-      })
-      return ret
-    },
     statusFilter () {
       return this.$store.getters[this.getStore].rhFilters[2]
     },
@@ -108,10 +97,9 @@ export default {
       this.rhSelected = undefined
       if (newVal === '' || newVal === oldVal) {
         this.tableSelected = this.resources[this.selectedIndex]
-        if (this.filterActive) this.filter()
-        else this.$emit('restore')
+        this.$emit('filter')
       } else {
-        this.filter(newVal)
+        this.$emit('filter')
       }
     }, 500)
   },
@@ -135,9 +123,6 @@ export default {
         return 'success'
       }
       return 'error'
-    },
-    filter () {
-      this.$emit('filter')
     }
   },
   components: {

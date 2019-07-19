@@ -25,7 +25,7 @@
             {{ parseDate(props.row.created_at) }}
           </b-table-column>
           <b-table-column field="created_at" label="Previsão">
-            {{ parseDate(props.row.forecast) }}
+            {{ props.row.forecast ? parseDate(props.row.forecast) :'N. I. ' }}
           </b-table-column>
           <b-table-column field="name" label="Situação" sortable>
             {{ props.row.status.abbreviation }}

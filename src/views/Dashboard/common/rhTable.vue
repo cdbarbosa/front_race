@@ -121,7 +121,7 @@
             </span>
           </div>
           <div class="bottonFilter">
-            <button @click="filter(searchRh); isFilterModalActive = false">Ok</button>
+            <button @click="$emit('filter'); isFilterModalActive = false">Ok</button>
             <button @click="$emit('restore'); isFilterModalActive = false">Resetar</button>
           </div>
         </section>

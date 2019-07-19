@@ -112,8 +112,8 @@ export default {
       this.rhCreated = undefined
     },
     searchQuery (newQuery, oldQuery) {
-      if (newQuery === '' || newQuery === oldQuery) this.restoreRhs()
-      else this.filter()
+      if (newQuery === '' || newQuery === oldQuery) this.get()
+      else this.filterRhs()
     },
     // searchQuery: _.debounce(function (newQuery, oldQuery) {
     //   this.rhSelected = undefined
@@ -136,16 +136,7 @@ export default {
   //   }
   // },
   beforeMount () {
-    if (this.filterActive) {
-      this.filter()
-    } else {
-      this.getRhs(this).then(rhs => {
-        if (rhs.length) {
-          this.rhs = rhs
-          this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
-        }
-      })
-    }
+    this.get()
     this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
   },
   beforeDestroy () {
@@ -162,21 +153,19 @@ export default {
       'setRhQuery',
       'setRhFilters'
     ]),
-    restoreRhSelected () {
-      this.setRhSelected(this.rhs[this.selectedIndex])
+    get () {
+      if (this.filterActive) this.filterRhs()
+      else this.getAllRhs()
     },
-    parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
+    getAllRhs () {
+      this.getRhs(this).then(rhs => {
+        if (rhs.length) {
+          this.rhs = rhs
+          this.rhSelected = rhs[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
+        }
+      })
     },
-    parseModal () {
-      if (this.rhCreated === undefined) {
-        return 'createRh'
-      } else if (this.rhCreated === true) {
-        return 'success'
-      }
-      return 'error'
-    },
-    filter () {
+    filterRhs () {
       let data = {
         name: this.searchQuery,
         userFilters: this.userFilters.filter(f => f.active),
@@ -192,10 +181,24 @@ export default {
         this.isFilterModalActive = false
       })
     },
+    restoreRhSelected () {
+      this.setRhSelected(this.rhs[this.selectedIndex])
+    },
+    parseDate (date) {
+      return moment(date).format('DD/MM/YYYY')
+    },
+    parseModal () {
+      if (this.rhCreated === undefined) {
+        return 'createRh'
+      } else if (this.rhCreated === true) {
+        return 'success'
+      }
+      return 'error'
+    },
     restoreRhs () {
       this.restoreRhFilters()
       if (this.filterActive) {
-        this.filter()
+        this.filterRhs()
       } else {
         this.getRhs(this).then(rhs => {
           if (rhs.length) {
