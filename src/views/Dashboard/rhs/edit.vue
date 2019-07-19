@@ -1,6 +1,12 @@
 <template>
   <div class="rhScreen" id="updateRh">
     <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction">
+      <div v-if="!probation" id="probation">
+        Perfil em processo de aprovação!
+        <b-checkbox v-model="approved">
+          {{ approved ? 'Perfil Aprovado': 'Aprovação pendente' }}
+        </b-checkbox>
+      </div>
       <div class="content">
         <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">
           <article class="course" v-if="rh.user.type_id == 2">
@@ -42,9 +48,6 @@
         </div>
       </div>
       <button type="submit">Atualizar</button>
-      <b-checkbox v-model="approved">
-        {{ approved ? 'Perfil Aprovado': 'Aprovação pendente' }}
-      </b-checkbox>
     </form>
   </div>
 </template>

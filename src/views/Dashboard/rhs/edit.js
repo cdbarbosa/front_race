@@ -10,6 +10,7 @@ export default {
   props: ['rh', 'selectedIndex'],
   data () {
     return {
+      probation: undefined,
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
@@ -25,6 +26,7 @@ export default {
   watch: {
   },
   mounted () {
+    this.probation = this.rh.approved
   },
   computed: {
     'rh.user.type_id' () {

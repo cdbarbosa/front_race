@@ -15,6 +15,9 @@
         </template>
       </rh-table>
     </div>
+    <div v-if="rhSelected && !rhSelected.approved" id="probation">
+      Perfil em processo de aprovação!
+    </div>
     <div class="content" v-if="rhSelected">
       <generic-user :person="rhSelected"></generic-user>
       <section>
