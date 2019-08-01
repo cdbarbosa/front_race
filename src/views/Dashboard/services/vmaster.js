@@ -48,9 +48,8 @@ export default {
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.serviceFilters).forEach(fi => {
-        if (fi === 'name') {
-          if (this.$store.getters.serviceFilters[fi]) ret = true
-        } else {
+        if (fi !== 'name') {
+          // if (this.$store.getters.serviceFilters[fi]) ret = true
           if (this.$store.getters.serviceFilters[fi].filter(f => f.active).length) ret = true
         }
       })

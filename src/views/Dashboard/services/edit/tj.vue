@@ -6,7 +6,7 @@
         <section class="service">
           <article class="info-one">
             <b-field label="Título">
-              <textarea v-model="name" name="" rows="4" disabled></textarea>
+              <div v-html="name" class="textarea __disabled"></div>
             </b-field>
             <b-field label="ID">
               <b-input v-model="service.id" placeholder="23" disabled></b-input>
@@ -62,7 +62,8 @@
         </section>
         <section class="description">
           <b-field label="Observações">
-            <vue-editor :editorToolbar="customToolbar" v-model="description" disabled></vue-editor>
+            <div v-html="description" class="ql-editor textarea __disabled"></div>
+            <!-- <vue&#45;editor :editorToolbar="customToolbar" v&#45;model="description" disabled></vue&#45;editor> -->
           </b-field>
         </section>
         <button type="submit">Atualizar</button>

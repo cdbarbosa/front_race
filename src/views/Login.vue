@@ -2,9 +2,9 @@
   <main class="page" id="login">
     <vue-particles clickMode="repulse" color="#dedede"></vue-particles>
     <div class="wrapper">
+      <img src="/img/logo@2x.png" alt=""/>
       <transition name="fade" mode="out-in">
         <form @submit.prevent="send" v-if="!recover">
-          <img src="/img/logo@2x.png" alt=""/>
           <b-field label="Email">
             <b-input v-model="login" name="email" placeholder="Email" required></b-input>
           </b-field>

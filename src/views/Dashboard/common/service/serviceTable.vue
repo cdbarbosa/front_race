@@ -8,7 +8,10 @@
           <span @click="$emit('restore')" v-if="options.search">
             <i class="fas fa-backspace"></i>
           </span>
-          <div id="edit" @click="$emit('filter')" v-if="options.filter && $store.getters.user.role_id === 1">
+          <!-- <div v&#45;if="filters" @click="isFilterModalActive = true"> -->
+          <!--   <b&#45;icon icon="cog"></b&#45;icon> -->
+          <!-- </div> -->
+          <div :class="{ __filterActive: filterActive }" id="filter" @click="$emit('filter')" v-if="options.filter && $store.getters.user.role_id === 1">
             <b-icon icon="cog"></b-icon>
           </div>
         </header>
@@ -42,7 +45,8 @@
               <p>
               <b-icon icon="frown" size="is-large"></b-icon>
               </p>
-              <p>Nenhum serviço cadastrado.</p>
+              <p>Nenhum serviço encontrado.</p>
+              <p v-if="filterActive">Seus filtros estão ativos.</p>
             </div>
           </section>
         </template>
@@ -57,7 +61,7 @@ import dataTable from '../../../../mixins/dataTable.js'
 export default {
   name: 'serviceTable',
   mixins: [dataTable],
-  props: ['options', 'selectedIndex'],
+  props: ['options', 'selectedIndex', 'filterActive'],
   data () {
     return {
       target: 0
