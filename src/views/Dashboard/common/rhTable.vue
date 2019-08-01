@@ -44,7 +44,8 @@
               <p>
                 <b-icon icon="frown" size="is-large"></b-icon>
               </p>
-              <p>Nenhum RH.</p>
+              <p>Nenhum RH encontrado.</p>
+              <p v-if="filterActive">Seus filtros estão ativos.</p>
             </div>
           </section>
         </template>

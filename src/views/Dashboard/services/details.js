@@ -155,14 +155,20 @@ export default {
         addressFilters: this.addressFilters.filter(f => f.active),
         academicFilters: this.academicFilters.filter(f => f.active)
       }
-      this.$http.post(this.$api({ target: 'filter-rh-not-in-service' }), data, {
+      this.$http.post(this.$api({
+        target: 'filter-rh-not-in-service',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.setRhsNotInService(response.data)
       })
     },
     filterRhInService (data) {
-      this.$http.post(this.$api({ target: 'rh-in-service' }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
+      this.$http.post(this.$api({
+        target: 'rh-in-service',
+        conn: this.$store.getters.conn
+      }), Object.assign({ 'service_id': this.$route.params.service_id }, data), {
         headers: header()
       }).then(response => {
         this.setRhsInService(response.data)
@@ -194,7 +200,10 @@ export default {
         goal: this.rhInServiceSelected.pivot.goal
       }
       this.$Progress.start()
-      this.$http.post(this.$api({ target: 'rh-service-update' }), data, {
+      this.$http.post(this.$api({
+        target: 'rh-service-update',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(() => {
         this.$Progress.finish()
@@ -214,14 +223,20 @@ export default {
       return 'error'
     },
     getService () {
-      this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({
+        target: `service/${this.$route.params.service_id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.service = response.data
       })
     },
     getRhInService () {
-      this.$http.get(this.$api({ target: `rhs-in-service/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({
+        target: `rhs-in-service/${this.$route.params.service_id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.setRhsInService(response.data)
@@ -229,7 +244,10 @@ export default {
       })
     },
     getRhNotInService () {
-      this.$http.get(this.$api({ target: `rhs-not-in-service/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({
+        target: `rhs-not-in-service/${this.$route.params.service_id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.setRhsNotInService(response.data)
@@ -243,7 +261,10 @@ export default {
       }
       data = Object.assign(this.rhServiceFields, data)
       this.$Progress.start()
-      this.$http.post(this.$api({ target: 'rhs-service' }), data, {
+      this.$http.post(this.$api({
+        target: 'rhs-service',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(() => {
         this.$Progress.finish()
@@ -269,7 +290,10 @@ export default {
         service_id: this.service.id
       }
       this.$Progress.start()
-      this.$http.post(this.$api({ target: 'rh-service' }), data, {
+      this.$http.post(this.$api({
+        target: 'rh-service',
+        conn: this.$store.conn
+      }), data, {
         headers: header()
       }).then(() => {
         this.$Progress.finish()

@@ -45,7 +45,8 @@
                   <p>
                     <b-icon icon="frown" size="is-large"></b-icon>
                   </p>
-                  <p>Nenhum cliente cadastrado.</p>
+                  <p>Nenhum cliente encontrado.</p>
+                  <p v-if="filterActive">Seus filtros estão ativos.</p>
                 </div>
               </section>
             </template>

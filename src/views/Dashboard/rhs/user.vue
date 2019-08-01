@@ -85,7 +85,10 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     getPerfil () {
-      this.$http.get(this.$api({ target: `rh/${this.$store.getters.user.id}` }), {
+      this.$http.get(this.$api({
+        target: `rh/${this.$store.getters.user.id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.selected = response.data

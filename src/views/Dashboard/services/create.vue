@@ -126,7 +126,10 @@ export default {
       'setServices'
     ]),
     getServiceStatuses () {
-      this.$http.get(this.$api({ target: 'service-status' }), {
+      this.$http.get(this.$api({
+        target: 'service-status',
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.serviceStatuses = response.data
@@ -142,7 +145,10 @@ export default {
         service: this.service
       }
       this.$Progress.start()
-      this.$http.post(this.$api({ target: 'services' }), data, {
+      this.$http.post(this.$api({
+        target: 'services',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.$Progress.finish()

@@ -42,9 +42,8 @@ export default {
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.rhFilters).forEach(fi => {
-        if (fi === 'name') {
-          if (this.$store.getters.rhFilters[fi]) ret = true
-        } else {
+        if (fi !== 'name') {
+          // if (this.$store.getters.rhFilters[fi]) ret = true
           if (this.$store.getters.rhFilters[fi].filter(f => f.active).length) ret = true
         }
       })
@@ -105,6 +104,9 @@ export default {
     }
   },
   watch: {
+    rhCreated () {
+      this.get()
+    },
     isModalActive () {
       this.rhCreated = undefined
     },
@@ -173,11 +175,14 @@ export default {
         addressFilters: this.addressFilters.filter(f => f.active),
         academicFilters: this.academicFilters.filter(f => f.active)
       }
-      this.$http.post(this.$api({ target: 'filter-rh' }), data, {
+      this.$http.post(this.$api({
+        target: 'filter-rh',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.rhs = response.data
-        this.rhSelected = response.data[this.lastRhSelected !== undefined ? this.lastRhSelected : 0]
+        this.rhSelected = response.data.length ? response.data[this.lastRhSelected !== undefined ? this.lastRhSelected : 0] : null
         this.isFilterModalActive = false
       })
     },
@@ -209,10 +214,12 @@ export default {
       }
     },
     searchUserByDocument (document) {
-      this.$http.post(this.$api({ target: 'search-rh-document' }), { document: document }, {
+      this.$http.post(this.$api({
+        target: 'search-rh-document',
+        conn: this.$store.getters.conn
+      }), { document: document }, {
         headers: header()
       }).then(response => {
-        console.log(response)
         this.rhs = response.data
         this.rhSelected = response.data[0]
       })

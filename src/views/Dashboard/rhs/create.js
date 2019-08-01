@@ -62,14 +62,17 @@ export default {
           user_id: userId,
           rh: this.rh
         }
-        this.$http.post(this.$api({ target: 'rhs' }), data, {
+        this.$http.post(this.$api({
+          target: 'rhs',
+          conn: this.$store.getters.conn
+        }), data, {
           headers: header()
         }).then(response => {
           this.$Progress.finish()
-          this.getRhs(this).then(rhs => {
-            this.setRhs(rhs)
-            this.$emit('rhCreated')
-          })
+          this.$emit('rhCreated')
+          // this.getRhs(this).then(rhs => {
+          //   this.setRhs(rhs)
+          // })
         }).catch(err => {
           this.$Progress.fail()
           this.$emit('creationFailed')

@@ -125,7 +125,10 @@ export default {
       'updateServiceSelectedTj'
     ]),
     getServiceStatuses () {
-      this.$http.get(this.$api({ target: gets[this.$store.getters.user.role.name] }), {
+      this.$http.get(this.$api({
+        target: gets[this.$store.getters.user.role.name],
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.serviceStatuses = response.data

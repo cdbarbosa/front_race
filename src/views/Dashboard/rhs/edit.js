@@ -130,7 +130,10 @@ export default {
         value: e[1]
       }
       this.$Progress.start()
-      this.$http.put(this.$api({ target: 'rh-academic' }), Object.assign({ 'rh_id': this.rh.id, 'rh_academics_id': this.rh.academics[0].id }, data), {
+      this.$http.put(this.$api({
+        target: 'rh-academic',
+        conn: this.$store.getters.conn
+      }), Object.assign({ 'rh_id': this.rh.id, 'rh_academics_id': this.rh.academics[0].id }, data), {
         headers: header()
       }).then(response => {
         this.$Progress.finish()

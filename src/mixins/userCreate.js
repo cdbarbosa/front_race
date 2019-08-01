@@ -74,14 +74,20 @@ export default {
       }
       return new Promise((resolve, reject) => {
         this.$Progress.start()
-        this.$http.post(this.$api({ target: 'users' }), data, {
+        this.$http.post(this.$api({
+          target: 'users',
+          conn: this.$store.getters.conn
+        }), data, {
           headers: header()
         }).then(response => {
           let datas = {
             user_id: response.data.id,
             address: this.address
           }
-          this.$http.post(this.$api({ target: 'addresses' }), datas, {
+          this.$http.post(this.$api({
+            target: 'addresses',
+            conn: this.$store.getters.conn
+          }), datas, {
             headers: header()
           }).then(() => {
             this.$Progress.finish()

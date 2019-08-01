@@ -55,7 +55,10 @@ export default {
       return moment(date).format('DD/MM/YYYY H:m')
     },
     getRecords () {
-      this.$http.get(this.$api({ target: `service-history/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({
+        target: `service-history/${this.$route.params.service_id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.records = response.data

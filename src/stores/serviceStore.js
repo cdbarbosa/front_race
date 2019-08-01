@@ -111,6 +111,12 @@ const mutations = {
     const service = payload[0]
     const index = payload[1]
     state.services.splice(index, 1, service)
+  },
+  DESTROY_SERVICE_STORE (state) {
+    state.services = []
+    state.serviceSelected = undefined
+    state.lastServiceSelected = undefined
+    state.serviceFilters = getFilters()
   }
 }
 
@@ -126,7 +132,10 @@ const actions = {
   },
   getServices ({ commit }, that) {
     return new Promise((resolve, reject) => {
-      that.$http.get(that.$api({ target: 'services' }), {
+      that.$http.get(that.$api({
+        target: 'services',
+        conn: that.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         resolve(response.data)
@@ -151,7 +160,11 @@ const actions = {
     const that = payload[0]
     const service = payload[1]
     return new Promise((resolve, reject) => {
-      that.$http.post(that.$api({ target: 'service', clerance: that.$store.getters.user.role.name }), service, {
+      that.$http.post(that.$api({
+        target: 'service',
+        clerance: that.$store.getters.user.role.name,
+        conn: that.$store.getters.conn
+      }), service, {
         headers: header()
       }).then(response => {
         resolve(response)
@@ -167,6 +180,9 @@ const actions = {
   updateService ({ commit }, payload) {
     commit('UPDATE_SERVICE', payload)
     commit('SET_SERVICE_SELECTED', payload[0])
+  },
+  destroyServiceStore ({ commit }) {
+    commit('DESTROY_SERVICE_STORE')
   }
 }
 

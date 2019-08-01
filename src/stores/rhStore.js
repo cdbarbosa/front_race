@@ -179,6 +179,13 @@ const mutations = {
     const academic = payload[0]
     const index = payload[1]
     state.rhs[index].academics = academic
+  },
+  DESTROY_RH_STORE (state) {
+    state.rhs = []
+    state.rhSelected = undefined
+    state.lastRhSelected = undefined
+    state.lastRhServiceSelected = undefined
+    state.rhFilters = getFilters()
   }
 }
 
@@ -209,7 +216,10 @@ const actions = {
   },
   getRhs ({ commit }, that) {
     return new Promise((resolve, reject) => {
-      that.$http.get(that.$api({ target: 'rhs' }), {
+      that.$http.get(that.$api({
+        target: 'rhs',
+        conn: that.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         resolve(response.data)
@@ -235,16 +245,28 @@ const actions = {
     const { address: addressClean, ...userClean } = rawUser
     const { academics: academicsClean, ...rhClean } = rhUpdate
     return new Promise((resolve, reject) => {
-      that.$http.post(that.$api({ target: 'user' }), userClean, {
+      that.$http.post(that.$api({
+        target: 'user',
+        conn: that.$store.getters.conn
+      }), userClean, {
         headers: header()
       }).then(() => {
-        that.$http.post(that.$api({ target: 'address' }), addressClean, {
+        that.$http.post(that.$api({
+          target: 'address',
+          conn: that.$store.getters.conn
+        }), addressClean, {
           headers: header()
         }).then(() => {
-          that.$http.post(that.$api({ target: 'rh-academic' }), Object.assign({ rh_id: rhClean.id }, academicsClean[0]), {
+          that.$http.post(that.$api({
+            target: 'rh-academic',
+            conn: that.$store.getters.conn
+          }), Object.assign({ rh_id: rhClean.id }, academicsClean[0]), {
             headers: header()
           }).then(() => {
-            that.$http.post(that.$api({ target: 'rh' }), rhClean, {
+            that.$http.post(that.$api({
+              target: 'rh',
+              conn: that.$store.getters.conn
+            }), rhClean, {
               headers: header()
             }).then(response => {
               resolve(response)
@@ -274,7 +296,10 @@ const actions = {
   getRhByService ({ commit }, payload) {
     let that = payload[0]
     let value = payload[1]
-    that.$http.get(that.$api({ target: `rh/${value}` }), {
+    that.$http.get(that.$api({
+      target: `rh/${value}`,
+      conn: that.$store.getters.conn
+    }), {
       headers: header()
     }).then(response => {
       console.log(response)
@@ -293,6 +318,9 @@ const actions = {
   },
   updateRhAcademics ({ commit }, payload) {
     commit('UPDATE_RH_ACADEMICS', payload)
+  },
+  destroyRhStore ({ commit }) {
+    commit('DESTROY_RH_STORE')
   }
 }
 

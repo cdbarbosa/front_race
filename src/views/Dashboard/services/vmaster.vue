@@ -8,7 +8,7 @@
         <b-icon icon="edit"></b-icon>
       </div>
     </h3>
-    <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="searchServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
+    <service-table v-if="services" :options="serviceTableOptions" :selectedIndex="selectedIndex" :resources="services" @search="filterServices($event)" @restore="restoreServices" @update="setServiceSelected($event)" @filter="isFilterModal = true">
       <template v-slot:search>
         <b-input placeholder="Procurar" v-model="searchQuery"></b-input>
         <b-select v-if="[1, 4].indexOf($store.getters.user.role_id) !== -1" :value="statusFilters[0].abbreviation" selected="0" @input="setServiceFilters([0, 'statusFilters', 'value', $event]); watchStatusFilters($event)">
@@ -32,7 +32,7 @@
       <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></service-edit>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
-      <filter-service @filter="searchServices($event); isFilterModal = false" @reset="resetFilters(); isFilterModal = false"></filter-service>
+      <filter-service @filter="filterServices($event); isFilterModal = false" @reset="resetFilters(); isFilterModal = false"></filter-service>
     </b-modal>
   </main>
 </template>

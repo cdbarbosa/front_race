@@ -118,6 +118,13 @@ const mutations = {
     const address = payload[0]
     const index = payload[1]
     state.clients[index].user.address = address
+  },
+  DESTROY_CLIENT_STORE (state) {
+    state.clients = []
+    state.clientSelected = undefined
+    state.lastClientSelected = undefined
+    state.lastClientServiceSelected = undefined
+    state.clientFilters = getFilters()
   }
 }
 
@@ -139,7 +146,10 @@ const actions = {
   },
   getClients ({ commit }, that) {
     return new Promise((resolve, reject) => {
-      that.$http.get(that.$api({ target: 'clients' }), {
+      that.$http.get(that.$api({
+        target: 'clients',
+        conn: that.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         resolve(response.data)
@@ -163,13 +173,22 @@ const actions = {
     const { user: rawUser, ...cleanClient } = rawClient
     const { address: cleanAddress, ...cleanUser } = rawUser
     return new Promise((resolve, reject) => {
-      that.$http.post(that.$api({ target: 'user' }), cleanUser, {
+      that.$http.post(that.$api({
+        target: 'user',
+        conn: that.$store.getters.conn
+      }), cleanUser, {
         headers: header()
       }).then((response) => {
-        that.$http.post(that.$api({ target: 'address' }), cleanAddress, {
+        that.$http.post(that.$api({
+          target: 'address',
+          conn: that.$store.getters.conn
+        }), cleanAddress, {
           headers: header()
         }).then((response) => {
-          that.$http.post(that.$api({ target: 'client' }), cleanClient, {
+          that.$http.post(that.$api({
+            target: 'client',
+            conn: that.$store.getters.conn
+          }), cleanClient, {
             headers: header()
           }).then(response => {
             resolve(response)
@@ -195,6 +214,9 @@ const actions = {
   },
   updateClientAddress ({ commit }, payload) {
     commit('UPDATE_CLIENT_ADDRESS', payload)
+  },
+  destroyClientStore ({ commit }) {
+    commit('DESTROY_CLIENT_STORE')
   }
 }
 

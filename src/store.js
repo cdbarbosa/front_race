@@ -4,6 +4,7 @@ import userStore from './stores/userStore'
 import clientStore from './stores/clientStore'
 import rhStore from './stores/rhStore'
 import serviceStore from './stores/serviceStore'
+import appStore from './stores/appStore'
 
 Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     userStore,
     clientStore,
     rhStore,
-    serviceStore
+    serviceStore,
+    appStore
   },
   strict: debug
 })

@@ -53,10 +53,10 @@ export default {
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.clientFilters).forEach(fi => {
-        if (fi === 'name') {
-          if (this.$store.getters.clientFilters[fi]) ret = true
-        } else {
+        if (fi !== 'name') {
           if (this.$store.getters.clientFilters[fi].filter(f => f.active).length) ret = true
+          // if (this.$store.getters.clientFilters[fi]) ret = true
+        } else {
         }
       })
       return ret
@@ -103,6 +103,9 @@ export default {
     }
   },
   watch: {
+    clientCreated (newVal) {
+      this.get()
+    },
     clients () {
       this.tableSelected = this.clients[this.selectedIndex]
     },
@@ -178,13 +181,14 @@ export default {
         addressFilters: this.addressFilters.filter(f => f.active),
         clientFilters: this.clientFilters.filter(f => f.active)
       }
-      this.$http.post(this.$api({ target: 'filter-client' }), data, {
+      this.$http.post(this.$api({
+        target: 'filter-client',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
-        if (response.data.length) {
-          this.clients = response.data
-          this.clientSelected = response.data[0]
-        }
+        this.clients = response.data
+        this.clientSelected = response.data.length ? response.data[this.lastClientSelected !== undefined ? this.lastClientSelected : 0] : null
         this.isFilterModal = false
       })
     },
@@ -216,7 +220,10 @@ export default {
       return 'error'
     },
     searchUserByDocument (document) {
-      this.$http.post(this.$api({ target: 'search-client-document' }), { document: document }, {
+      this.$http.post(this.$api({
+        target: 'search-client-document',
+        conn: this.$store.getters.conn
+      }), { document: document }, {
         headers: header()
       }).then(response => {
         this.clients = response.data

@@ -53,6 +53,8 @@ export default {
   },
   beforeMount () {
     const authTokens = JSON.parse(window.localStorage.getItem('authTokens'))
+    const authConn = window.localStorage.getItem('authConn')
+    if (authConn) this.setConn(authConn)
     if (authTokens) this.reLogin(authTokens)
   },
   mounted () {
@@ -62,7 +64,8 @@ export default {
       'getAuthToken',
       'getAuthUser',
       'setAuthToken',
-      'setAuthUser'
+      'setAuthUser',
+      'setConn'
     ]),
     send () {
       this.message = 'Validando credênciais'

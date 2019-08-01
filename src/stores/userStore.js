@@ -45,11 +45,12 @@ const actions = {
     const that = payload[0]
     const data = payload[1]
 
-    Object.assign(data, client(), { grant_type: 'password', scope: '' })
+    Object.assign(data, client(that.$store.getters.conn), { grant_type: 'password', scope: '' })
     return new Promise((resolve, reject) => {
       that.$http.post(that.$api({
         target: 'oauth/token',
-        secure: false
+        secure: false,
+        conn: that.$store.getters.conn
       }), data).then(response => {
         resolve(response)
       }).catch(err => {
@@ -63,7 +64,8 @@ const actions = {
   getAuthUser ({ commit }, that) {
     return new Promise((resolve, reject) => {
       that.$http.get(that.$api({
-        target: 'user'
+        target: 'user',
+        conn: that.$store.getters.conn
       }), {
         headers: header()
       }).then(response => {
@@ -88,7 +90,10 @@ const actions = {
   updateUser ({ commit }, payload) {
     let that = payload[0]
     let data = payload[1]
-    that.$http.put(that.$api({ target: 'user' }), data, {
+    that.$http.put(that.$api({
+      target: 'user',
+      conn: that.$store.getters.conn
+    }), data, {
       headers: header()
     }).then(response => {
       commit('SET_USER', response.data)

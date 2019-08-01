@@ -114,7 +114,7 @@ export default {
     },
     searchQuery (newQuery, oldQuery) {
       if (newQuery === '' || newQuery === oldQuery) this.restoreServices()
-      else this.searchServices()
+      else this.filterServices()
     },
     selected (newVal) {
       if (this.services.length > 0) {
@@ -126,11 +126,10 @@ export default {
     console.log(to, from)
   },
   beforeMount () {
-    console.log(this.selectedIndex)
     this.getServiceStatuses()
     // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
     if (this.filterActive) {
-      this.searchServices()
+      this.filterServices()
     } else {
       this.getServices(this).then(services => {
         if (services.length) {
@@ -157,7 +156,11 @@ export default {
       'setServiceFilters'
     ]),
     getServiceStatuses () {
-      this.$http.get(this.$api({ target: 'service-status', clerance: this.$store.getters.user.role.name }), {
+      this.$http.get(this.$api({
+        target: 'service-status',
+        clerance: this.$store.getters.user.role.name,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.serviceStatuses = response.data
@@ -187,7 +190,7 @@ export default {
       })
       this.tableSelected = this.services[0]
     },
-    searchServices () {
+    filterServices () {
       let data = {
         name: this.searchQuery,
         clientFilters: this.clientFilters.filter(f => f.active),
@@ -195,11 +198,14 @@ export default {
         statusFilter: this.statusFilters.filter(f => f.active)
       }
       let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
-      this.$http.post(this.$api({ target: url }), data, {
+      this.$http.post(this.$api({
+        target: url,
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.services = response.data
-        this.serviceSelected = response.data[0]
+        this.serviceSelected = response.data.length ? response.data[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0] : null
         this.isFilterModal = false
       })
     },
@@ -212,7 +218,7 @@ export default {
     watchStatusFilters (e) {
       if (e) {
         this.setServiceFilters([0, 'statusFilters', 'active', true])
-        this.searchServices()
+        this.filterServices()
       } else {
         this.setServiceFilters([0, 'statusFilters', 'active', false])
         this.restoreServices()

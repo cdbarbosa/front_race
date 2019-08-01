@@ -76,7 +76,10 @@ export default {
       'setLastRhServiceSelected'
     ]),
     getRhServices () {
-      this.$http.get(this.$api({ target: `rh-services/${this.rhSelected.id}` }), {
+      this.$http.get(this.$api({
+        target: `rh-services/${this.rhSelected.id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.rhServices = response.data

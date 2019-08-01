@@ -163,7 +163,10 @@ export default {
       this.receipt.value = null
     },
     getServiceReceipts () {
-      this.$http.get(this.$api({ target: `service-receipts/${this.serviceSelected.id}` }), {
+      this.$http.get(this.$api({
+        target: `service-receipts/${this.serviceSelected.id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.serviceReceipts = response.data.map(s => {
@@ -173,7 +176,10 @@ export default {
       })
     },
     getService () {
-      this.$http.get(this.$api({ target: `service/${this.$route.params.service_id}` }), {
+      this.$http.get(this.$api({
+        target: `service/${this.$route.params.service_id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.service = response.data
@@ -199,7 +205,10 @@ export default {
         }
       }
       this.$Progress.start()
-      this.$http.post(this.$api({ target: 'receipts' }), data, {
+      this.$http.post(this.$api({
+        target: 'receipts',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.$Progress.finish()
@@ -228,7 +237,10 @@ export default {
         }
       }
       this.$Progress.start()
-      this.$http.put(this.$api({ target: 'receipt' }), data, {
+      this.$http.put(this.$api({
+        target: 'receipt',
+        conn: this.$store.getters.conn
+      }), data, {
         headers: header()
       }).then(response => {
         this.$Progress.finish()

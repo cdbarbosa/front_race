@@ -152,14 +152,14 @@ export default {
           user_id: userId,
           client: this.client
         }
-        this.$http.post(this.$api({ target: 'clients' }), data, {
+        this.$http.post(this.$api({
+          target: 'clients',
+          conn: this.$store.getters.conn
+        }), data, {
           headers: header()
         }).then(() => {
           this.$Progress.finish()
-          this.getClients(this).then(clients => {
-            this.setClients(clients)
-            this.$emit('clientCreated')
-          })
+          this.$emit('clientCreated')
         }).catch(err => {
           this.$Progress.fail()
           this.$emit('creationFailed')

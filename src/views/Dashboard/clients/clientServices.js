@@ -76,7 +76,10 @@ export default {
       'setLastClientServiceSelected'
     ]),
     getClientServices () {
-      this.$http.get(this.$api({ target: `client-services/${this.clientSelected.id}` }), {
+      this.$http.get(this.$api({
+        target: `client-services/${this.clientSelected.id}`,
+        conn: this.$store.getters.conn
+      }), {
         headers: header()
       }).then(response => {
         this.clientServices = response.data
