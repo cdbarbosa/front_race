@@ -41,6 +41,9 @@
       display: grid;
       grid-template-columns: 2fr 1fr;
       grid-gap: 1rem;
+      li + li{
+        margin: 0.5rem 0;
+      }
       &.__display{
         display: block;
       }

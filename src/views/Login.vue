@@ -9,7 +9,7 @@
             <b-input v-model="login" name="email" placeholder="Email" required></b-input>
           </b-field>
           <b-field label="Senha">
-            <b-input type="password" name="password" v-model="password" placeholder="Password" required></b-input>
+            <b-input type="password" name="password" v-model="password" placeholder="Password" required password-reveal></b-input>
           </b-field>
           <section>
             <button type="submit">Entrar</button>

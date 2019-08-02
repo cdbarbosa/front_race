@@ -120,6 +120,7 @@ const mutations = {
     state.clients[index].user.address = address
   },
   DESTROY_CLIENT_STORE (state) {
+    console.log('smashing')
     state.clients = []
     state.clientSelected = undefined
     state.lastClientSelected = undefined

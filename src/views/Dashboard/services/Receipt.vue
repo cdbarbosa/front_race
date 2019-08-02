@@ -10,7 +10,7 @@
       <section>
         <article>
           <b-field label="Serviço">
-            <textarea v-model="serviceSelected.name" disabled></textarea>
+            <div v-html="serviceSelected.name" class="textarea __disabled"></div>
             <!-- <b&#45;input v&#45;model="serviceSelected.name" placeholder="Jessica Miles" disabled></b&#45;input> -->
           </b-field>
           <b-field label="ID">
@@ -60,6 +60,16 @@
                   <td>{{ parseDateTime(item.created_at) }}</td>
                 </tr>
               </div>
+            </template>
+            <template slot="empty">
+              <section class="section">
+                <div class="empty has-text-grey has-text-centered">
+                  <p>
+                    <b-icon icon="frown" size="is-large"></b-icon>
+                  </p>
+                  <p>Nenhum recebimento para esse serviço.</p>
+                </div>
+              </section>
             </template>
           </b-table>
         </div>

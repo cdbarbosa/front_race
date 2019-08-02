@@ -3,7 +3,8 @@
     <section>
       <article>
         <b-field label="Título">
-          <textarea v-model="selected.name" disabled></textarea>
+          <div v-html="selected.name" class="textarea __disabled"></div>
+          <!-- <textarea v&#45;model="selected.name" disabled></textarea> -->
           <!-- <b&#45;input type="" ></b&#45;input> -->
         </b-field>
         <b-field label="ID">

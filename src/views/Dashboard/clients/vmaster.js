@@ -74,7 +74,7 @@ export default {
         return this.$store.getters.lastClientSelected
       },
       set (index) {
-        this.setLastClientSelected(index)
+        this.setLastClientSelected(index >= 0 ? index : 0)
       }
     },
     selected: {
@@ -163,7 +163,7 @@ export default {
       'setClientQuery'
     ]),
     get () {
-      if (this.filterActive) this.filterClients()
+      if (this.filterActive || this.$store.getters.clientFilters.name) this.filterClients()
       else this.getAllClients()
     },
     getAllClients () {

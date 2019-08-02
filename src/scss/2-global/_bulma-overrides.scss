@@ -7,6 +7,9 @@ body{
 			padding: 0.5rem;
 		}
 	}
+  .has-text-primary{
+    color: $primary !important;
+  }
 	.field {
 		&:not(:last-child) {
 			margin-bottom: 0.5rem;
@@ -57,5 +60,8 @@ body{
     a{
       text-decoration: none;
     }
+  }
+  .control.has-icons-left .icon, .control.has-icons-right .icon {
+    top: 0.25rem;
   }
 }

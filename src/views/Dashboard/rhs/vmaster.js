@@ -99,7 +99,7 @@ export default {
         return this.$store.getters.lastRhSelected
       },
       set (index) {
-        this.setLastRhSelected(index)
+        this.setLastRhSelected(index >= 0 ? index : 0)
       }
     }
   },
@@ -156,7 +156,7 @@ export default {
       'setRhFilters'
     ]),
     get () {
-      if (this.filterActive) this.filterRhs()
+      if (this.filterActive || this.$store.getters.rhFilters.name) this.filterRhs()
       else this.getAllRhs()
     },
     getAllRhs () {

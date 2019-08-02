@@ -68,7 +68,7 @@ export default {
         return this.$store.getters.lastServiceSelected
       },
       set (index) {
-        this.setLastServiceSelected(index)
+        this.setLastServiceSelected(index >= 0 ? index : 0)
       }
     },
     selected: {
@@ -121,26 +121,9 @@ export default {
       }
     }
   },
-  beforeRouteEnter (to, from, next) {
-    console.log(to, from)
-  },
   beforeMount () {
     this.getServiceStatuses()
-    // this.currentPage = Math.ceil(this.selectedIndex / this.perPage) || 1
-    if (this.filterActive) {
-      this.filterServices()
-    } else {
-      this.getServices(this).then(services => {
-        if (services.length) {
-          this.services = services
-          if (this.$route.params.service_id) {
-            this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
-          } else {
-            this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
-          }
-        }
-      })
-    }
+    this.get()
   },
   beforeDestroy () {
     this.lastServiceSelected = this.selectedIndex
@@ -154,6 +137,41 @@ export default {
       'setServiceQuery',
       'setServiceFilters'
     ]),
+    get () {
+      if (this.filterActive || this.$store.getters.serviceFilters.name) this.filterServices()
+      else this.getAllServices()
+    },
+    getAllServices () {
+      this.getServices(this).then(services => {
+        if (services.length) {
+          this.services = services
+          if (this.$route.params.service_id) {
+            this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
+          } else {
+            this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+          }
+        }
+      })
+    },
+    filterServices () {
+      let data = {
+        name: this.searchQuery,
+        clientFilters: this.clientFilters.filter(f => f.active),
+        serviceFilters: this.serviceFilters.filter(f => f.active),
+        statusFilter: this.statusFilters.filter(f => f.active)
+      }
+      let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
+      this.$http.post(this.$api({
+        target: url,
+        conn: this.$store.getters.conn
+      }), data, {
+        headers: header()
+      }).then(response => {
+        this.services = response.data
+        this.serviceSelected = response.data.length ? response.data[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0] : null
+        this.isFilterModal = false
+      })
+    },
     getServiceStatuses () {
       this.$http.get(this.$api({
         target: 'service-status',
@@ -188,25 +206,6 @@ export default {
         this.services = services
       })
       this.tableSelected = this.services[0]
-    },
-    filterServices () {
-      let data = {
-        name: this.searchQuery,
-        clientFilters: this.clientFilters.filter(f => f.active),
-        serviceFilters: this.serviceFilters.filter(f => f.active),
-        statusFilter: this.statusFilters.filter(f => f.active)
-      }
-      let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
-      this.$http.post(this.$api({
-        target: url,
-        conn: this.$store.getters.conn
-      }), data, {
-        headers: header()
-      }).then(response => {
-        this.services = response.data
-        this.serviceSelected = response.data.length ? response.data[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0] : null
-        this.isFilterModal = false
-      })
     },
     findIndex (id) {
       return this.services.findIndex(service => service.id === id)
