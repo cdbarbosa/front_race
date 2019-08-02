@@ -66,9 +66,8 @@ export default {
     filterActive () {
       let ret = false
       Object.keys(this.$store.getters.rhNotInServiceFilters).forEach(fi => {
-        if (fi === 'name') {
-          if (this.$store.getters.rhNotInServiceFilters[fi]) ret = true
-        } else {
+        if (fi !== 'name') {
+          // if (this.$store.getters.rhNotInServiceFilters[fi]) ret = true
           if (this.$store.getters.rhNotInServiceFilters[fi].filter(f => f.active).length) ret = true
         }
       })
@@ -142,9 +141,9 @@ export default {
       'restoreRhNotInServiceFilters',
       'setRhNotInServiceQuery'
     ]),
-    restoreRhNotInService () {
-      this.getRhNotInService()
-      // this.restoreRhNotInServiceFilters()
+    get () {
+    },
+    getAllRhNotInService () {
     },
     filterRhNotInService () {
       let data = {
@@ -163,6 +162,12 @@ export default {
       }).then(response => {
         this.setRhsNotInService(response.data)
       })
+    },
+    getAllRhInService () {
+    },
+    restoreRhNotInService () {
+      this.getRhNotInService()
+      // this.restoreRhNotInServiceFilters()
     },
     filterRhInService (data) {
       this.$http.post(this.$api({
