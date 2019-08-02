@@ -48,9 +48,9 @@
       </section>
       <section>
         <rh-table
-          @filter="filterRhNotInService($event)"
+          @filter="filterRhInService($event)"
           :resources="rhsInService"
-          :selectedIndex="rhNotInServiceSelectedIndex"
+          :selectedIndex="rhInServiceSelectedIndex"
           :create="false"
           :filters="false"
           :attach="false"
@@ -82,7 +82,6 @@
           :setFunction="setRhNotInServiceFilters"
           :getStore="'rhNotInServiceFilters'"
           :mode="'out'"
-
           @update="setRhNotInServiceSelected($event[0])"
           @restore="restoreRhNotInService">
           <span slot="title">RH's</span>
