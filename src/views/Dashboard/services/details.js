@@ -97,6 +97,9 @@ export default {
     }
   },
   watch: {
+    filterActive () {
+      this.get()
+    },
     rhNotInService (newVal) {
       this.rhServiceFields.cost = parseFloat(newVal.cost)
     },
@@ -126,9 +129,7 @@ export default {
     })
   },
   beforeMount () {
-    this.getService()
-    this.getRhInService()
-    this.getRhNotInService()
+    this.get()
   },
   methods: {
     ...mapActions([
@@ -142,8 +143,10 @@ export default {
       'setRhNotInServiceQuery'
     ]),
     get () {
-    },
-    getAllRhNotInService () {
+      this.getService()
+      if (this.filterActive || this.$store.getters.rhNotInServiceFilters.name) this.filterRhNotInService()
+      else this.getAllRhNotInService()
+      this.getRhInService()
     },
     filterRhNotInService () {
       let data = {
@@ -166,8 +169,7 @@ export default {
     getAllRhInService () {
     },
     restoreRhNotInService () {
-      this.getRhNotInService()
-      // this.restoreRhNotInServiceFilters()
+      this.get()
     },
     filterRhInService (data) {
       this.$http.post(this.$api({
@@ -248,7 +250,7 @@ export default {
         this.setRhInServiceSelected(response.data[0])
       })
     },
-    getRhNotInService () {
+    getAllRhNotInService () {
       this.$http.get(this.$api({
         target: `rhs-not-in-service/${this.$route.params.service_id}`,
         conn: this.$store.getters.conn
@@ -275,7 +277,7 @@ export default {
         this.$Progress.finish()
         this.rhSelected = undefined
         this.getRhInService()
-        this.getRhNotInService()
+        this.getAllRhNotInService()
         this.restoreRhServiceFields()
         this.isAttachModalOpen = false
       })
@@ -303,7 +305,7 @@ export default {
       }).then(() => {
         this.$Progress.finish()
         this.getRhInService()
-        this.getRhNotInService()
+        this.getAllRhNotInService()
       })
     }
   },
