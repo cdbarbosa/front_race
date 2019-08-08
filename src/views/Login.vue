@@ -20,7 +20,6 @@
           <p>{{ message }}</p>
         </form>
         <form v-else @submit.prevent="resetPassword">
-          <img src="/img/logo@2x.png" alt=""/>
           <b-field label="Email">
             <b-input v-model="login" name="recover_email" placeholder="Email" required></b-input>
           </b-field>
@@ -116,11 +115,12 @@ export default {
       })
     },
     resetPassword () {
-      this.$http.post(this.$api({ target: 'password/create' }), { email: this.login }).then(response => {
-        console.log(response)
-      }).then(err => {
-        console.log(err)
-      })
+      window.open(`http://localhost:8081/resetpr?email=${this.login}`, '_blank')
+      // this.$http.post(this.$api({ target: 'password/create' }), { email: this.login }).then(response => {
+      //   console.log(response)
+      // }).then(err => {
+      //   console.log(err)
+      // })
     }
   }
 }

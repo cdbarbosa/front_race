@@ -27,11 +27,13 @@
           </router-link>
         </span>
         <transition>
+        <div @mouseleave="confim = false">
           <li v-if="!confim" @click="confim = true">Sair</li>
           <li v-else id="actions">
             <button @click="logout">Confirmar</button>
             <button @click="confim = false">Cancelar</button>
           </li>
+        </div>
         </transition>
       </ul>
     </div>

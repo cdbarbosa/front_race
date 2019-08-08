@@ -55,7 +55,7 @@ export default {
       return moment(date).format('DD/MM/YYYY')
     },
     createRh () {
-      if (this.rh.cost) this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
+      // if (this.rh.cost) this.rh.cost = parseFloat(this.rh.cost.split(' ')[1])
       this.$Progress.start()
       this.createUser().then(userId => {
         let data = {
