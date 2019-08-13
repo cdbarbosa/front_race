@@ -299,7 +299,7 @@ export default {
       this.$Progress.start()
       this.$http.post(this.$api({
         target: 'rh-service',
-        conn: this.$store.conn
+        conn: this.$store.getters.conn
       }), data, {
         headers: header()
       }).then(() => {
