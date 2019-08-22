@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
     "buefy": "^0.7.2",
+    "extenso": "^2.0.1",
     "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-rc.3",
     "jspdf": "^1.5.3",

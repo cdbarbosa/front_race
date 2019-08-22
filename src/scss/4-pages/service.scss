@@ -3,9 +3,9 @@
 @import '../3-components/service/_show';
 @import '../3-components/service/_create';
 
-#dashboard #services{
+#dashboard main#services{
   .__secundary .tableContainer header {
-    grid-template-columns: auto 1fr 0.5fr auto auto;
+    grid-template-columns: auto 1fr 1fr auto auto;
   }
   h3{
     display: grid;
@@ -42,6 +42,25 @@
       }
     }
   }
+  #master{
+    .content{
+      section{
+        article{
+          &:nth-child(2){
+            .field{
+              &:nth-child(2){
+                label{
+                  margin-top: 0.6rem;
+                  font-size: 1rem !important;
+                }
+              }
+            }
+            // grid-template-columns: 8fr 1.5fr;
+          }
+        }
+      }
+    }
+  }
   .content{
     section{
       article{
@@ -56,6 +75,9 @@
           input{
             text-align: right;
           }
+        }
+        &:nth-child(5) {
+          grid-template-columns: 1fr 2fr;
         }
       }
     }

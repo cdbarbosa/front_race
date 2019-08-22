@@ -14,14 +14,14 @@
       </article>
       <article class="info-second">
         <b-field label="Email">
-          <b-input v-model="email" type="email" placeholder="example@example.com" ></b-input>
+          <b-input v-model="email" type="email" placeholder="example@example.com" :disabled="$store.getters.user.role_id != 1"></b-input>
         </b-field>
         <b-field label="Tipo">
           <div class="control block">
-            <b-radio v-model="userType" native-value="1" >
+            <b-radio v-model="userType" native-value="1" :disabled="$store.getters.user.role_id != 1">
               Jurídica
             </b-radio>
-            <b-radio v-model="userType" native-value="2" >
+            <b-radio v-model="userType" native-value="2" :disabled="$store.getters.user.role_id != 1">
               Física
             </b-radio>
           </div>
@@ -29,7 +29,7 @@
       </article>
       <article v-if="userType == 1">
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento"></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
           <b-datepicker v-model="birthdate" name="date" disabled></b-datepicker>
@@ -37,10 +37,10 @@
       </article>
       <article v-else>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" ></b-input>
+          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" disabled></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
-          <b-datepicker  v-model="birthdate" name="date" editable></b-datepicker>
+          <b-datepicker  v-model="birthdate" name="date" editable disabled></b-datepicker>
         </b-field>
       </article>
       <article class="info-second">

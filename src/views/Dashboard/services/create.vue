@@ -18,7 +18,7 @@
         </b-field>
         <article class="info-two">
           <b-field label="Previsão">
-            <b-datepicker  v-model="service.forecast"  :month-names="months" :day-names="days" :date-parser="parseDate(service.forecast)" v-mask="'##/##/####'" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" name="date" required></b-datepicker>
+            <b-datepicker  v-model="service.forecast" :month-names="months" :day-names="days" name="date" required></b-datepicker>
             <!-- <b-input v-model="service.forecast" v-validate="'regex: rules.date_before.regex, before: beforeTarget'" v-mask="'##/##/####'" placeholder="Data" name="date" required></b-input> -->
           </b-field>
           <b-field label="Sigilo">
@@ -56,8 +56,14 @@
       </section>
       <section>
         <div class="description">
-          <b-field label="Descrição">
-            <vue-editor :editorToolbar="customToolbar" v-model="service.description" placeholder="Analise de dados"></vue-editor>
+          <b-field label="Detalhes Técnicos">
+            <vue-editor :editorToolbar="customToolbar" v-model="service.technical_details" placeholder="Analise de dados"></vue-editor>
+          </b-field>
+          <b-field label="Observações">
+            <vue-editor :editorToolbar="customToolbar" v-model="service.description" placeholder="Observações para o time"></vue-editor>
+          </b-field>
+          <b-field label="Observações privadas">
+            <vue-editor :editorToolbar="customToolbar" v-model="service.private_description" placeholder="Observações para a administração"></vue-editor>
           </b-field>
           <div class="buttonClass">
             <button type="submit" class="is-primary" >Cadastrar</button>
@@ -90,6 +96,8 @@ export default {
       service: {
         name: null,
         description: null,
+        private_description: null,
+        technical_details: null,
         due_date: null,
         forecast: null,
         profit: null,
@@ -136,6 +144,7 @@ export default {
       })
     },
     parseDate (date) {
+      console.log(date)
       var data = new Date(date)
       return data.toLocaleDateString('pt-BR')
     },
@@ -144,6 +153,7 @@ export default {
         client_id: this.client_id,
         service: this.service
       }
+      console.log(data)
       this.$Progress.start()
       this.$http.post(this.$api({
         target: 'services',

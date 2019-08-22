@@ -59,6 +59,22 @@ export default {
         this.updateServiceSelected(['description', newVal])
       }, 1000)
     },
+    privateDescription: {
+      get () {
+        return this.service.private_description
+      },
+      set: _.debounce(function (newVal) {
+        this.updateServiceSelected(['private_description', newVal])
+      }, 1000)
+    },
+    technicalDetails: {
+      get () {
+        return this.service.technical_details
+      },
+      set: _.debounce(function (newVal) {
+        this.updateServiceSelected(['technical_details', newVal])
+      }, 1000)
+    },
     confidentiality: {
       get () {
         return this.service.confidentiality_id

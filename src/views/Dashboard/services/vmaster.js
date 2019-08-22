@@ -10,6 +10,8 @@ import filterService from './Filters.vue'
 import { header } from '../../../config/index.js'
 import serviceTable from '../common/service/serviceTable.vue'
 import { saveAs } from 'file-saver'
+import extenso from 'extenso'
+
 moment.locale('pt-BR')
 export default {
   name: 'showServices',
@@ -54,6 +56,9 @@ export default {
         }
       })
       return ret
+    },
+    textValue () {
+      return extenso(this.serviceSelected.total_cost)
     },
     searchQuery: {
       get () {
@@ -226,14 +231,40 @@ export default {
       this.isServiceModalActive = true
     },
     saveFile () {
+      const service = this.serviceSelected
+      const client = this.serviceSelected.client
+      const address = this.serviceSelected.client.user.address
+
       const header = `
-##===============================================================================
-## Serviço: ${this.serviceSelected.name} 
+#! RACE
+##=======================================================================================
+## CONTRATADA...: RACE - REDE DE ASSESSORIA E CONSULTORIA EM ESTATÍSTICA
+## CNPJ.........: 28.683.999/0001-30
+## ENDEREÇO.....: Rua Jacarandá, 375, Torre Sul, Apt 707, São Francisco - Ilhéus - Bahia
+## REPRESENTANTE: Isabel Fernanda Da Silva Caleare
+## ESTADO CIVIL.: Casada
+## PROFISSÃO....: Empresária
+## RG/SSP.......: 986.247.16/PR
+## TELEFONE.....: 55(73)99949.8982
+## CPF..........: 057.963.879-01
+## EMAIL........: contato@race.srv.br
+##=======================================================================================
 
-## Descrição: ${this.stripHtml(this.serviceSelected.description)}
+#! SERVIÇO
+##=======================================================================================
+## TÍTULO..........: ${service.name} 
+## PREV. DE ENTREGA: ${moment(service.forecast).format('DD/MM/YYYY', { mode: 'currency', number: { decimal: 'informal' } })}
+## VALOR...........: R$ ${service.total_cost.toFixed(2).split('.').join(',')} (${extenso(service.total_cost.toFixed(2).split('.').join(','))})
+##=======================================================================================
 
-## Custo: R$ ${parseFloat(this.serviceSelected.total_cost).toFixed(2)}
-##===============================================================================
+#! CLIENTE
+##=======================================================================================
+## NOME....: ${client.name}
+## TELEFONE: ${client.phone}
+## EMAIL...: ${client.user.email}
+## CPF/CNPJ: ${client.user.document}
+## ENDEREÇO: ${address.address}, ${address.neighborhood}, ${address.city} - ${address.state}, ${address.postal_code}
+##=======================================================================================
       `
       // const serviceInfo = ''
       // const clientInfo = ''
@@ -245,16 +276,20 @@ export default {
       saveAs(blob, `${new Date().valueOf()}.txt`)
     },
     getRhInfo (rh) {
+      const address = rh.user.address
       return `
-##===============================================================================
-## Nome: ${rh.name} 
-## Telefone: ${rh.phone}
-## Email: ${rh.user.email}
-
-## Atividades: ${rh.pivot.goal}
-## Numero de Horas: ${rh.pivot.hours}
-## Custo por hora: R$ ${rh.pivot.cost}
-##===============================================================================
+#! RH
+##=======================================================================================
+## NOME...........: ${rh.name}
+## TELEFONE.......: ${rh.phone}
+## EMAIL..........: ${rh.user.email}
+## CPF/CNPJ.......: ${rh.user.document}
+## ENDEREÇO.......: ${address.address}, ${address.neighborhood}, ${address.city} - ${address.state}, ${address.postal_code}
+## RESP.TÉCNICA...: ${rh.pivot.gotal}
+## NÚMERO DE HORAS: ${rh.pivot.hours}
+## CUSTO POR HORA.: ${rh.pivot.cost}
+## CUSTO TOTAL....: ${rh.pivot.cost * rh.pivot.hours}
+##=======================================================================================
       `
     },
     stripHtml (html) {

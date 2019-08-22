@@ -27,18 +27,18 @@
             <b-field label="Comepetências">
               <div class="textarea __disabled" v-html="rhInServiceSelected.competencies"></div>
             </b-field>
-            <b-field label="Atividades">
+            <b-field label="Responsabilidade Técnica">
               <b-input v-model="rhInServiceSelected.pivot.goal" placeholder="Atividade" disabled></b-input>
             </b-field>
           </article>
           <article>
-            <b-field label="Custo (padrão)">
+            <b-field label="Custo (padrão) por hora">
               <money class="input" :value="rhInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
             <b-field label="Demanda (hora)">
               <b-input :value="rhInServiceSelected.pivot.hours" disabled></b-input>
             </b-field>
-            <b-field label="Custo (no serviço)">
+            <b-field label="Custo (no serviço) por hora">
               <money class="input" :value="rhInServiceSelected.pivot.cost" v-money="money" :masked="true" disabled></money>
             </b-field>
           </article>
@@ -114,13 +114,13 @@
               </b-field>
             </article>
             <article>
-              <b-field label="Custo (padrão)">
+              <b-field label="Custo (padrão) por hora">
                 <money class="input" :value="rhNotInServiceSelected.cost" v-money="money" :masked="true" disabled></money>
               </b-field>
               <b-field label="Demanda (hora)">
                 <b-input  v-model="rhServiceFields.hours" required></b-input>
               </b-field>
-              <b-field label="Custo (no serviço)">
+              <b-field label="Custo (no serviço) por hora">
                 <b-input type="number" step="0.01" v-model="rhServiceFields.cost" required></b-input>
               </b-field>
             </article>

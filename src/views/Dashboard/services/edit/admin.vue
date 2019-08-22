@@ -69,8 +69,14 @@
           </article>
         </section>
         <section class="description">
+          <b-field label="Detalhes Técnicos">
+            <vue-editor :editorToolbar="customToolbar" v-model="technicalDetails"></vue-editor>
+          </b-field>
           <b-field label="Observações">
             <vue-editor :editorToolbar="customToolbar" v-model="description"></vue-editor>
+          </b-field>
+          <b-field label="Observações privadas">
+            <vue-editor :editorToolbar="customToolbar" v-model="privateDescription"></vue-editor>
           </b-field>
         </section>
         <button type="submit">Atualizar</button>

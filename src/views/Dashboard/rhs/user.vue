@@ -8,17 +8,18 @@
     </h3>
     <div class="content perfil_user">
       <generic-user :person="selected"></generic-user>
-      <!-- <section>
+      <section>
+        <b-field label="Custo (hora)">
+          <money v-if="selected.cost" class="input" :value="parseFloat(selected.cost)" v-money="money" :masked="true" disabled></money>
+          <div v-else class="textarea __disabled" disabled></div>
+        </b-field>
         <b-field label="Competências">
           <div class="textarea __disabled" v-html="selected.competencies" disabled></div>
         </b-field>
         <b-field label="Experiência">
           <div class="textarea __disabled" v-html="selected.experience"></div>
         </b-field>
-        <b-field label="Observações">
-          <textarea v-model="selected.observations" name="" id="" cols="40" rows="4" disabled></textarea>
-        </b-field>
-      </section> -->
+      </section>
     </div>
     <b-modal :active.sync="isEditActive">
       <edit-rh :rh="rhSelected" :selectedIndex="0" @updated="getPerfil"></edit-rh>

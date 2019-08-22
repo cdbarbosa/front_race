@@ -61,8 +61,14 @@
     </section>
     <section>
       <div class="description">
+        <b-field label="Detalhes Técnicos">
+          <div class="ql-editor textarea __disabled" v-html="selected.technical_details"></div>
+        </b-field>
         <b-field label="Observações">
           <div class="ql-editor textarea __disabled" v-html="selected.description"></div>
+        </b-field>
+        <b-field label="Observações privadas">
+          <div class="ql-editor textarea __disabled" v-html="selected.private_description"></div>
         </b-field>
       </div>
     </section>
