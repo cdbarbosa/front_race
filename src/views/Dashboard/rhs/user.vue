@@ -37,6 +37,13 @@ export default {
   name: 'perfil',
   data () {
     return {
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        precision: 2,
+        masked: true
+      },
       isEditActive: false,
       rhCreated: undefined,
       isModalActive: false,
