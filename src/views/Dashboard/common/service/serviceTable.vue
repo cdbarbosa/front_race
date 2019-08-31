@@ -16,7 +16,7 @@
           </div>
         </header>
       </div>
-      <b-table :current-page.sync="currentPage" :data="resources" :selected.sync="selected" :paginated="true" @update:selected="$emit('update', $event)"  :per-page="perPage" focusable style="padding-top: 1rem">
+      <b-table :current-page.sync="currentPage" :data="resources" :selected.sync="selected" :paginated="true" :per-page="perPage" focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="Titulo" sortable>
             {{ props.row.name.length > 130 ? props.row.name.slice(0, 130) + ' ...' : props.row.name }}
@@ -71,6 +71,14 @@ export default {
     ...mapGetters([
       'services'
     ]),
+    selected: {
+      get () {
+        return this.serviceSelected
+      },
+      set (newVal) {
+        this.serviceSelected = newVal
+      }
+    },
     serviceSelected: {
       get () {
         return this.$store.getters.serviceSelected

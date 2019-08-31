@@ -76,14 +76,6 @@ export default {
         this.setLastServiceSelected(index >= 0 ? index : 0)
       }
     },
-    selected: {
-      get () {
-        return this.tableSelected ? this.tableSelected : this.services[this.$route.params.service_id]
-      },
-      set (newValue) {
-        this.tableSelected = newValue
-      }
-    },
     serviceSelected: {
       get () {
         return this.$store.getters.serviceSelected

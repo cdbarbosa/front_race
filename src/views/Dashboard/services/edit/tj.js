@@ -76,7 +76,6 @@ export default {
         return isNaN(new Date(this.service.forecast)) ? null : new Date(this.service.forecast)
       },
       set: _.debounce(function (newVal, oldVal) {
-        console.log(newVal, oldVal)
         this.updateServiceSelected(['forecast', newVal])
       }, 1000)
     },

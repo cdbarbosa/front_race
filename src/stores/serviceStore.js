@@ -89,7 +89,8 @@ const mutations = {
     state.services = services
   },
   SET_SERVICE_SELECTED (state, service) {
-    state.serviceSelected = JSON.parse(JSON.stringify(service))
+    // state.serviceSelected = JSON.parse(JSON.stringify(service))
+    state.serviceSelected = service
     if (!state.serviceSelected.tj) {
       state.serviceSelected.tj = {
         type_id: 1,
