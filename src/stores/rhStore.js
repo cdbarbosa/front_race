@@ -108,7 +108,8 @@ const mutations = {
     state.lastRhSelected = index
   },
   SET_RH_SELECTED (state, rh) {
-    state.rhSelected = JSON.parse(JSON.stringify(rh))
+    state.rhSelected = rh
+    // state.rhSelected = JSON.parse(JSON.stringify(rh))
   },
   SET_RH_FILTERS (state, payload) {
     const index = payload[0]
@@ -302,7 +303,6 @@ const actions = {
     }), {
       headers: header()
     }).then(response => {
-      console.log(response)
       commit('SET_RH_SERVICE', response.data)
     })
   },

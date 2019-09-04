@@ -206,7 +206,15 @@ export default {
       // }
     },
     restoreClientSelected () {
-      this.setClientSelected(this.clients[this.selectedIndex])
+      this.$http.get(this.$api({
+        target: `client/${this.selected.id}`,
+        conn: this.$store.getters.conn
+      }), {
+        headers: header()
+      }).then(response => {
+        this.updateClient([response.data, this.selectedIndex])
+        // this.setClientSelected(this.clients[this.selectedIndex])
+      })
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

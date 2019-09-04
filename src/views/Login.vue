@@ -2,7 +2,7 @@
   <main class="page" id="login">
     <vue-particles clickMode="repulse" color="#dedede"></vue-particles>
     <div class="wrapper">
-      <img src="/img/logo@2x.png" alt=""/>
+      <img :src="`/img/${$store.getters.conn === 'prod' ? 'logo@2x' : 'logo_white'}.png`" alt=""/>
       <transition name="fade" mode="out-in">
         <form @submit.prevent="send" v-if="!recover">
           <b-field label="Email">

@@ -132,7 +132,8 @@ export default {
       'setServiceSelected',
       'setLastServiceSelected',
       'setServiceQuery',
-      'setServiceFilters'
+      'setServiceFilters',
+      'updateService'
     ]),
     get () {
       if (this.filterActive || this.$store.getters.serviceFilters.name) this.filterServices()
@@ -145,7 +146,9 @@ export default {
           if (this.$route.params.service_id) {
             this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
           } else {
-            this.serviceSelected = services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0]
+            const index = this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0
+            this.$router.push({ name: 'service', params: { service_id: this.services[index].id } })
+            this.serviceSelected = services[index]
           }
         }
       })
@@ -188,7 +191,16 @@ export default {
       this.searchQuery = ''
     },
     restoreServiceSelected () {
-      this.setServiceSelected(this.services[this.selectedIndex])
+      this.$http.get(this.$api({
+        target: `service/${this.serviceSelected.id}`,
+        conn: this.$store.getters.conn
+      }), {
+        headers: header()
+      }).then(response => {
+        this.updateService([response.data, this.selectedIndex])
+        // this.setClientSelected(this.clients[this.selectedIndex])
+      })
+      // this.setServiceSelected(this.services[this.selectedIndex])
     },
     parseModal () {
       if (this.serviceCreated === undefined) {

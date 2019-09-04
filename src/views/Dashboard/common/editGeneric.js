@@ -6,12 +6,17 @@ export default {
   props: ['person', 'title'],
   data () {
     return {
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
       update: undefined
     }
   },
   methods: {
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    getStartBirthdate () {
+      return new Date(moment(new Date()).subtract(18, 'year'))
     }
   },
   beforeMount () {
@@ -112,7 +117,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.document = ''
-        this.birthdate = ''
+        this.birthdate = this.getStartBirthdate()
         this.$emit('change', ['type_id', 'user', newVal])
       }, 50)
     },
@@ -126,7 +131,7 @@ export default {
     },
     birthdate: {
       get () {
-        return this.person.user.birthdate ? new Date(this.person.user.birthdate) : null
+        return this.person.user.birthdate ? new Date(this.person.user.birthdate) : this.getStartBirthdate()
       },
       set: _.debounce(function (newVal) {
         this.$emit('change', ['birthdate', 'user', moment(newVal).format()])

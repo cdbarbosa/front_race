@@ -21,7 +21,7 @@
         </b-field>
       </section>
     </div>
-    <b-modal :active.sync="isEditActive">
+    <b-modal :onCancel="restorePerfil" :active.sync="isEditActive">
       <edit-rh :rh="rhSelected" :selectedIndex="0" @updated="getPerfil"></edit-rh>
     </b-modal>
   </main>
@@ -102,6 +102,17 @@ export default {
         this.selected = response.data
         this.setRhSelected(response.data)
         if (!response.data.approved) this.$router.push({ name: 'approvedCheck' })
+      })
+    },
+    restorePerfil () {
+      this.$http.get(this.$api({
+        target: `rh/${this.$store.getters.user.id}`,
+        conn: this.$store.getters.conn
+      }), {
+        headers: header()
+      }).then(response => {
+        this.selected = response.data
+        this.setRhSelected(response.data)
       })
     }
   },

@@ -1,9 +1,9 @@
 <template>
-  <main id="history" v-if="records.length">
+  <main id="history">
     <h3>
       Histórico
     </h3>
-    <b-table :data="records" :paginated="true" :per-page="25" style="padding-top: 1rem">
+    <b-table v-if="records.length" :data="records" :paginated="true" :per-page="25" style="padding-top: 1rem">
       <template slot-scope="props">
         <b-table-column field="email" label="Usuário">
           {{ props.row.user.email }}
@@ -47,7 +47,7 @@ export default {
   },
   watch: {
   },
-  beforeMount () {
+  mounted () {
     this.getRecords()
   },
   methods: {

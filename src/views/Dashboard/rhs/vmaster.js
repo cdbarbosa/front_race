@@ -187,7 +187,16 @@ export default {
       })
     },
     restoreRhSelected () {
-      this.setRhSelected(this.rhs[this.selectedIndex])
+      this.$http.get(this.$api({
+        target: `rh/${this.selected.user.id}`,
+        conn: this.$store.getters.conn
+      }), {
+        headers: header()
+      }).then(response => {
+        this.updateRh([response.data, this.selectedIndex])
+        // this.setClientSelected(this.clients[this.selectedIndex])
+      })
+      // this.setRhSelected(this.rhs[this.selectedIndex])
     },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')

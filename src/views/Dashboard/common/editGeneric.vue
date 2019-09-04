@@ -29,18 +29,19 @@
       </article>
       <article v-if="userType == 1">
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento"></b-input>
+          <b-input v-model="document" v-mask="'##.###.###/####-##'" placeholder="Documento"></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
-          <b-datepicker v-model="birthdate" name="date" disabled></b-datepicker>
+          <b-datepicker v-model="birthdate" :month-names="months" :day-names="days" name="date" disabled></b-datepicker>
+          <!-- <b&#45;datepicker v&#45;model="birthdate" name="date" disabled></b&#45;datepicker> -->
         </b-field>
       </article>
       <article v-else>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="document" v-mask="[ userType == '1' ? '##.###.###/####-##' : '###.###.###-##']" placeholder="Documento" disabled></b-input>
+          <b-input v-model="document" v-mask="'###.###.###-##'" placeholder="Documento" :disabled="$store.getters.user.role_id != 1"></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
-          <b-datepicker  v-model="birthdate" name="date" editable disabled></b-datepicker>
+          <b-datepicker v-model="birthdate" :month-names="months" :day-names="days" name="date" required editable :disabled="$store.getters.user.role_id != 1"></b-datepicker>
         </b-field>
       </article>
       <article class="info-second">

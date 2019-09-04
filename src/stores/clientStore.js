@@ -88,7 +88,8 @@ const mutations = {
     state.clients = clients
   },
   SET_CLIENT_SELECTED (state, client) {
-    state.clientSelected = JSON.parse(JSON.stringify(client))
+    state.clientSelected = client
+    // state.clientSelected = JSON.parse(JSON.stringify(client))
   },
   UPDATE_CLIENT_SELECTED (state, payload) {
     const label = payload[0]
@@ -212,6 +213,7 @@ const actions = {
   },
   updateClient ({ commit }, payload) {
     commit('UPDATE_CLIENT', payload)
+    commit('SET_CLIENT_SELECTED', payload[0])
   },
   updateClientAddress ({ commit }, payload) {
     commit('UPDATE_CLIENT_ADDRESS', payload)
