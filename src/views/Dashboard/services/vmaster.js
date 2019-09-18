@@ -81,7 +81,7 @@ export default {
         return this.$store.getters.serviceSelected
       },
       set (service) {
-        this.setServiceSelected(service)
+        this.setServiceSelected(['serviceSelected', service])
       }
     },
     services: {
@@ -160,10 +160,11 @@ export default {
         serviceFilters: this.serviceFilters.filter(f => f.active),
         statusFilter: this.statusFilters.filter(f => f.active)
       }
-      let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
+      // let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
       this.$http.post(this.$api({
-        target: url,
-        conn: this.$store.getters.conn
+        target: 'filter-service',
+        conn: this.$store.getters.conn,
+        clerance: this.$store.getters.user.role.name
       }), data, {
         headers: header()
       }).then(response => {

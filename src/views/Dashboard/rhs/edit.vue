@@ -34,7 +34,7 @@
         </edit-generic>
         <div class="competencias">
             <b-field label="Perfil do Lattes">
-              <b-input v-model="lattes_perfil" name="lattes_perfil" placeholder="http://lattes.cnpq.br/4259409970128066" :disabled="rh.user.type_id == '1'" editable></b-input>
+              <b-input v-model="lattes_perfil" name="lattes_perfil" placeholder="http://lattes.cnpq.br/4259409970128066" :disabled="rh.user.type_id == '1'"></b-input>
             </b-field>
           <b-field label="Experiência">
             <b-input v-model="experience" placeholder="Analise de dados"></b-input>

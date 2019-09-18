@@ -8,11 +8,15 @@ const admin = () => ({
 const tj = () => ({
   component: import('./service/tj.vue')
 })
+const tm = () => ({
+  component: import('./service/tm.vue')
+})
 //
 const SERVICE = {
   rh: user,
   admin: admin,
-  tj: tj
+  tj: tj,
+  tm: tm
 }
 export default {
   route: {

@@ -21,7 +21,7 @@
             Serviços
           </router-link>
         </span>
-        <span v-else-if="user.role.name === 'tj'">
+        <span v-else-if="user.role.name === 'tj' || user.role.name === 'tm'">
           <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
             Serviços
           </router-link>

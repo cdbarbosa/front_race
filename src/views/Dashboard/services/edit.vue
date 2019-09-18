@@ -5,14 +5,20 @@ const user = () => ({
 const admin = () => ({
   component: import('./edit/admin.vue')
 })
+
 const tj = () => ({
   component: import('./edit/tj.vue')
+})
+
+const tm = () => ({
+  component: import('./edit/tm.vue')
 })
 //
 const SERVICE = {
   rh: user,
   admin: admin,
-  tj: tj
+  tj: tj,
+  tm: tm
 }
 export default {
   route: {

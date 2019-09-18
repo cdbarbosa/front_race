@@ -41,7 +41,7 @@
           <b-input v-model="document" v-mask="'###.###.###-##'" placeholder="Documento" :disabled="$store.getters.user.role_id != 1"></b-input>
         </b-field>
         <b-field label="Data (nascimento)">
-          <b-datepicker v-model="birthdate" :month-names="months" :day-names="days" name="date" required editable :disabled="$store.getters.user.role_id != 1"></b-datepicker>
+          <b-datepicker v-model="birthdate" :month-names="months" :day-names="days" name="date" required :disabled="$store.getters.user.role_id != 1"></b-datepicker>
         </b-field>
       </article>
       <article class="info-second">

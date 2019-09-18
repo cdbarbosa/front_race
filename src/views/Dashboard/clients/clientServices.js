@@ -11,7 +11,8 @@ export default {
       serviceTableOptions: {
         filter: false,
         search: false,
-        link: true
+        link: true,
+        target: 'clientServiceSelected'
       }
     }
   },
@@ -46,10 +47,10 @@ export default {
     },
     serviceSelected: {
       get () {
-        return this.$store.getters.serviceSelected
+        return this.$store.getters[this.serviceTableOptions.target]
       },
       set (service) {
-        this.setServiceSelected(service)
+        this.setServiceSelected([this.serviceTableOptions.target, service])
       }
     }
   },
@@ -83,7 +84,7 @@ export default {
         headers: header()
       }).then(response => {
         this.clientServices = response.data
-        this.selected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
+        this.serviceSelected = response.data[this.lastClientServiceSelected ? this.lastClientServiceSelected : 0]
       })
     }
   },

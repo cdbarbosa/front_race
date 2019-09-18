@@ -9,7 +9,7 @@
           </b-checkbox>
           <span v-if="filter.active">
             <span v-if="['created_at', 'forecast', 'delivered'].indexOf(filter.key) !== -1" class="data-style">
-              <b-datepicker :value="filter.value"  @input="parseFilters([index, 'serviceFilters', 'value', $event])" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date" editable></b-datepicker>
+              <b-datepicker :value="filter.value"  @input="parseFilters([index, 'serviceFilters', 'value', $event])" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" name="date"></b-datepicker>
               <b-select @input="parseFilters([index, 'serviceFilters', 'operator', $event])">
                 <option v-for="(operator, index) in operators" :key="index"> {{ operator }}</option>
               </b-select>

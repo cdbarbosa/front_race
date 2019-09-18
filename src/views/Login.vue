@@ -36,7 +36,8 @@ const routes = {
   admin: 'client',
   rh: 'rh',
   user: 'rh',
-  tj: 'service'
+  tj: 'service',
+  tm: 'service'
 }
 export default {
   name: 'login',

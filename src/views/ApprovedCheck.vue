@@ -12,7 +12,7 @@
             <p>Você receberá um email, assim que seu perfil for aprovado por nossa equipe.</p>
           </div>
           <footer>
-            &copy; 2019 Todos os direitos reservados. Race é uma marca registrada pelo INPI.
+            &copy; 2019 Todos os direitos reservados. RACE é uma marca registrada pelo INPI.
           </footer>
         </section>
       </div>
@@ -21,7 +21,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'approvedCheck'
+  name: 'approvedCheck',
+  mounted () {
+    setTimeout(() => {
+      this.logout()
+    }, 3000)
+  },
+  methods: {
+    ...mapActions([
+      'destroyUserStore',
+      'destroyRhStore',
+      'destroyClientStore',
+      'destroyServiceStore',
+      'setConn'
+    ]),
+    logout () {
+      window.localStorage.removeItem('authTokens')
+      this.$router.push({ name: 'login' })
+      this.destroyUserStore()
+      this.destroyClientStore()
+      this.destroyRhStore()
+      this.destroyServiceStore()
+    }
+  }
 }
 </script>

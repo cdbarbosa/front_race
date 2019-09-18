@@ -60,6 +60,8 @@ const getFilters = () => {
 const state = {
   services: [],
   serviceSelected: undefined,
+  clientServiceSelected: undefined,
+  rhServiceSelected: undefined,
   lastServiceSelected: undefined,
   serviceFilters: getFilters()
 }
@@ -67,6 +69,8 @@ const state = {
 const getters = {
   services: () => state.services,
   serviceSelected: () => state.serviceSelected,
+  clientServiceSelected: () => state.clientServiceSelected,
+  rhServiceSelected: () => state.rhServiceSelected,
   lastServiceSelected: () => state.lastServiceSelected,
   serviceFilters: () => state.serviceFilters
 }
@@ -88,13 +92,17 @@ const mutations = {
   SET_SERVICES (state, services) {
     state.services = services
   },
-  SET_SERVICE_SELECTED (state, service) {
-    // state.serviceSelected = JSON.parse(JSON.stringify(service))
-    state.serviceSelected = service
-    if (!state.serviceSelected.tj) {
-      state.serviceSelected.tj = {
-        type_id: 1,
-        cost: null
+  SET_SERVICE_SELECTED (state, payload) {
+    const target = payload[0]
+    const service = payload[1]
+    state[target] = service
+
+    if (target === 'serviceSelected') {
+      if (!state.serviceSelected.tj) {
+        state.serviceSelected.tj = {
+          type_id: 1,
+          cost: null
+        }
       }
     }
   },
@@ -148,8 +156,8 @@ const actions = {
   setServices ({ commit }, services) {
     commit('SET_SERVICES', services)
   },
-  setServiceSelected ({ commit }, service) {
-    commit('SET_SERVICE_SELECTED', service)
+  setServiceSelected ({ commit }, payload) {
+    commit('SET_SERVICE_SELECTED', payload)
   },
   updateServiceSelected ({ commit }, payload) {
     commit('UPDATE_SERVICE_SELECTED', payload)

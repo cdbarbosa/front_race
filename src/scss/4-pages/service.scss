@@ -16,6 +16,9 @@
       &.__no-edit{
         grid-template-columns: auto 300px;
       }
+      &.__no-download{
+        grid-template-columns: auto 2rem;
+      }
     }
     #edit{
       position: relative;
@@ -60,6 +63,87 @@
         }
       }
     }
+  }
+  main#report{
+    .content section article:nth-child(3) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    #reportSelected{
+      grid-template-columns: repeat(2, 1fr);
+    }
+    #createReport {
+      .upload{
+        .upload-draggable{
+          margin-bottom: 1rem;
+          width: 100%;
+          .icon{
+            margin: 0 auto;
+          }
+        }
+        .content{
+          display: block !important;
+        }
+      }
+    }
+    button.__secundary{
+      width: 300px;
+    }
+    .content section #technicalManager{
+      .upload{
+        .upload-draggable{
+          margin-bottom: 1rem;
+          width: 100%;
+          .icon{
+            margin: 0 auto;
+          }
+        }
+        .content{
+          display: block !important;
+        }
+      }
+    }
+    // table tr{
+    //   p{
+    //     position: absolute;
+    //     right: 1.3rem;
+    //     top: 0.5rem;
+    //   }
+    // }
+    table{
+      tbody{
+        // tr{
+        //   display: block;
+        // }
+      }
+      // tr{
+      //   position: relative;
+      //
+      //   p.download{
+      //     position: absolute;
+      //     right: 1.3rem;
+      //     top: 0.5rem;
+      //   }
+      //   &.detail{
+      //     tr{
+      //       &:not(:last-child){
+      //         margin-bottom: 1rem;
+      //       }
+      //     }
+      //     tr p{
+      //       right: -3rem;
+      //       top: -0.3rem;
+      //     }
+      //   }
+      //   &.is-empty{
+      //     p{
+      //       position: relative;
+      //       display: block;
+      //       margin: 0 auto;
+      //     }
+      //   }
+      // }
+    }
+
   }
   .content{
     section{
@@ -161,8 +245,9 @@
     }
   }
 }
-#serviceDetails, main#receipt {
+#serviceDetails, main#receipt, main#report {
   h3 {
     grid-template-columns: 1fr 2rem !important;
   }
 }
+

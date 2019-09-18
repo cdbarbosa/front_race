@@ -6,8 +6,7 @@
           <h4>Serviços </h4>
           <slot name="search"></slot>
           <span @click="$emit('restore')" v-if="options.search">
-            <i class="fas fa-backspace"></i>
-          </span>
+            <i class="fas fa-backspace"></i> </span>
           <!-- <div v&#45;if="filters" @click="isFilterModalActive = true"> -->
           <!--   <b&#45;icon icon="cog"></b&#45;icon> -->
           <!-- </div> -->
@@ -81,10 +80,10 @@ export default {
     },
     serviceSelected: {
       get () {
-        return this.$store.getters.serviceSelected
+        return this.$store.getters[this.options.target ? this.options.target : 'serviceSelected']
       },
       set (service) {
-        this.setServiceSelected(service)
+        this.setServiceSelected([(this.options.target ? this.options.target : 'serviceSelected'), service])
       }
     }
   },

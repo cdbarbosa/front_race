@@ -6,7 +6,7 @@
         <section class="service">
           <article class="info-one">
             <b-field label="Título">
-              <textarea v-model="name" name="" rows="4"></textarea>
+              <div v-html="name" class="textarea __disabled"></div>
             </b-field>
             <b-field label="ID">
               <b-input v-model="service.id" placeholder="23" disabled></b-input>
@@ -18,12 +18,12 @@
               <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
             </b-field>
             <b-field label="Previsão">
-              <b-datepicker v-if="!lockDate(service.status)" v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date"></b-datepicker>
+              <b-datepicker v-if="!lockDate(service.status)" v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" disabled></b-datepicker>
               <b-datepicker v-else v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" disabled></b-datepicker>
               <!-- <b&#45;input :value="parseDate(service.forecast)" v&#45;model="forecast" placeholder="Previsão" required></b&#45;input> -->
             </b-field>
             <b-field label="Entrega">
-              <b-datepicker v-if="!lockDate(service.status)" v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega"></b-datepicker>
+              <b-datepicker v-if="!lockDate(service.status)" v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" disabled></b-datepicker>
               <b-datepicker v-else v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" disabled></b-datepicker>
               <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
             </b-field>
@@ -33,23 +33,15 @@
               <b-input v-model="service.client.name" placeholder="Cliente" disabled></b-input>
             </b-field>
           </article>
-          <article class="info-four">
-            <b-field label="Margem">
-              <b-input type="number" step="0.1" v-model="profit" placeholder="50%"></b-input>
-            </b-field>
-            <b-field label="Recebido">
-              <b-input v-model="received_value" placeholder="825" disabled></b-input>
-            </b-field>
-          </article>
           <article>
             <b-field label="Tipo de custo TJ">
               <div class="block">
-                <b-radio v-model="tjType" :native-value="1">Porcentagem</b-radio>
-                <b-radio v-model="tjType" :native-value="2">Valor</b-radio>
+                <b-radio v-model="tjType" :native-value="1" disabled>Porcentagem</b-radio>
+                <b-radio v-model="tjType" :native-value="2" disabled>Valor</b-radio>
               </div>
             </b-field>
             <b-field :label="`Custo TJ (${service.tj.type_id === 1 ? '%' : 'R$'})`">
-              <b-input v-model="tjCost" type="number" step="0.01"></b-input>
+              <b-input v-model="tjCost" type="number" step="0.01" disabled></b-input>
             </b-field>
           </article>
           <article>
@@ -61,22 +53,17 @@
             </b-field>
             <b-field label="Sigilo">
               <div class="block">
-                <b-radio v-model="confidentiality" :native-value="1">Nenhum</b-radio>
-                <b-radio v-model="confidentiality" :native-value="2">Parcial</b-radio>
-                <b-radio v-model="confidentiality" :native-value="3">Total</b-radio>
+                <b-radio v-model="confidentiality" :native-value="1" disabled>Nenhum</b-radio>
+                <b-radio v-model="confidentiality" :native-value="2" disabled>Parcial</b-radio>
+                <b-radio v-model="confidentiality" :native-value="3" disabled>Total</b-radio>
               </div>
             </b-field>
           </article>
         </section>
         <section class="description">
-          <b-field label="Detalhes Técnicos">
-            <vue-editor :editorToolbar="customToolbar" v-model="technicalDetails"></vue-editor>
-          </b-field>
           <b-field label="Observações">
-            <vue-editor :editorToolbar="customToolbar" v-model="description"></vue-editor>
-          </b-field>
-          <b-field label="Observações privadas">
-            <vue-editor :editorToolbar="customToolbar" v-model="privateDescription"></vue-editor>
+            <div v-html="description" class="ql-editor textarea __disabled"></div>
+            <!-- <vue&#45;editor :editorToolbar="customToolbar" v&#45;model="description" disabled></vue&#45;editor> -->
           </b-field>
         </section>
         <button type="submit">Atualizar</button>
@@ -84,4 +71,4 @@
     </form>
   </main>
 </template>
-<script src="./admin.js"></script>
+<script src="./tj.js"></script>

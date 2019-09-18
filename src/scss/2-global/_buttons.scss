@@ -10,6 +10,12 @@
   font-weight: 900;
   border: none;
   outline: none;
+  &.__secundary{
+    font-size: 1.2em;
+    background: $primary;
+    margin-bottom: 0;
+    justify-content: center;
+  }
   &:focus {
     outline: none;
   }
