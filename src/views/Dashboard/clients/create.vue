@@ -24,7 +24,7 @@
           </b-field>
         </article>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '##.###.###/####-##':'###.###.###-##' " placeholder="Documentos" name="document" required></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id == 1 ? '##.###.###/####-##':'###.###.###-##' " placeholder="Documentos" name="document" required></b-input>
         </b-field>
         <article>
           <b-field label="Telefone">

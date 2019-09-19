@@ -23,18 +23,18 @@
           </b-field>
         </article>
         <b-field label="CPF/CNPJ">
-          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '1' ? '##.###.###/####-##' : '###.###.###-##'" placeholder="Documentos" name="document"></b-input>
+          <b-input v-model="user.document" v-validate="rules.document" v-mask="user.type_id == 1 ? '##.###.###/####-##' : '###.###.###-##'" placeholder="Documentos" name="document"></b-input>
         </b-field>
         <article>
           <b-field label="Telefone">
             <b-input v-model="rh.phone" v-mask="'(##) # ####-####'" placeholder="Telefone"></b-input>
           </b-field>
           <b-field label="Data (nascimento)">
-            <b-datepicker  v-model="user.birthdate" name="birthdate" placeholder="Data de nascimento" :disabled="user.type_id == '1'"></b-datepicker>
+            <b-datepicker  v-model="user.birthdate" name="birthdate" placeholder="Data de nascimento" :disabled="user.type_id == 1"></b-datepicker>
           </b-field>
         </article>
         <b-field label="Perfil do Lattes">
-          <b-input v-model="rh.lattes_perfil" name="lattes_perfil" placeholder="http://lattes.cnpq.br/4259409970128066" :disabled="user.type_id == '1'"></b-input>
+          <b-input v-model="rh.lattes_perfil" name="lattes_perfil" placeholder="http://lattes.cnpq.br/4259409970128066" :disabled="user.type_id == 1"></b-input>
         </b-field>
         <address class="address">
           <hr>

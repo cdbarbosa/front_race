@@ -15,7 +15,13 @@
           </div>
         </header>
       </div>
-      <b-table :current-page.sync="currentPage" :data="resources" :selected.sync="selected" :paginated="true" :per-page="perPage" focusable style="padding-top: 1rem">
+      <b-table
+        :current-page.sync="currentPage"
+        :data="resources"
+        :selected.sync="serviceSelected"
+        :paginated="true"
+        :per-page="perPage"
+        style="padding-top: 1rem" focusable>
         <template slot-scope="props">
           <b-table-column field="name" label="Titulo" sortable>
             {{ props.row.name.length > 130 ? props.row.name.slice(0, 130) + ' ...' : props.row.name }}
@@ -54,55 +60,4 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex'
-import dataTable from '../../../../mixins/dataTable.js'
-export default {
-  name: 'serviceTable',
-  mixins: [dataTable],
-  props: ['options', 'selectedIndex', 'filterActive'],
-  data () {
-    return {
-      target: 0
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'services'
-    ]),
-    selected: {
-      get () {
-        return this.serviceSelected
-      },
-      set (newVal) {
-        this.serviceSelected = newVal
-      }
-    },
-    serviceSelected: {
-      get () {
-        return this.$store.getters[this.options.target ? this.options.target : 'serviceSelected']
-      },
-      set (service) {
-        this.setServiceSelected([(this.options.target ? this.options.target : 'serviceSelected'), service])
-      }
-    }
-  },
-  beforeMount () {
-    if (this.$store.getters.user.role_id !== 1) {
-      this.target = 0
-    } else {
-      this.target = this.$store.getters.user.role_id
-    }
-  },
-  watch: {
-  },
-  methods: {
-    ...mapActions([
-      'setServiceSelected'
-    ]),
-    findIndex (id) {
-      return this.services.findIndex(service => service.id === id)
-    }
-  }
-}
-</script>
+<script src="./serviceTable.js"></script>

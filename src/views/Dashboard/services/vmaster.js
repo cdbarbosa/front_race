@@ -34,6 +34,22 @@ export default {
     }
   },
   computed: {
+    services: {
+      get () {
+        return this.$store.getters.services
+      },
+      set (newVal) {
+        this.setServices(newVal)
+      }
+    },
+    serviceSelected: {
+      get () {
+        return this.$store.getters.serviceSelected
+      },
+      set (service) {
+        this.setServiceSelected(service)
+      }
+    },
     selectedIndex () {
       return this.serviceSelected ? this.services.findIndex(service => service.id === this.serviceSelected.id) : 0
       // return this.serviceSelected ? this.services.findIndex(service => service.id === this.serviceSelected.id) : (this.$route.params.service_id ? this.services.findIndex(this.$route.params.service_id) : 0)
@@ -76,22 +92,6 @@ export default {
         this.setLastServiceSelected(index >= 0 ? index : 0)
       }
     },
-    serviceSelected: {
-      get () {
-        return this.$store.getters.serviceSelected
-      },
-      set (service) {
-        this.setServiceSelected(['serviceSelected', service])
-      }
-    },
-    services: {
-      get () {
-        return this.$store.getters.services
-      },
-      set (newVal) {
-        this.setServices(newVal)
-      }
-    }
   },
   watch: {
     services () {
@@ -129,6 +129,7 @@ export default {
     ...mapActions([
       'getServices',
       'setServices',
+      'setService',
       'setServiceSelected',
       'setLastServiceSelected',
       'setServiceQuery',
@@ -144,11 +145,11 @@ export default {
         if (services.length) {
           this.services = services
           if (this.$route.params.service_id) {
-            this.serviceSelected = services[this.findIndex(this.$route.params.service_id)]
+            this.serviceSelected = this.services[this.findIndex(this.$route.params.service_id)]
           } else {
             const index = this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0
             this.$router.push({ name: 'service', params: { service_id: this.services[index].id } })
-            this.serviceSelected = services[index]
+            this.serviceSelected = this.services[index]
           }
         }
       })
@@ -160,7 +161,6 @@ export default {
         serviceFilters: this.serviceFilters.filter(f => f.active),
         statusFilter: this.statusFilters.filter(f => f.active)
       }
-      // let url = this.$store.getters.user.role_id === 1 ? 'filter-service' : (this.$store.getters.user.role_id === 3 ? 'rh/filter-service' : 'tj/filter-service')
       this.$http.post(this.$api({
         target: 'filter-service',
         conn: this.$store.getters.conn,
@@ -169,7 +169,7 @@ export default {
         headers: header()
       }).then(response => {
         this.services = response.data
-        this.serviceSelected = response.data.length ? response.data[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0] : null
+        this.serviceSelected = this.services.length ? this.services[this.lastServiceSelected !== undefined ? this.lastServiceSelected : 0] : null
         this.isFilterModal = false
       })
     },
@@ -198,7 +198,9 @@ export default {
       }), {
         headers: header()
       }).then(response => {
-        this.updateService([response.data, this.selectedIndex])
+        this.serviceSelected = response.data
+        this.setService([this.selectedIndex, this.serviceSelected])
+        // this.updateService([response.data, this.selectedIndex])
         // this.setClientSelected(this.clients[this.selectedIndex])
       })
       // this.setServiceSelected(this.services[this.selectedIndex])
@@ -270,15 +272,15 @@ export default {
 ## CPF/CNPJ: ${client.user.document}
 ## ENDEREÇO: ${address.address}, ${address.neighborhood}, ${address.city} - ${address.state}, ${address.postal_code}
 ##=======================================================================================
-      `
+`
       // const serviceInfo = ''
       // const clientInfo = ''
       const rhsInfo = this.serviceSelected.rhs.map(r => this.getRhInfo(r))
       // const footer = ''
       // const div = ''
-      const body = `${header}\n${rhsInfo}`
-      let blob = new Blob([body], { type: 'text/plain;charset=utf-8' })
-      saveAs(blob, `${new Date().valueOf()}.txt`)
+      let body = header + '\n' + rhsInfo
+      let blob = new Blob([body.split('##=======================================================================================,').join('##=======================================================================================')], { type: 'text/plain;charset=utf-8' })
+      saveAs(blob, `${service.name} - ${new Date().valueOf()}.txt`)
     },
     getRhInfo (rh) {
       const address = rh.user.address
@@ -294,8 +296,7 @@ export default {
 ## NÚMERO DE HORAS: ${rh.pivot.hours}
 ## CUSTO POR HORA.: ${rh.pivot.cost}
 ## CUSTO TOTAL....: ${rh.pivot.cost * rh.pivot.hours}
-##=======================================================================================
-      `
+##=======================================================================================`
     },
     stripHtml (html) {
       let tmp = document.createElement('div')

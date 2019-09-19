@@ -14,7 +14,15 @@
           <b-icon icon="cog"></b-icon>
         </div>
       </header>
-      <b-table :row-class="(row, index) => row.completed == true && '__completed'" :current-page.sync="currentPage" :per-page="perPage" :data="resources" :paginated="true" :selected.sync="selected" @update:selected="$emit('update', [$event, true])" focusable style="padding-top: 1rem">
+      <b-table
+        :row-class="(row, index) => row.completed == true && '__completed'"
+        :current-page.sync="currentPage"
+        :per-page="perPage"
+        :data="resources"
+        :paginated="true"
+        :selected.sync="selected"
+        @update:selected="$emit('update', [$event, true])"
+        focusable style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}

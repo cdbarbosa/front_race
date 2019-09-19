@@ -137,7 +137,8 @@ export default {
       'updateService',
       'updateServiceSelected',
       'postServiceSelected',
-      'updateServiceSelectedTj'
+      'updateServiceSelectedTj',
+      'setServiceSelected'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({
@@ -162,7 +163,8 @@ export default {
       this.$Progress.start()
       this.postServiceSelected([this, this.service]).then(response => {
         this.$Progress.finish()
-        this.updateService([response.data, this.selectedIndex])
+        this.setServiceSelected(['serviceSelected', response.data])
+        // this.updateService([response.data, this.selectedIndex])
         this.$toasted.success('Serviço atualizado com sucesso!', {
           theme: 'bubble',
           position: 'top-center',

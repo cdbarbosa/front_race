@@ -164,6 +164,7 @@ export default {
         headers: header()
       }).then(response => {
         this.setRhsNotInService(response.data)
+        this.setRhNotInServiceSelected(response.data[0])
       })
     },
     getAllRhInService () {
@@ -192,7 +193,8 @@ export default {
       this.setRhInServiceSelected(this.rhsInService[this.rhNotInServiceSelectedIndex])
     },
     setRhNotInServiceSelected (rh) {
-      this.rhNotInServiceSelected = JSON.parse(JSON.stringify(rh))
+      console.log(rh)
+      this.rhNotInServiceSelected = rh
       this.rhServiceFields.cost = parseFloat(rh.cost)
     },
     setRhInServiceSelected (rh) {
@@ -276,8 +278,9 @@ export default {
       }).then(() => {
         this.$Progress.finish()
         this.rhSelected = undefined
-        this.getRhInService()
-        this.getAllRhNotInService()
+        this.get()
+        // this.getRhInService()
+        // this.getAllRhNotInService()
         this.restoreRhServiceFields()
         this.isAttachModalOpen = false
       })
@@ -304,8 +307,9 @@ export default {
         headers: header()
       }).then(() => {
         this.$Progress.finish()
-        this.getRhInService()
-        this.getAllRhNotInService()
+        this.get()
+        // this.getRhInService()
+        // this.getAllRhNotInService()
       })
     }
   },

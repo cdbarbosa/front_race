@@ -30,8 +30,8 @@
         </div>
       </article>
       <b-field label="CPF/CNPJ">
-        <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document"></b-input>
-        <b-input v-else v-model="user.document" v-validate="rules.document" v-mask="user.type_id === '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos" name="document" disabled></b-input>
+        <b-input v-if="user.type_id" v-model="user.document" v-validate="rules.document" v-mask="user.type_id == '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos A" name="document"></b-input>
+        <b-input v-else v-model="user.document" v-validate="rules.document" v-mask="user.type_id == '2' ? '###.###.###-##' : '##.###.###/####-##'" placeholder="Documentos B" name="document" disabled></b-input>
       </b-field>
       <address class="address">
         <h3>Endereço</h3>

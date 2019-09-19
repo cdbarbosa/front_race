@@ -143,7 +143,8 @@ export default {
       this.$Progress.start()
       this.postServiceSelected([this, this.service]).then(response => {
         this.$Progress.finish()
-        this.updateService([response.data, this.selectedIndex])
+        // this.updateService([response.data, this.selectedIndex])
+        this.setServiceSelected(['serviceSelected', response.data])
         this.$toasted.success('Serviço atualizado com sucesso!', {
           theme: 'bubble',
           position: 'top-center',

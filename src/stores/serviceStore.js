@@ -76,6 +76,31 @@ const getters = {
 }
 
 const mutations = {
+  SET_SERVICES (state, services) {
+    state.services = services
+  },
+  SET_SERVICE_SELECTED (state, service) {
+    state.serviceSelected = service
+  },
+  SET_LAST_SERVICE_SELECTED (state, index) {
+    state.lastServiceSelected = index
+  },
+  SET_CLIENT_SERVICE_SELECTED (state, service) {
+    state.clientServiceSelected = service
+  },
+  SET_RH_SERVICE_SELECTED (state, service) {
+    state.rhServiceSelected = service
+  },
+  SET_SERVICE (state, payload) {
+    const index = payload[0]
+    const service = payload[1]
+    state.services.splice(index, 1, service)
+  },
+  UPDATE_SERVICE_SELECTED_KEY (state, payload) {
+    const key = payload[0]
+    const value = payload[0]
+    state.serviceSelected[key] = value
+  },
   SET_SERVICE_FILTERS (state, payload) {
     const index = payload[0]
     const filter = payload[1]
@@ -86,26 +111,23 @@ const mutations = {
   SET_SERVICE_QUERY (state, query) {
     state.serviceFilters.name = query
   },
-  SET_LAST_SERVICE_SELECTED (state, index) {
-    state.lastServiceSelected = index
-  },
-  SET_SERVICES (state, services) {
-    state.services = services
-  },
-  SET_SERVICE_SELECTED (state, payload) {
-    const target = payload[0]
-    const service = payload[1]
-    state[target] = service
-
-    if (target === 'serviceSelected') {
-      if (!state.serviceSelected.tj) {
-        state.serviceSelected.tj = {
-          type_id: 1,
-          cost: null
-        }
-      }
-    }
-  },
+  // SET_SERVICE_SELECTED (state, payload) {
+  //   if (Array.isArray(payload)) {
+  //     const target = payload[0]
+  //     const service = payload[1]
+  //     state[target] = service
+  //
+  //     if (target === 'serviceSelected') {
+  //       if (!state.serviceSelected.tj) {
+  //         state.serviceSelected.tj = {
+  //           type_id: 1,
+  //           cost: null
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //   }
+  // },
   UPDATE_SERVICE_SELECTED (state, payload) {
     const label = payload[0]
     const value = payload[1]
@@ -116,11 +138,6 @@ const mutations = {
     const value = payload[1]
     state.serviceSelected.tj[label] = value
   },
-  UPDATE_SERVICE (state, payload) {
-    const service = payload[0]
-    const index = payload[1]
-    state.services.splice(index, 1, service)
-  },
   DESTROY_SERVICE_STORE (state) {
     state.services = []
     state.serviceSelected = undefined
@@ -130,6 +147,15 @@ const mutations = {
 }
 
 const actions = {
+  setServices ({ commit }, services) {
+    commit('SET_SERVICES', services)
+  },
+  setService ({ commit }, payload) {
+    commit('SET_SERVICE', payload)
+  },
+  setServiceSelected ({ commit }, service) {
+    commit('SET_SERVICE_SELECTED', service)
+  },
   setLastServiceSelected ({ commit }, index) {
     commit('SET_LAST_SERVICE_SELECTED', index)
   },
@@ -152,12 +178,6 @@ const actions = {
         reject(err)
       })
     })
-  },
-  setServices ({ commit }, services) {
-    commit('SET_SERVICES', services)
-  },
-  setServiceSelected ({ commit }, payload) {
-    commit('SET_SERVICE_SELECTED', payload)
   },
   updateServiceSelected ({ commit }, payload) {
     commit('UPDATE_SERVICE_SELECTED', payload)
@@ -187,7 +207,7 @@ const actions = {
     commit('SET_SERVICES', services)
   },
   updateService ({ commit }, payload) {
-    commit('UPDATE_SERVICE', payload)
+    // commit('UPDATE_SERVICE', payload)
     commit('SET_SERVICE_SELECTED', payload[0])
   },
   destroyServiceStore ({ commit }) {
