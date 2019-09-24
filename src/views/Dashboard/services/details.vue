@@ -21,7 +21,7 @@
         <hr>
         <div v-if="rhInServiceSelected" id="rh">
           <article class="__display">
-            <b-field label="RH">
+            <b-field label="RH Associado">
               <b-input v-model="rhInServiceSelected.name" disabled></b-input>
             </b-field>
             <b-field label="Comepetências">
@@ -83,6 +83,7 @@
           :setFunction="setRhNotInServiceFilters"
           :getStore="'rhNotInServiceFilters'"
           :mode="'out'"
+          :detailed="true"
           @update="setRhNotInServiceSelected($event[0])"
           @restore="restoreRhNotInServiceFilters">
           <span slot="title">RH's</span>

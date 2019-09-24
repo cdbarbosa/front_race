@@ -12,7 +12,8 @@ export default {
         filter: false,
         search: false,
         link: true,
-        target: 'clientServiceSelected'
+        getter: 'clientServiceSelected',
+        setter: 'setClientServiceSelected'
       }
     }
   },
@@ -47,10 +48,10 @@ export default {
     },
     serviceSelected: {
       get () {
-        return this.$store.getters[this.serviceTableOptions.target]
+        return this.$store.getters.clientServiceSelected
       },
       set (service) {
-        this.setServiceSelected([this.serviceTableOptions.target, service])
+        this.setClientServiceSelected(service)
       }
     }
   },
@@ -74,6 +75,7 @@ export default {
       'getServices',
       'setServices',
       'setServiceSelected',
+      'setClientServiceSelected',
       'setLastClientServiceSelected'
     ]),
     getClientServices () {

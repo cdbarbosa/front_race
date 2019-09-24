@@ -156,6 +156,12 @@ const actions = {
   setServiceSelected ({ commit }, service) {
     commit('SET_SERVICE_SELECTED', service)
   },
+  setClientServiceSelected ({ commit }, service) {
+    commit('SET_CLIENT_SERVICE_SELECTED', service)
+  },
+  setRhServiceSelected ({ commit }, service) {
+    commit('SET_RH_SERVICE_SELECTED', service)
+  },
   setLastServiceSelected ({ commit }, index) {
     commit('SET_LAST_SERVICE_SELECTED', index)
   },

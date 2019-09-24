@@ -24,6 +24,26 @@
     <b-modal :onCancel="restorePerfil" :active.sync="isEditActive">
       <edit-rh :rh="rhSelected" :selectedIndex="0" @updated="getPerfil"></edit-rh>
     </b-modal>
+    <b-modal :active.sync="critical">
+      <h2>Aviso</h2>
+      Algumas informações sobre a sua identidade estão pendentes. Favor informa-lás para que seu perfil seja elegível para participações em nossa rede colaborativa.
+      <h3>Informações Críticas</h3>
+      <h4><span class="__danger">Atenção!</span> As informações criticas abaixo não podem ser alteradas uma vez enviadas. Caso seja necessário uma alteração, entrar em contato!</h4>
+      <ol>
+        <li v-if="!selected.user.document">Documentação</li>
+        <li v-if="!selected.user.birthday && selected.user.type_id == 2">Data de nascimento</li>
+      </ol>
+      <h3>Informações Adicionais</h3>
+      <ol>
+        <li v-if="!selected.cost">Custo</li>
+        <li v-if="!selected.user.address.country">País</li>
+        <li v-if="!selected.user.address.state">Estado</li>
+        <li v-if="!selected.user.address.city">Cidade</li>
+        <li v-if="!selected.user.address.neighborhood">Bairro</li>
+        <li v-if="!selected.user.address.address">Logradouro</li>
+        <li v-if="!selected.user.address.postal_code">CEP</li>
+      </ol>
+    </b-modal>
   </main>
 </template>
 <script>
@@ -37,6 +57,7 @@ export default {
   name: 'perfil',
   data () {
     return {
+      critical: false,
       money: {
         decimal: ',',
         thousands: '.',
@@ -77,6 +98,9 @@ export default {
     }
   },
   watch: {
+    selected () {
+      this.critical = this.checkCritical()
+    }
   },
   beforeMount () {
     this.getPerfil()
@@ -114,6 +138,15 @@ export default {
         this.selected = response.data
         this.setRhSelected(response.data)
       })
+    },
+    checkCritical () {
+      // let rh = this.selected
+      let user = this.selected.user
+      if (!user.document) return true
+      if (user.type_id === 2) {
+        if (!user.birthday) return true
+      }
+      return false
     }
   },
   components: {

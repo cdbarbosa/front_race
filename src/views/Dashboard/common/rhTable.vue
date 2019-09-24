@@ -22,7 +22,10 @@
         :paginated="true"
         :selected.sync="selected"
         @update:selected="$emit('update', [$event, true])"
-        focusable style="padding-top: 1rem">
+        focusable
+        custom-detail-row
+        detail-key="service_history"
+        :detailed="detailed" style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -42,9 +45,34 @@
           <b-table-column v-else field="pivot.cost" label="Custo">
             R$ {{ parseFloat(props.row.pivot.cost) }}
           </b-table-column>
-          <b-table-column field="completed" :title="props.row.completed ? 'Completo' : 'Incompleto'" width="" centered>
+          <b-table-column label="Completo" field="completed" :title="props.row.completed ? 'Completo' : 'Incompleto'" width="" centered>
             <span :class="[{ __completed: props.row.completed }, 'signal']"></span>
           </b-table-column>
+        </template>
+        <template slot="detail" slot-scope="props">
+          <div v-if="props.row.service_history.length">
+            <h5>Histórico</h5>
+            <tr>
+              <th>Usuário</th>
+              <th>Ação</th>
+              <th>Data</th>
+            </tr>
+            <tr v-for="(item, index) in props.row.service_history" :key="index">
+              <td>{{ item.user.email }}</td>
+              <td>{{ item.action }}</td>
+              <td>{{ parseDateTime(item.created_at) }}</td>
+            </tr>
+          </div>
+          <div v-else>
+            <section class="section">
+              <div class="empty has-text-grey has-text-centered">
+                <p>
+                <b-icon icon="frown" size="is-large"></b-icon>
+                </p>
+                <p>Nenhuma ação deste RH nesse serviço.</p>
+              </div>
+            </section>
+          </div>
         </template>
         <template slot="empty">
           <section class="section">
@@ -69,19 +97,12 @@
       <div class="content" style="padding: 1rem">
         <section>
           <h3>Básicos</h3>
-          <div class="box basic-filter">
-            <b-checkbox @input="parseFilters([2, 'rhFilters', 'active',  $event])" :value="statusFilter.active">
-              {{ statusFilter.label }}
+          <div class="box basic-filter" v-if="completedFilter">
+            <b-checkbox @input="parseFilters([0, 'rhFilters', 'active',  $event])" :value="completedFilter.active">
+              {{ completedFilter.label }}
             </b-checkbox>
-            <span v-if="statusFilter.active">
-              <b-field v-if="statusFilter.key === 'completed'">
-                <b-radio @input="parseFilters([2, 'rhFilters', 'value', $event])" :value="statusFilter.value" :native-value="1">
-                  Completo
-                </b-radio>
-                <b-radio @input="parseFilters([2, 'rhFilters', 'value', $event])" :value="statusFilter.value" :native-value="0">
-                  Incompleto
-                </b-radio>
-              </b-field>
+            <span v-if="completedFilter.active">
+              <b-switch v-if="completedFilter.type === 'bool'" :value="completedFilter.value" @input="parseFilters([0, 'rhFilters', 'value', $event])">{{ completedFilter.value ? 'Sim' : 'Não'}}</b-switch>
             </span>
           </div>
           <div class="box basic-filter" v-for="(filter, index) in userFilters" :key="filter.key">
@@ -89,35 +110,29 @@
               {{ filter.label }}
             </b-checkbox>
             <span v-if="filter.active" >
-              <b-field v-if="filter.key === 'active'" >
-                <b-radio @input="parseFilters([index, 'userFilters', 'value', $event])" :value="filter.value" :native-value="1">
-                  Ativo
-                </b-radio>
-                <b-radio @input="parseFilters([index, 'userFilters', 'value', $event])" :value="filter.value" :native-value="0">
-                  Inativo
-                </b-radio>
+              <b-field>
+                <b-switch v-if="filter.type === 'bool'" :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])">{{ filter.value ? 'Sim' : 'Não'}}</b-switch>
+                <b-input v-else :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
               </b-field>
-              <!-- <b&#45;switch v&#45;if="filter.key === 'completed'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Ativo' : 'Inativo' }}</b&#45;switch> -->
-              <b-input  v-else placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
             </span>
           </div>
           <div class="box basic-filter" v-for="(filter, index) in rhFilters" :key="filter.key">
-            <b-checkbox @input="parseFilters([index, 'rhFilters', 'active',  $event])" :value="filter.active">
+            <b-checkbox @input="parseFilters([index + 1, 'rhFilters', 'active',  $event])" :value="filter.active">
               {{ filter.label }}
             </b-checkbox>
             <span v-if="filter.active">
-              <!-- <b&#45;checkbox @input="" :value="filter.value">{{ filter.value ? 'Completo' : 'Incompleto' }}</b&#45;checkbox> -->
-              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])"></b-input>
+              <b-input v-if="filter.type === 'string'" :value="filter.value" @input="parseFilters([index + 1, 'rhFilters', 'value', $event])"></b-input>
+              <b-switch v-else-if="filter.type === 'bool'" :value="filter.value" @input="parseFilters([index + 1, 'rhFilters', 'value', $event])">{{ filter.value ? 'Sim' : 'Não'}}</b-switch>
             </span>
           </div>
-          <div class="box basic-filter" v-for="(filter, index) in addressFilters" :key="filter.key">
-            <b-checkbox @input="parseFilters([index, 'addressFilters', 'active',  $event])" :value="filter.active">
-              {{ filter.label }}
-            </b-checkbox>
-            <span v-if="filter.active">
-              <b-input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'addressFilters', 'value', $event])"></b-input>
-            </span>
-          </div>
+          <!-- <div class="box basic&#45;filter" v&#45;for="(filter, index) in addressFilters" :key="filter.key"> -->
+          <!--   <b&#45;checkbox @input="parseFilters([index, 'addressFilters', 'active',  $event])" :value="filter.active"> -->
+          <!--     {{ filter.label }} -->
+          <!--   </b&#45;checkbox> -->
+          <!--   <span v&#45;if="filter.active"> -->
+          <!--     <b&#45;input placeholder="Text here..." :value="filter.value" @input="parseFilters([index, 'addressFilters', 'value', $event])"></b&#45;input> -->
+          <!--   </span> -->
+          <!-- </div> -->
         </section>
         <section>
           <h3>Acadêmicos</h3>

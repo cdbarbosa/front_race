@@ -1,11 +1,26 @@
 <template>
   <div class="rhScreen" id="updateRh">
-    <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction">
+    <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction" v-if="ready">
       <div v-if="!probation" id="probation">
-        Perfil em processo de aprovação!
-        <b-checkbox v-model="approved">
-          {{ approved ? 'Perfil Aprovado': 'Aprovação pendente' }}
-        </b-checkbox>
+        <h4>Perfil em processo de aprovação!</h4>
+        <div>
+          <b-radio class="__default" v-model="approved" :native-value="0">
+            Aprovação pendente
+          </b-radio>
+          <b-radio v-model="approved" :native-value="1">
+            Aprovado
+          </b-radio>
+          <b-radio class="__danger" v-model="approved" :native-value="2">
+            Aprovação negada
+          </b-radio>
+        </div>
+        <b-field label="Mensagem adicional" v-if="approved === 2">
+          <b-input v-model="customMessage" maxlength="200" type="textarea"></b-input>
+        </b-field>
+
+        <!-- <b&#45;checkbox v&#45;model="approved"> -->
+        <!--   {{ approved ? 'Perfil Aprovado': 'Aprovação pendente' }} -->
+        <!-- </b&#45;checkbox> -->
       </div>
       <div class="content">
         <edit-generic :person="rh" :title="'RH'" @change="updateRhSelected($event)">

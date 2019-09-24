@@ -44,7 +44,7 @@
             <h4>O relatório deverá ser impresso, assinado, scaneado e enviado novamente através da interface abaixo.</h4>
             <h5>Para atualizar o relatório assinado, basta enviar um novo arquivo.</h5>
           </header>
-          <b-upload drag-drop @input="createChildReport">
+          <b-upload drag-drop @input="createChildReport" accept="application/pdf">
             <section class="section">
               <div class="content has-text-centered">
                 <p>
@@ -124,7 +124,7 @@
             Relatório
           </h3>
         </header>
-        <b-upload drag-drop @input="createReport">
+        <b-upload drag-drop @input="createReport" accept="application/pdf">
           <section class="section">
             <div class="content has-text-centered">
               <p>
@@ -228,9 +228,16 @@ export default {
         }), data, {
           headers: header()
         }).then(response => {
-          this.$Progress.finish()
-          this.getServiceReports()
-          this.isModalActive = false
+          this.$toasted.success('Relatório enviado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 300,
+            onComplete: () => {
+              this.$Progress.finish()
+              this.getServiceReports()
+              this.isModalActive = false
+            }
+          })
         })
         // this.$http.post(this.$api({ target: 'receipts' }), data, {
         //   headers: header()
@@ -262,9 +269,16 @@ export default {
         }), data, {
           headers: header()
         }).then(response => {
-          this.$Progress.finish()
-          this.getServiceReports()
-          this.isModalActive = false
+          this.$toasted.success('Relatório assinado enviado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 300,
+            onComplete: () => {
+              this.$Progress.finish()
+              this.getServiceReports()
+              this.isModalActive = false
+            }
+          })
         })
       })
     },

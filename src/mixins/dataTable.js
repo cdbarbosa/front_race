@@ -2,6 +2,10 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 export default {
   props: {
+    detailed: {
+      type: Boolean,
+      default: false
+    },
     resources: {
       required: true
     },
@@ -46,6 +50,9 @@ export default {
   methods: {
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
+    },
+    parseDateTime (date) {
+      return moment(date).format('HH:mm - D/MM/Y')
     }
   }
 }

@@ -65,15 +65,15 @@ export default {
     }
   },
   computed: {
-    statusFilter () {
-      return this.$store.getters[this.getStore].rhFilters[2]
+    completedFilter () {
+      return this.$store.getters[this.getStore].rhFilters[0]
     },
     userFilters () {
       return this.$store.getters[this.getStore].userFilters
     },
     rhFilters () {
-      let b = this.$store.getters[this.getStore].rhFilters
-      return b.slice(0, 2)
+      return this.$store.getters[this.getStore].rhFilters.slice(1)
+      // return b.slice(0, 2)
     },
     academicFilters () {
       return this.$store.getters[this.getStore].academicFilters

@@ -10,7 +10,10 @@ export default {
   props: ['rh', 'selectedIndex'],
   data () {
     return {
+      customMessage: null,
       probation: undefined,
+      ready: false,
+      wasLocked: false,
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
@@ -24,6 +27,18 @@ export default {
     }
   },
   watch: {
+  },
+  beforeMount () {
+    this.wasLocked = this.rh.lock
+    this.lock().then(() => {
+      this.ready = true
+      if (this.rh.approved === null) {
+        this.approved = undefined
+      }
+    })
+  },
+  beforeDestroy () {
+    this.unlock()
   },
   mounted () {
     this.probation = this.rh.approved
@@ -93,9 +108,9 @@ export default {
       get () {
         return this.rh.approved
       },
-      set: _.debounce(function (newVal) {
+      set (newVal) {
         this.updateRhSelected(['approved', '', newVal])
-      }, 400)
+      }
     }
   },
   methods: {
@@ -111,7 +126,7 @@ export default {
     },
     updateFunction () {
       this.$Progress.start()
-      this.postRhSelected([this, this.rh]).then(response => {
+      this.postRhSelected([this, Object.assign({ message: this.customMessage }, this.rh)]).then(response => {
         this.$Progress.finish()
         this.updateRh([response.data, this.selectedIndex])
         this.$toasted.success('Perfil do RH atualizado com sucesso!', {
@@ -145,6 +160,29 @@ export default {
           position: 'top-center',
           duration: 300
         })
+      })
+    },
+    lock () {
+      return new Promise((resolve, reject) => {
+        this.$http.post(this.$api({
+          target: 'lock-rh',
+          conn: this.$store.getters.conn
+        }), { id: this.rh.id }, {
+          headers: header()
+        }).then(response => {
+          resolve(response)
+        })
+      })
+    },
+    unlock () {
+      this.$http.post(this.$api({
+        target: 'unlock-rh',
+        conn: this.$store.getters.conn
+      }), { id: this.rh.id }, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.ready = true
       })
     }
   },

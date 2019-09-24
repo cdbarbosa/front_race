@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setServiceSelected'
+      'setServiceSelected',
+      'setClientServiceSelected',
+      'setRhServiceSelected'
     ]),
     findIndex (id) {
       return this.services.findIndex(service => service.id === id)

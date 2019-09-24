@@ -91,7 +91,7 @@ export default {
       set (index) {
         this.setLastServiceSelected(index >= 0 ? index : 0)
       }
-    },
+    }
   },
   watch: {
     services () {

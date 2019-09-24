@@ -6,29 +6,40 @@ const getFilters = () => {
     userFilters: [
       {
         key: 'active',
-        label: 'Ativo',
-        value: 1,
-        active: false
+        label: 'Ativo ?',
+        value: true,
+        active: false,
+        type: 'bool'
       }
     ],
     rhFilters: [
       {
+        key: 'completed',
+        label: 'Dados Completos ?',
+        value: true,
+        active: true,
+        type: 'bool'
+      },
+      {
+        key: 'approved',
+        label: 'Aprovado ?',
+        value: null,
+        active: false,
+        type: 'bool'
+      },
+      {
         key: 'competencies',
         label: 'Competências',
         value: null,
-        active: false
+        active: false,
+        type: 'string'
       },
       {
         key: 'experience',
         label: 'Experiências',
         value: null,
-        active: false
-      },
-      {
-        key: 'completed',
-        label: 'Situação dos dados',
-        value: 1,
-        active: true
+        active: false,
+        type: 'string'
       }
     ],
     addressFilters: [
@@ -36,13 +47,15 @@ const getFilters = () => {
         key: 'state',
         label: 'Estado',
         value: null,
-        active: false
+        active: false,
+        type: 'string'
       },
       {
         key: 'city',
         label: 'Cidade',
         value: null,
-        active: false
+        active: false,
+        type: 'string'
       }
     ],
     academicFilters: [
@@ -50,12 +63,14 @@ const getFilters = () => {
         key: 'titulation',
         label: 'Titulação',
         value: null,
+        type: 'string',
         active: false
       },
       {
         key: 'area',
         label: 'Bacharelado',
         value: null,
+        type: 'string',
         active: false
       }
     ]

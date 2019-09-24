@@ -106,7 +106,6 @@ export default {
     searchQueryNotInService (newQuery) {
       if (newQuery === '') {
         if (this.filterActive) {
-          console.log('filter')
           this.filterRhNotInService()
         } else {
           this.restoreRhNotInService()
@@ -163,8 +162,10 @@ export default {
       }), data, {
         headers: header()
       }).then(response => {
-        this.setRhsNotInService(response.data)
-        this.setRhNotInServiceSelected(response.data[0])
+        if (response.data.length) {
+          this.setRhsNotInService(response.data)
+          this.setRhNotInServiceSelected(response.data[0])
+        }
       })
     },
     getAllRhInService () {
@@ -193,7 +194,6 @@ export default {
       this.setRhInServiceSelected(this.rhsInService[this.rhNotInServiceSelectedIndex])
     },
     setRhNotInServiceSelected (rh) {
-      console.log(rh)
       this.rhNotInServiceSelected = rh
       this.rhServiceFields.cost = parseFloat(rh.cost)
     },
@@ -249,7 +249,9 @@ export default {
         headers: header()
       }).then(response => {
         this.setRhsInService(response.data)
-        this.setRhInServiceSelected(response.data[0])
+        if (response.data.length) {
+          this.setRhInServiceSelected(response.data[0])
+        }
       })
     },
     getAllRhNotInService () {
@@ -259,6 +261,7 @@ export default {
       }), {
         headers: header()
       }).then(response => {
+        console.log(response)
         this.setRhsNotInService(response.data)
         this.setRhNotInServiceSelected(response.data[0])
       })
@@ -279,19 +282,9 @@ export default {
         this.$Progress.finish()
         this.rhSelected = undefined
         this.get()
-        // this.getRhInService()
-        // this.getAllRhNotInService()
         this.restoreRhServiceFields()
         this.isAttachModalOpen = false
       })
-    },
-    showDetached (e) {
-      this.rhSelected = e[0]
-      this.isResponseble = !e[1]
-    },
-    showAttached (e) {
-      this.rhSelected = e[0]
-      this.isResponseble = e[1]
     },
     detachRh (id) {
       this.rhSelected = undefined
@@ -308,9 +301,15 @@ export default {
       }).then(() => {
         this.$Progress.finish()
         this.get()
-        // this.getRhInService()
-        // this.getAllRhNotInService()
       })
+    },
+    showDetached (e) {
+      this.rhSelected = e[0]
+      this.isResponseble = !e[1]
+    },
+    showAttached (e) {
+      this.rhSelected = e[0]
+      this.isResponseble = e[1]
     }
   },
   components: {

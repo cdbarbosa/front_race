@@ -4,8 +4,13 @@
 @import '../3-components/service/_create';
 
 #dashboard main#services{
+  #master{
+    .__secundary .tableContainer header {
+      grid-template-columns: auto 1fr 1fr auto auto;
+    }
+  }
   .__secundary .tableContainer header {
-    grid-template-columns: auto 1fr 1fr auto auto;
+    grid-template-columns: auto 1fr auto auto;
   }
   h3{
     display: grid;

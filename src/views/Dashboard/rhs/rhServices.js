@@ -12,7 +12,8 @@ export default {
         filter: false,
         search: false,
         link: true,
-        target: 'rhServiceSelected'
+        getter: 'rhServiceSelected',
+        setter: 'setRhServiceSelected'
       }
     }
   },
@@ -47,10 +48,10 @@ export default {
     },
     serviceSelected: {
       get () {
-        return this.$store.getters[this.serviceTableOptions.target]
+        return this.$store.getters.rhServiceSelected
       },
       set (service) {
-        this.setServiceSelected([this.serviceTableOptions.target, service])
+        this.setRhServiceSelected(service)
       }
     }
   },
@@ -74,7 +75,8 @@ export default {
       'getServices',
       'setServices',
       'setServiceSelected',
-      'setLastRhServiceSelected'
+      'setLastRhServiceSelected',
+      'setRhServiceSelected'
     ]),
     getRhServices () {
       this.$http.get(this.$api({

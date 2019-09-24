@@ -2,13 +2,26 @@
   <main id="master">
     <h3>
       RH's
-      <div id="edit" @click="rhSelected ? isEditActive = true : null">
-        <b-icon icon="edit"></b-icon>
+      <div @mouseenter="restoreRhSelected()" id="edit" @click="rhSelected ? (rhSelected.lock ? null : isEditActive = true) : null">
+        <b-tooltip v-if="rhSelected" label="RH em edição" type="is-danger" :active="rhSelected.lock === 1">
+          <b-icon icon="edit"></b-icon>
+        </b-tooltip>
+        <b-icon v-else icon="edit"></b-icon>
       </div>
       <button id="createButtonRh" class="buttons is-primary" @click="isRhModalActive = true">Cadastrar novo RH</button>
     </h3>
     <div class="content __display">
-      <rh-table v-if="rhs" :resources="rhs" :filterActive="filterActive" :setFunction="setRhFilters" :document="true" :selectedIndex="selectedIndex" @update="setRhSelected($event[0])" @filter="get()" @searchByDocument="searchUserByDocument" @restore="restoreRhs($event)">
+      <rh-table
+        v-if="rhs"
+        :resources="rhs"
+        :filterActive="filterActive"
+        :setFunction="setRhFilters"
+        :document="true"
+        :selectedIndex="selectedIndex"
+        @update="setRhSelected($event[0]); restoreRhSelected()"
+        @filter="get()"
+        @searchByDocument="searchUserByDocument"
+        @restore="restoreRhs($event)">
         <span slot="title">RH's</span>
         <template v-slot:search>
           <b-input placeholder="Procurar por um RH" v-model="searchQuery"></b-input>
@@ -36,9 +49,14 @@
         </b-field>
       </section>
       <section id="academics">
-        <b-field label="Perfil Lattes" >
-          <b-input v-model="rhSelected.lattes_perfil" disabled></b-input>
+        <b-field label="Perfil Lattes">
+          <div class="textarea __disabled">
+            <a :href="rhSelected.lattes_perfil" target="_blank">{{ rhSelected.lattes_perfil }}</a>
+          </div>
         </b-field>
+        <!-- <b&#45;field label="Perfil Lattes" > -->
+        <!--   <b&#45;input v&#45;model="rhSelected.lattes_perfil" disabled></b&#45;input> -->
+        <!-- </b&#45;field> -->
         <b-field label="Bacharelado">
           <b-input v-model="area" disabled></b-input>
         </b-field>

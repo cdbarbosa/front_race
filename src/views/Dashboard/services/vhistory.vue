@@ -15,7 +15,7 @@
           {{ props.row.service_status.description }}
         </b-table-column>
         <b-table-column field="abbreviation" label="Data">
-          {{ parseDate(props.row.created_at) }}
+          {{ parseDateTime(props.row.created_at) }}
         </b-table-column>
       </template>
       <template slot="empty">
@@ -51,8 +51,8 @@ export default {
     this.getRecords()
   },
   methods: {
-    parseDate (date) {
-      return moment(date).format('DD/MM/YYYY H:m')
+    parseDateTime (date) {
+      return moment(date).format('HH:mm - D/MM/Y')
     },
     getRecords () {
       this.$http.get(this.$api({
