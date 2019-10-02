@@ -158,6 +158,11 @@ export default {
       }
     }
   },
+  watch: {
+    '$route.params.service_id' () {
+      this.getServiceReceipts()
+    }
+  },
   beforeMount () {
     this.getServiceReceipts()
   },

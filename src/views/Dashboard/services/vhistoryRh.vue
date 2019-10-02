@@ -5,14 +5,14 @@
     </h3>
     <b-table v-if="records.length" :data="records" :paginated="true" :per-page="25" style="padding-top: 1rem">
       <template slot-scope="props">
-        <b-table-column field="email" label="Usuário">
+        <b-table-column field="date" label="Usuário">
           {{ props.row.user.email }}
         </b-table-column>
-        <b-table-column field="abbreviation" label="Abreviação">
-          {{ props.row.service_status.abbreviation }}
+        <b-table-column field="action" label="Ação">
+          {{ props.row.action }}
         </b-table-column>
-        <b-table-column field="abbreviation" label="Status">
-          {{ props.row.service_status.description }}
+        <b-table-column field="rh" label="RH">
+          {{ props.row.rh.name }}
         </b-table-column>
         <b-table-column field="abbreviation" label="Data">
           {{ parseDateTime(props.row.created_at) }}
@@ -61,7 +61,7 @@ export default {
     },
     getRecords () {
       this.$http.get(this.$api({
-        target: `service-history/${this.$route.params.service_id}`,
+        target: `service-history-rh/${this.$route.params.service_id}`,
         conn: this.$store.getters.conn
       }), {
         headers: header()

@@ -183,6 +183,11 @@ export default {
       'serviceSelected'
     ])
   },
+  watch: {
+    '$route.params.service_id' () {
+      this.getServiceReports()
+    }
+  },
   beforeMount () {
     this.getServiceReports()
   },

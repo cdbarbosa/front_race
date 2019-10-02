@@ -23,9 +23,7 @@
         :selected.sync="selected"
         @update:selected="$emit('update', [$event, true])"
         focusable
-        custom-detail-row
-        detail-key="service_history"
-        :detailed="detailed" style="padding-top: 1rem">
+        style="padding-top: 1rem">
         <template slot-scope="props">
           <b-table-column field="name" label="NOME" sortable>
             {{ props.row.name }}
@@ -48,31 +46,6 @@
           <b-table-column label="Completo" field="completed" :title="props.row.completed ? 'Completo' : 'Incompleto'" width="" centered>
             <span :class="[{ __completed: props.row.completed }, 'signal']"></span>
           </b-table-column>
-        </template>
-        <template slot="detail" slot-scope="props">
-          <div v-if="props.row.service_history.length">
-            <h5>Histórico</h5>
-            <tr>
-              <th>Usuário</th>
-              <th>Ação</th>
-              <th>Data</th>
-            </tr>
-            <tr v-for="(item, index) in props.row.service_history" :key="index">
-              <td>{{ item.user.email }}</td>
-              <td>{{ item.action }}</td>
-              <td>{{ parseDateTime(item.created_at) }}</td>
-            </tr>
-          </div>
-          <div v-else>
-            <section class="section">
-              <div class="empty has-text-grey has-text-centered">
-                <p>
-                <b-icon icon="frown" size="is-large"></b-icon>
-                </p>
-                <p>Nenhuma ação deste RH nesse serviço.</p>
-              </div>
-            </section>
-          </div>
         </template>
         <template slot="empty">
           <section class="section">

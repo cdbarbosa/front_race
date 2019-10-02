@@ -97,6 +97,9 @@ export default {
     }
   },
   watch: {
+    '$route.params.service_id' () {
+      this.get()
+    },
     filterActive () {
       this.get()
     },
@@ -128,7 +131,6 @@ export default {
     })
   },
   beforeMount () {
-    this.get()
   },
   methods: {
     ...mapActions([
