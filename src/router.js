@@ -49,7 +49,7 @@ export default new Router({
       ]
     },
     {
-      path: 'approved-check',
+      path: '/approved-check',
       name: 'approvedCheck',
       component: ApprovedCheck
     }

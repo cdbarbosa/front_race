@@ -56,16 +56,15 @@ export default {
     }
   },
   watch: {
+    '$route.params.client_id' () {
+      this.get()
+    },
     serviceQuery (newQuery, oldQuery) {
       if (newQuery === '' || newQuery === oldQuery) this.restoreServices()
       else this.searchServices()
     }
   },
   beforeMount () {
-    this.getClientServices()
-    this.getServices(this).then(services => {
-      this.services = services
-    })
   },
   beforeDestroy () {
     this.lastClientServiceSelected = this.selectedIndex
@@ -78,6 +77,12 @@ export default {
       'setClientServiceSelected',
       'setLastClientServiceSelected'
     ]),
+    get () {
+      this.getClientServices()
+      this.getServices(this).then(services => {
+        this.services = services
+      })
+    },
     getClientServices () {
       this.$http.get(this.$api({
         target: `client-services/${this.clientSelected.id}`,

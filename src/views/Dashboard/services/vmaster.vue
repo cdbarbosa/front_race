@@ -7,6 +7,7 @@
     -->
     <h3 :class="{'__no-create': [2, 3, 4, 5].indexOf($store.getters.user.role_id) !== -1, '__no-edit': [5].indexOf($store.getters.user.role_id) !== -1, '__no-download': [5].indexOf($store.getters.user.role_id) !== -1}">
       Serviços
+      <button id="showClientInfo" @click="isClientInfoOpen = !isClientInfoOpen">Dados do Cliente</button> <!--- If found, render -->
       <button v-if="[1, 4].indexOf($store.getters.user.role_id) !== -1" id="downloadServiceData" @click="saveFile">Baixar dados do Serviço</button> <!--- If found, render -->
       <button v-if="[1].indexOf($store.getters.user.role_id) !== -1" id="createButtonService" @click="log">Criar novo serviço</button> <!--- If found, render -->
       <div id="edit" @click="isEditActive = true" v-if="serviceSelected && [1, 4, 5].indexOf($store.getters.user.role_id) !== -1"> <!--- If found, render -->
@@ -30,6 +31,11 @@
         </b-select>
       </template>
     </service-table>
+    <transition name="fade">
+      <div id="clientInfo" v-if="isClientInfoOpen">
+        <generic-user :complete="false" :person="serviceSelected.client"></generic-user>
+      </div>
+    </transition>
     <service :selected="serviceSelected"  v-if="serviceSelected"></service>
     <div class="content" v-else>
        <h2>Nenhum serviço cadastrado ou encontrado</h2>

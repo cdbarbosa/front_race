@@ -29,14 +29,12 @@ export default {
       isAttachModalOpen: false,
       rhNotInServiceSelected: null,
       rhInServiceSelected: null,
-      service: undefined,
       rhsService: undefined,
       isSearchModalActive: false,
       data: [],
       rh_id: '',
       isModalActive: false,
       isCreateModalActive: false,
-      serviceSelected: undefined,
       rhSelected: undefined,
       rhCreated: undefined,
       isResponseble: true,
@@ -51,6 +49,9 @@ export default {
       'rhsNotInService',
       'rhsInService'
     ]),
+    service () {
+      return this.$store.getters.serviceSelected
+    },
     userFilters () {
       return this.$store.getters.rhNotInServiceFilters.userFilters
     },
@@ -131,6 +132,7 @@ export default {
     })
   },
   beforeMount () {
+    this.get()
   },
   methods: {
     ...mapActions([
@@ -144,7 +146,7 @@ export default {
       'setRhNotInServiceQuery'
     ]),
     get () {
-      this.getService()
+      // this.getService()
       if (this.filterActive || this.$store.getters.rhNotInServiceFilters.name) this.filterRhNotInService()
       else this.getAllRhNotInService()
       this.getRhInService()

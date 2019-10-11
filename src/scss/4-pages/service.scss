@@ -14,7 +14,7 @@
   }
   h3{
     display: grid;
-    grid-template-columns: auto 300px 200px 2rem;
+    grid-template-columns: auto 300px 300px 200px 2rem;
     grid-gap: 1rem;
     &.__no-create{
       grid-template-columns: auto 300px 2rem;
@@ -29,7 +29,28 @@
       position: relative;
     }
   }
-  #downloadServiceData, #createButtonService {
+  #clientInfo{
+    padding: 1rem;
+    position: absolute;
+    background: white;
+    z-index: 9;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.19);
+    width: 400px;
+    right: 1rem;
+    top: 1rem;
+    height: calc(100vh - 61px - 3rem);
+    overflow: scroll;
+    .genericUser{
+      article{
+        grid-template-columns: 1fr;
+      }
+      address{
+        font-style: normal;
+      }
+    }
+  }
+  #showClientInfo, #downloadServiceData, #createButtonService {
     // position: absolute;
     // top: 0;
     background: #2B4F73;

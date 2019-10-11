@@ -1,5 +1,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import dataTable from '../../../../mixins/dataTable.js'
+import genericUser from '../genericUser.vue'
 export default {
   name: 'serviceTable',
   mixins: [dataTable],
@@ -40,5 +41,8 @@ export default {
     findIndex (id) {
       return this.services.findIndex(service => service.id === id)
     }
+  },
+  components: {
+    genericUser
   }
 }

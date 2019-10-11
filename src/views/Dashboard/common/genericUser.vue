@@ -4,10 +4,10 @@
       <b-field label="Nome">
         <b-input :value="person.name" placeholder="Nome" disabled></b-input>
       </b-field>
-      <b-field label="Ativo">
+      <b-field label="Ativo" v-if="complete">
         <b-checkbox :value="person.user.active === 1 || person.user.active" disabled></b-checkbox>
       </b-field>
-      <b-field label="ID">
+      <b-field label="ID" v-if="complete">
         <b-input :value="person.id" placeholder="23" disabled></b-input>
       </b-field>
     </article>
@@ -21,7 +21,10 @@
     </article>
     <article>
       <b-field label="Email">
-        <b-input :value="person.user.email" type="email" placeholder="example@example.com" disabled></b-input>
+        <div class="input __disabled">
+          <a :href="'mailto:' + person.user.email" target="_blank">{{ person.user.email }}</a>
+        </div>
+        <!-- <b&#45;input :value="person.user.email" type="email" placeholder="example@example.com" disabled></b&#45;input> -->
       </b-field>
     </article>
     <article>
@@ -80,7 +83,14 @@ import moment from 'moment'
 moment.locale('pt-BR')
 export default {
   name: 'componentGeneric',
-  props: ['person'],
+  props: {
+    person: {
+      required: true
+    },
+    complete: {
+      default: true
+    }
+  },
   data () {
     return {
     }

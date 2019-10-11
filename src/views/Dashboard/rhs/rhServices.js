@@ -56,16 +56,15 @@ export default {
     }
   },
   watch: {
+    '$route.params.rh_id' () {
+      this.get()
+    },
     serviceQuery (newQuery, oldQuery) {
       if (newQuery === '' || newQuery === oldQuery) this.restoreServices()
       else this.searchServices()
     }
   },
   beforeMount () {
-    this.getRhServices()
-    this.getServices(this).then(services => {
-      this.services = services
-    })
   },
   beforeDestroy () {
     this.lastRhServiceSelected = this.selectedIndex
@@ -78,6 +77,12 @@ export default {
       'setLastRhServiceSelected',
       'setRhServiceSelected'
     ]),
+    get () {
+      this.getRhServices()
+      this.getServices(this).then(services => {
+        this.services = services
+      })
+    },
     getRhServices () {
       this.$http.get(this.$api({
         target: `rh-services/${this.rhSelected.id}`,

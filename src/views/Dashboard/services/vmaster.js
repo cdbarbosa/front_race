@@ -11,6 +11,7 @@ import { header } from '../../../config/index.js'
 import serviceTable from '../common/service/serviceTable.vue'
 import { saveAs } from 'file-saver'
 import extenso from 'extenso'
+import genericUser from '../common/genericUser.vue'
 
 moment.locale('pt-BR')
 export default {
@@ -19,6 +20,7 @@ export default {
   data () {
     return {
       isEditActive: false,
+      isClientInfoOpen: false,
       isFilterModal: false,
       checkboxGroup: [],
       serviceStatuses: [],
@@ -311,6 +313,7 @@ export default {
     success,
     error,
     filterService,
-    serviceTable
+    serviceTable,
+    genericUser
   }
 }
