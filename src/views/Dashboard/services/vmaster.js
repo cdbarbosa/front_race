@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       isEditActive: false,
-      isClientInfoOpen: false,
+      isUserInfoOpen: false,
       isFilterModal: false,
       checkboxGroup: [],
       serviceStatuses: [],

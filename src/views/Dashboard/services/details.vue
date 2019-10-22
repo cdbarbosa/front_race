@@ -7,6 +7,26 @@
       </div>
     </h3>
     <div class="content">
+      <transition name="fade">
+        <div class="userInfo" v-if="isUserInfoOpen">
+          <generic-user :complete="false" :person="rhDetails"></generic-user>
+          <section>
+            <b-field label="Custo (hora)">
+              <money v-if="rhDetails.cost" class="input" :value="parseFloat(rhDetails.cost)" v-money="money" :masked="true" disabled></money>
+              <div v-else class="textarea __disabled" disabled></div>
+            </b-field>
+            <b-field label="Competências">
+              <div class="textarea __disabled" v-html="rhDetails.competencies" disabled></div>
+            </b-field>
+            <b-field label="Experiência">
+              <div class="textarea __disabled" v-html="rhDetails.experience"></div>
+            </b-field>
+            <b-field label="Observações">
+              <div class="textarea __disabled" v-html="rhDetails.observations"></div>
+            </b-field>
+          </section>
+        </div>
+      </transition>
       <section>
         <article>
           <b-field label="Serviço">
@@ -65,6 +85,7 @@
           @restore="reset($event)">
           <span slot="title">RH's (associados)</span>
           <template v-slot:action>
+            <button class="__small __primary" @click="rhDetails = rhInServiceSelected; isUserInfoOpen = !isUserInfoOpen">Detalhes do RH</button>
             <button class="__small" @click="detachRh(rhInServiceSelected.id)" v-if="isResponseble">Desassociar esse RH</button>
           </template>
         </rh-table>
@@ -91,6 +112,7 @@
             <b-input placeholder="Procurar por um RH" v-model="searchQueryNotInService"></b-input>
           </template>
           <template v-slot:action>
+            <button class="__small __primary" @click="rhDetails = rhInServiceSelected; isUserInfoOpen = !isUserInfoOpen">Detalhes do RH</button>
             <button class="__small __primary" @click="isAttachModalOpen = true">Associar esse RH</button>
           </template>
         </rh-table>

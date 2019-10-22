@@ -16,6 +16,9 @@
     margin-bottom: 0;
     justify-content: center;
   }
+  &.__small{
+    font-size: 1rem;
+  }
   &:focus {
     outline: none;
   }

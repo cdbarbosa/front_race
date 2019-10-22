@@ -1,36 +1,14 @@
-import { mapActions } from 'vuex'
-import { header } from '../../../../config/index.js'
 import _ from 'lodash'
-import { VueEditor } from 'vue2-editor'
-import moment from 'moment'
-moment.locale('pt-BR')
-const gets = {
-  admin: 'service-status',
-  tj: 'service-status-tj'
-}
+import serviceEdit from '../../../../mixins/serviceEdit'
 export default {
   name: 'serviceUpdate',
-  props: ['service', 'selectedIndex'],
+  mixins: [serviceEdit],
   data () {
     return {
-      serviceStatuses: [],
-      customToolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
-      ],
       radio: ''
     }
   },
   watch: {
-  },
-  created () {
-    if (!this.service.tj) {
-      this.updateServiceSelectedTj(['type_id', 1])
-      this.updateServiceSelectedTj(['cost', null])
-    }
-  },
-  beforeMount () {
-    this.getServiceStatuses()
   },
   mounted () {
   },
@@ -41,7 +19,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['name', newVal])
-      }, 1000)
+      }, 300)
     },
     profit: {
       get () {
@@ -49,7 +27,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['profit', newVal])
-      }, 1000)
+      }, 300)
     },
     description: {
       get () {
@@ -57,7 +35,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['description', newVal])
-      }, 1000)
+      }, 300)
     },
     privateDescription: {
       get () {
@@ -65,7 +43,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['private_description', newVal])
-      }, 1000)
+      }, 300)
     },
     technicalDetails: {
       get () {
@@ -73,7 +51,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['technical_details', newVal])
-      }, 1000)
+      }, 300)
     },
     confidentiality: {
       get () {
@@ -81,7 +59,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['confidentiality_id', newVal])
-      }, 1000)
+      }, 300)
     },
     delivered: {
       get () {
@@ -89,7 +67,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['delivered', newVal])
-      }, 1000)
+      }, 300)
     },
     forecast: {
       get () {
@@ -97,7 +75,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateServiceSelected(['forecast', newVal])
-      }, 1000)
+      }, 300)
     },
     received_value: {
       get () {
@@ -105,7 +83,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['received_value', newVal])
-      }, 1000)
+      }, 300)
     },
     status: {
       get () {
@@ -131,52 +109,5 @@ export default {
         this.updateServiceSelectedTj(['cost', newVal])
       }
     }
-  },
-  methods: {
-    ...mapActions([
-      'updateService',
-      'updateServiceSelected',
-      'postServiceSelected',
-      'updateServiceSelectedTj',
-      'setServiceSelected'
-    ]),
-    getServiceStatuses () {
-      this.$http.get(this.$api({
-        target: gets[this.$store.getters.user.role.name],
-        conn: this.$store.getters.conn
-      }), {
-        headers: header()
-      }).then(response => {
-        this.serviceStatuses = response.data
-      })
-    },
-    parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
-    },
-    lockDate (status) {
-      const LOCKED = [10, 14, 15]
-      // 10, 14, 15
-      if (LOCKED.indexOf(status.id) !== -1) return true
-      return false
-    },
-    updateFunction () {
-      this.$Progress.start()
-      this.postServiceSelected([this, this.service]).then(response => {
-        this.$Progress.finish()
-        this.setServiceSelected(['serviceSelected', response.data])
-        // this.updateService([response.data, this.selectedIndex])
-        this.$toasted.success('Serviço atualizado com sucesso!', {
-          theme: 'bubble',
-          position: 'top-center',
-          duration: 300,
-          onComplete: () => {
-            this.$parent.$emit('updated')
-          }
-        })
-      })
-    }
-  },
-  components: {
-    VueEditor
   }
 }

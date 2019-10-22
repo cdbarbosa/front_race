@@ -37,7 +37,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['name', newVal])
-      }, 1000)
+      }, 300)
     },
     profit: {
       get () {
@@ -45,7 +45,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['profit', newVal])
-      }, 1000)
+      }, 300)
     },
     description: {
       get () {
@@ -53,7 +53,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['description', newVal])
-      }, 1000)
+      }, 300)
     },
     confidentiality: {
       get () {
@@ -61,7 +61,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['confidentiality_id', newVal])
-      }, 1000)
+      }, 300)
     },
     delivered: {
       get () {
@@ -69,7 +69,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['delivered', newVal])
-      }, 1000)
+      }, 300)
     },
     forecast: {
       get () {
@@ -77,7 +77,7 @@ export default {
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateServiceSelected(['forecast', newVal])
-      }, 1000)
+      }, 300)
     },
     received_value: {
       get () {
@@ -85,7 +85,7 @@ export default {
       },
       set: _.debounce(function (newVal) {
         this.updateServiceSelected(['received_value', newVal])
-      }, 1000)
+      }, 300)
     },
     status: {
       get () {
@@ -138,22 +138,6 @@ export default {
       // 10, 14, 15
       if (LOCKED.indexOf(status.id) !== -1) return true
       return false
-    },
-    updateFunction () {
-      this.$Progress.start()
-      this.postServiceSelected([this, this.service]).then(response => {
-        this.$Progress.finish()
-        // this.updateService([response.data, this.selectedIndex])
-        this.setServiceSelected(['serviceSelected', response.data])
-        this.$toasted.success('Serviço atualizado com sucesso!', {
-          theme: 'bubble',
-          position: 'top-center',
-          duration: 300,
-          onComplete: () => {
-            this.$parent.$emit('updated')
-          }
-        })
-      })
     }
   },
   components: {

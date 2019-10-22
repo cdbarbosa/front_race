@@ -1,8 +1,9 @@
 import { header } from '../../../config/index.js'
+import genericUser from '../common/genericUser.vue'
+import rhTable from '../common/rhTable.vue'
 import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 import moment from 'moment'
-import rhTable from '../common/rhTable.vue'
 moment.locale('pt-BR')
 export default {
   name: 'serviceDetails',
@@ -25,6 +26,8 @@ export default {
         search: false,
         link: true
       },
+      rhDetails: null,
+      isUserInfoOpen: false,
       isEditModal: false,
       isAttachModalOpen: false,
       rhNotInServiceSelected: null,
@@ -166,8 +169,8 @@ export default {
       }), data, {
         headers: header()
       }).then(response => {
+        this.setRhsNotInService(response.data)
         if (response.data.length) {
-          this.setRhsNotInService(response.data)
           this.setRhNotInServiceSelected(response.data[0])
         }
       })
@@ -317,6 +320,7 @@ export default {
     }
   },
   components: {
-    rhTable
+    rhTable,
+    genericUser
   }
 }

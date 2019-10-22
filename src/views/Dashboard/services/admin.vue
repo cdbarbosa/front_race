@@ -1,10 +1,10 @@
 <template>
   <main id="services">
-    <b-tabs v-model="active" type="is-boxed">
+    <b-tabs :destroy-on-hide="true" v-model="active" type="is-boxed">
       <b-tab-item label="Principal">
         <vmaster></vmaster>
       </b-tab-item>
-      <b-tab-item label="Detalhes">
+      <b-tab-item  label="Detalhes">
         <vdetails v-if="$route.params.service_id"></vdetails>
       </b-tab-item>
       <b-tab-item label="Recebimentos">

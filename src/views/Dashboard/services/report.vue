@@ -64,10 +64,12 @@
             </h4>
             <button v-if="[1].indexOf($store.getters.user.role_id) !== -1" class="buttons is-primary" @click="isModalActive = true">Adicionar</button>
           </header>
-          <b-table :data="serviceReports" :paginated="true" :per-page="5" :selected.sync="selected" detailed custom-detail-row detail-key="value">
+          <b-table ref="table" :show-detail-icon="false" :data="serviceReports" :paginated="true" :per-page="5" :selected.sync="selected" detailed custom-detail-row detail-key="id">
             <template slot-scope="props">
               <b-table-column field="file_name" label="Arquivo">
-                {{ props.row.file_name }}
+                <span class="detailToggle" @click="toggle(props.row)">
+                  {{ props.row.file_name }}
+                </span>
               </b-table-column>
               <b-table-column field="created_at" label="Data">
                 {{ parseDateTime(props.row.created_at) }}
@@ -82,25 +84,31 @@
               </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <div v-if="props.row.children.length">
+              <div class="tableDetails">
                 <h5>Relatórios assinados</h5>
-                <tr>
-                  <th>Arquivo</th>
-                  <th>Data</th>
-                  <th>Usuário</th>
-                  <th></th>
-                  <!-- <th></th> -->
-                </tr>
-                <tr v-for="(item, index) in props.row.children" :key="index">
-                  <td>{{ item.file_name}}</td>
-                  <td>{{ parseDateTime(item.created_at) }}</td>
-                  <td>{{ item.user.email }}</td>
-                  <td>
-                    <p @click="downloadReport(item)">
-                    <b-icon icon="download" size="is-large"></b-icon>
-                    </p>
-                  </td>
-                </tr>
+                <div>
+                  <thead>
+                    <tr>
+                      <th>Arquivo</th>
+                      <th>Data</th>
+                      <th>Usuário</th>
+                      <th></th>
+                      <!-- <th></th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in props.row.children" :key="index">
+                      <td>{{ item.file_name}}</td>
+                      <td>{{ parseDateTime(item.created_at) }}</td>
+                      <td>{{ item.user.email }}</td>
+                      <td>
+                        <p @click="downloadReport(item)">
+                        <b-icon icon="download" size="is-large"></b-icon>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </div>
               </div>
             </template>
             <template slot="empty">
@@ -311,6 +319,9 @@ export default {
         }
         fr.readAsDataURL(file)
       })
+    },
+    toggle (row) {
+      this.$refs.table.toggleDetails(row)
     },
     editReport () {
       // let data = {

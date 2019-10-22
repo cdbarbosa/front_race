@@ -29,7 +29,8 @@
       position: relative;
     }
   }
-  #clientInfo{
+
+  .userInfo{
     padding: 1rem;
     position: absolute;
     background: white;
@@ -43,7 +44,11 @@
     overflow: scroll;
     .genericUser{
       article{
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        grid-gap: 0;
+        input{
+          text-align: left !important;
+        }
       }
       address{
         font-style: normal;
@@ -187,7 +192,7 @@
           }
         }
         &:nth-child(5) {
-          grid-template-columns: 1fr 2fr;
+          grid-template-columns: 1fr 1fr 1fr;
         }
       }
     }
@@ -222,6 +227,11 @@
 #dashboard #serviceDetails{
   .__secundary .tableContainer header {
     grid-template-columns: auto 1fr auto auto;
+  }
+  .__secundary .tableContainer {
+    button {
+      margin-right: 1rem;
+    }
   }
   .content{
     grid-template-columns: 1fr 1fr;
@@ -277,3 +287,8 @@
   }
 }
 
+#report{
+  .upload{
+    width: 100%;
+  }
+}

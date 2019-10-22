@@ -1,37 +1,83 @@
+<template>
+  <main id="updateService" v-if="ready">
+    <h3>Serviços</h3>
+    <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction">
+      <render :service="serviceSelected"></render>
+      <button type="submit">Atualizar</button>
+    </form>
+  </main>
+</template>
 <script>
-const user = () => ({
-  component: import('./edit/user.vue')
-})
-const admin = () => ({
-  component: import('./edit/admin.vue')
-})
-
-const tj = () => ({
-  component: import('./edit/tj.vue')
-})
-
-const tm = () => ({
-  component: import('./edit/tm.vue')
-})
-//
-const SERVICE = {
-  rh: user,
-  admin: admin,
-  tj: tj,
-  tm: tm
-}
+import { mapGetters } from 'vuex'
+import { header } from '../../../config/index.js'
+import render from './edit/render.vue'
 export default {
-  route: {
-    waitForData: true
+  data () {
+    return {
+      wasLocked: false,
+      ready: true
+    }
   },
-  props: ['service', 'selectedIndex'],
-  render (h) {
-    return h(SERVICE[this.$store.getters.user.role.name], {
-      props: {
-        service: this.service,
-        selectedIndex: this.selectedIndex
+  computed: {
+    ...mapGetters([
+      'serviceSelected'
+    ])
+  },
+  beforeMount () {
+    this.wasLocked = this.serviceSelected.lock
+    this.lock().then(() => {
+      this.ready = true
+      if (this.rh.approved === null) {
+        this.approved = undefined
       }
     })
+  },
+  beforeDestroy () {
+    this.unlock()
+  },
+  methods: {
+    lock () {
+      return new Promise((resolve, reject) => {
+        this.$http.post(this.$api({
+          target: 'lock-service',
+          conn: this.$store.getters.conn
+        }), { id: this.serviceSelected.id }, {
+          headers: header()
+        }).then(response => {
+          resolve(response)
+        })
+      })
+    },
+    unlock () {
+      this.$http.post(this.$api({
+        target: 'unlock-service',
+        conn: this.$store.getters.conn
+      }), { id: this.serviceSelected.id }, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.ready = true
+      })
+    },
+    update () {
+      this.$Progress.start()
+      this.postServiceSelected([this, this.serviceSelected]).then(response => {
+        this.$Progress.finish()
+        // this.setServiceSelected(['serviceSelected', response.data])
+        // this.updateService([response.data, this.selectedIndex])
+        this.$toasted.success('Serviço atualizado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 300,
+          onComplete: () => {
+            this.$parent.$emit('updated')
+          }
+        })
+      })
+    }
+  },
+  components: {
+    render
   }
 }
 </script>

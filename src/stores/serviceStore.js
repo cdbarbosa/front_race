@@ -79,8 +79,29 @@ const mutations = {
   SET_SERVICES (state, services) {
     state.services = services
   },
-  SET_SERVICE_SELECTED (state, service) {
-    state.serviceSelected = service
+  SET_SERVICE_SELECTED (state, payload) {
+    if (Array.isArray(payload)) {
+      const target = payload[0]
+      const service = payload[1]
+      state[target] = service
+
+      if (target === 'serviceSelected') {
+        if (!state.serviceSelected.tj) {
+          state.serviceSelected.tj = {
+            type_id: 1,
+            cost: null
+          }
+        }
+      }
+    } else {
+      state.serviceSelected = payload
+      if (!state.serviceSelected.tj) {
+        state.serviceSelected.tj = {
+          type_id: 1,
+          cost: null
+        }
+      }
+    }
   },
   SET_LAST_SERVICE_SELECTED (state, index) {
     state.lastServiceSelected = index

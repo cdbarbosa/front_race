@@ -37,28 +37,34 @@
             </h4>
             <button class="buttons is-primary" @click="isModalActive = true">Adicionar</button>
           </header>
-          <b-table :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected" detailed custom-detail-row detail-key="value">
+          <b-table ref="table" :data="serviceReceipts" :paginated="true" :per-page="5" :selected.sync="selected" :show-detail-icon="false" detailed custom-detail-row detail-key="id">
             <template slot-scope="props">
               <b-table-column field="value" label="Valor">
-                {{ 'R$ ' + parseFloat(props.row.value) }}
+                <span class="detailToggle" @click="toggle(props.row)">
+                  {{ 'R$ ' + parseFloat(props.row.value) }}
+                </span>
               </b-table-column>
               <b-table-column field="created_at" label="Data">
                 {{ parseDate(props.row.date) }}
               </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
-              <div v-if="props.row.history.length">
+              <div class="tableDetails">
                 <h5>Histórico</h5>
-                <tr>
-                  <th>Usuário</th>
-                  <th>Valor anterior</th>
-                  <th>Data</th>
-                </tr>
-                <tr v-for="(item, index) in props.row.history" :key="index">
-                  <td>{{ item.user.email }}</td>
-                  <td>R$ {{ item.old_value }}</td>
-                  <td>{{ parseDateTime(item.created_at) }}</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Usuário</th>
+                    <th>Valor anterior</th>
+                    <th>Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item) in props.row.history" :key="item.id">
+                    <td>{{ item.user.email }}</td>
+                    <td>R$ {{ item.old_value }}</td>
+                    <td>{{ parseDateTime(item.created_at) }}</td>
+                  </tr>
+                </tbody>
               </div>
             </template>
             <template slot="empty">
@@ -130,6 +136,7 @@ export default {
         precision: 2,
         masked: true
       },
+      showDetailIcon: false,
       isModalActive: false,
       isEditModal: false,
       service: undefined,
@@ -262,6 +269,9 @@ export default {
         this.getService()
         this.isEditModal = false
       })
+    },
+    toggle (row) {
+      this.$refs.table.toggleDetails(row)
     }
   }
 }

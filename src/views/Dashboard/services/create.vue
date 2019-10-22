@@ -65,11 +65,11 @@
           <b-field label="Observações privadas">
             <vue-editor :editorToolbar="customToolbar" v-model="service.private_description" placeholder="Observações para a administração"></vue-editor>
           </b-field>
-          <div class="buttonClass">
-            <button type="submit" class="is-primary" >Cadastrar</button>
-          </div>
         </div>
       </section>
+      <div class="buttonClass">
+        <button type="submit" class="is-primary" >Cadastrar</button>
+      </div>
     </form>
   </main>
 </template>
@@ -153,7 +153,6 @@ export default {
         client_id: this.client_id,
         service: this.service
       }
-      console.log(data)
       this.$Progress.start()
       this.$http.post(this.$api({
         target: 'services',
@@ -162,10 +161,10 @@ export default {
         headers: header()
       }).then(response => {
         this.$Progress.finish()
-        this.getServices(this).then(services => {
-          this.setServices(services)
-          this.$emit('serviceCreated')
-        })
+        this.$emit('serviceCreated')
+        // this.getServices(this).then(services => {
+        //   this.setServices(services)
+        // })
       }).catch(err => {
         this.$Progress.fail()
         this.$emit('creationFailed')

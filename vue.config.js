@@ -64,44 +64,44 @@ module.exports = {
             yandex: false,
             windows: true
           }
-        }),
-        new PrerenderSPAPlugin({
-          // Required - The path to the webpack-outputted app to prerender.
-          staticDir: path.join(__dirname, 'dist'),
-
-          // Optional - The path your rendered app should be output to.
-          // (Defaults to staticDir.)
-          outputDir: path.join(__dirname, 'dist'),
-
-          // Optional - The location of index.html
-          indexPath: path.join(__dirname, 'dist', 'index.html'),
-
-          // Required - Routes to render.
-          routes: ['/'],
-          // Optional - Uses html-minifier (https://github.com/kangax/html-minifier)
-          // To minify the resulting HTML.
-          // Option reference: https://github.com/kangax/html-minifier#options-quick-reference
-          minify: {
-            collapseBooleanAttributes: true,
-            collapseWhitespace: true,
-            decodeEntities: true,
-            keepClosingSlash: true,
-            sortAttributes: true
-          },
-          // The actual renderer to use. (Feel free to write your own)
-          // Available renderers: https://github.com/Tribex/prerenderer/tree/master/renderers
-          renderer: new Renderer({
-            // Optional - The name of the property to add to the window object with the contents of `inject`.
-            injectProperty: '__PRERENDER_INJECTED',
-            // Optional - defaults to 0, no limit.
-            // Routes are rendered asynchronously.
-            // Use this to limit the number of routes rendered in parallel.
-            maxConcurrentRoutes: 4,
-            // Other puppeteer options.
-            // (See here: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
-            headless: false // Display the browser window when rendering. Useful for debugging.
-          })
         })
+        // new PrerenderSPAPlugin({
+        //   // Required - The path to the webpack-outputted app to prerender.
+        //   staticDir: path.join(__dirname, 'dist'),
+        //
+        //   // Optional - The path your rendered app should be output to.
+        //   // (Defaults to staticDir.)
+        //   outputDir: path.join(__dirname, 'dist'),
+        //
+        //   // Optional - The location of index.html
+        //   indexPath: path.join(__dirname, 'dist', 'index.html'),
+        //
+        //   // Required - Routes to render.
+        //   routes: ['/'],
+        //   // Optional - Uses html-minifier (https://github.com/kangax/html-minifier)
+        //   // To minify the resulting HTML.
+        //   // Option reference: https://github.com/kangax/html-minifier#options-quick-reference
+        //   minify: {
+        //     collapseBooleanAttributes: true,
+        //     collapseWhitespace: true,
+        //     decodeEntities: true,
+        //     keepClosingSlash: true,
+        //     sortAttributes: true
+        //   },
+        //   // The actual renderer to use. (Feel free to write your own)
+        //   // Available renderers: https://github.com/Tribex/prerenderer/tree/master/renderers
+        //   renderer: new Renderer({
+        //     // Optional - The name of the property to add to the window object with the contents of `inject`.
+        //     injectProperty: '__PRERENDER_INJECTED',
+        //     // Optional - defaults to 0, no limit.
+        //     // Routes are rendered asynchronously.
+        //     // Use this to limit the number of routes rendered in parallel.
+        //     maxConcurrentRoutes: 4,
+        //     // Other puppeteer options.
+        //     // (See here: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
+        //     headless: false // Display the browser window when rendering. Useful for debugging.
+        //   })
+        // })
       ]
     }
   }
