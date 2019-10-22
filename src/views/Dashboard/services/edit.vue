@@ -1,14 +1,14 @@
 <template>
   <main id="updateService" v-if="ready">
     <h3>Serviços</h3>
-    <form @keyup.enter.ctrl="updateFunction" @submit.prevent="updateFunction">
+    <form @keyup.enter.ctrl="update" @submit.prevent="update">
       <render :service="serviceSelected"></render>
       <button type="submit">Atualizar</button>
     </form>
   </main>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { header } from '../../../config/index.js'
 import render from './edit/render.vue'
 export default {
@@ -27,15 +27,17 @@ export default {
     this.wasLocked = this.serviceSelected.lock
     this.lock().then(() => {
       this.ready = true
-      if (this.rh.approved === null) {
-        this.approved = undefined
-      }
     })
   },
   beforeDestroy () {
     this.unlock()
   },
   methods: {
+    ...mapActions([
+      'updateService',
+      'postServiceSelected',
+      'setServiceSelected'
+    ]),
     lock () {
       return new Promise((resolve, reject) => {
         this.$http.post(this.$api({
@@ -70,7 +72,7 @@ export default {
           position: 'top-center',
           duration: 300,
           onComplete: () => {
-            this.$parent.$emit('updated')
+            this.$emit('updated')
           }
         })
       })

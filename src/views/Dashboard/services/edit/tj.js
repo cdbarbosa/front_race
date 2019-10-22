@@ -1,32 +1,14 @@
-import { mapActions } from 'vuex'
-import { header } from '../../../../config/index.js'
 import _ from 'lodash'
-import { VueEditor } from 'vue2-editor'
-import moment from 'moment'
-moment.locale('pt-BR')
+import serviceEdit from '../../../../mixins/serviceEdit'
 export default {
   name: 'serviceUpdate',
-  props: ['service', 'selectedIndex'],
+  mixins: [serviceEdit],
   data () {
     return {
-      serviceStatuses: [],
-      customToolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }]
-      ],
       radio: ''
     }
   },
   watch: {
-  },
-  created () {
-    if (!this.service.tj) {
-      this.updateServiceSelectedTj(['type_id', 1])
-      this.updateServiceSelectedTj(['cost', null])
-    }
-  },
-  beforeMount () {
-    this.getServiceStatuses()
   },
   mounted () {
   },
@@ -111,36 +93,5 @@ export default {
         this.updateServiceSelectedTj(['cost', newVal])
       }
     }
-  },
-  methods: {
-    ...mapActions([
-      'updateService',
-      'updateServiceSelected',
-      'postServiceSelected',
-      'updateServiceSelectedTj'
-    ]),
-    getServiceStatuses () {
-      this.$http.get(this.$api({
-        target: 'service-status',
-        clerance: this.$store.getters.user.role.name,
-        conn: this.$store.getters.conn
-      }), {
-        headers: header()
-      }).then(response => {
-        this.serviceStatuses = response.data
-      })
-    },
-    parseDate (date) {
-      return moment(date).format('DD/MM/YYYY')
-    },
-    lockDate (status) {
-      const LOCKED = [10, 14, 15]
-      // 10, 14, 15
-      if (LOCKED.indexOf(status.id) !== -1) return true
-      return false
-    }
-  },
-  components: {
-    VueEditor
   }
 }

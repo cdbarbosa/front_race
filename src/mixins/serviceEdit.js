@@ -30,11 +30,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'updateService',
       'updateServiceSelected',
-      'postServiceSelected',
-      'updateServiceSelectedTj',
-      'setServiceSelected'
+      'updateServiceSelectedTj'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({
