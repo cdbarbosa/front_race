@@ -69,9 +69,12 @@
       <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <b-modal :active.sync="isRhModalActive">
-      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false">
+      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false; creationErros = $event">
         <template v-slot:message>
           <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
+          <span class="error" v-for="(err, index) in creationErros">
+            {{ err[0] }}
+          </span>
         </template>
       </component>
     </b-modal>

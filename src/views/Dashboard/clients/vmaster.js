@@ -34,7 +34,8 @@ export default {
           value: null,
           active: false
         }
-      ]
+      ],
+      creationErros: []
     }
   },
   computed: {
@@ -103,7 +104,15 @@ export default {
     }
   },
   watch: {
-    clientCreated (newVal) {
+    isEditActive (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          console.log('time is ticking')
+          this.isEditActive = false
+        }, 10 * 60 * 1000)
+      }
+    },
+    clientCreated () {
       this.get()
     },
     clients () {

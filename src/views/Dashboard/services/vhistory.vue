@@ -3,7 +3,14 @@
     <h3>
       Histórico
     </h3>
-    <b-table v-if="records.length" :data="records" :paginated="true" :per-page="25" style="padding-top: 1rem">
+    <b-table
+      v-if="records.length"
+      :data="records"
+      :paginated="true"
+      :per-page="25"
+      detailed
+      detail-key="id"
+      style="padding-top: 1rem">
       <template slot-scope="props">
         <b-table-column field="email" label="Usuário">
           {{ props.row.user.email }}
@@ -17,6 +24,14 @@
         <b-table-column field="abbreviation" label="Data">
           {{ parseDateTime(props.row.created_at) }}
         </b-table-column>
+      </template>
+      <template slot="detail" slot-scope="props">
+        <div v-if="props.row.service_status.id === 11">
+          {{ props.row.justification }}
+        </div>
+        <div v-else>
+          Justifica não necessária
+        </div>
       </template>
       <template slot="empty">
         <section class="section">

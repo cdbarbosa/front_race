@@ -2,8 +2,11 @@
   <main id="master">
     <h3>
       Cliente
-      <div id="edit" @click="clientSelected ? isEditActive = true : null">
-        <b-icon icon="edit"></b-icon>
+      <div @mouseenter="restoreClientSelected()" id="edit" @click="clientSelected ? (clientSelected.lock ? null : isEditActive = true) : null">
+        <b-tooltip v-if="clientSelected" label="Cliente em edição" type="is-danger" :active="clientSelected.lock === 1">
+          <b-icon icon="edit"></b-icon>
+        </b-tooltip>
+        <b-icon v-else icon="edit"></b-icon>
       </div>
       <button id="createButton" class="buttons is-primary" @click="isModalActive = true">Cadastrar novo cliente</button>
     </h3>
@@ -70,9 +73,12 @@
       <h2>Nenhum cliente cadastrado ou encontrado</h2>
     </div>
     <b-modal :active.sync="isModalActive">
-      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false">
+      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false; creationErros = $event">
         <template v-slot:message>
           <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
+          <span class="error" v-for="(err, index) in creationErros">
+            {{ err[0] }}
+          </span>
         </template>
       </component>
     </b-modal>

@@ -199,15 +199,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     h2{
       color: white;
       text-align: center;
+      display: block;
     }
     &#success{
       background: #009688;
     }
     &#error{
       background: #F44336;
+    }
+    .error{
+      display: block;
+      font-size: 1.25em;
+      color: white;
+      font-weight: 600;
     }
   }
 }

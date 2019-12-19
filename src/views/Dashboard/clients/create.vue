@@ -10,7 +10,7 @@
         </article>
         <article class="info-second">
           <b-field label="Email">
-            <b-input v-model="user.email" type="email"  v-validate="rules.email" placeholder="exemplo@exemplo.com" name="Email" required></b-input>
+            <b-input v-model="user.email" type="email"  v-validate="rules.email" placeholder="exemplo@exemplo.com" name="email" required></b-input>
           </b-field>
           <b-field label="Tipo">
             <div class="block">
@@ -42,7 +42,7 @@
               <b-input pattern="[A-Za-z ]+" name="country" v-model="address.country" placeholder="País"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
+              <b-input maxlength="2" style="text-transform:uppercase" pattern="[A-Z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-three">
@@ -58,7 +58,7 @@
               <b-input v-model="address.postal_code" name="postal-code" autocomplete="shipping postal-code" v-mask="'##.###-###'" placeholder="CEP"></b-input>
             </b-field>
             <b-field label="Bairro">
-              <b-input v-model="address.neighborhood" name="sublocality_level_1" autocomplete="sublocality_level_1" placeholder="Bairro"></b-input>
+              <b-input v-model="address.neighborhood" autocomplete="sublocality_level_1" name="neighborhood" placeholder="Bairro"></b-input>
             </b-field>
             <b-field label="Cidade">
               <b-input v-model="address.city" name="locality" autocomplete="shipping locality" placeholder="Cidade"></b-input>
@@ -82,7 +82,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import userCreate from '../../../mixins/userCreate'
+import userCreate from '@/mixins/userCreate'
 import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
@@ -163,12 +163,9 @@ export default {
         }).catch(err => {
           this.$Progress.fail()
           this.$emit('creationFailed')
-          console.log(err)
         })
       }).catch(err => {
-        this.$Progress.fail()
-        this.$emit('creationFailed')
-        console.log(err)
+        this.$emit('creationFailed', err.response.data)
       })
     }
   },

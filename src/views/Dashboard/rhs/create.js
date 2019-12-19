@@ -67,7 +67,7 @@ export default {
           conn: this.$store.getters.conn
         }), data, {
           headers: header()
-        }).then(response => {
+        }).then(() => {
           this.$Progress.finish()
           this.$emit('rhCreated')
           // this.getRhs(this).then(rhs => {
@@ -79,8 +79,8 @@ export default {
           console.log(err)
         })
       }).catch(err => {
-        this.$Progess.fail()
-        this.$emit('creationFailed')
+        this.$Progress.fail()
+        this.$emit('creationFailed', err.response.data)
         console.log(err)
       })
     }

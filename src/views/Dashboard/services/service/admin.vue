@@ -37,7 +37,7 @@
       </article>
       <article>
         <b-field label="Margem">
-          <b-input :value="selected.profit ? `${selected.profit} %` : 'Não informado'" placeholder="50%" disabled></b-input>
+          <b-input :value="selected.profit !== undefined ? `${selected.profit} %` : 'Não informado'" placeholder="50%" disabled></b-input>
         </b-field>
         <b-field label="Valor">
           <money class="input" :value="selected.total_cost" v-money="money" :masked="true" disabled></money>

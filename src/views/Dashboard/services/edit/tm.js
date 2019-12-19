@@ -35,56 +35,56 @@ export default {
       get () {
         return this.service.name
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['name', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['name', newVal])
       }, 1000)
     },
     profit: {
       get () {
         return this.service.profit
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['profit', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['profit', newVal])
       }, 1000)
     },
     description: {
       get () {
         return this.service.description
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['description', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['description', newVal])
       }, 1000)
     },
     confidentiality: {
       get () {
         return this.service.confidentiality_id
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['confidentiality_id', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['confidentiality_id', newVal])
       }, 1000)
     },
     delivered: {
       get () {
         return this.service.delivered ? new Date(this.service.delivered) : null
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['delivered', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['delivered', newVal])
       }, 1000)
     },
     forecast: {
       get () {
         return isNaN(new Date(this.service.forecast)) ? null : new Date(this.service.forecast)
       },
-      set: _.debounce(function (newVal, oldVal) {
-        this.updateServiceSelected(['forecast', newVal])
+      set: _.debounce(function () {
+
       }, 1000)
     },
     received_value: {
       get () {
         return this.service.received_value
       },
-      set: _.debounce(function (newVal) {
-        this.updateServiceSelected(['received_value', newVal])
+      set: _.debounce(function () {
+        // this.updateServiceSelected(['received_value', newVal])
       }, 1000)
     },
     status: {
@@ -99,16 +99,16 @@ export default {
       get () {
         return this.service.tj.type_id
       },
-      set (newVal) {
-        this.updateServiceSelectedTj(['type_id', newVal])
+      set () {
+        // this.updateServiceSelectedTj(['type_id', newVal])
       }
     },
     tjCost: {
       get () {
         return parseFloat(this.service.tj.cost)
       },
-      set (newVal) {
-        this.updateServiceSelectedTj(['cost', newVal])
+      set () {
+        // this.updateServiceSelectedTj(['cost', newVal])
       }
     }
   },

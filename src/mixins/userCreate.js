@@ -94,7 +94,6 @@ export default {
             resolve(datas.user_id)
           })
         }).catch(err => {
-          this.$Progress.fail()
           reject(err)
         })
       })

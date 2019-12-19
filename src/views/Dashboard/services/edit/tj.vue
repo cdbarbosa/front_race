@@ -12,17 +12,14 @@
       <article class="info-two">
         <b-field label="Cadastro">
           <b-input :value="parseDate(service.created_at)" v-mask="'##/##/####'" placeholder="data" name="register" disabled></b-input>
-          <!-- <b&#45;datepicker :value="parseDate(service.delivered)"></b&#45;datepicker> -->
         </b-field>
         <b-field label="Previsão">
           <b-datepicker v-if="!lockDate(service.status)" v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" disabled></b-datepicker>
           <b-datepicker v-else v-model="forecast" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Previsão" name="date" disabled></b-datepicker>
-          <!-- <b&#45;input :value="parseDate(service.forecast)" v&#45;model="forecast" placeholder="Previsão" required></b&#45;input> -->
         </b-field>
         <b-field label="Entrega">
           <b-datepicker v-if="!lockDate(service.status)" v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" disabled></b-datepicker>
           <b-datepicker v-else v-model="delivered" :date-formatter="(date) => date.toLocaleDateString('pt-BR')" placeholder="Entrega" disabled></b-datepicker>
-          <!-- <b-input :value="parseDate(service.delivered)" v-model="delivered" v-mask="'##/##/####'" name="delivered"></b-input> -->
         </b-field>
       </article>
       <article class="info-three">
@@ -43,7 +40,7 @@
       </article>
       <article>
         <b-field label="Situação">
-          <b-select placeholder="Selecione um status para o cliente" v-model="status">
+          <b-select placeholder="Selecione uma situação para o serviço" v-model="status">
             <!-- <option value="">Selecione</option> -->
             <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
@@ -60,7 +57,6 @@
     <section class="description">
       <b-field label="Observações">
         <div v-html="description" class="ql-editor textarea __disabled"></div>
-        <!-- <vue&#45;editor :editorToolbar="customToolbar" v&#45;model="description" disabled></vue&#45;editor> -->
       </b-field>
     </section>
   </div>

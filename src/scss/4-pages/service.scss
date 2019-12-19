@@ -17,7 +17,7 @@
     grid-template-columns: auto 300px 300px 200px 2rem;
     grid-gap: 1rem;
     &.__no-create{
-      grid-template-columns: auto 300px 2rem;
+      grid-template-columns: auto 300px 300px 2rem;
       &.__no-edit{
         grid-template-columns: auto 300px;
       }
@@ -42,6 +42,11 @@
     top: 1rem;
     height: calc(100vh - 61px - 3rem);
     overflow: scroll;
+    button{
+      position: absolute;
+      right: 1rem;
+      background: $error;
+    }
     .genericUser{
       article{
         grid-template-columns: 1fr !important;
@@ -133,48 +138,6 @@
         }
       }
     }
-    // table tr{
-    //   p{
-    //     position: absolute;
-    //     right: 1.3rem;
-    //     top: 0.5rem;
-    //   }
-    // }
-    table{
-      tbody{
-        // tr{
-        //   display: block;
-        // }
-      }
-      // tr{
-      //   position: relative;
-      //
-      //   p.download{
-      //     position: absolute;
-      //     right: 1.3rem;
-      //     top: 0.5rem;
-      //   }
-      //   &.detail{
-      //     tr{
-      //       &:not(:last-child){
-      //         margin-bottom: 1rem;
-      //       }
-      //     }
-      //     tr p{
-      //       right: -3rem;
-      //       top: -0.3rem;
-      //     }
-      //   }
-      //   &.is-empty{
-      //     p{
-      //       position: relative;
-      //       display: block;
-      //       margin: 0 auto;
-      //     }
-      //   }
-      // }
-    }
-
   }
   .content{
     section{

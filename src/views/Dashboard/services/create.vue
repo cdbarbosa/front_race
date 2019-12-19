@@ -48,7 +48,7 @@
           </b-field>
         </article>
         <b-field label="Situação">
-          <b-select placeholder="Selecione um status para o cliente">
+          <b-select placeholder="Selecione uma situação para o serviço" v-model="service.status_id">
             <!-- <option value="">Selecione</option> -->
             <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
@@ -101,7 +101,7 @@ export default {
         due_date: null,
         forecast: null,
         profit: null,
-        service_status_id: 1,
+        status_id: 1,
         confidentiality_id: 1,
         tj_cost_type_id: 1,
         tj_cost: null

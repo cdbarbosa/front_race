@@ -1,17 +1,14 @@
+import _ from 'lodash'
 import { header } from '../config/index'
 import { VueEditor } from 'vue2-editor'
 import moment from 'moment'
 import { mapActions } from 'vuex'
 
-const gets = {
-  admin: 'service-status',
-  tj: 'service-status-tj'
-}
-
 export default {
   props: ['service', 'selectedIndex'],
   data () {
     return {
+      oldServiceStatus: null,
       serviceStatuses: [],
       customToolbar: [
         ['bold', 'italic', 'underline'],
@@ -27,15 +24,31 @@ export default {
   },
   beforeMount () {
     this.getServiceStatuses()
+    this.oldServiceStatus = this.service.status_id
+  },
+  computed: {
+    showJustificationBox () {
+      if (this.oldServiceStatus !== 11 && this.service.status_id === 11) return true
+      return false
+    },
+    justification: {
+      get () {
+        return this.$store.getters.serviceUpdateJustification
+      },
+      set: _.debounce(function (newVal) {
+        this.setServiceUpdateJustification(newVal)
+      }, 300)
+    }
   },
   methods: {
     ...mapActions([
       'updateServiceSelected',
-      'updateServiceSelectedTj'
+      'updateServiceSelectedTj',
+      'setServiceUpdateJustification'
     ]),
     getServiceStatuses () {
       this.$http.get(this.$api({
-        target: gets[this.$store.getters.user.role.name],
+        target: 'service-status',
         conn: this.$store.getters.conn
       }), {
         headers: header()

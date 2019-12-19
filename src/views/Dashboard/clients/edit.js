@@ -1,4 +1,5 @@
 import { mapActions } from 'vuex'
+import { header } from '../../../config/index.js'
 import { VueEditor } from 'vue2-editor'
 import _ from 'lodash'
 import editGeneric from '../common/editGeneric.vue'
@@ -9,6 +10,8 @@ export default {
   props: ['client', 'selectedIndex'],
   data () {
     return {
+      wasLocked: false,
+      ready: false,
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }]
@@ -16,6 +19,15 @@ export default {
     }
   },
   watch: {
+  },
+  beforeMount () {
+    this.wasLocked = this.client.lock
+    this.lock().then(() => {
+      this.ready = true
+    })
+  },
+  beforeDestroy () {
+    this.unlock()
   },
   mounted () {
   },
@@ -44,6 +56,29 @@ export default {
       'updateClientAddress',
       'updateClientSelected'
     ]),
+    lock () {
+      return new Promise((resolve, reject) => {
+        this.$http.post(this.$api({
+          target: 'lock-client',
+          conn: this.$store.getters.conn
+        }), { id: this.client.id }, {
+          headers: header()
+        }).then(response => {
+          resolve(response)
+        })
+      })
+    },
+    unlock () {
+      this.$http.post(this.$api({
+        target: 'unlock-client',
+        conn: this.$store.getters.conn
+      }), { id: this.client.id }, {
+        headers: header()
+      }).then(response => {
+        console.log(response)
+        this.ready = true
+      })
+    },
     parseDate (date) {
       return moment(date).format('DD/MM/YYYY')
     },

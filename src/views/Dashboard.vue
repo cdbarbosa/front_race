@@ -18,6 +18,11 @@ import navstrip from './Dashboard/NavStrip.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'home',
+  data () {
+    return {
+      banana: true
+    }
+  },
   computed: {
     ...mapGetters([
       'user'

@@ -1,6 +1,6 @@
 <template>
   <main class="page" id="login">
-    <vue-particles clickMode="repulse" color="#dedede"></vue-particles>
+    <vue-particles :particlesNumber="20" :clickEffect="false" color="#dedede"></vue-particles>
     <div class="wrapper">
       <img :src="`/img/${$store.getters.conn === 'prod' ? 'logo@2x' : 'logo_white'}.png`" alt=""/>
       <transition name="fade" mode="out-in">
@@ -34,7 +34,7 @@
 import { mapActions } from 'vuex'
 const routes = {
   admin: 'client',
-  rh: 'rh',
+  sudo: 'rh',
   user: 'rh',
   tj: 'service',
   tm: 'service'

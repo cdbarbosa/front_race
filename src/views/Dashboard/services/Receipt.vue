@@ -234,8 +234,18 @@ export default {
         headers: header()
       }).then(response => {
         this.$Progress.finish()
-        this.getService()
-        this.isModalActive = false
+      }).catch(err => {
+        this.$Progress.fail()
+        this.$toasted.error(err.response.data, {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 1000,
+          onComplete: () => {
+            this.receipt.value = null
+            this.getService()
+            this.isModalActive = false
+          }
+        })
       })
       // this.$http.post(this.$api({ target: 'receipts' }), data, {
       //   headers: header()

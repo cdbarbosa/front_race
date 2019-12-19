@@ -96,6 +96,14 @@ export default {
     }
   },
   watch: {
+    isEditActive (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          console.log('time is ticking')
+          this.isEditActive = false
+        }, 10 * 60 * 1000)
+      }
+    },
     services () {
       this.tableSelected = this.services[this.selectedIndex]
     },
@@ -144,8 +152,8 @@ export default {
     },
     getAllServices () {
       this.getServices(this).then(services => {
+        this.services = services
         if (services.length) {
-          this.services = services
           if (this.$route.params.service_id) {
             this.serviceSelected = this.services[this.findIndex(this.$route.params.service_id)]
           } else {
@@ -261,7 +269,7 @@ export default {
 
 #! SERVIÇO
 ##=======================================================================================
-## TÍTULO..........: ${service.name} 
+## TÍTULO..........: ${service.name}
 ## PREV. DE ENTREGA: ${moment(service.forecast).format('DD/MM/YYYY', { mode: 'currency', number: { decimal: 'informal' } })}
 ## VALOR...........: R$ ${service.total_cost.toFixed(2).split('.').join(',')} (${extenso(service.total_cost.toFixed(2).split('.').join(','))})
 ##=======================================================================================

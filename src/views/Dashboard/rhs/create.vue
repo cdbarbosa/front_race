@@ -43,7 +43,7 @@
               <b-input pattern="[A-Za-z ]+" name="country" v-model="address.country" placeholder="País"></b-input>
             </b-field>
             <b-field label="Estado">
-              <b-input maxlength="2" pattern="[A-Z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
+              <b-input style="text-transform:uppercase" maxlength="2" pattern="[A-Za-z]{2}" name="region" autocomplete="shipping region" v-model="address.state" placeholder="ES"></b-input>
             </b-field>
           </article>
           <article class="info-three">

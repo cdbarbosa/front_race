@@ -63,7 +63,8 @@ const state = {
   clientServiceSelected: undefined,
   rhServiceSelected: undefined,
   lastServiceSelected: undefined,
-  serviceFilters: getFilters()
+  serviceFilters: getFilters(),
+  serviceUpdateJustification: ''
 }
 
 const getters = {
@@ -72,7 +73,8 @@ const getters = {
   clientServiceSelected: () => state.clientServiceSelected,
   rhServiceSelected: () => state.rhServiceSelected,
   lastServiceSelected: () => state.lastServiceSelected,
-  serviceFilters: () => state.serviceFilters
+  serviceFilters: () => state.serviceFilters,
+  serviceUpdateJustification: () => state.serviceUpdateJustification
 }
 
 const mutations = {
@@ -164,6 +166,9 @@ const mutations = {
     state.serviceSelected = undefined
     state.lastServiceSelected = undefined
     state.serviceFilters = getFilters()
+  },
+  SET_SERVICE_UPDATE_JUSTIFICATION (state, justification) {
+    state.serviceUpdateJustification = justification
   }
 }
 
@@ -215,12 +220,14 @@ const actions = {
   postServiceSelected ({ commit }, payload) {
     const that = payload[0]
     const service = payload[1]
+    const justification = payload[2]
+
     return new Promise((resolve, reject) => {
       that.$http.post(that.$api({
         target: 'service',
-        clerance: that.$store.getters.user.role.name,
+        // clerance: that.$store.getters.user.role.name,
         conn: that.$store.getters.conn
-      }), service, {
+      }), Object.assign(service, { justification: justification }), {
         headers: header()
       }).then(response => {
         resolve(response)
@@ -239,6 +246,9 @@ const actions = {
   },
   destroyServiceStore ({ commit }) {
     commit('DESTROY_SERVICE_STORE')
+  },
+  setServiceUpdateJustification ({ commit }, justification) {
+    commit('SET_SERVICE_UPDATE_JUSTIFICATION', justification)
   }
 }
 

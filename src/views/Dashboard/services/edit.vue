@@ -63,7 +63,7 @@ export default {
     },
     update () {
       this.$Progress.start()
-      this.postServiceSelected([this, this.serviceSelected]).then(response => {
+      this.postServiceSelected([this, this.serviceSelected, this.$store.getters.serviceUpdateJustification]).then(response => {
         this.$Progress.finish()
         // this.setServiceSelected(['serviceSelected', response.data])
         // this.updateService([response.data, this.selectedIndex])

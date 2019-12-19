@@ -23,7 +23,8 @@ export default {
       isEditActive: false,
       rhCreated: undefined,
       isRhModalActive: false,
-      tableSelected: undefined
+      tableSelected: undefined,
+      creationErros: []
     }
   },
   computed: {
@@ -104,6 +105,14 @@ export default {
     }
   },
   watch: {
+    isEditActive (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          console.log('time is ticking')
+          this.isEditActive = false
+        }, 10 * 60 * 1000)
+      }
+    },
     rhCreated () {
       this.get()
     },
