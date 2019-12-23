@@ -27,3 +27,4 @@ yarn-error.log*
 /.gtm/
 tags
 tags.*
+report.*

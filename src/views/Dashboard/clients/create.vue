@@ -161,6 +161,7 @@ export default {
           this.$Progress.finish()
           this.$emit('clientCreated')
         }).catch(err => {
+          console.log(err)
           this.$Progress.fail()
           this.$emit('creationFailed')
         })
