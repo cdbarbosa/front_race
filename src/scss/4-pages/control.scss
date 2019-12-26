@@ -1,0 +1,85 @@
+#dashboard main#control{
+  #accounts{
+    .field{
+      margin-bottom: 0;
+      input{
+        margin-bottom: 0;
+      }
+    }
+    h3{
+      display: grid;
+      grid-template-columns: auto 200px 2rem;
+      grid-gap: 1rem;
+      button{
+        background: #2B4F73;
+        font-size: .7em;
+        text-align: center;
+      }
+    }
+    form#accountsEdit, form#accountsCreate {
+      #email{
+        grid-area: email;
+      }
+      #active{
+        grid-area: active;
+      }
+      #cancel{
+        grid-area: cancel;
+      }
+      #confirm {
+        grid-area: confirm;
+      }
+      #password{
+        grid-area: password;
+      }
+      #passwordConfirmation{
+        grid-area: passwordConfirmation;
+      }
+      #old-password{
+        grid-area: oldPassword;
+      }
+      #type{
+        grid-area: type;
+      }
+      #role{
+        grid-area: role;
+      }
+      #document{
+        grid-area: document;
+      }
+      button[disabled]{
+        cursor: not-allowed;
+      }
+      button{
+        &.__success{
+          background: $success;
+        }
+      }
+      button#check{
+        grid-area: check;
+        height: 36px;
+        font-size: 1rem;
+        align-self: flex-end;
+      }
+      .content{
+        grid-template-columns: auto;
+        grid-template-areas:
+        "email email email type type active"
+        "oldPassword oldPassword oldPassword oldPassword check check"
+        "password password password passwordConfirmation passwordConfirmation passwordConfirmation"
+        "cancel cancel cancel confirm confirm confirm";
+      }
+    }
+    form#accountsCreate{
+      .content{
+        grid-template-columns: auto;
+        grid-template-areas:
+        "email email email email email email"
+        "type role role role document document"
+        "oldPassword oldPassword oldPassword oldPassword check check"
+        "password password password passwordConfirmation passwordConfirmation passwordConfirmation"
+        "cancel cancel cancel confirm confirm confirm";
+      }
+    }
+  }
+}

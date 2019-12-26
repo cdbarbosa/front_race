@@ -14,6 +14,9 @@
           <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
             Serviços
           </router-link>
+          <router-link tag="li" :to="{ name: 'control' }">
+            Painel de Controle
+          </router-link>
         </span>
         <span v-else-if="user.role.name === 'rh'">
           <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">Perfil</router-link>

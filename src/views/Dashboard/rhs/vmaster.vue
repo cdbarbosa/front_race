@@ -72,7 +72,7 @@
       <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false; creationErros = $event">
         <template v-slot:message>
           <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
-          <span class="error" v-for="(err, index) in creationErros">
+          <span class="error" v-for="(err, index) in creationErros" :key="index">
             {{ err[0] }}
           </span>
         </template>

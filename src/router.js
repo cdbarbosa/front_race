@@ -7,6 +7,7 @@ import Overview from './views/Dashboard/Overview.vue'
 import Clients from './views/Dashboard/Clients.vue'
 import Rhs from './views/Dashboard/Rhs.vue'
 import Services from './views/Dashboard/Services.vue'
+import Control from './views/Dashboard/Control.vue'
 import ApprovedCheck from './views/ApprovedCheck.vue'
 Vue.use(Router)
 
@@ -45,6 +46,12 @@ export default new Router({
           path: 'service/:service_id?/',
           name: 'service',
           component: Services
+        },
+        {
+          path: 'control',
+          name: 'control',
+          component: Control
+
         }
       ]
     },
