@@ -1,5 +1,6 @@
 #dashboard main#control{
-  #accounts{
+  .content#accounts{
+    grid-template-columns: 1fr;
     .field{
       margin-bottom: 0;
       input{

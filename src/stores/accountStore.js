@@ -107,7 +107,7 @@ const actions = {
     const that = payload[0]
     const data = payload[1]
     that.$Progress.start()
-
+    //
     return new Promise((resolve, reject) => {
       that.$http.put(that.$api({
         target: `account`

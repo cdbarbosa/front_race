@@ -70,6 +70,7 @@ const mutations = {
     const filter = payload[1]
     const key = payload[2]
     const value = payload[3]
+
     state.clientFilters[filter][index][key] = value
   },
   SET_CLIENT_QUERY (state, query) {

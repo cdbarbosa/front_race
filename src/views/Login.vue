@@ -65,7 +65,11 @@ export default {
       'getAuthUser',
       'setAuthToken',
       'setAuthUser',
-      'setConn'
+      'setConn',
+      'destroyUserStore',
+      'destroyRhStore',
+      'destroyClientStore',
+      'destroyServiceStore',
     ]),
     send () {
       this.message = 'Validando credênciais'
@@ -76,14 +80,20 @@ export default {
         this.setAuthToken(response.data).then(() => {
           this.message = 'Armazenando o token'
           this.getAuthUser(this).then(response => {
-            this.message = 'Validando o token'
-            let authUser = response.data
-            this.setAuthUser(authUser).then(status => {
-              return authUser
-            }).then(user => {
-              this.message = 'Token Validado'
-              this.$router.push({ name: routes[authUser.role.name] })
-            })
+            let user = response.data
+            if (user.active) {
+              let authUser = response.data
+              this.setAuthUser(authUser).then(status => {
+                return authUser
+              }).then(user => {
+                this.message = 'Token Validado'
+                this.$router.push({ name: routes[authUser.role.name] })
+              })
+            } else {
+              this.message = 'Conta desativada'
+              this.logout()
+            }
+
           }).catch(err => {
             console.log(err)
             this.message = 'Token Expirado, faça o login novamente'
@@ -122,7 +132,15 @@ export default {
       // }).then(err => {
       //   console.log(err)
       // })
-    }
+    },
+    logout () {
+      window.localStorage.removeItem('authTokens')
+      this.$router.push({ name: 'login' })
+      this.destroyUserStore()
+      this.destroyClientStore()
+      this.destroyRhStore()
+      this.destroyServiceStore()
+    },
   }
 }
 </script>

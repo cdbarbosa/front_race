@@ -13,15 +13,15 @@
       <b-field label="Ativo" id="active">
           <b-checkbox v-model="user.active" :true-value="1" :false-value="0"></b-checkbox>
       </b-field>
-      <b-field label="Senha antiga" id="old-password">
-        <b-input type="password" placeholder="Senha" v-model="password" password-reveal></b-input>
-      </b-field>
-      <button class="__success" type="button" id="check" @click="check">Verificar</button>
+      <!-- <b&#45;field label="Senha antiga" id="old&#45;password"> -->
+      <!--   <b&#45;input type="password" placeholder="Senha" v&#45;model="password" password&#45;reveal></b&#45;input> -->
+      <!-- </b&#45;field> -->
+      <!-- <button class="__success" type="button" id="check" @click="check">Verificar</button> -->
       <b-field label="Nova Senha" id="password">
-        <b-input type="password" placeholder="Senha" v-model="user.password" password-reveal :disabled="!confirmed"></b-input>
+        <b-input type="password" placeholder="Senha" v-model="user.password" password-reveal></b-input>
       </b-field>
-      <b-field :type="confirmationType.type" :message="confirmationType.message" label="Confirme a senha" :required="confirmed" id="passwordConfirmation">
-        <b-input type="password" placeholder="Senha" v-model="user.passwordConfirmation" password-reveal :required="confirmed" :disabled="!confirmed"></b-input>
+      <b-field :type="confirmationType.type" :message="confirmationType.message" label="Confirme a senha" id="passwordConfirmation">
+        <b-input type="password" placeholder="Senha" v-model="user.passwordConfirmation" password-reveal :required="user.password && user.password.length > 0"></b-input>
       </b-field>
       <button class="__error" id="cancel" type="button" @click="$emit('cancel')">Cancelar</button>
       <button class="__success" id="confirm" type="submit" :disabled="confirmationType.type === 'is-success'">Atualizar</button>
@@ -50,7 +50,15 @@ export default {
   },
   computed: {
     confirmationType () {
-      return this.user.password ? (this.user.password === this.user.passwordConfirmation ? { type: 'is-success' } : { type: 'is-danger', message: 'As senhas devem ser iguais' }) : { type: 'is-danger', message: 'Preencha a senha' }
+      if (this.user.password) {
+        if (this.user.password === this.user.passwordConfirmation) {
+          return { type: 'is-success' }
+        } else {
+          return { type: 'is-danger', message: 'As senhas devem ser iguais' }
+        }
+      }
+      return { type: '', message: '' }
+      // return this.user.password ? (this.user.password === this.user.passwordConfirmation ? { type: 'is-success' } : { type: 'is-danger', message: 'As senhas devem ser iguais' }) : { type: 'is-danger', message: 'Preencha a senha' }
     }
   },
   beforeMount () {

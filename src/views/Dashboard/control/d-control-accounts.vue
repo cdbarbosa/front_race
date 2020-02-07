@@ -1,5 +1,5 @@
 <template>
-  <div class="" id="accounts">
+  <div class="content" id="accounts">
     <h3 :class="{}">
       Contas
       <button id="createAccount" @click="isCreateActive = true">Criar conta</button>
@@ -62,7 +62,7 @@
     <!--   <d&#45;control&#45;account&#45;create @create="create($event); isCreateActive = false"></d&#45;control&#45;account&#45;create> -->
     <!-- </b&#45;modal> -->
     <b-modal :active.sync="isEditActive">
-      <d-control-account-edit :account="account"></d-control-account-edit>
+      <d-control-account-edit :account="account" @update="edit"></d-control-account-edit>
     </b-modal>
   </div>
 </template>
@@ -102,7 +102,8 @@ export default {
   methods: {
     ...mapActions('accountStore', [
       'index',
-      'store'
+      'store',
+      'update'
     ]),
     create (account) {
       this.store([this, account]).then(response => {
@@ -113,6 +114,18 @@ export default {
         this.creationErros = err.response.data
       })
     },
+    edit (user) {
+      this.update([this, user]).then(() => {
+        this.$toasted.success('Conta atualizada com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 1000,
+          onComplete: () => {
+            this.isEditActive = false
+          }
+        })
+      })
+    },
     parseModal () {
       if (this.accountCreated === undefined) {
         return 'dControlAccountCreate'
@@ -120,7 +133,7 @@ export default {
         return 'success'
       }
       return 'error'
-    },
+    }
   },
   components: {
     dControlAccountEdit,
