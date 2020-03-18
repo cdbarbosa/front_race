@@ -7,31 +7,31 @@
     <div class="links">
       <ul>
         <span v-if="user.role.name === 'admin'">
-          <router-link tag="li" :to="{ name: 'client', params: { client_id: $route.params.client_id } }">
+          <router-link tag="a" :to="{ name: 'client', params: { client_id: $route.params.client_id } }">
             Clientes
           </router-link>
-          <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">RH's</router-link>
-          <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
+          <router-link tag="a" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">RH's</router-link>
+          <router-link tag="a" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
             Serviços
           </router-link>
-          <router-link tag="li" :to="{ name: 'control' }">
+          <router-link tag="a" :to="{ name: 'control' }">
             Painel de Controle
           </router-link>
         </span>
         <span v-else-if="user.role.name === 'rh'">
-          <router-link tag="li" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">Perfil</router-link>
+          <router-link tag="a" :to="{ name: 'rh', params: { rh_id: $route.params.rh_id } }">Perfil</router-link>
           <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
             Serviços
           </router-link>
         </span>
         <span v-else-if="user.role.name === 'tj' || user.role.name === 'tm'">
-          <router-link tag="li" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
+          <router-link tag="a" :to="{ name: 'service', params: { service_id: $route.params.service_id } }">
             Serviços
           </router-link>
         </span>
         <transition>
         <div>
-          <li v-if="!confim" @click="confim = true">Sair</li>
+          <a v-if="!confim" @click="confim = true">Sair</a>
           <li v-else id="actions">
             <button @click="logout">Confirmar</button>
             <button @click="confim = false">Cancelar</button>

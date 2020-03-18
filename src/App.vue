@@ -23,7 +23,7 @@ export default {
       scroll: 0,
       refreshing: false,
       updateExists: false,
-      registration: null
+      registration: null,
     }
   },
   created () {

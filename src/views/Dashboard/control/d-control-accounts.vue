@@ -35,6 +35,9 @@
           <b-table-column field="role" label="Tipo de Conta">
             {{ props.row.role.description }}
           </b-table-column>
+          <b-table-column label="Ativo" field="active" :title="props.row.active ? 'Ativo' : 'Inativo'"  width="" centered>
+            <span :class="[{ __completed: props.row.active }, 'signal']"></span>
+          </b-table-column>
         </template>
         <template slot="empty">
           <section class="section">

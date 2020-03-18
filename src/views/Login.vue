@@ -69,7 +69,7 @@ export default {
       'destroyUserStore',
       'destroyRhStore',
       'destroyClientStore',
-      'destroyServiceStore',
+      'destroyServiceStore'
     ]),
     send () {
       this.message = 'Validando credênciais'
@@ -93,7 +93,6 @@ export default {
               this.message = 'Conta desativada'
               this.logout()
             }
-
           }).catch(err => {
             console.log(err)
             this.message = 'Token Expirado, faça o login novamente'
@@ -140,7 +139,7 @@ export default {
       this.destroyClientStore()
       this.destroyRhStore()
       this.destroyServiceStore()
-    },
+    }
   }
 }
 </script>

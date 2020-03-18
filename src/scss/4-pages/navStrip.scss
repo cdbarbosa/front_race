@@ -15,7 +15,10 @@
     margin-bottom: 0;
   }
   .links {
-    li {
+    a{
+      display: block;
+    }
+    li, a{
       text-decoration: none;
       padding: 1rem;
       color: white;
