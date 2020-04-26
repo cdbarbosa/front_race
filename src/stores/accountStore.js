@@ -43,7 +43,8 @@ const actions = {
     // that.isLoading = true
     // that.$Progress.start()
     that.$http.get(that.$api({
-      target: 'accounts'
+      target: 'accounts',
+      conn: that.$store.getters.conn
     }), {
       headers: header()
     }).then(response => {
@@ -63,7 +64,8 @@ const actions = {
     const that = payload[0]
     const id = payload[1]
     that.$http.get(that.$api({
-      target: `account/${id}`
+      target: `account/${id}`,
+      conn: that.$store.getters.conn
     }), {
       headers: header()
     }).then(response => {
@@ -110,7 +112,8 @@ const actions = {
     //
     return new Promise((resolve, reject) => {
       that.$http.put(that.$api({
-        target: `account`
+        target: `account`,
+        conn: that.$store.getters.conn
       }), data, {
         headers: header()
       }).then(response => {
@@ -136,7 +139,8 @@ const actions = {
     const slug = payload[1]
     that.$Progress.start()
     that.$http.get(that.$api({
-      target: `account/search/${slug}`
+      target: `account/search/${slug}`,
+      conn: that.$store.getters.conn
     }), {
       headers: header()
     }).then(response => {
@@ -156,7 +160,8 @@ const actions = {
   filter ({ state, commit }, that) {
     that.$Progress.start()
     that.$http.get(that.$api({
-      target: `accounts/critical`
+      target: `accounts/critical`,
+      conn: that.$store.getters.conn
     }), {
       headers: header()
     }).then(response => {

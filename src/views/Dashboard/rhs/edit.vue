@@ -46,6 +46,7 @@
               <b-input v-model="cost" type="number" step="0.01" placeholder="R$ 131,00"></b-input>
             </b-field>
           </article>
+          <button type="submit">Atualizar</button>
         </edit-generic>
         <div class="competencias">
             <b-field label="Perfil do Lattes">
@@ -62,7 +63,6 @@
           </b-field>
         </div>
       </div>
-      <button type="submit">Atualizar</button>
     </form>
   </div>
 </template>

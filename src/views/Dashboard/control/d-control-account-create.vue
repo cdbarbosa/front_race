@@ -74,7 +74,8 @@ export default {
   methods: {
     getUserRoles () {
       this.$http.get(this.$api({
-        target: 'roles/creatable'
+        target: 'roles/creatable',
+        conn: this.$store.getters.conn
       }), {
         headers: header()
       }).then(response => {

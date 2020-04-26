@@ -54,7 +54,7 @@
     <b-modal :active.sync="isCreateActive" @close="accountCreated = undefined; creationErros = []">
       <component :is="parseModal()" @create="create">
         <template v-slot:message>
-          <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
+          <h2>{{ accountCreated ? 'Sucesso ao cadastrar uma conta' : 'Algo de errado aconteceu' }}</h2>
           <span class="error" v-for="(err, index) in creationErros" :key="index">
             {{ err[0] }}
           </span>

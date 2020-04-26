@@ -17,14 +17,13 @@
       <!--   <b&#45;input type="password" placeholder="Senha" v&#45;model="password" password&#45;reveal></b&#45;input> -->
       <!-- </b&#45;field> -->
       <!-- <button class="__success" type="button" id="check" @click="check">Verificar</button> -->
-      <b-field label="Nova Senha" id="password">
+      <b-field label="Nova senha" id="password">
         <b-input type="password" placeholder="Senha" v-model="user.password" password-reveal></b-input>
       </b-field>
       <b-field :type="confirmationType.type" :message="confirmationType.message" label="Confirme a senha" id="passwordConfirmation">
         <b-input type="password" placeholder="Senha" v-model="user.passwordConfirmation" password-reveal :required="user.password && user.password.length > 0"></b-input>
       </b-field>
-      <button class="__error" id="cancel" type="button" @click="$emit('cancel')">Cancelar</button>
-      <button class="__success" id="confirm" type="submit" :disabled="confirmationType.type === 'is-success'">Atualizar</button>
+      <button class="__success" id="confirm" type="submit" :disabled="confirmationType.type !== 'is-success'">Atualizar</button>
     </div>
   </form>
 </template>
