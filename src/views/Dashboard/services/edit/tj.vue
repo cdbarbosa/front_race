@@ -45,6 +45,8 @@
             <option v-for="(st, index) in serviceStatuses" :value="st.id" :key="index">{{ st.abbreviation }} - {{ st.description }}</option>
           </b-select>
         </b-field>
+      </article>
+      <article>
         <b-field label="Sigilo">
           <div class="block">
             <b-radio v-model="confidentiality" :native-value="1" disabled>Nenhum</b-radio>

@@ -12,7 +12,7 @@
       grid-template-columns: auto 200px 2rem;
       grid-gap: 1rem;
       button{
-        background: #2B4F73;
+        background: $primary;
         font-size: .7em;
         text-align: center;
       }
@@ -51,11 +51,6 @@
       button[disabled]{
         cursor: not-allowed;
       }
-      button{
-        &.__success{
-          background: $success;
-        }
-      }
       button#check{
         grid-area: check;
         height: 36px;
@@ -68,7 +63,7 @@
         "email email email type type active"
         "oldPassword oldPassword oldPassword oldPassword check check"
         "password password password passwordConfirmation passwordConfirmation passwordConfirmation"
-        "cancel cancel cancel confirm confirm confirm";
+        "confirm confirm confirm . . .";
       }
     }
     form#accountsCreate{
@@ -79,7 +74,15 @@
         "type role role role document document"
         "oldPassword oldPassword oldPassword oldPassword check check"
         "password password password passwordConfirmation passwordConfirmation passwordConfirmation"
-        "cancel cancel cancel confirm confirm confirm";
+        "confirm confirm confirm . . .";
+      }
+      button{
+        background: $primary;
+      }
+    }
+    form#accountsEdit{
+      button{
+        background: $highlight;
       }
     }
   }

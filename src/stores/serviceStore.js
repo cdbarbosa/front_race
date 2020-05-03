@@ -97,7 +97,7 @@ const mutations = {
       }
     } else {
       state.serviceSelected = payload
-      if (!state.serviceSelected.tj) {
+      if (payload && !state.serviceSelected.tj) {
         state.serviceSelected.tj = {
           type_id: 1,
           cost: null

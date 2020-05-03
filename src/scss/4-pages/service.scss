@@ -145,6 +145,9 @@
   .content{
     section{
       article{
+        &:last-child{
+          margin-bottom: 1rem;
+        }
         &:nth-child(1){
           grid-template-columns: 8fr 1.5fr;
         }
@@ -158,7 +161,10 @@
           }
         }
         &:nth-child(5) {
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr;
+        }
+        &:nth-child(6) {
+          grid-template-columns: 1fr;
         }
       }
     }

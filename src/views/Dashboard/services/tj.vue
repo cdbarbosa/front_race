@@ -1,6 +1,6 @@
 <template>
   <main id="services">
-    <b-tabs v-model="active" type="is-boxed">
+    <b-tabs v-model="active" type="is-boxed" :destroy-on-hide="true">
       <b-tab-item label="Principal">
         <vmaster></vmaster>
       </b-tab-item>

@@ -36,8 +36,8 @@
       <b-field :type="confirmationType.type" :message="confirmationType.message" label="Confirme a senha" id="passwordConfirmation">
         <b-input type="password" placeholder="Senha" v-model="user.passwordConfirmation" password-reveal></b-input>
       </b-field>
-      <button class="__error" id="cancel" type="button" @click="$emit('cancel')">Cancelar</button>
-      <button class="__success" id="confirm" type="submit" :disabled="confirmationType.type !== 'is-success'">Criar</button>
+      <!-- <button class="__error" id="cancel" type="button" @click="$emit('cancel')">Cancelar</button> -->
+      <button id="confirm" type="submit" :disabled="confirmationType.type !== 'is-success'">Criar</button>
     </div>
   </form>
 </template>

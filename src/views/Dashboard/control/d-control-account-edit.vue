@@ -23,7 +23,7 @@
       <b-field :type="confirmationType.type" :message="confirmationType.message" label="Confirme a senha" id="passwordConfirmation">
         <b-input type="password" placeholder="Senha" v-model="user.passwordConfirmation" password-reveal :required="user.password && user.password.length > 0"></b-input>
       </b-field>
-      <button class="__success" id="confirm" type="submit" :disabled="confirmationType.type !== 'is-success'">Atualizar</button>
+      <button id="confirm" type="submit" :disabled="confirmationType.type !== 'is-success'">Atualizar</button>
     </div>
   </form>
 </template>
