@@ -35,7 +35,7 @@ import { mapActions } from 'vuex'
 const routes = {
   admin: 'client',
   sudo: 'rh',
-  user: 'rh',
+  rh: 'rh',
   tj: 'service',
   tm: 'service'
 }
