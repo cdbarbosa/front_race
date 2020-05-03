@@ -36,7 +36,7 @@
         <article v-else>
           Nenhum relatório selecionado
         </article>
-        <div id="technicalManager">
+        <div id="technicalManager" v-if="selected">
           <header>
             <h3>
               Relatório Assinado
