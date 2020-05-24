@@ -159,7 +159,14 @@ export default {
           headers: header()
         }).then(() => {
           this.$Progress.finish()
-          this.$emit('clientCreated')
+          this.$toasted.success('Perfil do Cliente criado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 1000,
+            onComplete: () => {
+              this.$emit('clientCreated')
+            }
+          })
         }).catch(err => {
           console.log(err)
           this.$Progress.fail()

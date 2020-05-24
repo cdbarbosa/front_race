@@ -33,7 +33,7 @@ export const api = options => {
   let clerance = options.clerance === undefined ? '' : (options.clerance === 'admin' ? '' : options.clerance + '/')
 
   if (secure) {
-    if (env === 'production') return `${prod[conn]}/api/v1/${options.service ? options.service + '/' : ''}${options.target}`
+    if (env === 'production') return `${prod[conn]}/api/v1/${clerance}${options.service ? options.service + '/' : ''}${options.target}`
     return `${dev[conn]}/api/v1/${clerance}${options.service ? options.service + '/' : ''}${options.target}`
   } else {
     if (env === 'production') return `${prod[conn]}/${options.service ? options.service + '/' : ''}${options.target}`

@@ -142,9 +142,16 @@ export default {
     checkCritical () {
       // let rh = this.selected
       let user = this.selected.user
-      if (!user.document) return true
+      console.log(user)
+      if (!user.document) {
+        console.log('missing document')
+        return true
+      }
       if (user.type_id === 2) {
-        if (!user.birthday) return true
+        if (!user.birthdate) {
+          console.log('missing birthday')
+          return true
+        }
       }
       return false
     }

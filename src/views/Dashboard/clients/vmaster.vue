@@ -73,7 +73,7 @@
       <h2>Nenhum cliente cadastrado ou encontrado</h2>
     </div>
     <b-modal :active.sync="isModalActive">
-      <component :is="parseModal()" @clientCreated="clientCreated = true" @creationFailed="clientCreated = false; creationErros = $event">
+      <component :is="parseModal()" @clientCreated="clientCreated = true; isModalActive = false" @creationFailed="clientCreated = false; creationErros = $event">
         <template v-slot:message>
           <h2>{{ clientCreated ? 'Sucesso ao cadastrar um cliente' : 'Algo de errado aconteceu' }}</h2>
           <span class="error" v-for="(err, index) in creationErros" :key="index">
@@ -83,7 +83,7 @@
       </component>
     </b-modal>
     <b-modal :onCancel="restoreClientSelected" :active.sync="isEditActive">
-      <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-client>
+      <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; isEditActive = false"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
       <filters-client @restore="restoreClients(); isFilterModal = false" @filter="get(); isFilterModal = false"></filters-client>

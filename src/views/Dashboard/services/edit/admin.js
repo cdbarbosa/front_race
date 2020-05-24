@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import serviceEdit from '../../../../mixins/serviceEdit'
+import moment from 'moment'
 export default {
   name: 'serviceUpdate',
   mixins: [serviceEdit],
@@ -11,6 +12,7 @@ export default {
   watch: {
   },
   mounted () {
+    console.log(moment)
   },
   computed: {
     name: {
@@ -71,7 +73,7 @@ export default {
     },
     forecast: {
       get () {
-        return isNaN(new Date(this.service.forecast)) ? null : new Date(this.service.forecast)
+        return isNaN(new Date(this.service.forecast)) ? null : new Date(moment(this.service.forecast))
       },
       set: _.debounce(function (newVal, oldVal) {
         this.updateServiceSelected(['forecast', newVal])

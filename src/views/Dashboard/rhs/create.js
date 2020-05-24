@@ -69,7 +69,14 @@ export default {
           headers: header()
         }).then(() => {
           this.$Progress.finish()
-          this.$emit('rhCreated')
+          this.$toasted.success('Perfil do RH criado com sucesso!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 1000,
+            onComplete: () => {
+              this.$emit('rhCreated')
+            }
+          })
           // this.getRhs(this).then(rhs => {
           //   this.setRhs(rhs)
           // })

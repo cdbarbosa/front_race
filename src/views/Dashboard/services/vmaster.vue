@@ -45,14 +45,14 @@
        <h2>Nenhum serviço cadastrado ou encontrado</h2>
     </div>
     <b-modal :active.sync="isServiceModalActive">
-      <component :is="parseModal()" @serviceCreated="serviceCreated = true; get()" @creationFailed="serviceCreated = false">
+      <component :is="parseModal()" @serviceCreated="serviceCreated = true; isServiceModalActive = false; get()" @creationFailed="serviceCreated = false">
         <template v-slot:message>
           <h2>{{ serviceCreated ? 'Sucesso ao cadastrar um serviço' : 'Algo de errado aconteceu' }}</h2>
         </template>
       </component>
     </b-modal>
     <b-modal :onCancel="restoreServiceSelected" :active.sync="isEditActive">
-      <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; get()"></service-edit>
+      <service-edit :service="serviceSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; isEditActive = false; get()"></service-edit>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
       <filter-service @filter="filterServices($event); isFilterModal = false" @reset="resetFilters(); isFilterModal = false"></filter-service>

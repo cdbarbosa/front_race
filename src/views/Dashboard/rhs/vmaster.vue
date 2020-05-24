@@ -69,7 +69,7 @@
       <h2>RH não cadastrado ou não encontrado</h2>
     </div>
     <b-modal :active.sync="isRhModalActive">
-      <component :is="parseModal()" @rhCreated="rhCreated = true" @creationFailed="rhCreated = false; creationErros = $event">
+      <component :is="parseModal()" @rhCreated="rhCreated = true; isRhModalActive = false" @creationFailed="rhCreated = false; creationErros = $event">
         <template v-slot:message>
           <h2>{{ rhCreated ? 'Sucesso ao cadastrar um RH' : 'Algo de errado aconteceu' }}</h2>
           <span class="error" v-for="(err, index) in creationErros" :key="index">
@@ -79,7 +79,7 @@
       </component>
     </b-modal>
     <b-modal :onCancel="restoreRhSelected" :active.sync="isEditActive">
-      <edit-rh :rh="rhSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false"></edit-rh>
+      <edit-rh :rh="rhSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; isEditActive = false"></edit-rh>
     </b-modal>
   </main>
 </template>

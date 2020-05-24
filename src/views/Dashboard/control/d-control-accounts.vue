@@ -112,6 +112,14 @@ export default {
       this.store([this, account]).then(response => {
         this.accountCreated = true
         this.index(this)
+        this.$toasted.success('Conta criada com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 1000,
+          onComplete: () => {
+            this.isCreateActive = false
+          }
+        })
       }).catch(err => {
         this.accountCreated = false
         this.creationErros = err.response.data

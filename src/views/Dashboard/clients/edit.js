@@ -91,7 +91,7 @@ export default {
         this.$toasted.success('Perfil do Cliente atualizado com sucesso!', {
           theme: 'bubble',
           position: 'top-center',
-          duration: 300,
+          duration: 1000,
           onComplete: () => {
             this.$emit('updated')
           }

@@ -161,7 +161,14 @@ export default {
         headers: header()
       }).then(response => {
         this.$Progress.finish()
-        this.$emit('serviceCreated')
+        this.$toasted.success('Serviço criado com sucesso!', {
+          theme: 'bubble',
+          position: 'top-center',
+          duration: 1000,
+          onComplete: () => {
+            this.$emit('serviceCreated')
+          }
+        })
         // this.getServices(this).then(services => {
         //   this.setServices(services)
         // })

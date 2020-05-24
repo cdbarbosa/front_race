@@ -4,15 +4,9 @@
       <b-tab-item label="Principal">
         <vmaster></vmaster>
       </b-tab-item>
-      <!-- <b&#45;tab&#45;item label="Detalhes"> -->
-      <!--   <vdetails v&#45;if="$route.params.service_id"></vdetails> -->
-      <!-- </b&#45;tab&#45;item> -->
-      <!-- <b&#45;tab&#45;item label="Recebimentos"> -->
-      <!--   <vreceipt v&#45;if="$route.params.service_id"></vreceipt> -->
-      <!-- </b&#45;tab&#45;item> -->
-      <!-- <b&#45;tab&#45;item label="Histórico"> -->
-      <!--   <vhistory :active="active" v&#45;if="$route.params.service_id"></vhistory> -->
-      <!-- </b&#45;tab&#45;item> -->
+      <b-tab-item label="Histórico">
+        <vhistory :active="active" v-if="$route.params.service_id"></vhistory>
+      </b-tab-item>
       <b-tab-item label="Relatórios">
         <vreport v-if="$route.params.service_id"></vreport>
       </b-tab-item>
@@ -22,6 +16,7 @@
 <script>
 import vmaster from './vmaster.vue'
 import vreport from './report.vue'
+import vhistory from './vhistory.vue'
 export default {
   name: 'services',
   data () {
@@ -31,7 +26,8 @@ export default {
   },
   components: {
     vmaster,
-    vreport
+    vreport,
+    vhistory
   }
 }
 </script>
