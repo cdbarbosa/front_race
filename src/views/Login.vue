@@ -4,12 +4,12 @@
     <div class="wrapper">
       <img :src="`/img/${$store.getters.conn === 'prod' ? 'logo@2x' : 'logo_white'}.png`" alt=""/>
       <transition name="fade" mode="out-in">
-        <form @submit.prevent="send" v-if="!recover">
+        <form data-cy="login-form" @submit.prevent="send" v-if="!recover">
           <b-field label="Email">
-            <b-input v-model="login" name="email" placeholder="Email" required></b-input>
+            <b-input data-cy="login-email-input" v-model="login" name="email" placeholder="Email" required></b-input>
           </b-field>
           <b-field label="Senha">
-            <b-input type="password" name="password" v-model="password" placeholder="Password" required password-reveal></b-input>
+            <b-input data-cy="login-password-input" type="password" name="password" v-model="password" placeholder="Password" required password-reveal></b-input>
           </b-field>
           <section>
             <button type="submit">Entrar</button>

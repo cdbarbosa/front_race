@@ -83,7 +83,7 @@
       </component>
     </b-modal>
     <b-modal :onCancel="restoreClientSelected" :active.sync="isEditActive">
-      <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; isEditActive = false"></edit-client>
+      <edit-client :client="clientSelected" :selectedIndex="selectedIndex" @updated="isEditActive = false; get()"></edit-client>
     </b-modal>
     <b-modal :active.sync="isFilterModal">
       <filters-client @restore="restoreClients(); isFilterModal = false" @filter="get(); isFilterModal = false"></filters-client>

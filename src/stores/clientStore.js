@@ -8,7 +8,8 @@ const getFilters = () => {
         key: 'active',
         label: 'Ativo',
         value: 1,
-        active: false
+        active: false,
+        type: 'bool'
       }
     ],
     clientFilters: [

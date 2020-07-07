@@ -84,7 +84,7 @@
             </b-checkbox>
             <span v-if="filter.active" >
               <b-field>
-                <b-switch v-if="filter.type === 'bool'" :value="filter.value" @input="parseFilters([index, 'rhFilters', 'value', $event])">{{ filter.value ? 'Sim' : 'Não'}}</b-switch>
+                <b-switch v-if="filter.type === 'bool'" :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])">{{ filter.value ? 'Sim' : 'Não'}}</b-switch>
                 <b-input v-else :value="filter.value" @input="parseFilters([index, 'userFilters', 'value', $event])"></b-input>
               </b-field>
             </span>

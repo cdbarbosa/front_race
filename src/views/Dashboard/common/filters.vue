@@ -33,38 +33,38 @@
         </section>
       </div>
     </b-modal>
-    <b-modal :active.sync="isAttachModalOpen" v-if="selected">
-      <div class="" id="attachScreen">
-        <h3>Associar RH</h3>
-        <section>
-          <article>
-            <b-field label="RH">
-              <b-input v-model="selected.name" disabled></b-input>
-            </b-field>
-            <b-field label="RH">
-              <b-input v-model="selected.id" disabled></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Objetivo">
-              <b-input placeholder="Qual serviço o rh irá realizar?" v-model="rhServiceFields.goal"></b-input>
-            </b-field>
-          </article>
-          <article>
-            <b-field label="Custo por Hora Padrão">
-              <money class="input" :value="selected.cost" v-money="money" :masked="true" disabled></money>
-            </b-field>
-            <b-field label="Numero de Horas">
-              <b-input  v-model="rhServiceFields.hours"></b-input>
-            </b-field>
-            <b-field label="Custo por Hora para o Serviço (R$)">
-              <b-input v-model="rhServiceFields.cost"></b-input>
-            </b-field>
-          </article>
-        </section>
-        <button @click="$emit('attachRh', Object.assign(rhServiceFields, {rh_id: selected.id})); isAttachModalOpen = false">Associar</button>
-      </div>
-    </b-modal>
+    <!-- <b&#45;modal :active.sync="isAttachModalOpen" v&#45;if="selected"> -->
+    <!--   <div class="" id="attachScreen"> -->
+    <!--     <h3>Associar RH</h3> -->
+    <!--     <section> -->
+    <!--       <article> -->
+    <!--         <b&#45;field label="RH"> -->
+    <!--           <b&#45;input v&#45;model="selected.name" disabled></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="RH"> -->
+    <!--           <b&#45;input v&#45;model="selected.id" disabled></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--       </article> -->
+    <!--       <article> -->
+    <!--         <b&#45;field label="Objetivo"> -->
+    <!--           <b&#45;input placeholder="Qual serviço o rh irá realizar?" v&#45;model="rhServiceFields.goal"></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--       </article> -->
+    <!--       <article> -->
+    <!--         <b&#45;field label="Custo por Hora Padrão"> -->
+    <!--           <money class="input" :value="selected.cost" v&#45;money="money" :masked="true" disabled></money> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="Numero de Horas"> -->
+    <!--           <b&#45;input  v&#45;model="rhServiceFields.hours"></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--         <b&#45;field label="Custo por Hora para o Serviço (R$)"> -->
+    <!--           <b&#45;input v&#45;model="rhServiceFields.cost"></b&#45;input> -->
+    <!--         </b&#45;field> -->
+    <!--       </article> -->
+    <!--     </section> -->
+    <!--     <button @click="$emit('attachRh', Object.assign(rhServiceFields, {rh_id: selected.id})); isAttachModalOpen = false">Associar</button> -->
+    <!--   </div> -->
+    <!-- </b&#45;modal> -->
 </template>
 
 <script src="./filters.js">

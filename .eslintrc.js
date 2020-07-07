@@ -4,8 +4,12 @@ module.exports = {
     node: true
   },
   'extends': [
+    'plugin:cypress/recommended',
     'plugin:vue/essential',
     '@vue/standard'
+  ],
+  plugins: [
+    'cypress'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
