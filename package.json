@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/file-saver": "^2.0.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.5",
     "buefy": "^0.7.2",
     "extenso": "^2.0.1",
